@@ -11,17 +11,16 @@ canvas.height = window.h;
 canvasContext.fillStyle = window.c;
 canvasContext.fillRect(0, 0, window.w, window.h);
 let field = new BattleGround(groundList, wallList, canvasContext);
-field.drawfield();
-//field.drawwalls();
 
-let p = new Player(100, 100, 0, canvasContext);
+let p = new Player(500, 500, 0, canvasContext);
 
 
 play();
 
 function play() {
     field.clearFrame();
-    field.drawfield();
+    field.drawGround();
     p.draw();
+    field.drawWalls();
     requestAnimationFrame(play);
 }

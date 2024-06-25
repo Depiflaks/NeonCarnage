@@ -21,26 +21,27 @@ class BattleGround {
             const startY = wallList[k][1];
             const endX = wallList[k][2];
             const endY = wallList[k][3];
-            console.log(startX, startY, endX, endY);
+            //console.log(startX, startY, endX, endY);
             this.walls.push(new Wall(startX, startY, endX, endY, canvasContext));
         }
 
     }
 
-    drawfield() {
+    drawGround() {
         for (let cell of this.cells) {
             cell.draw();
         }
     }
 
-    drawwalls() {
+    drawWalls() {
         this.walls.forEach(wall => {
             wall.drawWall();
         });
     }
 
     clearFrame() {
-        this.canvasContext.clearRect(0, 0, window.w, window.h);
+        this.canvasContext.fillStyle = "black";
+        this.canvasContext.fillRect(0, 0, window.w, window.h);
     }
 
 }

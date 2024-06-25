@@ -26,7 +26,7 @@ class Wall {
         } 
         this.canvasContext.fillStyle = wallSet.c;
         this.canvasContext.fillRect(wallStartX, wallStartY, wallXSide, wallYSide);
-        console.log(wallStartX, wallStartY, wallXSide, wallYSide);
+        //console.log(wallStartX, wallStartY, wallXSide, wallYSide);
     }
 }
 
