@@ -1,16 +1,19 @@
 const window = {
-    w: 1200,
-    h: 800,
+    w: 1400,
+    h: 1000,
+    c: "black",
 };
 
-const cell = {
+const cellSet = {
     w: 100,
     h: 100,
-    color: ""
+    c: "green"
 };
 
 const player = {
-    
+    w: 10,
+    h: 10,
+    color: "red"
 };
 
-export {window, player, cell}
+export {window, cellSet}
