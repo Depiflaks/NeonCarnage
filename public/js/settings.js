@@ -11,8 +11,8 @@ const cellSet = {
 };
 
 const wallSet = {
-    h: 10,
-    c: "yellow",
+    h: 5,
+    c: "orange",
 }
 
 const player = {

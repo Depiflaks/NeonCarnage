@@ -1,5 +1,5 @@
 import { wallSet } from "../settings.js";
-
+import {cellSet} from "../settings.js";
 
 class Wall {
     constructor(startX, startY, endX, endY, canvasContext) {
@@ -11,17 +11,22 @@ class Wall {
     }
 
     drawWall() {
-        if (startX = endX) {
-            const wallStartY = this.startY - wallSet.h;
-            const wallStartX = this.startX;
+        if (this.startX === this.endX) {
+            var wallStartY = this.startY * cellSet.w;
+            var wallStartX = (this.startX * cellSet.w)- wallSet.h;
+            var wallXSide = wallSet.h * 2;
+            var wallYSide = (this.endY - this.startY) * cellSet.w;
         } else {
-            if (startY = endY){
-                const wallStartX = this.startY - wallSet.h;
-                const wallStartY = this.startY;
+            if (this.startY === this.endY){
+             var wallStartX = this.startX * cellSet.w;
+             var wallStartY = (this.startY * cellSet.w) - wallSet.h;
+             var wallXSide =  (this.endX - this.startX) * cellSet.w;
+             var wallYSide = wallSet.h * 2;
             }
         } 
         this.canvasContext.fillStyle = wallSet.c;
-        this.canvasContext.fillRect(wallStartX, wallStartY, this.endX - this.startX, this.endY - this.startY);
+        this.canvasContext.fillRect(wallStartX, wallStartY, wallXSide, wallYSide);
+        console.log(wallStartX, wallStartY, wallXSide, wallYSide);
     }
 }
 

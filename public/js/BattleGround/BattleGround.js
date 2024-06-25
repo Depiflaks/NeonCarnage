@@ -23,6 +23,7 @@ class BattleGround {
             console.log(startX, startY, endX, endY);
             this.walls.push(new Wall(startX, startY, endX, endY, canvasContext));
         }
+
     }
 
     drawfield() {
@@ -32,9 +33,9 @@ class BattleGround {
     }
 
     drawwalls() {
-        for (let wall of this.walls){
+        this.walls.forEach(wall => {
             wall.drawWall();
-        }
+        });
     }
 
 }
