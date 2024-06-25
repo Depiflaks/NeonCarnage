@@ -1,5 +1,6 @@
 import { Cell } from "./Cell.js";
 import { Wall } from "./Wall.js";
+import { window } from "../settings.js";
 
 class BattleGround {
     constructor(groundList, wallList, canvasContext) {
@@ -35,6 +36,10 @@ class BattleGround {
         for (let wall of this.walls){
             wall.drawWall();
         }
+    }
+
+    clearFrame() {
+        this.canvasContext.clearRect(0, 0, window.w, window.h);
     }
 
 }

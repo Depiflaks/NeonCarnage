@@ -16,9 +16,11 @@ const wallSet = {
 }
 
 const player = {
-    w: 10,
-    h: 10,
-    color: "red"
+    radius: 20,
+    w: 60,
+    h: 30,
+    headColor: "red",
+    bodyColor: "blue",
 };
 
-export {window, cellSet, wallSet}
+export {window, cellSet, wallSet, player}
