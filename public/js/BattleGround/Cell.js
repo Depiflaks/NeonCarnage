@@ -1,15 +1,22 @@
 import { cellSet } from "../settings.js";
 
 class Cell {
-    constructor(x, y, canvasContext) {
-        this.x = x;
-        this.y = y;
-        this.canvasContext = canvasContext;
+    constructor(x, y, context) {
+        this.x = x * cellSet.w;
+        this.y = y * cellSet.h;
+        this.context = context;
     }
     
     draw() {
-        this.canvasContext.fillStyle = cellSet.c;
-        this.canvasContext.fillRect(this.x * cellSet.w, this.y * cellSet.h, cellSet.w, cellSet.h);
+        this.context.fillStyle = cellSet.c;
+        this.context.fillRect(this.x, this.y, cellSet.w, cellSet.h);
+    }
+
+    move(dx, dy){
+        this.x += dx;
+        this.y += dy;
+        this.context.fillStyle = cellSet.c;
+        this.context.fillRect(this.x, this.y, cellSet.w, cellSet.h);
     }
 }
 
