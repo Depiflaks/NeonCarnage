@@ -1,22 +1,39 @@
 import { Cell } from "./Cell.js";
+import { Wall } from "./Wall.js";
 
 class BattleGround {
-    constructor(battleGround, ctx) {
-        this.ctx = ctx;
+    constructor(groundList, wallList, canvasContext) {
+        this.canvasContext = canvasContext;
         this.cells = [];
-        for (let i = 0; i < battleGround.length; i++) {
-            for (let j = 0; j < battleGround[i].length; j++) {
-                if (battleGround[i][j] === '1') {
-                    this.cells.push(new Cell(i, j, this.ctx));
+        this.walls = [];
+        for (let i = 0; i < groundList.length; i++) {
+            for (let j = 0; j < groundList[i].length; j++) {
+                if (groundList[i][j] === '1') {
+                    this.cells.push(new Cell(i, j, this.canvasContext));
                 }
                 
             }
+        }
+
+        for (let k = 0; k < wallList.length; k++){
+            const startX = wallList[k][0];
+            const startY = wallList[k][1];
+            const endX = wallList[k][2];
+            const endY = wallList[k][3];
+            console.log(startX, startY, endX, endY);
+            this.walls.push(new Wall(startX, startY, endX, endY, canvasContext));
         }
     }
 
     drawfield() {
         for (let cell of this.cells) {
             cell.draw();
+        }
+    }
+
+    drawwalls() {
+        for (let wall of this.walls){
+            wall.drawWall();
         }
     }
 

@@ -7,8 +7,13 @@ const window = {
 const cellSet = {
     w: 100,
     h: 100,
-    c: "green"
+    c: "green",
 };
+
+const wallSet = {
+    h: 10,
+    c: "yellow",
+}
 
 const player = {
     w: 10,
@@ -16,4 +21,4 @@ const player = {
     color: "red"
 };
 
-export {window, cellSet}
+export {window, cellSet, wallSet}
