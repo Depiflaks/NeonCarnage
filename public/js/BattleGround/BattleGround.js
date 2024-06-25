@@ -3,14 +3,14 @@ import { Wall } from "./Wall.js";
 import { window } from "../settings.js";
 
 class BattleGround {
-    constructor(groundList, wallList, canvasContext) {
-        this.canvasContext = canvasContext;
+    constructor(groundList, wallList, context) {
+        this.context = context;
         this.cells = [];
         this.walls = [];
         for (let i = 0; i < groundList.length; i++) {
             for (let j = 0; j < groundList[i].length; j++) {
                 if (groundList[i][j] === '1') {
-                    this.cells.push(new Cell(i, j, this.canvasContext));
+                    this.cells.push(new Cell(i, j, this.context));
                 }
                 
             }
@@ -33,6 +33,7 @@ class BattleGround {
         }
     }
 
+    drawWalls() {
     drawWalls() {
         this.walls.forEach(wall => {
             wall.drawWall();
