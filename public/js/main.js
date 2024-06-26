@@ -1,6 +1,8 @@
 import { WINDOW, CAMERA } from "./settings.js";
 import { BattleGround } from "./BattleGround/BattleGround.js";
-import { Player } from "./Player/Player.js";
+import { PlayerModel } from './Player/PlayerModel.js';
+import { PlayerView } from './Player/PlayerView.js';
+import { PlayerController } from './Player/PlayerController.js';
 var canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 const cellsList = [
@@ -41,28 +43,28 @@ context.fillStyle = WINDOW.c;
 context.fillRect(0, 0, WINDOW.w, WINDOW.h);
 let field = new BattleGround(groundList, wallList, weaponSet, context);
 
-let player = new Player(1000, 1000, context);
+const playerModel = new PlayerModel(1000, 1000);
+const playerView = new PlayerView(context);
+const playerController = new PlayerController(playerModel, playerView);
 
 play();
 
 function moveFrame() {
-    let [dx, dy] = [CAMERA.center.x - player.x, CAMERA.center.y - player.y];
+    const [dx, dy] = [CAMERA.center.x - playerModel.getPosition().x, CAMERA.center.y - playerModel.getPosition().y];
     const period = (Math.abs(dx) + Math.abs(dy) < 0.5) ? 1 : CAMERA.period;
     field.move(dx / period, dy / period);
-    player.move(dx / period, dy / period)
+    playerModel.move(dx / period, dy / period);
 }
 
 function drawFrame() {
     field.drawGround();
-    field.drawWeapons();
-    player.draw();
     field.drawWalls();
 }
 
 function play() {
     field.clearFrame();
     drawFrame();
-    player.update();
+    playerController.update();
     moveFrame();
     requestAnimationFrame(play);
 }
