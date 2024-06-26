@@ -14,7 +14,6 @@ class BattleGround {
             this.cells.push(new Cell(x, y, context));
         }
 
-
         for (let k = 0; k < wallList.length; k++){
             const startX = wallList[k][0];
             const startY = wallList[k][1];
@@ -33,7 +32,7 @@ class BattleGround {
 
     drawWalls() {
         this.walls.forEach(wall => {
-            wall.drawWall();
+            wall.draw();
         });
     }
 
@@ -42,11 +41,16 @@ class BattleGround {
         this.context.fillRect(0, 0, window.w, window.h);
     }
 
-    moveFrame(dx, dy) {
-        this.x += dx;
-        this.y += dy;
-    }
 
+    move(dx, dy) {
+        for (let cell of this.cells) {
+            cell.move(dx, dy);
+        }
+        for (let wall of this.walls) {
+            //console.log(wall);
+            wall.move(dx, dy);
+        }
+    }
 }
 
-export {BattleGround}
+export { BattleGround } 
