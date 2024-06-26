@@ -21,7 +21,7 @@ const cellsList = [
 const wallList = [[2, 0, 2, 1], [1, 4, 1, 5], [2, 5, 3, 5], [3, 8, 3, 9], [5, 2, 5, 3], [5, 6, 5, 5], [5, 8, 4, 8], [6, 4, 7, 4], [8, 8, 8, 9], [8, 2, 9, 2], [9, 4, 9, 3], [10, 6, 11, 6], [12, 2, 13, 2], [12, 5, 12, 6]];
 var weaponSet = [
     ["wep1", 3, 2, "close", 10, 10, 10, 0, "pink", "red"], 
-    ["wep2", 10, 5, "close", 10, 10, 10, 1, "pink", "red"]];
+    ["wep2", 10, 5, "close", 10, 10, 10, 1, "pink", "red"]];  //0 - на земле, 1 - в руках
 var groundList = [];
 
 function convertFields(cellsList) {
