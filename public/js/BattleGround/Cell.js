@@ -15,8 +15,6 @@ class Cell {
     move(dx, dy){
         this.x += dx;
         this.y += dy;
-        this.context.fillStyle = cellSet.c;
-        this.context.fillRect(this.x, this.y, cellSet.w, cellSet.h);
     }
 }
 

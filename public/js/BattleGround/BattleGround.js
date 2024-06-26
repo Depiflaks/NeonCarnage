@@ -22,7 +22,7 @@ class BattleGround {
             const endX = wallList[k][2];
             const endY = wallList[k][3];
             //console.log(startX, startY, endX, endY);
-            this.walls.push(new Wall(startX, startY, endX, endY, canvasContext));
+            this.walls.push(new Wall(startX, startY, endX, endY, context));
         }
 
     }
@@ -34,15 +34,14 @@ class BattleGround {
     }
 
     drawWalls() {
-    drawWalls() {
         this.walls.forEach(wall => {
             wall.drawWall();
         });
     }
 
     clearFrame() {
-        this.canvasContext.fillStyle = "black";
-        this.canvasContext.fillRect(0, 0, window.w, window.h);
+        this.context.fillStyle = "black";
+        this.context.fillRect(0, 0, window.w, window.h);
     }
 
 }
