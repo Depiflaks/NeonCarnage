@@ -11,43 +11,42 @@ class BattleGround {
         this.walls = [];
         this.weapons = [];
 
-        for (let w = 0; w < weaponSet.length; w++) {
-            const [name, x, y, battleType, rapidity, grouping, deviation, status, onGround, inHand] = weaponSet[w];
-            this.weapons.push(new Weapon(name, x, y, battleType, rapidity, grouping, deviation, status, onGround, inHand, context));
-        }
+        weaponSet.map(
+            weap => {
+                this.weapons.push(new Weapon(weap, context));
+            }
+        );
 
-        for (let i = 0; i < groundList.length; i++) {
-            const [x, y] = groundList[i];
-            this.cells.push(new Cell(x, y, context));
-        }
+        groundList.map(
+            cell => {
+                const [x, y] = cell;
+                this.cells.push(new Cell(x, y, context)); 
+            }
+        );
 
-        for (let k = 0; k < wallList.length; k++){
-            const [startX, startY, endX, endY] = wallList[k];
-            if (this.startX === this.endX) {
-                this.walls.push(new VerticalWall(startX, startY, endX, endY, context));
-            } else if (this.startY === this.endY) {
-                    this.walls.push(new HorisontalWall(startX, startY, endX, endY, context));
-                }
-            } 
+        wallList.map(
+            wall => {
+                const [startX, startY, endX, endY] = wall;
+                if (this.startX === this.endX) {
+                    this.walls.push(new VerticalWall(startX, startY, endX, endY, context));
+                } else if (this.startY === this.endY) {
+                        this.walls.push(new HorisontalWall(startX, startY, endX, endY, context));
+                    }
+                } 
+        )
 
     }
 
     drawGround() {
-        this.cells.forEach(cell => {
-            cell.draw();
-        });
+        this.cells.map(cell => cell.draw());
     }
 
     drawWalls() {
-        this.walls.forEach(wall => {
-            wall.draw();
-        });
+        this.walls.map(wall => wall.draw());
     }
 
     drawWeapons(){
-        this.weapons.forEach(weap => {
-            weap.draw();
-        })
+        this.weapons.map(weap => weap.draw());
     }
 
     clearFrame() {
@@ -57,15 +56,9 @@ class BattleGround {
 
 
     move(dx, dy) {
-        for (let cell of this.cells) {
-            cell.move(dx, dy);
-        }
-        for (let wall of this.walls) {
-            wall.move(dx, dy);
-        }
-        for (let weapon of this.weapons) {
-            weapon.move(dx, dy);
-        }
+        this.cells.map(cell => cell.move(dx, dy));
+        this.walls.map(wall => wall.move(dx, dy));
+        this.weapons.map(weapon => weapon.move(dx, dy));
     }
 }
 

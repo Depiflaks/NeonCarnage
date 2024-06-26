@@ -2,6 +2,10 @@ import { WEAPON_SET } from "../settings.js";
 import { CELL_SET } from "../settings.js";
 import { Drawable } from "../Interface/Drawable.js";
 
+const state = {
+    onTheGround: 0, 
+    inTheHand: 1,
+}
 
 class Weapon extends Drawable {
     constructor(name, x, y, battleType, rapidity, grouping, deviation, status, onGround, inHand, context) {
@@ -11,20 +15,20 @@ class Weapon extends Drawable {
         this.rapidity = rapidity;
         this.grouping = grouping;
         this.deviation = deviation;
-        this.status = status;   //0 - на земле, 1 - в руках
         this.onGround = onGround;   
         this.inHand = inHand;
         this.context = context;
+        this.status = state.onTheGround; 
     }
    
     draw() {
-        if (this.status === 0) {
-            var weaponX = this.x - (this.w * 0.5);
-            var weaponY = this.y - (this.h * 0.5);
+        if (this.status === state.onTheGround) {
+            const weaponX = this.x - (WEAPON_SET.w * 0.5);
+            const weaponY = this.y - (WEAPON_SET.h * 0.5);
             this.context.fillStyle = this.onGround;
             this.context.fillRect(weaponX, weaponY, WEAPON_SET.w, WEAPON_SET.h);   
         }
-        if (this.status === 1) {
+        if (this.status === state.inTheHand) {
             const weaponX = this.x - (WEAPON_SET.w * 0.5);
             const weaponY = this.y - (WEAPON_SET.h * 0.5);
             this.context.fillStyle = this.inHand;
