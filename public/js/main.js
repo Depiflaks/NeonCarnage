@@ -54,6 +54,7 @@ function moveFrame() {
 
 function drawFrame() {
     field.drawGround();
+    field.drawWeapons();
     player.draw();
     field.drawWalls();
 }

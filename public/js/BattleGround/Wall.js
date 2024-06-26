@@ -1,8 +1,10 @@
+import { Drawable } from "../components/Drawable.js";
 import { WALL_SET } from "../settings.js";
 import {CELL_SET} from "../settings.js";
 
-class Wall {
+class Wall extends Drawable {
     constructor(startX, startY, endX, endY, context) {
+        super()
         this.startX = startX * CELL_SET.w;
         this.startY = startY * CELL_SET.h;
         this.endX = endX * CELL_SET.w;
@@ -15,15 +17,6 @@ class Wall {
         this.context.fillRect(this.x, this.y, this.w, this.h);
     }
 
-    move(dx, dy){
-        this.startX += dx;
-        this.startY += dy;
-        this.endX += dx;
-        this.endY += dy;
-        this.y += dy;
-        this.x += dx;
-
-    }
 }
 
 export { Wall }

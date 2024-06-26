@@ -1,20 +1,15 @@
 import { CELL_SET } from "../settings.js";
+import { Drawable } from "../components/Drawable.js";
 
-class Cell {
+class Cell extends Drawable {
     constructor(x, y, context) {
-        this.x = x * CELL_SET.w;
-        this.y = y * CELL_SET.h;
+        super(x * CELL_SET.w, y * CELL_SET.h, CELL_SET.w, CELL_SET.h);
         this.context = context;
     }
     
     draw() {
         this.context.fillStyle = CELL_SET.c;
         this.context.fillRect(this.x, this.y, CELL_SET.w, CELL_SET.h);
-    }
-
-    move(dx, dy){
-        this.x += dx;
-        this.y += dy;
     }
 }
 
