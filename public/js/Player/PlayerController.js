@@ -64,6 +64,16 @@ class PlayerController {
         this.playerModel.updatePosition();
         this.playerView.draw(this.playerModel);
     }
+
+    checkIntersections(drawableArray) {
+        for (const drawableObj of drawableArray) {
+            if (this.playerModel.isIntersect(drawableObj)) {
+                this.playerModel.changeDirection();
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 export { PlayerController };

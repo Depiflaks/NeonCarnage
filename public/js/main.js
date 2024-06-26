@@ -41,7 +41,7 @@ canvas.width = WINDOW.w;
 canvas.height = WINDOW.h;
 context.fillStyle = WINDOW.c;
 context.fillRect(0, 0, WINDOW.w, WINDOW.h);
-let field = new BattleGround(groundList, wallList, weaponSet, context);
+const field = new BattleGround(groundList, wallList, weaponSet, context);
 
 const playerModel = new PlayerModel(1000, 1000);
 const playerView = new PlayerView(context);
@@ -65,6 +65,7 @@ function play() {
     field.clearFrame();
     drawFrame();
     playerController.update();
+    playerController.checkIntersections(field.walls);
     moveFrame();
     requestAnimationFrame(play);
 }
