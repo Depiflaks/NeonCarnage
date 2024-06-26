@@ -1,21 +1,16 @@
 import { PLAYER_SET } from "../settings.js";
+import { Moveable } from "../components/Moveable.js";
 
-class Player {
-    constructor(x0, y0, skin, ctx) {
-        this.x0 = x0;
-        this.y0 = y0;
-        this.x = this.x0;
-        this.y = this.y0;
-        this.alpha = 0;
+class Player extends Moveable {
+    constructor(x, y, ctx) {
+        super(x, y, PLAYER_SET.w, PLAYER_SET.h, PLAYER_SET.radius);
         this.ctx = ctx;
-        this.speedX = 0;
-        this.speedY = 0;
         this.keyPressed = {
             w: 0,
             a: 0,
             s: 0,
             d: 0,
-        }
+        };
 
         addEventListener("mousemove", (event) => {this.mouseMove(event)});
         addEventListener("keydown", (event) => {this.keyDown(event)});
@@ -24,15 +19,15 @@ class Player {
 
     draw() {
         this.ctx.strokeStyle = PLAYER_SET.bodyColor;
-        this.ctx.lineWidth = PLAYER_SET.h;
+        this.ctx.lineWidth = this.h;
         this.ctx.beginPath();
-        this.ctx.moveTo(this.x - PLAYER_SET.w * Math.cos(this.alpha + Math.PI / 2) / 2, this.y - PLAYER_SET.w * Math.sin(this.alpha + Math.PI / 2) / 2);
-        this.ctx.lineTo(this.x + PLAYER_SET.w * Math.cos(this.alpha + Math.PI / 2) / 2, this.y + PLAYER_SET.w * Math.sin(this.alpha + Math.PI / 2) / 2);
+        this.ctx.moveTo(this.x - this.w * Math.cos(this.alpha + Math.PI / 2) / 2, this.y - this.w * Math.sin(this.alpha + Math.PI / 2) / 2);
+        this.ctx.lineTo(this.x + this.w * Math.cos(this.alpha + Math.PI / 2) / 2, this.y + this.w * Math.sin(this.alpha + Math.PI / 2) / 2);
         this.ctx.stroke();
         this.ctx.lineWidth = 1;
         this.ctx.fillStyle = PLAYER_SET.headColor;
         this.ctx.beginPath();
-        this.ctx.arc(this.x, this.y, PLAYER_SET.radius, 0, Math.PI * 2, true);
+        this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
         this.ctx.fill();
         this.drawViewLine();
     }
@@ -66,7 +61,6 @@ class Player {
     }
 
     key() {
-
         if((this.keyPressed.w) && (this.keyPressed.d)){
             this.speedY = -PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
             this.speedX = PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
@@ -146,11 +140,6 @@ class Player {
                 break;
         }
         this.key();
-    }
-
-    move(dx, dy) {
-        this.x += dx;
-        this.y += dy;
     }
 }
 

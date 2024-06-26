@@ -60,6 +60,10 @@ class BattleGround {
             //console.log(wall);
             wall.move(dx, dy);
         }
+        for (let weapon of this.weapons) {
+            //console.log(wall);
+            weapon.move(dx, dy);
+        }
     }
 }
 
