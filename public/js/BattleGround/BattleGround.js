@@ -51,6 +51,12 @@ class BattleGround {
         this.context.fillRect(0, 0, window.w, window.h);
     }
 
+    move(dx, dy) {
+        this.walls.forEach(wall => {
+            wall.move(dx, dy);
+        });
+    }
+
 }
 
 export {BattleGround}

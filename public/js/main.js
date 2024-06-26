@@ -43,6 +43,7 @@ let field = new BattleGround(groundList, wallList, weaponSet, context);
 
 let p = new Player(500, 500, 0, context);
 
+field.move(50, 50);
 
 play();
 
