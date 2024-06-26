@@ -11,22 +11,22 @@ class Weapon {
         this.rapidity = rapidity;
         this.grouping = grouping;
         this.deviation = deviation;
-        this.status = status;
-        this.onGround = onGround;
+        this.status = status;   //0 - на земле, 1 - в руках
+        this.onGround = onGround;   
         this.inHand = inHand;
         this.context = context;
     }
    
     draw() {
         if (this.status === 0) {
-            var weaponX = this.x - (WEAPON_SET.w * 0.5);
-            var weaponY = this.y - (WEAPON_SET.h * 0.5);
+            const weaponX = this.x - (WEAPON_SET.w * 0.5);
+            const weaponY = this.y - (WEAPON_SET.h * 0.5);
             this.context.fillStyle = this.onGround;
             this.context.fillRect(weaponX, weaponY, WEAPON_SET.w, WEAPON_SET.h);   
         }
         if (this.status === 1) {
-            var weaponX = this.x - (WEAPON_SET.w * 0.5);
-            var weaponY = this.y - (WEAPON_SET.h * 0.5);
+            const weaponX = this.x - (WEAPON_SET.w * 0.5);
+            const weaponY = this.y - (WEAPON_SET.h * 0.5);
             this.context.fillStyle = this.inHand;
             this.context.fillRect(weaponX, weaponY, (WEAPON_SET.w/2), (WEAPON_SET.h/2));
         }
