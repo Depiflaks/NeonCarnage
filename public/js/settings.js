@@ -21,7 +21,7 @@ const PLAYER_SET = {
     h: 30,
     headColor: "red",
     bodyColor: "blue",
-    speed: 3,
+    speed: 6,
     pythagoreanFactor: Math.sqrt(2)/2,
 }
 

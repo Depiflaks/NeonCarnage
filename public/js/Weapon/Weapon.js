@@ -1,6 +1,6 @@
 import { WEAPON_SET } from "../settings.js";
 import { CELL_SET } from "../settings.js";
-import { Drawable } from "../components/Drawable.js";
+import { Drawable } from "../Interface/Drawable.js";
 
 
 class Weapon extends Drawable {

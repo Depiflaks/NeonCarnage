@@ -1,5 +1,5 @@
 import { CELL_SET } from "../settings.js";
-import { Drawable } from "../components/Drawable.js";
+import { Drawable } from "../Interface/Drawable.js";
 
 class Cell extends Drawable {
     constructor(x, y, context) {
