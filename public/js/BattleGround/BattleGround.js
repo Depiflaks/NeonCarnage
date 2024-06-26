@@ -27,15 +27,16 @@ class BattleGround {
         wallList.map(
             wall => {
                 const [startX, startY, endX, endY] = wall;
-                if (this.startX === this.endX) {
+                console.log(startX, startY, endX, endY);
+                if (startX === endX) {
                     this.walls.push(new VerticalWall(startX, startY, endX, endY, context));
-                } else if (this.startY === this.endY) {
+                } else if (startY === endY){
                         this.walls.push(new HorisontalWall(startX, startY, endX, endY, context));
                     }
                 } 
         )
 
-    }
+    };
 
     drawGround() {
         this.cells.map(cell => cell.draw());
@@ -43,6 +44,7 @@ class BattleGround {
 
     drawWalls() {
         this.walls.map(wall => wall.draw());
+        console.log(this.walls);
     }
 
     drawWeapons(){
