@@ -58,7 +58,6 @@ canvas.height = WINDOW.h;
 context.fillStyle = WINDOW.c;
 context.fillRect(0, 0, WINDOW.w, WINDOW.h);
 const field = new BattleGround(groundList, wallList, weaponSet, context);
-const field = new BattleGround(groundList, wallList, weaponSet, context);
 
 const playerModel = new PlayerModel(1000, 1000);
 const playerView = new PlayerView(context);

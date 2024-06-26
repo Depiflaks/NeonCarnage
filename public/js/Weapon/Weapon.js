@@ -8,7 +8,7 @@ const state = {
 }
 
 class Weapon extends Drawable {
-    constructor(name, x, y, battleType, rapidity, grouping, deviation, status, onGround, inHand, context) {
+    constructor({name, x, y, battleType, rapidity, grouping, deviation, status, onGround, inHand}, context) {
         super(x * CELL_SET.w + CELL_SET.w * 0.5, y * CELL_SET.h + CELL_SET.h * 0.5, WEAPON_SET.w, WEAPON_SET.h)
         this.name = name;
         this.battleType = battleType;
