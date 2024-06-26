@@ -1,25 +1,28 @@
 import { Cell } from "./Cell.js";
 import { Wall } from "./Wall.js";
 import { window } from "../settings.js";
+import { Weapon } from "../Weapon/Weapon.js";
 
 class BattleGround {
-    constructor(groundList, wallList, context) {
+    constructor(groundList, wallList, weaponSet, context) {
         this.context = context;
         this.cells = [];
         this.walls = [];
+        this.weapons = [];
+
+        for (let w = 0; w < weaponSet.length; w++) {
+            var [name, x, y, battleType, rapidity, grouping, deviation, status, onGround, inHand] = weaponSet[w];
+            this.weapons.push(new Weapon(name, x, y, battleType, rapidity, grouping, deviation, status, onGround, inHand, context));
+        }
 
         for (let i = 0; i < groundList.length; i++) {
-            var x = groundList[i][0];
-            var y = groundList[i][1];
+            var [x, y] = groundList[i];
             this.cells.push(new Cell(x, y, context));
         }
 
 
         for (let k = 0; k < wallList.length; k++){
-            const startX = wallList[k][0];
-            const startY = wallList[k][1];
-            const endX = wallList[k][2];
-            const endY = wallList[k][3];
+            const [startX, startY, endX, endY] = wallList[k];
             this.walls.push(new Wall(startX, startY, endX, endY, context));
         }
 
@@ -37,14 +40,15 @@ class BattleGround {
         });
     }
 
+    drawWeapons(){
+        this.weapons.forEach(weap => {
+            weap.drawWeapon();
+        })
+    }
+
     clearFrame() {
         this.context.fillStyle = "black";
         this.context.fillRect(0, 0, window.w, window.h);
-    }
-
-    moveFrame(dx, dy) {
-        this.x += dx;
-        this.y += dy;
     }
 
 }

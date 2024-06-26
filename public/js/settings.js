@@ -23,4 +23,13 @@ const player = {
     bodyColor: "blue",
 };
 
-export {window, cellSet, wallSet, player}
+const weapon = {
+    w: 20,
+    h: 30,
+    color: "pink",
+    statOnGround: 0,
+    statInHand: 1, 
+};
+
+
+export {window, cellSet, wallSet, player, weapon}
