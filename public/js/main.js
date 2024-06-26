@@ -47,6 +47,7 @@ function play() {
     field.clearFrame();
     field.drawGround();
     p.draw();
+    p.update();
     field.drawWalls();
     requestAnimationFrame(play);
 }

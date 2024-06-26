@@ -21,6 +21,8 @@ const player = {
     h: 30,
     headColor: "red",
     bodyColor: "blue",
+    speed: 3,
+    pythagoreanFactor: Math.sqrt(2)/2,
 };
 
 export {window, cellSet, wallSet, player}
