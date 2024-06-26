@@ -47,9 +47,7 @@ class Player {
     }
 
     update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        console.log("X: " + this.speedX + "  Y: " + this.speedY)
+        this.move(this.speedX, this.speedY);
     }
 
     mouseMove(event) {
@@ -70,39 +68,39 @@ class Player {
     key() {
 
         if((this.keyPressed.w) && (this.keyPressed.d)){
-            this.speedY = -player.speed * player.pythagoreanFactor;
-            this.speedX = player.speed * player.pythagoreanFactor;
+            this.speedY = -playerSet.speed * playerSet.pythagoreanFactor;
+            this.speedX = playerSet.speed * playerSet.pythagoreanFactor;
         }
 
         if((this.keyPressed.d) && (this.keyPressed.s)){
-            this.speedY = player.speed * player.pythagoreanFactor;
-            this.speedX = player.speed * player.pythagoreanFactor;
+            this.speedY = playerSet.speed * playerSet.pythagoreanFactor;
+            this.speedX = playerSet.speed * playerSet.pythagoreanFactor;
         }
 
         if((this.keyPressed.s) && (this.keyPressed.a)){
-            this.speedY = player.speed * player.pythagoreanFactor;
-            this.speedX = -player.speed * player.pythagoreanFactor;
+            this.speedY = playerSet.speed * playerSet.pythagoreanFactor;
+            this.speedX = -playerSet.speed * playerSet.pythagoreanFactor;
         }
 
         if((this.keyPressed.w) && (this.keyPressed.a)){
-            this.speedY = -player.speed * player.pythagoreanFactor;
-            this.speedX = -player.speed * player.pythagoreanFactor;
+            this.speedY = -playerSet.speed * playerSet.pythagoreanFactor;
+            this.speedX = -playerSet.speed * playerSet.pythagoreanFactor;
         }
 
         if(this.keyPressed.w) {
-            this.speedY = -player.speed;
+            this.speedY = -playerSet.speed;
         }
 
         if(this.keyPressed.a) {
-            this.speedX = -player.speed;
+            this.speedX = -playerSet.speed;
         }
 
         if(this.keyPressed.s) {
-            this.speedY = player.speed;
+            this.speedY = playerSet.speed;
         }
 
         if(this.keyPressed.d) {
-            this.speedX = player.speed;
+            this.speedX = playerSet.speed;
         }
 
         if((!this.keyPressed.w) && (!this.keyPressed.s)){
@@ -149,6 +147,7 @@ class Player {
         }
         this.key();
     }
+
     move(dx, dy) {
         this.x += dx;
         this.y += dy;
