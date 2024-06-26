@@ -29,9 +29,9 @@ class BattleGround {
     }
 
     drawGround() {
-        for (let cell of this.cells) {
+        this.cells.forEach(cell => {
             cell.draw();
-        }
+        });
     }
 
     drawWalls() {
