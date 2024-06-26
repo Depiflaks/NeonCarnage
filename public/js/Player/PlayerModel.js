@@ -17,6 +17,18 @@ class PlayerModel extends Moveable {
         this.y += this.speedY;
     }
 
+    changeDirection() {
+        this.speedX *= -1;
+        this.speedY *= -1;
+    }
+
+    blockDirection() {
+        this.x -= this.speedX;
+        this.y -= this.speedY;
+        this.speedX = 0;
+        this.speedY = 0;
+    }
+
     setSpeed(direction, value) {
         if (direction === 'x') {
             this.speedX = value;
