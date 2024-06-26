@@ -36,13 +36,13 @@ class BattleGround {
 
     drawWalls() {
         this.walls.forEach(wall => {
-            wall.drawWall();
+            wall.draw();
         });
     }
 
     drawWeapons(){
         this.weapons.forEach(weap => {
-            weap.drawWeapon();
+            weap.draw();
         })
     }
 

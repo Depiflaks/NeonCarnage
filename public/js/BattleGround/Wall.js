@@ -10,7 +10,7 @@ class Wall {
         this.context = context;
     }
 
-    drawWall() {
+    draw() {
         if (this.startX === this.endX) {
             var wallStartY = this.startY * cellSet.w;
             var wallStartX = (this.startX * cellSet.w)- wallSet.h;
@@ -28,7 +28,7 @@ class Wall {
         this.context.fillRect(wallStartX, wallStartY, wallXSide, wallYSide);
     }
 
-    moveWall(dx, dy){
+    move(dx, dy){
         this.startX += dx;
         this.startY += dy;
         this.endX += dx;

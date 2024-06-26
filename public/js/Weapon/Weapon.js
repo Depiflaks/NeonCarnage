@@ -17,7 +17,7 @@ class Weapon {
         this.context = context;
     }
    
-    drawWeapon() {
+    draw() {
         if (this.status === 0) {
             var weaponX = this.x - (weapon.w * 0.5);
             var weaponY = this.y - (weapon.h * 0.5);
@@ -32,7 +32,7 @@ class Weapon {
         }
     }
 
-    moveWeapon(dx, dy) {
+    move(dx, dy) {
         this.x += dx;
         this.y += dy;
     }
