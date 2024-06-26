@@ -3,29 +3,29 @@ import {cellSet} from "../settings.js";
 
 class Wall {
     constructor(startX, startY, endX, endY, context) {
-        this.startX = startX;
-        this.startY = startY;
-        this.endX = endX;
-        this.endY = endY;
+        this.startX = startX * cellSet.w;
+        this.startY = startY * cellSet.h;
+        this.endX = endX * cellSet.w;
+        this.endY = endY * cellSet.h;
         this.context = context;
+        if (this.startX === this.endX) {
+            this.wallStartY = this.startY;
+            this.wallStartX = (this.startX)- wallSet.h;
+            this.wallXSide = wallSet.h * 2;
+            this.wallYSide = (this.endY - this.startY);
+        } else {
+            if (this.startY === this.endY){
+                this.wallStartX = this.startX;
+                this.wallStartY = (this.startY) - wallSet.h;
+                this.wallXSide =  (this.endX - this.startX);
+                this.wallYSide = wallSet.h * 2;
+            }
+        } 
     }
 
     draw() {
-        if (this.startX === this.endX) {
-            var wallStartY = this.startY * cellSet.w;
-            var wallStartX = (this.startX * cellSet.w)- wallSet.h;
-            var wallXSide = wallSet.h * 2;
-            var wallYSide = (this.endY - this.startY) * cellSet.w;
-        } else {
-            if (this.startY === this.endY){
-                var wallStartX = this.startX * cellSet.w;
-                var wallStartY = (this.startY * cellSet.w) - wallSet.h;
-                var wallXSide =  (this.endX - this.startX) * cellSet.w;
-                var wallYSide = wallSet.h * 2;
-            }
-        } 
         this.context.fillStyle = wallSet.c;
-        this.context.fillRect(wallStartX, wallStartY, wallXSide, wallYSide);
+        this.context.fillRect(this.wallStartX, this.wallStartY, this.wallXSide, this.wallYSide);
     }
 
     move(dx, dy){
@@ -33,6 +33,9 @@ class Wall {
         this.startY += dy;
         this.endX += dx;
         this.endY += dy;
+        this.wallStartY += dy;
+        this.wallStartX += dx;
+
     }
 }
 

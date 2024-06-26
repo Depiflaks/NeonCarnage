@@ -33,4 +33,13 @@ const camera = {
     period: 10
 }
 
-export {window, cellSet, wallSet, playerSet, camera}
+const weapon = {
+    w: 20,
+    h: 30,
+    color: "pink",
+    statOnGround: 0,
+    statInHand: 1, 
+};
+
+
+export {window, cellSet, wallSet, playerSet, weapon, camera}
