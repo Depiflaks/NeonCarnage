@@ -1,6 +1,6 @@
 import { Cell } from "./Cell.js";
 import { Wall } from "./Wall.js";
-import { window } from "../settings.js";
+import { WINDOW } from "../settings.js";
 import { Weapon } from "../Weapon/Weapon.js";
 
 class BattleGround {
@@ -48,7 +48,7 @@ class BattleGround {
 
     clearFrame() {
         this.context.fillStyle = "black";
-        this.context.fillRect(0, 0, window.w, window.h);
+        this.context.fillRect(0, 0, WINDOW.w, WINDOW.h);
     }
 
 

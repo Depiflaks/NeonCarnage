@@ -1,4 +1,4 @@
-import { playerSet } from "../settings.js";
+import { PLAYER_SET } from "../settings.js";
 
 class Player {
     constructor(x0, y0, skin, ctx) {
@@ -23,16 +23,16 @@ class Player {
     }
 
     draw() {
-        this.ctx.strokeStyle = playerSet.bodyColor;
-        this.ctx.lineWidth = playerSet.h;
+        this.ctx.strokeStyle = PLAYER_SET.bodyColor;
+        this.ctx.lineWidth = PLAYER_SET.h;
         this.ctx.beginPath();
-        this.ctx.moveTo(this.x - playerSet.w * Math.cos(this.alpha + Math.PI / 2) / 2, this.y - playerSet.w * Math.sin(this.alpha + Math.PI / 2) / 2);
-        this.ctx.lineTo(this.x + playerSet.w * Math.cos(this.alpha + Math.PI / 2) / 2, this.y + playerSet.w * Math.sin(this.alpha + Math.PI / 2) / 2);
+        this.ctx.moveTo(this.x - PLAYER_SET.w * Math.cos(this.alpha + Math.PI / 2) / 2, this.y - PLAYER_SET.w * Math.sin(this.alpha + Math.PI / 2) / 2);
+        this.ctx.lineTo(this.x + PLAYER_SET.w * Math.cos(this.alpha + Math.PI / 2) / 2, this.y + PLAYER_SET.w * Math.sin(this.alpha + Math.PI / 2) / 2);
         this.ctx.stroke();
         this.ctx.lineWidth = 1;
-        this.ctx.fillStyle = playerSet.headColor;
+        this.ctx.fillStyle = PLAYER_SET.headColor;
         this.ctx.beginPath();
-        this.ctx.arc(this.x, this.y, playerSet.radius, 0, Math.PI * 2, true);
+        this.ctx.arc(this.x, this.y, PLAYER_SET.radius, 0, Math.PI * 2, true);
         this.ctx.fill();
         this.drawViewLine();
     }
@@ -68,39 +68,39 @@ class Player {
     key() {
 
         if((this.keyPressed.w) && (this.keyPressed.d)){
-            this.speedY = -playerSet.speed * playerSet.pythagoreanFactor;
-            this.speedX = playerSet.speed * playerSet.pythagoreanFactor;
+            this.speedY = -PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
+            this.speedX = PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
         }
 
         if((this.keyPressed.d) && (this.keyPressed.s)){
-            this.speedY = playerSet.speed * playerSet.pythagoreanFactor;
-            this.speedX = playerSet.speed * playerSet.pythagoreanFactor;
+            this.speedY = PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
+            this.speedX = PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
         }
 
         if((this.keyPressed.s) && (this.keyPressed.a)){
-            this.speedY = playerSet.speed * playerSet.pythagoreanFactor;
-            this.speedX = -playerSet.speed * playerSet.pythagoreanFactor;
+            this.speedY = PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
+            this.speedX = -PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
         }
 
         if((this.keyPressed.w) && (this.keyPressed.a)){
-            this.speedY = -playerSet.speed * playerSet.pythagoreanFactor;
-            this.speedX = -playerSet.speed * playerSet.pythagoreanFactor;
+            this.speedY = -PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
+            this.speedX = -PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
         }
 
         if(this.keyPressed.w) {
-            this.speedY = -playerSet.speed;
+            this.speedY = -PLAYER_SET.speed;
         }
 
         if(this.keyPressed.a) {
-            this.speedX = -playerSet.speed;
+            this.speedX = -PLAYER_SET.speed;
         }
 
         if(this.keyPressed.s) {
-            this.speedY = playerSet.speed;
+            this.speedY = PLAYER_SET.speed;
         }
 
         if(this.keyPressed.d) {
-            this.speedX = playerSet.speed;
+            this.speedX = PLAYER_SET.speed;
         }
 
         if((!this.keyPressed.w) && (!this.keyPressed.s)){

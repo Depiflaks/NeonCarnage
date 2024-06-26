@@ -1,21 +1,21 @@
-const window = {
+const WINDOW = {
     w: 1400,
     h: 1000,
     c: "black",
 };
 
-const cellSet = {
+const CELL_SET = {
     w: 150,
     h: 150,
     c: "green",
 };
 
-const wallSet = {
-    h: 5,
+const WALL_SET = {
+    h: 10,
     c: "orange",
 }
 
-const playerSet = {
+const PLAYER_SET = {
     radius: 20,
     w: 60,
     h: 30,
@@ -23,17 +23,17 @@ const playerSet = {
     bodyColor: "blue",
     speed: 3,
     pythagoreanFactor: Math.sqrt(2)/2,
-};
+}
 
-const camera = {
+const CAMERA = {
     center: {
-        x: window.w / 2,
-        y: window.h / 2,
+        x: WINDOW.w / 2,
+        y: WINDOW.h / 2,
     },
     period: 10
 }
 
-const weapon = {
+const WEAPON_SET = {
     w: 20,
     h: 30,
     color: "pink",
@@ -42,4 +42,4 @@ const weapon = {
 };
 
 
-export {window, cellSet, wallSet, playerSet, weapon, camera}
+export {WINDOW, CELL_SET, WALL_SET, PLAYER_SET, WEAPON_SET, CAMERA}

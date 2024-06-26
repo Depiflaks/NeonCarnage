@@ -1,4 +1,4 @@
-import { window } from "./settings";
+import { WINDOW } from "./settings";
 
 class Player {
     constructor() {

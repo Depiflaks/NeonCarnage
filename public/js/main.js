@@ -1,4 +1,4 @@
-import { window, camera } from "./settings.js";
+import { WINDOW, CAMERA } from "./settings.js";
 import { BattleGround } from "./BattleGround/BattleGround.js";
 import { Player } from "./Player/Player.js";
 var canvas = document.getElementById("canvas");
@@ -35,10 +35,10 @@ function convertFields(cellsList) {
 }
 convertFields(cellsList);
 
-canvas.width = window.w;
-canvas.height = window.h;
-context.fillStyle = window.c;
-context.fillRect(0, 0, window.w, window.h);
+canvas.width = WINDOW.w;
+canvas.height = WINDOW.h;
+context.fillStyle = WINDOW.c;
+context.fillRect(0, 0, WINDOW.w, WINDOW.h);
 let field = new BattleGround(groundList, wallList, weaponSet, context);
 
 let player = new Player(1000, 1000, 0, context);
@@ -46,8 +46,8 @@ let player = new Player(1000, 1000, 0, context);
 play();
 
 function moveFrame() {
-    let [dx, dy] = [camera.center.x - player.x, camera.center.y - player.y];
-    const period = (Math.abs(dx) + Math.abs(dy) < 0.5) ? 1 : camera.period;
+    let [dx, dy] = [CAMERA.center.x - player.x, CAMERA.center.y - player.y];
+    const period = (Math.abs(dx) + Math.abs(dy) < 0.5) ? 1 : CAMERA.period;
     field.move(dx / period, dy / period);
     player.move(dx / period, dy / period)
 }
