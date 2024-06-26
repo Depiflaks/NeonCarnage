@@ -12,7 +12,6 @@ class BattleGround {
                 if (groundList[i][j] === '1') {
                     this.cells.push(new Cell(i, j, this.context));
                 }
-                
             }
         }
 
@@ -35,7 +34,7 @@ class BattleGround {
 
     drawWalls() {
         this.walls.forEach(wall => {
-            wall.drawWall();
+            wall.draw();
         });
     }
 
@@ -44,6 +43,15 @@ class BattleGround {
         this.context.fillRect(0, 0, window.w, window.h);
     }
 
+    move(dx, dy) {
+        for (let cell of this.cells) {
+            cell.move(dx, dy);
+        }
+        for (let wall of this.walls) {
+            //console.log(wall);
+            wall.move(dx, dy);
+        }
+    }
 }
 
-export {BattleGround}
+export { BattleGround } 

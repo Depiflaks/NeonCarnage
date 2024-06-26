@@ -1,4 +1,4 @@
-import { window } from "./settings.js";
+import { window, camera } from "./settings.js";
 import { BattleGround } from "./BattleGround/BattleGround.js";
 import { Player } from "./Player/Player.js";
 var canvas = document.getElementById("canvas");
@@ -26,15 +26,27 @@ context.fillStyle = window.c;
 context.fillRect(0, 0, window.w, window.h);
 let field = new BattleGround(groundList, wallList, context);
 
-let p = new Player(500, 500, 0, context);
-
+let player = new Player(1000, 1000, 0, context);
 
 play();
 
+function moveFrame() {
+    let [dx, dy] = [camera.center.x - player.x, camera.center.y - player.y];
+    const period = (Math.abs(dx) + Math.abs(dy) < 0.5) ? 1 : camera.period;
+    field.move(dx / period, dy / period);
+    player.move(dx / period, dy / period)
+}
+
+function drawFrame() {
+    field.drawGround();
+    player.draw();
+    field.drawWalls();
+}
+
 function play() {
     field.clearFrame();
-    field.drawGround();
-    p.draw();
-    field.drawWalls();
+    drawFrame();
+    player.update();
+    moveFrame();
     requestAnimationFrame(play);
 }

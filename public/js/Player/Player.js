@@ -1,4 +1,4 @@
-import { player } from "../settings.js";
+import { playerSet } from "../settings.js";
 
 class Player {
     constructor(x0, y0, skin, ctx) {
@@ -13,16 +13,16 @@ class Player {
     }
 
     draw() {
-        this.ctx.strokeStyle = player.bodyColor;
-        this.ctx.lineWidth = player.h;
+        this.ctx.strokeStyle = playerSet.bodyColor;
+        this.ctx.lineWidth = playerSet.h;
         this.ctx.beginPath();
-        this.ctx.moveTo(this.x - player.w * Math.cos(this.alpha + Math.PI / 2) / 2, this.y - player.w * Math.sin(this.alpha + Math.PI / 2) / 2);
-        this.ctx.lineTo(this.x + player.w * Math.cos(this.alpha + Math.PI / 2) / 2, this.y + player.w * Math.sin(this.alpha + Math.PI / 2) / 2);
+        this.ctx.moveTo(this.x - playerSet.w * Math.cos(this.alpha + Math.PI / 2) / 2, this.y - playerSet.w * Math.sin(this.alpha + Math.PI / 2) / 2);
+        this.ctx.lineTo(this.x + playerSet.w * Math.cos(this.alpha + Math.PI / 2) / 2, this.y + playerSet.w * Math.sin(this.alpha + Math.PI / 2) / 2);
         this.ctx.stroke();
         this.ctx.lineWidth = 1;
-        this.ctx.fillStyle = player.headColor;
+        this.ctx.fillStyle = playerSet.headColor;
         this.ctx.beginPath();
-        this.ctx.arc(this.x, this.y, player.radius, 0, Math.PI * 2, true);
+        this.ctx.arc(this.x, this.y, playerSet.radius, 0, Math.PI * 2, true);
         this.ctx.fill();
         this.drawViewLine();
     }
@@ -52,11 +52,15 @@ class Player {
         const difference = { x: v2.x - v1.x, y: v2.y - v1.y };
         this.alpha = Math.atan2(difference.x, -difference.y); 
         this.alpha -= Math.PI / 2;
-        
     }
 
     keyDown(event) {
 
+    }
+
+    move(dx, dy) {
+        this.x += dx;
+        this.y += dy;
     }
 }
 

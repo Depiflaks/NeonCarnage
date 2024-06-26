@@ -5,8 +5,8 @@ const window = {
 };
 
 const cellSet = {
-    w: 100,
-    h: 100,
+    w: 150,
+    h: 150,
     c: "green",
 };
 
@@ -15,7 +15,7 @@ const wallSet = {
     c: "orange",
 }
 
-const player = {
+const playerSet = {
     radius: 20,
     w: 60,
     h: 30,
@@ -23,4 +23,12 @@ const player = {
     bodyColor: "blue",
 };
 
-export {window, cellSet, wallSet, player}
+const camera = {
+    center: {
+        x: window.w / 2,
+        y: window.h / 2,
+    },
+    period: 10
+}
+
+export {window, cellSet, wallSet, playerSet, camera}
