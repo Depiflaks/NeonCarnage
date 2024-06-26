@@ -68,7 +68,7 @@ class PlayerController {
     checkIntersections(drawableArray) {
         for (const drawableObj of drawableArray) {
             if (this.playerModel.isIntersect(drawableObj)) {
-                this.playerModel.changeDirection();
+                this.playerModel.blockDirection();
                 return true;
             }
         }

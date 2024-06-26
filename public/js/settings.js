@@ -11,7 +11,7 @@ const CELL_SET = {
 };
 
 const WALL_SET = {
-    h: 10,
+    h: 20,
     c: "orange",
 }
 
