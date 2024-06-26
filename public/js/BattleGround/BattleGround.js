@@ -7,21 +7,19 @@ class BattleGround {
         this.context = context;
         this.cells = [];
         this.walls = [];
+
         for (let i = 0; i < groundList.length; i++) {
-            for (let j = 0; j < groundList[i].length; j++) {
-                if (groundList[i][j] === '1') {
-                    this.cells.push(new Cell(i, j, this.context));
-                }
-                
-            }
+            var x = groundList[i][0];
+            var y = groundList[i][1];
+            this.cells.push(new Cell(x, y, context));
         }
+
 
         for (let k = 0; k < wallList.length; k++){
             const startX = wallList[k][0];
             const startY = wallList[k][1];
             const endX = wallList[k][2];
             const endY = wallList[k][3];
-            //console.log(startX, startY, endX, endY);
             this.walls.push(new Wall(startX, startY, endX, endY, context));
         }
 
@@ -42,6 +40,11 @@ class BattleGround {
     clearFrame() {
         this.context.fillStyle = "black";
         this.context.fillRect(0, 0, window.w, window.h);
+    }
+
+    moveFrame(dx, dy) {
+        this.x += dx;
+        this.y += dy;
     }
 
 }
