@@ -41,7 +41,7 @@ context.fillStyle = WINDOW.c;
 context.fillRect(0, 0, WINDOW.w, WINDOW.h);
 let field = new BattleGround(groundList, wallList, weaponSet, context);
 
-let player = new Player(1000, 1000, 0, context);
+let player = new Player(1000, 1000, context);
 
 play();
 

@@ -1,11 +1,9 @@
 import { PLAYER_SET } from "../settings.js";
 
 class Player {
-    constructor(x0, y0, skin, ctx) {
-        this.x0 = x0;
-        this.y0 = y0;
-        this.x = this.x0;
-        this.y = this.y0;
+    constructor(x, y, ctx) {
+        this.x = x;
+        this.y = y;
         this.alpha = 0;
         this.ctx = ctx;
         this.speedX = 0;
@@ -67,26 +65,6 @@ class Player {
 
     key() {
 
-        if((this.keyPressed.w) && (this.keyPressed.d)){
-            this.speedY = -PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
-            this.speedX = PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
-        }
-
-        if((this.keyPressed.d) && (this.keyPressed.s)){
-            this.speedY = PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
-            this.speedX = PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
-        }
-
-        if((this.keyPressed.s) && (this.keyPressed.a)){
-            this.speedY = PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
-            this.speedX = -PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
-        }
-
-        if((this.keyPressed.w) && (this.keyPressed.a)){
-            this.speedY = -PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
-            this.speedX = -PLAYER_SET.speed * PLAYER_SET.pythagoreanFactor;
-        }
-
         if(this.keyPressed.w) {
             this.speedY = -PLAYER_SET.speed;
         }
@@ -103,6 +81,30 @@ class Player {
             this.speedX = PLAYER_SET.speed;
         }
 
+        if((this.keyPressed.w) && (this.keyPressed.d)){
+            this.speedY *= PLAYER_SET.pythagoreanFactor;
+            this.speedX *= PLAYER_SET.pythagoreanFactor;
+            return;
+        }
+
+        if((this.keyPressed.d) && (this.keyPressed.s)){
+            this.speedY *= PLAYER_SET.pythagoreanFactor;
+            this.speedX *= PLAYER_SET.pythagoreanFactor;
+            return;
+        }
+
+        if((this.keyPressed.s) && (this.keyPressed.a)){
+            this.speedY *= PLAYER_SET.pythagoreanFactor;
+            this.speedX *= PLAYER_SET.pythagoreanFactor;
+            return;
+        }
+
+        if((this.keyPressed.w) && (this.keyPressed.a)){
+            this.speedY *= PLAYER_SET.pythagoreanFactor;
+            this.speedX *= PLAYER_SET.pythagoreanFactor;
+            return;
+        }
+
         if((!this.keyPressed.w) && (!this.keyPressed.s)){
             this.speedY = 0;
         }
@@ -112,39 +114,30 @@ class Player {
         }
     }
 
-    keyDown(event) {
-        switch(event.code) {
+    changePressed(code, state) {
+        switch(code) {
             case 'KeyW': 
-                this.keyPressed.w = 1;
+                this.keyPressed.w = state;
                 break;
             case 'KeyA': 
-                this.keyPressed.a = 1;
+                this.keyPressed.a = state;
                 break;
             case 'KeyS': 
-                this.keyPressed.s = 1;
+                this.keyPressed.s = state;
                 break;
             case 'KeyD': 
-                this.keyPressed.d = 1;
+                this.keyPressed.d = state;
                 break;
         }
+    }
+
+    keyDown(event) {
+        this.changePressed(event.code, 1);
         this.key();
     }
 
     keyUp(event) {
-        switch(event.code) {
-            case 'KeyW': 
-                this.keyPressed.w = 0;
-                break;
-            case 'KeyA': 
-                this.keyPressed.a = 0;
-                break;
-            case 'KeyS': 
-                this.keyPressed.s = 0;
-                break;
-            case 'KeyD': 
-                this.keyPressed.d = 0;
-                break;
-        }
+        this.changePressed(event.code, 0);
         this.key();
     }
 
