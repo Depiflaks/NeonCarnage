@@ -18,12 +18,14 @@ class Weapon extends Drawable {
         this.inHand = inHand;
         this.status = state.onTheGround; 
     }
-    unsetPlayer(player){
+
+    unsetPlayer(player) {
         this.x = player.x;
         this.y = player.y;
     }
    
-    draw(player, context, player) {
+    draw(player, context) {
+        
         if (this.status === state.onTheGround) {
             const weaponX = this.x;
             const weaponY = this.y;
@@ -31,9 +33,10 @@ class Weapon extends Drawable {
             context.fillRect(weaponX, weaponY, WEAPON_SET.w, WEAPON_SET.h);   
         }
         if (this.status === state.inTheHand) {
-            const alpha = player.getAlpha();
-            const weaponX = player.x + PLAYER_SET.w * Math.cos(alpha + Math.PI / 2) / 2;
-            const weaponY = player.y + PLAYER_SET.w * Math.sin(alpha + Math.PI / 2) / 2;
+            const { x, y } = player.model.getPosition();
+            const alpha = player.model.getAlpha();
+            const weaponX = x + PLAYER_SET.w * Math.cos(alpha + Math.PI / 2) / 2;
+            const weaponY = y + PLAYER_SET.w * Math.sin(alpha + Math.PI / 2) / 2;
             context.lineWidth = WEAPON_SET.w;
             context.strokeStyle = this.inHand;
             context.beginPath();

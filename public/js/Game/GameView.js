@@ -12,7 +12,7 @@ class GameView {
 
     drawFrame(field, player) {
         field.drawGround(this.context);
-        field.drawWeapons(this.context);
+        field.drawWeapons(player, this.context);
         player.view.draw(
             player.model.getPosition(), 
             player.model.getAlpha()

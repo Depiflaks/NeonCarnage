@@ -20,11 +20,11 @@ class GameController {
         ];
         const period = (Math.abs(dx) + Math.abs(dy) < 0.5) ? 1 : CAMERA.period;
         this.model.field.move(dx / period, dy / period);
-        this.model.playerModel.move(dx / period, dy / period);
+        this.player.model.move(dx / period, dy / period);
     }
 
     keyDown(event) {
-        if ((event.code == 'KeyE') && (this.model.playerModel.weapon === undefined)) {
+        if ((event.code == 'KeyE') && (this.player.model.weapon === undefined)) {
             this.distanceCheck();
         } else if (event.code == 'KeyE') {
             this.dropWeapon();
@@ -32,23 +32,22 @@ class GameController {
     }
 
     distanceCheck(){
-        const { x, y } = this.model.playerModel.getPosition();
+        const { x, y } = this.player.model.getPosition();
         this.model.field.weapons.map(
             weap => {
                 const distance = ((weap.x - x)**2 + (weap.y - y)**2)**0.5;
                 if (distance <= 40){
                     weap.status = state.inTheHand;
-                    this.model.playerModel.setWeapon(weap);
-                    weap.setPlayer(this.model.playerModel);
+                    this.player.model.setWeapon(weap);
                 }
             }
         )
     }
     
     dropWeapon() {
-        this.model.playerModel.weapon.unsetPlayer(this.model.playerModel);
-        this.model.playerModel.weapon.status = state.onTheGround;
-        this.model.playerModel.weapon = undefined;
+        this.player.model.weapon.unsetPlayer(this.player.model);
+        this.player.model.weapon.status = state.onTheGround;
+        this.player.model.weapon = undefined;
     }
 
     update() {
