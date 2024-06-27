@@ -46,7 +46,6 @@ class Bullet extends Moveable {
         this.x += this.speedX;
         this.y += this.speedY;
     }
-
 }
 
 export { Bullet }
