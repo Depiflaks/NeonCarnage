@@ -9,6 +9,7 @@ class Moveable extends Drawable {
         this.speedY = 0;
     }
 
+
     isIntersect(obj) {
         const nearestX = Math.max(obj.x, Math.min(this.x, obj.x + obj.w));
         const nearestY = Math.max(obj.y, Math.min(this.y, obj.y + obj.h));

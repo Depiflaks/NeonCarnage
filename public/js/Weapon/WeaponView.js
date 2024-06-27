@@ -4,6 +4,16 @@ class WeaponView {
     constructor() {
     }
 
+    /**
+     * 
+     * @param {number} x координата x у оружия
+     * @param {number} y координата у у оружия
+     * @param {object} status определяет, на земле оружие или в руке игрока
+     * @param {string} onGround текстура, если оружие на земле
+     * @param {string} inHand  текстура, если оружие в руке
+     * @param {object} player  данные игрока
+     * @param {canvas} context отрисовка канвас 2d
+     */
     draw({x, y, status, onGround, inHand}, player, context) {
         if (status === WEAPON_STATE.onTheGround) {
             this.drawOnGround(x, y, onGround, context);  
@@ -13,6 +23,13 @@ class WeaponView {
         }
     }
 
+    /**
+     * 
+     * @param {number} x координата x у оружия
+     * @param {number} y координата у у оружия
+     * @param {string} onGround текстура, если оружие на земле
+     * @param {canvas} context  отрисовка канвас 2d
+     */
     drawOnGround(x, y, onGround, context) {
         const weaponX = x;
         const weaponY = y;
@@ -20,6 +37,12 @@ class WeaponView {
         context.fillRect(weaponX, weaponY, WEAPON_SET.w, WEAPON_SET.h); 
     }
 
+    /**
+     * 
+     * @param {string} inHand  текстура, если оружие в руке 
+     * @param {object} player данные об игроке
+     * @param {canvas} context  отрисовка канвас 2d
+     */
     drawInHand(inHand, player, context) {
         const { x, y } = player.getPosition();
         const angle = player.getAngle();

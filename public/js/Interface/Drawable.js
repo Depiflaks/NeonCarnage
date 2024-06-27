@@ -6,6 +6,11 @@ class Drawable {
         this.h = h;
     }
 
+    /**
+     * 
+     * @param {number} dx перемещение по оси х
+     * @param {number} dy перемещение по оси у
+     */
     move(dx, dy) {
         this.x += dx;
         this.y += dy;

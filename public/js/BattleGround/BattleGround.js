@@ -36,14 +36,27 @@ class BattleGround {
 
     };
 
+    /**
+     * 
+     * @param {canvas} context отрисовка канвас 2d 
+     */
     drawGround(context) {
         this.cells.map(cell => cell.draw(context));
     }
 
+    /**
+     * 
+     * @param {canvas} context отрисовка канвас 2d 
+     */
     drawWalls(context) {
         this.walls.map(wall => wall.draw(context));
     }
 
+    /**
+     * 
+     * @param {object} player модель игрока
+     * @param {canvas} context отрисовка канвас 2d  
+     */
     drawWeapons(player, context){
         this.weapons.map(weapon => weapon.view.draw(
             {
@@ -58,12 +71,21 @@ class BattleGround {
         ));
     }
 
+    /**
+     * 
+     * @param {canvas} context отрисовка канвас 2d 
+     */
     clearFrame(context) {
         context.fillStyle = "black";
         context.fillRect(0, 0, WINDOW.w, WINDOW.h);
     }
 
 
+    /**
+     * 
+     * @param {number} dx перемещение по х
+     * @param {number} dy перемещение по у
+     */
     move(dx, dy) {
         this.cells.map(cell => cell.move(dx, dy));
         this.walls.map(wall => wall.move(dx, dy));

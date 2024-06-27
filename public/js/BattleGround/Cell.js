@@ -6,6 +6,10 @@ class Cell extends Drawable {
         super(x * CELL_SET.w, y * CELL_SET.h, CELL_SET.w, CELL_SET.h);
     }
     
+    /**
+     * 
+     * @param {canvas} context отрисовка канвас 2d
+     */
     draw(context) {
         context.fillStyle = CELL_SET.c;
         context.fillRect(this.x, this.y, CELL_SET.w, CELL_SET.h);

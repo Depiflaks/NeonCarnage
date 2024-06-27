@@ -8,6 +8,10 @@ class WeaponController {
         this.view = new WeaponView();
     }
 
+    /**
+     * 
+     * @param {object} player модель данных игрока 
+     */
     unsetPlayer(player) {
         this.model.x = player.x;
         this.model.y = player.y;

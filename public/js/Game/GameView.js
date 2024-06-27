@@ -10,6 +10,11 @@ class GameView {
         this.context = canvas.getContext("2d");
     }
 
+    /**
+     * 
+     * @param {object} field все данные на экране; комнаты, стены, оружия
+     * @param {object} player вся модель mvc игрока
+     */
     drawFrame(field, player) {
         field.drawGround(this.context);
         field.drawWeapons(player.model, this.context);
@@ -20,6 +25,11 @@ class GameView {
         field.drawWalls(this.context);
     }
 
+    /**
+     * 
+     * @param {object} field все данные на экране; комнаты, стены, оружия
+     * @param {object} player вся модель mvc игрока 
+     */
     updateFrame(field, player) {
         field.clearFrame(this.context);
         this.drawFrame(field, player);

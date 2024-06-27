@@ -1,5 +1,5 @@
 import { Moveable } from "../Interface/Moveable.js";
-import { PLAYER_SET } from "../settings.js";
+import { PLAYER_SET, WEAPON_STATE } from "../settings.js";
 
 class PlayerModel extends Moveable {
     constructor({x, y}) {
@@ -43,6 +43,11 @@ class PlayerModel extends Moveable {
         this.speedX = 0;
     }
 
+    /**
+     * 
+     * @param {string} direction направление скорости
+     * @param {number} value  значение для скорости
+     */
     setSpeed(direction, value) {
         if (direction === 'x') {
             this.speedX = value;
@@ -55,6 +60,11 @@ class PlayerModel extends Moveable {
         this.angle = value;
     }
 
+    /**
+     * 
+     * @param {string} key буква текущей клавиши 
+     * @param {number} value состояние клавиши 0 - отпущена  1 - нажата 
+     */
     setKeyPressed(key, value) {
         this.keyPressed[key] = value;
     }
@@ -75,8 +85,18 @@ class PlayerModel extends Moveable {
         return { speedX: this.speedX, speedY: this.speedY };
     }
 
+    /**
+     * 
+     * @param {object} weapon WeaponController вся модель mvc оружия
+     */
     setWeapon(weapon) {
         this.weapon = weapon; 
+    }
+
+    dropWeapon() {
+        this.weapon.unsetPlayer(this);
+        this.weapon.model.status = WEAPON_STATE.onTheGround;
+        this.weapon = null;
     }
 }
 

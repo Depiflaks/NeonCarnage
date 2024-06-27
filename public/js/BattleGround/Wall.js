@@ -11,6 +11,10 @@ class Wall extends Drawable {
         this.endY = endY * CELL_SET.h;
     }
 
+    /**
+     * 
+     * @param {canvas} context отрисовка канвас 2d
+     */
     draw(context) {
         context.fillStyle = WALL_SET.c;
         context.fillRect(this.x, this.y, this.w, this.h);

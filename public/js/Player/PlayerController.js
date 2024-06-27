@@ -29,6 +29,11 @@ class PlayerController {
         this.updateKey(event.code, 0);
     }
 
+    /**
+     * 
+     * @param {string} code  клавиша, с которой работают
+     * @param {number} state состояние клавиши (нажали или отпустили)
+     */
     updateKey(code, state) {
         const keyMap = {
             'KeyW': 'w',

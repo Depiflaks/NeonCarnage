@@ -5,6 +5,11 @@ class PlayerView {
         this.context = context;
     }
 
+    /**
+     * 
+     * @param {object} x,y координаты игрока 
+     * @param {number} angle угол отклонения игрока 
+     */
     draw({x, y}, angle) {
         this.context.strokeStyle = PLAYER_SET.bodyColor;
         this.context.lineWidth = PLAYER_SET.h;
@@ -28,6 +33,12 @@ class PlayerView {
         this.drawViewLine(x, y, angle);
     }
 
+    /**
+     * 
+     * @param {number} x координата центра игрока
+     * @param {number} y координата центра игрока
+     * @param {number} angle угол отклонения игрока
+     */
     drawViewLine(x, y, angle) {
         this.context.lineWidth = 2;
         this.context.strokeStyle = "red";

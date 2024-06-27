@@ -26,7 +26,7 @@ class GameController {
         if ((event.code == KEYBOARD_E) && (this.player.model.weapon === null)) {
             this.distanceCheck();
         } else if (event.code == KEYBOARD_E) {
-            this.dropWeapon();
+            this.player.model.dropWeapon();
         }
     }
 
@@ -41,13 +41,6 @@ class GameController {
                 }
             }
         )
-    }
-    
-    dropWeapon() {
-        this.player.model.weapon.unsetPlayer(this.player.model);
-        this.player.model.weapon.model.status = WEAPON_STATE.onTheGround;
-        console.log(this.player.model.weapon);
-        this.player.model.weapon = null;
     }
 
     update() {
