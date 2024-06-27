@@ -44,8 +44,8 @@ class BattleGround {
         this.walls.map(wall => wall.draw(context));
     }
 
-    drawWeapons(context){
-        this.weapons.map(weap => weap.draw(context));
+    drawWeapons(player, context){
+        this.weapons.map(weap => weap.draw(player, context));
     }
 
     clearFrame(context) {

@@ -24,7 +24,7 @@ class GameController {
     }
 
     keyDown(event) {
-        if ((event.code == 'KeyE') && (this.model.playerModel.weapon === 0)) {
+        if ((event.code == 'KeyE') && (this.model.playerModel.weapon === undefined)) {
             this.distanceCheck();
         } else if (event.code == 'KeyE') {
             this.dropWeapon();
@@ -46,9 +46,9 @@ class GameController {
     }
     
     dropWeapon() {
-        this.model.playerModel.weapon.unsetPlayer();
+        this.model.playerModel.weapon.unsetPlayer(this.model.playerModel);
         this.model.playerModel.weapon.status = state.onTheGround;
-        this.model.playerModel.weapon = 0;
+        this.model.playerModel.weapon = undefined;
     }
 
     update() {

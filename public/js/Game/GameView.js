@@ -14,7 +14,7 @@ class GameView {
     drawFrame(field, player) {
         field.drawGround(this.context);
         field.drawWalls(this.context);
-        field.drawWeapons(this.context);
+        field.drawWeapons(player, this.context);
     }
 
     updateFrame(field, player) {
