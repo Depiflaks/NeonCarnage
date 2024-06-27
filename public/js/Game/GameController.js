@@ -55,14 +55,23 @@ class GameController {
 
     checkIntersections(player, drawableArray) {
         for (const drawableObj of drawableArray) {
-            player.model.updatePosition();
-            if (player.model.isIntersect(drawableObj)) {
-                player.model.stepBack();
-                player.model.resetSpeed();
-                return true;
+
+            player.model.updatePositionY();
+            if(player.model.isIntersect(drawableObj)) {
+                player.model.stepBackY();
+                player.model.resetSpeedY();
             }
             else {
-                player.model.stepBack();
+                player.model.stepBackY();
+            }
+
+            player.model.updatePositionX();
+            if(player.model.isIntersect(drawableObj)) {
+                player.model.stepBackX();
+                player.model.resetSpeedX();
+            }
+            else {
+                player.model.stepBackX();
             }
         }
         return false;
