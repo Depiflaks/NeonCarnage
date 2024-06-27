@@ -2,6 +2,7 @@ import { PLAYER_SET, WEAPON_STATE } from "../settings.js";
 import { Weapon } from "../Weapon/Weapon.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { PlayerView } from "./PlayerView.js";
+import { Trajectory } from "../Weapon/Trajectory.js";
 
 class PlayerController {
     constructor(context, player) {
@@ -26,6 +27,32 @@ class PlayerController {
     mouseDown(event) {
         if((this.model.weapon != null) && (this.model.weapon.battleType == "distant")) {
 
+        }
+
+        this.model.weapon.battleType = "close";
+        if((this.model.weapon.battleType === "close")) {
+            this.strike();
+        }
+    }
+
+    strike() {
+        if (this.isStriking) return; // Если уже идет удар, новый не запускаем
+        this.isStriking = true; // Устанавливаем флаг удара
+
+        const weapon = this.model.weapon;
+
+        if (weapon.status === WEAPON_STATE.inTheHand) {
+            const { x, y } = this.model.getPosition();
+            const angle = this.model.getAngle();
+            const trajectory = new Trajectory({
+                x: x,
+                y: y,
+                angle: angle
+            }, this.view.context);
+
+            trajectory.animateStrike(this.model, () => {
+                this.isStriking = false; // Сбрасываем флаг удара после завершения анимации
+            });
         }
     }
 
