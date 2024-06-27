@@ -25,7 +25,6 @@ class Weapon extends Drawable {
     }
    
     draw(player, context) {
-        
         if (this.status === state.onTheGround) {
             const weaponX = this.x;
             const weaponY = this.y;
@@ -34,14 +33,14 @@ class Weapon extends Drawable {
         }
         if (this.status === state.inTheHand) {
             const { x, y } = player.model.getPosition();
-            const alpha = player.model.getAlpha();
-            const weaponX = x + PLAYER_SET.w * Math.cos(alpha + Math.PI / 2) / 2;
-            const weaponY = y + PLAYER_SET.w * Math.sin(alpha + Math.PI / 2) / 2;
+            const angle = player.model.getAngle();
+            const weaponX = x + PLAYER_SET.w * Math.cos(angle + Math.PI / 2) / 2;
+            const weaponY = y + PLAYER_SET.w * Math.sin(angle + Math.PI / 2) / 2;
             context.lineWidth = WEAPON_SET.w;
             context.strokeStyle = this.inHand;
             context.beginPath();
             context.moveTo(weaponX, weaponY);
-            context.lineTo(weaponX + WEAPON_SET.h * Math.cos(alpha), weaponY + WEAPON_SET.h * Math.sin(alpha));
+            context.lineTo(weaponX + WEAPON_SET.h * Math.cos(angle), weaponY + WEAPON_SET.h * Math.sin(angle));
             context.stroke();
         }
     }

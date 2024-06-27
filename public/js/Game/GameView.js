@@ -27,4 +27,4 @@ class GameView {
 }
 
 
-export { GameView };import { PlayerView } from "../Player/PlayerView.js";
+export { GameView };

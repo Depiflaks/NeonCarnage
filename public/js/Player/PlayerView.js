@@ -5,17 +5,17 @@ class PlayerView {
         this.context = context;
     }
 
-    draw({ x, y }, alpha) {
+    draw({ x, y }, angle) {
         this.context.strokeStyle = PLAYER_SET.bodyColor;
         this.context.lineWidth = PLAYER_SET.h;
         this.context.beginPath();
         this.context.moveTo(
-            x - PLAYER_SET.w * Math.cos(alpha + Math.PI / 2) / 2,
-            y - PLAYER_SET.w * Math.sin(alpha + Math.PI / 2) / 2
+            x - PLAYER_SET.w * Math.cos(angle + Math.PI / 2) / 2,
+            y - PLAYER_SET.w * Math.sin(angle + Math.PI / 2) / 2
         );
         this.context.lineTo(
-            x + PLAYER_SET.w * Math.cos(alpha + Math.PI / 2) / 2,
-            y + PLAYER_SET.w * Math.sin(alpha + Math.PI / 2) / 2
+            x + PLAYER_SET.w * Math.cos(angle + Math.PI / 2) / 2,
+            y + PLAYER_SET.w * Math.sin(angle + Math.PI / 2) / 2
         );
         this.context.stroke();
 
@@ -28,13 +28,12 @@ class PlayerView {
         this.drawViewLine(x, y, angle);
     }
 
-<<<<<<< Updated upstream
-    drawViewLine(x, y, alpha) {
+    drawViewLine(x, y, angle) {
         this.context.lineWidth = 2;
         this.context.strokeStyle = "red";
         this.context.beginPath();
         this.context.moveTo(x, y);
-        this.context.lineTo(x + 300 * Math.cos(alpha), y + 300 * Math.sin(alpha));
+        this.context.lineTo(x + 300 * Math.cos(angle), y + 300 * Math.sin(angle));
         this.context.stroke();
     }
 }

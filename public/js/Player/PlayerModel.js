@@ -41,7 +41,7 @@ class PlayerModel extends Moveable {
         }
     }
 
-    setangle(value) {
+    setAngle(value) {
         this.angle = value;
     }
 
