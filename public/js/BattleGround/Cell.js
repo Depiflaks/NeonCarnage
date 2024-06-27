@@ -7,7 +7,7 @@ class Cell extends Drawable {
     }
     
     draw(context) {
-        context.fillStyle = CELL_SET.c;
+        context.fillStyle = this.active ? CELL_SET.activeColor : CELL_SET.inactiveColor;
         context.fillRect(this.x, this.y, CELL_SET.w, CELL_SET.h);
     }
 }

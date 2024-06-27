@@ -3,9 +3,11 @@ import { VerticalWall} from "./VerticalWall.js";
 import { HorisontalWall} from "./HorisontalWall.js";
 import { WINDOW } from "../settings.js";
 import { Weapon } from "../Weapon/Weapon.js";
+import { Drawable } from "../Interface/Drawable.js";
 
-class BattleGround {
+class BattleGround extends Drawable {
     constructor(groundList, wallList, weaponSet) {
+        super(0, 0, 0, 0);
         this.cells = [];
         this.walls = [];
         this.weapons = [];
@@ -55,6 +57,7 @@ class BattleGround {
 
 
     move(dx, dy) {
+        super.move(dx, dy);
         this.cells.map(cell => cell.move(dx, dy));
         this.walls.map(wall => wall.move(dx, dy));
         this.weapons.map(weapon => weapon.move(dx, dy));
