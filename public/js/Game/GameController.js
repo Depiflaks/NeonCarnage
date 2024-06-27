@@ -34,9 +34,9 @@ class GameController {
         const { x, y } = this.player.model.getPosition();
         this.model.field.weapons.map(
             weapon => {
-                const distance = ((weapon.x - x)**2 + (weapon.y - y)**2)**0.5;
+                const distance = Math.sqrt((weapon.model.x - x)**2 + (weapon.model.y - y)**2);
                 if ((distance <= MIN_DISTANCE) && (this.player.model.weapon === null)) {
-                    weapon.status = WEAPON_STATE.inTheHand;
+                    weapon.model.status = WEAPON_STATE.inTheHand;
                     this.player.model.setWeapon(weapon);
                 }
             }
@@ -45,7 +45,8 @@ class GameController {
     
     dropWeapon() {
         this.player.model.weapon.unsetPlayer(this.player.model);
-        this.player.model.weapon.status = WEAPON_STATE.onTheGround;
+        this.player.model.weapon.model.status = WEAPON_STATE.onTheGround;
+        console.log(this.player.model.weapon);
         this.player.model.weapon = null;
     }
 

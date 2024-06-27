@@ -2,7 +2,7 @@ import { Cell } from "./Cell.js";
 import { VerticalWall} from "./VerticalWall.js";
 import { HorisontalWall} from "./HorisontalWall.js";
 import { WINDOW } from "../settings.js";
-import { Weapon } from "../Weapon/Weapon.js";
+import { WeaponController } from "../Weapon/WeaponController.js";
 
 class BattleGround {
     constructor(groundList, wallList, weaponSet) {
@@ -12,7 +12,7 @@ class BattleGround {
 
         weaponSet.map(
             weapon => {
-                this.weapons.push(new Weapon(weapon));
+                this.weapons.push(new WeaponController(weapon));
             }
         );
 
@@ -45,7 +45,17 @@ class BattleGround {
     }
 
     drawWeapons(player, context){
-        this.weapons.map(weapon => weapon.draw(player, context));
+        this.weapons.map(weapon => weapon.view.draw(
+            {
+                x: weapon.model.x, 
+                y: weapon.model.y,
+                status: weapon.model.status,
+                onGround: weapon.model.onGround,
+                inHand: weapon.model.inHand
+            }, 
+            player, 
+            context
+        ));
     }
 
     clearFrame(context) {
@@ -57,7 +67,7 @@ class BattleGround {
     move(dx, dy) {
         this.cells.map(cell => cell.move(dx, dy));
         this.walls.map(wall => wall.move(dx, dy));
-        this.weapons.map(weapon => weapon.move(dx, dy));
+        this.weapons.map(weapon => weapon.model.move(dx, dy));
     }
 }
 
