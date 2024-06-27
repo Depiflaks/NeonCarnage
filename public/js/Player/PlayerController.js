@@ -29,7 +29,8 @@ class PlayerController {
             const x = this.model.getPosition().x;
             const y = this.model.getPosition().y;
             const angle = this.model.getAngle();
-            this.model.bullets.push(new Bullet({x, y, angle}));
+            const deviation = this.model.weapon.deviation;
+            this.model.bullets.push(new Bullet({x, y, angle, deviation}));
         }
     }
 

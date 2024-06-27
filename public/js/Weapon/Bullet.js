@@ -2,11 +2,17 @@ import { BULLET_SET } from "../settings.js";
 import { Moveable } from "../Interface/Moveable.js";
 
 class Bullet extends Moveable {
-    constructor({x, y, angle}) {
+    constructor({x, y, angle, deviation}) {
         super(x, y, BULLET_SET.w, BULLET_SET.h, BULLET_SET.radius);
-        this.speedX = BULLET_SET.speed * Math.cos(angle);
-        this.speedY = BULLET_SET.speed * Math.sin(angle);
-        this.angle = angle;
+
+        // Генерация случайного значения для разброса угла
+        const angleDeviation = (Math.random() * 2 - 1) * deviation;
+        const adjustedAngle = angle + angleDeviation;
+
+        // Вычисление скоростей по осям с учетом скорректированного угла
+        this.speedX = BULLET_SET.speed * Math.cos(adjustedAngle);
+        this.speedY = BULLET_SET.speed * Math.sin(adjustedAngle);
+        this.angle = adjustedAngle;
         this.color = BULLET_SET.color;
     }
 
