@@ -86,3 +86,5 @@ function play() {
     moveFrame();
     requestAnimationFrame(play);
 }
+
+export {field}

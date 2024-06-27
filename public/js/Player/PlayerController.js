@@ -1,4 +1,6 @@
 import { PLAYER_SET } from "../settings.js";
+import { Weapon, state } from "../Weapon/Weapon.js";
+import { field } from "../main.js";
 
 class PlayerController {
     constructor(playerModel, playerView) {
@@ -20,6 +22,9 @@ class PlayerController {
     }
 
     keyDown(event) {
+        if (event.code == 'KeyE' ) {
+            this.distanceCheck();
+        }
         this.updateKey(event.code, 1);
     }
 
@@ -32,7 +37,8 @@ class PlayerController {
             'KeyW': 'w',
             'KeyA': 'a',
             'KeyS': 's',
-            'KeyD': 'd'
+            'KeyD': 'd',
+            'KeyE': 'e',
         };
         const key = keyMap[code];
         if (key) {
@@ -73,6 +79,23 @@ class PlayerController {
             }
         }
         return false;
+    }
+
+    distanceCheck(){
+        const { x, y } = this.playerModel.getPosition();
+            field.weapons.map(
+                weap => {
+                    const distance = ((weap.x - x)**2 + (weap.y - y)**2)**0.5;
+                    if (distance <= 40){
+                        weap.status = state.inTheHand;
+                        this.playerModel.setWeapon(weap);
+                        weap.player = this.playerModel;
+                        weap.x = x+10;
+                        weap.y = y+10;
+                        console.log(this.playerModel, weap);
+                    }
+                }
+            )
     }
 }
 

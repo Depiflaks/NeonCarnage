@@ -20,6 +20,10 @@ class Weapon extends Drawable {
         this.context = context;
         this.status = state.onTheGround; 
     }
+
+    setPlayer(player) {
+        this.player = player;
+    }
    
     draw() {
         if (this.status === state.onTheGround) {
@@ -37,4 +41,4 @@ class Weapon extends Drawable {
     }
 }
 
-export { Weapon }
+export { Weapon, state }
