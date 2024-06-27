@@ -64,8 +64,8 @@ function drawFrame() {
 function play() {
     field.clearFrame();
     drawFrame();
-    playerController.update();
     playerController.checkIntersections(field.walls);
+    playerController.update();
     moveFrame();
     requestAnimationFrame(play);
 }
