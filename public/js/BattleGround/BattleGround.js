@@ -11,8 +11,8 @@ class BattleGround {
         this.weapons = [];
 
         weaponSet.map(
-            weap => {
-                this.weapons.push(new Weapon(weap));
+            weapon => {
+                this.weapons.push(new Weapon(weapon));
             }
         );
 
@@ -45,7 +45,7 @@ class BattleGround {
     }
 
     drawWeapons(player, context){
-        this.weapons.map(weap => weap.draw(player, context));
+        this.weapons.map(weapon => weapon.draw(player, context));
     }
 
     clearFrame(context) {

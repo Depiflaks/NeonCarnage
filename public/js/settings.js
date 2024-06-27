@@ -43,5 +43,12 @@ const WEAPON_SET = {
     statInHand: 1, 
 };
 
+const KEYBOARD_E = 'KeyE';
+const MIN_DISTANCE = 40;
 
-export {WINDOW, CELL_SET, WALL_SET, PLAYER_SET, WEAPON_SET, CAMERA}
+const WEAPON_STATE = {
+    onTheGround: 0, 
+    inTheHand: 1,
+}
+
+export {WINDOW, CELL_SET, WALL_SET, PLAYER_SET, WEAPON_SET, CAMERA, KEYBOARD_E, MIN_DISTANCE, WEAPON_STATE}

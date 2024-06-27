@@ -1,5 +1,7 @@
-import { PLAYER_SET } from "../settings.js";
-import { Weapon, state } from "../Weapon/Weapon.js";
+import { PLAYER_SET, WEAPON_STATE } from "../settings.js";
+import { Weapon } from "../Weapon/Weapon.js";
+import { PlayerModel } from "./PlayerModel.js";
+import { PlayerView } from "./PlayerView.js";
 
 class PlayerController {
     constructor(playerModel, playerView) {
