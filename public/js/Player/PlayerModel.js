@@ -41,16 +41,16 @@ class PlayerModel extends Moveable {
         }
     }
 
-    setAlpha(value) {
-        this.alpha = value;
+    setangle(value) {
+        this.angle = value;
     }
 
     setKeyPressed(key, value) {
         this.keyPressed[key] = value;
     }
 
-    getAlpha() {
-        return this.alpha;
+    getAngle() {
+        return this.angle;
     }
 
     getPosition() {

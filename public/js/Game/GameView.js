@@ -15,7 +15,7 @@ class GameView {
         field.drawWeapons(player, this.context);
         player.view.draw(
             player.model.getPosition(), 
-            player.model.getAlpha()
+            player.model.getAngle()
         );
         field.drawWalls(this.context);
     }
@@ -27,4 +27,4 @@ class GameView {
 }
 
 
-export { GameView };
+export { GameView };import { PlayerView } from "../Player/PlayerView.js";
