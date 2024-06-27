@@ -5,18 +5,15 @@ class PlayerView {
         this.context = context;
     }
 
-    draw(playerModel) {
-        const { x, y } = playerModel.getPosition();
-        const angle = playerModel.getAngle();
-
-        this.ctx.strokeStyle = PLAYER_SET.bodyColor;
-        this.ctx.lineWidth = PLAYER_SET.h;
-        this.ctx.beginPath();
-        this.ctx.moveTo(
+    draw({x, y}, angle) {
+        this.context.strokeStyle = PLAYER_SET.bodyColor;
+        this.context.lineWidth = PLAYER_SET.h;
+        this.context.beginPath();
+        this.context.moveTo(
             x - PLAYER_SET.w * Math.cos(angle + Math.PI / 2) / 2,
             y - PLAYER_SET.w * Math.sin(angle + Math.PI / 2) / 2
         );
-        this.ctx.lineTo(
+        this.context.lineTo(
             x + PLAYER_SET.w * Math.cos(angle + Math.PI / 2) / 2,
             y + PLAYER_SET.w * Math.sin(angle + Math.PI / 2) / 2
         );
