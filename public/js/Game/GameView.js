@@ -13,6 +13,7 @@ class GameView {
 
     drawFrame(field, player) {
         field.drawGround(this.context);
+        this.playerView.draw();
         field.drawWalls(this.context);
         field.drawWeapons(this.context);
     }

@@ -13,8 +13,8 @@ const gameController = new GameController(
         weaponList: weaponSet
     },
     {
-        px: 1000,
-        py: 1000,
+        x: 1000,
+        y: 1000,
     },
     canvas
 );

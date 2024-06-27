@@ -7,15 +7,15 @@ import { GameView } from "./GameView.js";
 
 class GameController {
     constructor(objects, player, canvas) {
+        this.player = new PlayerController(this.context, player);
+
         this.model = new GameModel(objects, player);
         this.view = new GameView(canvas);
-
-        this.playerController = new PlayerController(this.model.playerModel, this.view.playerView);
     }
     
     moveFrame() {
         const [dx, dy] = [
-            CAMERA.center.x - this.model.playerModel.getPosition().x, 
+            CAMERA.center.x - this.player.model.getPosition().x, 
             CAMERA.center.y - this.model.playerModel.getPosition().y
         ];
         const period = (Math.abs(dx) + Math.abs(dy) < 0.5) ? 1 : CAMERA.period;

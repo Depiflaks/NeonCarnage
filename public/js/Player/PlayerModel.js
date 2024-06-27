@@ -2,7 +2,7 @@ import { Moveable } from "../Interface/Moveable.js";
 import { PLAYER_SET } from "../settings.js";
 
 class PlayerModel extends Moveable {
-    constructor(x, y) {
+    constructor({x, y}) {
         super(x, y, PLAYER_SET.w, PLAYER_SET.h, PLAYER_SET.radius)
         this.keyPressed = {
             w: 0,

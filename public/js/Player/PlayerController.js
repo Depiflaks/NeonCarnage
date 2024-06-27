@@ -1,9 +1,11 @@
 import { PLAYER_SET } from "../settings.js";
+import { PlayerModel } from "./PlayerModel.js";
+import { PlayerView } from "./PlayerView.js";
 
 class PlayerController {
-    constructor(playerModel, playerView) {
-        this.playerModel = playerModel;
-        this.playerView = playerView;
+    constructor(context, player) {
+        this.model = new PlayerModel(player);
+        this.view = new PlayerView(context);
 
         addEventListener("mousemove", (event) => this.mouseMove(event));
         addEventListener("keydown", (event) => this.keyDown(event));
@@ -11,12 +13,12 @@ class PlayerController {
     }
 
     mouseMove(event) {
-        const { x, y } = this.playerModel.getPosition();
+        const { x, y } = this.model.getPosition();
         const v1 = { x: 1, y: 0 };
         const v2 = { x: event.x - x, y: event.y - y };
         const difference = { x: v2.x - v1.x, y: v2.y - v1.y };
         const alpha = Math.atan2(difference.x, -difference.y) - Math.PI / 2;
-        this.playerModel.setAlpha(alpha);
+        this.model.setAlpha(alpha);
     }
 
     keyDown(event) {
@@ -36,13 +38,13 @@ class PlayerController {
         };
         const key = keyMap[code];
         if (key) {
-            this.playerModel.setKeyPressed(key, state);
+            this.model.setKeyPressed(key, state);
             this.updateSpeed();
         }
     }
 
     updateSpeed() {
-        const keys = this.playerModel.getKeyPressed();
+        const keys = this.model.getKeyPressed();
         let speedX = 0;
         let speedY = 0;
 
@@ -56,19 +58,18 @@ class PlayerController {
             speedY *= PLAYER_SET.pythagoreanFactor;
         }
 
-        this.playerModel.setSpeed('x', speedX);
-        this.playerModel.setSpeed('y', speedY);
+        this.model.setSpeed('x', speedX);
+        this.model.setSpeed('y', speedY);
     }
 
     update() {
-        this.playerModel.updatePosition();
-        this.playerView.draw(this.playerModel);
+        this.model.updatePosition();
     }
 
     checkIntersections(drawableArray) {
         for (const drawableObj of drawableArray) {
-            if (this.playerModel.isIntersect(drawableObj)) {
-                this.playerModel.blockDirection();
+            if (this.model.isIntersect(drawableObj)) {
+                this.model.blockDirection();
                 return true;
             }
         }

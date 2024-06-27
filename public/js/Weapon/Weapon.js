@@ -3,8 +3,8 @@ import { CELL_SET } from "../settings.js";
 import { Drawable } from "../Interface/Drawable.js";
 
 const state = {
-    onTheGround: 0, 
-    inTheHand: 1,
+    onTheGround, 
+    inTheHand,
 }
 
 class Weapon extends Drawable {
@@ -19,8 +19,12 @@ class Weapon extends Drawable {
         this.inHand = inHand;
         this.status = state.onTheGround; 
     }
-   
-    draw(context) {
+   /**
+    * 
+    * @param {*} context 
+    * @param {*} player 
+    */
+    draw(context, player) {
         if (this.status === state.onTheGround) {
             const weaponX = this.x - (WEAPON_SET.w * 0.5);
             const weaponY = this.y - (WEAPON_SET.h * 0.5);
