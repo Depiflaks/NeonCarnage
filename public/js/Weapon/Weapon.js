@@ -24,11 +24,25 @@ class Weapon extends Drawable {
             this.context.fillStyle = this.onGround;
             this.context.fillRect(weaponX, weaponY, WEAPON_SET.w, WEAPON_SET.h);   
         }
+<<<<<<< Updated upstream
         if (this.status === 1) {
             const weaponX = this.x - (WEAPON_SET.w * 0.5);
             const weaponY = this.y - (WEAPON_SET.h * 0.5);
             this.context.fillStyle = this.inHand;
             this.context.fillRect(weaponX, weaponY, (WEAPON_SET.w/2), (WEAPON_SET.h/2));
+=======
+        if (this.status === state.inTheHand) {
+            const { x, y } = player.model.getPosition();
+            const angle = player.model.getAngle();
+            const weaponX = x + PLAYER_SET.w * Math.cos(angle + Math.PI / 2) / 2;
+            const weaponY = y + PLAYER_SET.w * Math.sin(angle + Math.PI / 2) / 2;
+            context.lineWidth = WEAPON_SET.w;
+            context.strokeStyle = this.inHand;
+            context.beginPath();
+            context.moveTo(weaponX, weaponY);
+            context.lineTo(weaponX + WEAPON_SET.h * Math.cos(angle), weaponY + WEAPON_SET.h * Math.sin(angle));
+            context.stroke();
+>>>>>>> Stashed changes
         }
     }
 }

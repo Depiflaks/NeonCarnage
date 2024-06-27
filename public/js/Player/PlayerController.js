@@ -15,8 +15,13 @@ class PlayerController {
         const v1 = { x: 1, y: 0 };
         const v2 = { x: event.x - x, y: event.y - y };
         const difference = { x: v2.x - v1.x, y: v2.y - v1.y };
+<<<<<<< Updated upstream
         const alpha = Math.atan2(difference.x, -difference.y) - Math.PI / 2;
         this.playerModel.setAlpha(alpha);
+=======
+        const angle = Math.atan2(difference.x, -difference.y) - Math.PI / 2;
+        this.model.setangle(angle);
+>>>>>>> Stashed changes
     }
 
     keyDown(event) {
@@ -60,6 +65,7 @@ class PlayerController {
         this.playerModel.setSpeed('y', speedY);
     }
 
+<<<<<<< Updated upstream
     update() {
         this.playerModel.updatePosition();
         this.playerView.draw(this.playerModel);
@@ -88,6 +94,12 @@ class PlayerController {
         }
         return false;
     }
+=======
+    updatePosition() {
+        this.model.updatePosition();
+    }
+
+>>>>>>> Stashed changes
 }
 
 export { PlayerController };
