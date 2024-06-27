@@ -1,6 +1,5 @@
 import { PLAYER_SET } from "../settings.js";
 import { Weapon, state } from "../Weapon/Weapon.js";
-import { field } from "../main.js";
 
 class PlayerController {
     constructor(playerModel, playerView) {
@@ -83,19 +82,19 @@ class PlayerController {
 
     distanceCheck(){
         const { x, y } = this.playerModel.getPosition();
-            field.weapons.map(
-                weap => {
-                    const distance = ((weap.x - x)**2 + (weap.y - y)**2)**0.5;
-                    if (distance <= 40){
-                        weap.status = state.inTheHand;
-                        this.playerModel.setWeapon(weap);
-                        weap.player = this.playerModel;
-                        weap.x = x+10;
-                        weap.y = y+10;
-                        console.log(this.playerModel, weap);
-                    }
+        field.weapons.map(
+            weap => {
+                const distance = ((weap.x - x)**2 + (weap.y - y)**2)**0.5;
+                if (distance <= 40){
+                    weap.status = state.inTheHand;
+                    this.playerModel.setWeapon(weap);
+                    weap.player = this.playerModel;
+                    weap.x = x+10;
+                    weap.y = y+10;
+                    console.log(this.playerModel, weap);
                 }
-            )
+            }
+        )
     }
 }
 
