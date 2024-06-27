@@ -3,7 +3,8 @@ import { PLAYER_SET } from "../settings.js";
 
 class PlayerModel extends Moveable {
     constructor({x, y}) {
-        super(x, y, PLAYER_SET.w, PLAYER_SET.h, PLAYER_SET.radius)
+        super(x, y, PLAYER_SET.w, PLAYER_SET.h, PLAYER_SET.radius);
+        this.weapon = null;
         this.keyPressed = {
             w: 0,
             a: 0,

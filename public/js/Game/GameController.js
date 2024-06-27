@@ -1,8 +1,7 @@
-import { CAMERA } from "../settings.js";
+import { CAMERA, KEYBOARD_E, MIN_DISTANCE, WEAPON_STATE } from "../settings.js";
 import { PlayerController } from '../Player/PlayerController.js';
 import { GameModel } from "./GameModel.js";
 import { GameView } from "./GameView.js";
-import { state } from "../Weapon/Weapon.js"
 
 class GameController {
     constructor(objects, player, canvas) {
@@ -24,9 +23,9 @@ class GameController {
     }
 
     keyDown(event) {
-        if ((event.code == 'KeyE') && (this.player.model.weapon === undefined)) {
+        if ((event.code == KEYBOARD_E) && (this.player.model.weapon === null)) {
             this.distanceCheck();
-        } else if (event.code == 'KeyE') {
+        } else if (event.code == KEYBOARD_E) {
             this.dropWeapon();
         }
     }
@@ -34,11 +33,11 @@ class GameController {
     distanceCheck() {
         const { x, y } = this.player.model.getPosition();
         this.model.field.weapons.map(
-            weap => {
-                const distance = ((weap.x - x)**2 + (weap.y - y)**2)**0.5;
-                if (distance <= 40){
-                    weap.status = state.inTheHand;
-                    this.player.model.setWeapon(weap);
+            weapon => {
+                const distance = ((weapon.x - x)**2 + (weapon.y - y)**2)**0.5;
+                if ((distance <= MIN_DISTANCE) && (this.player.model.weapon === null)) {
+                    weapon.status = WEAPON_STATE.inTheHand;
+                    this.player.model.setWeapon(weapon);
                 }
             }
         )
@@ -46,8 +45,8 @@ class GameController {
     
     dropWeapon() {
         this.player.model.weapon.unsetPlayer(this.player.model);
-        this.player.model.weapon.status = state.onTheGround;
-        this.player.model.weapon = undefined;
+        this.player.model.weapon.status = WEAPON_STATE.onTheGround;
+        this.player.model.weapon = null;
     }
 
     update() {
@@ -76,7 +75,7 @@ class GameController {
         this.player.updatePosition();
         
         requestAnimationFrame(() => {this.play()});
-    }
+    }   
 }
 
 export { GameController };

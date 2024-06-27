@@ -1,10 +1,5 @@
-import { WEAPON_SET, PLAYER_SET, CELL_SET } from "../settings.js";
+import { WEAPON_SET, PLAYER_SET, CELL_SET, WEAPON_STATE } from "../settings.js";
 import { Drawable } from "../Interface/Drawable.js";
-
-const state = {
-    onTheGround: 0, 
-    inTheHand: 1,
-}
 
 class Weapon extends Drawable {
     constructor({name, x, y, battleType, rapidity, grouping, deviation, status, onGround, inHand}) {
@@ -16,7 +11,7 @@ class Weapon extends Drawable {
         this.deviation = deviation;
         this.onGround = onGround;   
         this.inHand = inHand;
-        this.status = state.onTheGround; 
+        this.status = WEAPON_STATE.onTheGround; 
     }
 
     unsetPlayer(player) {
@@ -25,13 +20,14 @@ class Weapon extends Drawable {
     }
    
     draw(player, context) {
-        if (this.status === state.onTheGround) {
+        
+        if (this.status === WEAPON_STATE.onTheGround) {
             const weaponX = this.x;
             const weaponY = this.y;
             context.fillStyle = this.onGround;
             context.fillRect(weaponX, weaponY, WEAPON_SET.w, WEAPON_SET.h);   
         }
-        if (this.status === state.inTheHand) {
+        if (this.status === WEAPON_STATE.inTheHand) {
             const { x, y } = player.model.getPosition();
             const angle = player.model.getAngle();
             const weaponX = x + PLAYER_SET.w * Math.cos(angle + Math.PI / 2) / 2;
@@ -46,4 +42,4 @@ class Weapon extends Drawable {
     }
 }
 
-export { Weapon, state }
+export { Weapon }
