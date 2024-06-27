@@ -8,7 +8,7 @@ const state = {
 }
 
 class Weapon extends Drawable {
-    constructor({name, x, y, battleType, rapidity, grouping, deviation, status, onGround, inHand}, context) {
+    constructor({name, x, y, battleType, rapidity, grouping, deviation, status, onGround, inHand}) {
         super(x * CELL_SET.w + CELL_SET.w * 0.5, y * CELL_SET.h + CELL_SET.h * 0.5, WEAPON_SET.w, WEAPON_SET.h)
         this.name = name;
         this.battleType = battleType;
@@ -17,22 +17,21 @@ class Weapon extends Drawable {
         this.deviation = deviation;
         this.onGround = onGround;   
         this.inHand = inHand;
-        this.context = context;
         this.status = state.onTheGround; 
     }
    
-    draw() {
+    draw(context) {
         if (this.status === state.onTheGround) {
             const weaponX = this.x - (WEAPON_SET.w * 0.5);
             const weaponY = this.y - (WEAPON_SET.h * 0.5);
-            this.context.fillStyle = this.onGround;
-            this.context.fillRect(weaponX, weaponY, WEAPON_SET.w, WEAPON_SET.h);   
+            context.fillStyle = this.onGround;
+            context.fillRect(weaponX, weaponY, WEAPON_SET.w, WEAPON_SET.h);   
         }
         if (this.status === state.inTheHand) {
             const weaponX = this.x - (WEAPON_SET.w * 0.5);
             const weaponY = this.y - (WEAPON_SET.h * 0.5);
-            this.context.fillStyle = this.inHand;
-            this.context.fillRect(weaponX, weaponY, (WEAPON_SET.w/2), (WEAPON_SET.h/2));
+            context.fillStyle = this.inHand;
+            context.fillRect(weaponX, weaponY, (WEAPON_SET.w/2), (WEAPON_SET.h/2));
         }
     }
 }
