@@ -58,7 +58,7 @@ const weaponSet = [
         grouping: 10,           //кучность
         deviation: 10,          //отклонение
         onGround: "pink",       //текстура на земле
-        inHand: "red" //текстура в руках
+        inHand: "white" //текстура в руках
     },         
     {
         name: "wep2",
@@ -69,7 +69,7 @@ const weaponSet = [
         grouping: 10,
         deviation: 10,
         onGround: "pink",
-        inHand: "red"
+        inHand: "white"
     }
 ];
 

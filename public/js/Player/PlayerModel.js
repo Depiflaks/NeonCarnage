@@ -11,6 +11,7 @@ class PlayerModel extends Moveable {
             d: 0,
             e: 0,
         };
+        this.weapon = 0;
     }
 
     updatePosition() {

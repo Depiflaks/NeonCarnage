@@ -1,5 +1,4 @@
-import { WEAPON_SET } from "../settings.js";
-import { CELL_SET } from "../settings.js";
+import { WEAPON_SET, PLAYER_SET, CELL_SET } from "../settings.js";
 import { Drawable } from "../Interface/Drawable.js";
 
 const state = {
@@ -23,19 +22,26 @@ class Weapon extends Drawable {
     setPlayer(player) {
         this.player = player;
     }
+
+    unsetPlayer(){
+        this.x = this.player.x;
+        this.y = this.player.y;
+        this.player = 0;
+    }
    
     draw(context) {
         if (this.status === state.onTheGround) {
-            const weaponX = this.x - (WEAPON_SET.w * 0.5);
-            const weaponY = this.y - (WEAPON_SET.h * 0.5);
+            const weaponX = this.x;
+            const weaponY = this.y;
             context.fillStyle = this.onGround;
             context.fillRect(weaponX, weaponY, WEAPON_SET.w, WEAPON_SET.h);   
         }
         if (this.status === state.inTheHand) {
-            const weaponX = this.x - (WEAPON_SET.w * 0.5);
-            const weaponY = this.y - (WEAPON_SET.h * 0.5);
+            const alpha = this.player.getAlpha();
+            const weaponX = this.player.x + PLAYER_SET.w * Math.cos(alpha + Math.PI / 2) / 2;
+            const weaponY = this.player.y + PLAYER_SET.w * Math.sin(alpha + Math.PI / 2) / 2;
             context.fillStyle = this.inHand;
-            context.fillRect(weaponX, weaponY, (WEAPON_SET.w/2), (WEAPON_SET.h/2));
+            context.fillRect(weaponX, weaponY, WEAPON_SET.w, WEAPON_SET.h);
         }
     }
 }

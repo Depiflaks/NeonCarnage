@@ -46,7 +46,7 @@
             "grouping": 10,
             "deviation": 10,
             "onGround": "pink",
-            "inHand": "red"
+            "inHand": "white"
         },
         {
             "name": "wep2",
@@ -57,7 +57,7 @@
             "grouping": 10,
             "deviation": 10,
             "onGround": "pink",
-            "inHand": "red"
+            "inHand": "white"
         }
     ]
 }

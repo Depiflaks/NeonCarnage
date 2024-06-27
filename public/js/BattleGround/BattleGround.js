@@ -26,7 +26,6 @@ class BattleGround {
         wallList.map(
             wall => {
                 const [startX, startY, endX, endY] = wall;
-                //console.log(startX, startY, endX, endY);
                 if (startX === endX) {
                     this.walls.push(new VerticalWall(startX, startY, endX, endY));
                 } else if (startY === endY){
@@ -43,7 +42,6 @@ class BattleGround {
 
     drawWalls(context) {
         this.walls.map(wall => wall.draw(context));
-        //console.log(this.walls);
     }
 
     drawWeapons(context){
