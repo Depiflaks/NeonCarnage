@@ -20,6 +20,11 @@ class GameController {
         const period = (Math.abs(dx) + Math.abs(dy) < 0.5) ? 1 : CAMERA.period;
         this.model.field.move(dx / period, dy / period);
         this.player.model.move(dx / period, dy / period);
+        this.player.model.bullets.map(
+            bullet => {
+                bullet.updatePosition();
+            }
+        );
     }
 
     keyDown(event) {

@@ -1,5 +1,6 @@
 import { PLAYER_SET, WEAPON_STATE } from "../settings.js";
 import { Weapon } from "../Weapon/Weapon.js";
+import { Bullet } from "../Weapon/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { PlayerView } from "./PlayerView.js";
 
@@ -25,7 +26,10 @@ class PlayerController {
 
     mouseDown(event) {
         if((this.model.weapon != null) && (this.model.weapon.battleType == "distant")) {
-
+            const x = this.model.getPosition().x;
+            const y = this.model.getPosition().y;
+            const angle = this.model.getAngle();
+            this.model.bullets.push(new Bullet({x, y, angle}));
         }
     }
 

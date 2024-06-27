@@ -43,6 +43,15 @@ const WEAPON_SET = {
     statInHand: 1, 
 };
 
+const BULLET_SET = {
+    w: 20,
+    h: 20,
+    radius: 10,
+    speed: 10,
+    pythagoreanFactor: Math.sqrt(2)/2,
+    color: "white",
+};
+
 const KEYBOARD_E = 'KeyE';
 const MIN_DISTANCE = 40;
 
@@ -51,4 +60,4 @@ const WEAPON_STATE = {
     inTheHand: 1,
 }
 
-export {WINDOW, CELL_SET, WALL_SET, PLAYER_SET, WEAPON_SET, CAMERA, KEYBOARD_E, MIN_DISTANCE, WEAPON_STATE}
+export {WINDOW, CELL_SET, WALL_SET, PLAYER_SET, BULLET_SET, WEAPON_SET, CAMERA, KEYBOARD_E, MIN_DISTANCE, WEAPON_STATE}
