@@ -18,8 +18,8 @@ class PlayerController {
         const v1 = { x: 1, y: 0 };
         const v2 = { x: event.x - x, y: event.y - y };
         const difference = { x: v2.x - v1.x, y: v2.y - v1.y };
-        const alpha = Math.atan2(difference.x, -difference.y) - Math.PI / 2;
-        this.playerModel.setAlpha(alpha);
+        const angle = Math.atan2(difference.x, -difference.y) - Math.PI / 2;
+        this.playerModel.setAngle(angle);
     }
 
     keyDown(event) {

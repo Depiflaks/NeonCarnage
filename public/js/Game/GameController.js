@@ -8,7 +8,7 @@ class GameController {
         this.model = new GameModel(objects, player);
         this.view = new GameView(canvas);
 
-        this.playerController = new PlayerController(this.model.playerModel, this.view.playerView);
+        this.player = new PlayerController(this.model.playerModel, this.view.playerView);
         addEventListener("keydown", (event) => this.keyDown(event));
     }
     
@@ -57,11 +57,11 @@ class GameController {
         this.update();
         this.view.updateFrame(this.model.field, this.model.playerModel);
         // переписать обновление и прорисовку игрока по нормальному
-        this.playerController.update();
-        this.playerController.checkIntersections(this.model.field.walls);
-        
+        this.player.update();   
+        this.player.checkIntersections(this.model.field.walls);
+        this.view.updateFrame(this.model.field, this.player);
         requestAnimationFrame(() => {this.play()});
-    }
+    }   
 }
 
 export { GameController };
