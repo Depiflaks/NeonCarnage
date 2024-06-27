@@ -9,6 +9,7 @@ class PlayerModel extends Moveable {
             a: 0,
             s: 0,
             d: 0,
+            e: 0,
         };
     }
 
@@ -62,6 +63,10 @@ class PlayerModel extends Moveable {
 
     getSpeed() {
         return { speedX: this.speedX, speedY: this.speedY };
+    }
+
+    setWeapon(weapon) {
+        this.weapon = weapon; 
     }
 }
 

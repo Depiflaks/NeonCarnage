@@ -2,8 +2,7 @@ import { CAMERA } from "../settings.js";
 import { PlayerController } from '../Player/PlayerController.js';
 import { GameModel } from "./GameModel.js";
 import { GameView } from "./GameView.js";
-
-//console.log(groundList);
+import { state } from "../Weapon/Weapon.js"
 
 class GameController {
     constructor(objects, player, canvas) {
@@ -11,6 +10,7 @@ class GameController {
         this.view = new GameView(canvas);
 
         this.player = new PlayerController(this.view.context, player);
+        addEventListener("keydown", (event) => this.keyDown(event));
     }
     
     moveFrame() {
@@ -20,7 +20,35 @@ class GameController {
         ];
         const period = (Math.abs(dx) + Math.abs(dy) < 0.5) ? 1 : CAMERA.period;
         this.model.field.move(dx / period, dy / period);
-        this.player.model.move(dx / period, dy / period);
+        this.model.playerModel.move(dx / period, dy / period);
+    }
+
+    keyDown(event) {
+        if ((event.code == 'KeyE') && (this.model.playerModel.weapon === undefined)) {
+            this.distanceCheck();
+        } else if (event.code == 'KeyE') {
+            this.dropWeapon();
+        }
+    }
+
+    distanceCheck(){
+        const { x, y } = this.model.playerModel.getPosition();
+        this.model.field.weapons.map(
+            weap => {
+                const distance = ((weap.x - x)**2 + (weap.y - y)**2)**0.5;
+                if (distance <= 40){
+                    weap.status = state.inTheHand;
+                    this.model.playerModel.setWeapon(weap);
+                    weap.setPlayer(this.model.playerModel);
+                }
+            }
+        )
+    }
+    
+    dropWeapon() {
+        this.model.playerModel.weapon.unsetPlayer(this.model.playerModel);
+        this.model.playerModel.weapon.status = state.onTheGround;
+        this.model.playerModel.weapon = undefined;
     }
 
     update() {

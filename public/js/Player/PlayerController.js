@@ -1,4 +1,5 @@
 import { PLAYER_SET } from "../settings.js";
+import { Weapon, state } from "../Weapon/Weapon.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { PlayerView } from "./PlayerView.js";
 
@@ -34,7 +35,7 @@ class PlayerController {
             'KeyW': 'w',
             'KeyA': 'a',
             'KeyS': 's',
-            'KeyD': 'd'
+            'KeyD': 'd',
         };
         const key = keyMap[code];
         if (key) {
@@ -80,6 +81,7 @@ class PlayerController {
         }
         return false;
     }
+
 }
 
 export { PlayerController };

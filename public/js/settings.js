@@ -36,7 +36,7 @@ const CAMERA = {
 }
 
 const WEAPON_SET = {
-    w: 20,
+    w: 5,
     h: 30,
     color: "pink",
     statOnGround: 0,
