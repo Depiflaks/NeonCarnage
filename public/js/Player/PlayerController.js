@@ -68,14 +68,14 @@ class PlayerController {
 
     checkIntersections(drawableArray) {
         for (const drawableObj of drawableArray) {
-            this.playerModel.updatePosition();
-            if (this.playerModel.isIntersect(drawableObj)) {
-                this.playerModel.stepBack();
-                this.playerModel.resetSpeed();
+            this.model.updatePosition();
+            if (this.model.isIntersect(drawableObj)) {
+                this.model.stepBack();
+                this.model.resetSpeed();
                 return true;
             }
             else {
-                this.playerModel.stepBack();
+                this.model.stepBack();
             }
         }
         return false;

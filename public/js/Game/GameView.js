@@ -8,14 +8,16 @@ class GameView {
         canvas.width = WINDOW.w;
         canvas.height = WINDOW.h;
         this.context = canvas.getContext("2d");
-        this.playerView = new PlayerView(this.context);
     }
 
     drawFrame(field, player) {
         field.drawGround(this.context);
-        this.playerView.draw();
-        field.drawWalls(this.context);
         field.drawWeapons(this.context);
+        player.view.draw(
+            player.model.getPosition(), 
+            player.model.getAlpha()
+        );
+        field.drawWalls(this.context);
     }
 
     updateFrame(field, player) {

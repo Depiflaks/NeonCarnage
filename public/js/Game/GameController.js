@@ -7,20 +7,20 @@ import { GameView } from "./GameView.js";
 
 class GameController {
     constructor(objects, player, canvas) {
-        this.player = new PlayerController(this.context, player);
-
-        this.model = new GameModel(objects, player);
+        this.model = new GameModel(objects);
         this.view = new GameView(canvas);
+
+        this.player = new PlayerController(this.view.context, player);
     }
     
     moveFrame() {
         const [dx, dy] = [
             CAMERA.center.x - this.player.model.getPosition().x, 
-            CAMERA.center.y - this.model.playerModel.getPosition().y
+            CAMERA.center.y - this.player.model.getPosition().y
         ];
         const period = (Math.abs(dx) + Math.abs(dy) < 0.5) ? 1 : CAMERA.period;
         this.model.field.move(dx / period, dy / period);
-        this.model.playerModel.move(dx / period, dy / period);
+        this.player.model.move(dx / period, dy / period);
     }
 
     update() {
@@ -29,10 +29,10 @@ class GameController {
     
     play() {
         this.update();
-        this.view.updateFrame(this.model.field, this.model.playerModel);
+        this.view.updateFrame(this.model.field, this.player);
         // переписать обновление и прорисовку игрока по нормальному
-        this.playerController.update();
-        this.playerController.checkIntersections(this.model.field.walls);
+        this.player.update();
+        this.player.checkIntersections(this.model.field.walls);
         
         requestAnimationFrame(() => {this.play()});
     }

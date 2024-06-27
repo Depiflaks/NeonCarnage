@@ -3,8 +3,8 @@ import { CELL_SET } from "../settings.js";
 import { Drawable } from "../Interface/Drawable.js";
 
 const state = {
-    onTheGround, 
-    inTheHand,
+    onTheGround: 0, 
+    inTheHand: 1,
 }
 
 class Weapon extends Drawable {
