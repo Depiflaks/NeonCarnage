@@ -35,8 +35,12 @@ class Weapon extends Drawable {
             const alpha = player.getAlpha();
             const weaponX = player.x + PLAYER_SET.w * Math.cos(alpha + Math.PI / 2) / 2;
             const weaponY = player.y + PLAYER_SET.w * Math.sin(alpha + Math.PI / 2) / 2;
-            context.fillStyle = this.inHand;
-            context.fillRect(weaponX, weaponY, WEAPON_SET.w, WEAPON_SET.h);
+            context.lineWidth = WEAPON_SET.w;
+            context.strokeStyle = this.inHand;
+            context.beginPath();
+            context.moveTo(weaponX, weaponY);
+            context.lineTo(weaponX + WEAPON_SET.h * Math.cos(alpha), weaponY + WEAPON_SET.h * Math.sin(alpha));
+            context.stroke();
         }
     }
 }
