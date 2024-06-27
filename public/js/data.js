@@ -64,7 +64,7 @@ const weaponSet = [
         name: "wep2",
         x: 10,
         y: 5,
-        battleType: "close",
+        battleType: "distant",
         rapidity: 10,
         grouping: 10,
         deviation: 10,

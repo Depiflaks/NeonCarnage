@@ -9,6 +9,7 @@ class PlayerController {
         this.view = new PlayerView(context);
 
         addEventListener("mousemove", (event) => this.mouseMove(event));
+        addEventListener("mousedown", (event) => this.mouseDown(event));
         addEventListener("keydown", (event) => this.keyDown(event));
         addEventListener("keyup", (event) => this.keyUp(event));
     }
@@ -20,6 +21,12 @@ class PlayerController {
         const difference = { x: v2.x - v1.x, y: v2.y - v1.y };
         const angle = Math.atan2(difference.x, -difference.y) - Math.PI / 2;
         this.model.setAngle(angle);
+    }
+
+    mouseDown(event) {
+        if((this.model.weapon != null) && (this.model.weapon.battleType == "distant")) {
+
+        }
     }
 
     keyDown(event) {
