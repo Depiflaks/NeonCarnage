@@ -51,8 +51,8 @@ const wallList = [
 const weaponSet = [
     {
         name: "wep1", 
-        x: 3, 
-        y: 2, 
+        x: 10, 
+        y: 10, 
         battleType: "close",  //ближний или дальний бой
         rapidity: 10,           //скорострельность (задержка в миллисек)
         grouping: 10,           //кучность

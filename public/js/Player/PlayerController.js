@@ -34,6 +34,9 @@ class PlayerController {
                 this.model.weapon.model.shootingInterval = setInterval(() => this.shot(), this.model.weapon.model.rapidity);
             }
         }
+        if((this.model.weapon != null) && (this.model.weapon.battleType === "close")) {
+            this.strike();
+        }
     }
 
     shot() {
@@ -65,7 +68,7 @@ class PlayerController {
         if (this.isStriking) return;
         this.isStriking = true;
 
-        const weapon = this.model.weapon;
+        const weapon = this.model.weapon.model;
 
         if (weapon.status === WEAPON_STATE.inTheHand) {
             const { x, y } = this.model.getPosition();
