@@ -27,31 +27,31 @@ class PlayerController {
     }
 
     mouseDown(event) { 
-        if ((this.model.weapon != null) && (this.model.weapon.battleType == "distant")) {
-            if (!this.model.weapon.shootingInterval) {
+        if ((this.model.weapon != null) && (this.model.weapon.model.battleType == "distant")) {
+            if (!this.model.weapon.model.shootingInterval) {
                 this.shot();  
-                this.model.weapon.shootingInterval = setInterval(() => this.shot(), this.model.weapon.rapidity);
+                this.model.weapon.model.shootingInterval = setInterval(() => this.shot(), this.model.weapon.model.rapidity);
             }
         }
     }
 
     shot() {
-        for (let i = 0; i < this.model.weapon.grouping; i++) {
+        for (let i = 0; i < this.model.weapon.model.grouping; i++) {
             const x = this.model.getPosition().x;
             const y = this.model.getPosition().y;
             const angle = this.model.getAngle();
-            const deviation = this.model.weapon.deviation;
-            const rapidity = this.model.weapon.rapidity;
+            const deviation = this.model.weapon.model.deviation;
+            const rapidity = this.model.weapon.model.rapidity;
             this.model.bullets.push(new Bullet({x, y, angle, rapidity, deviation}));
         }
     }
 
     mouseUp(event)
     {
-        if((this.model.weapon != null) && (this.model.weapon.battleType == "distant"))
+        if((this.model.weapon != null) && (this.model.weapon.model.battleType == "distant"))
         {
-            clearInterval(this.model.weapon.shootingInterval);
-            this.model.weapon.shootingInterval = null;
+            clearInterval(this.model.weapon.model.shootingInterval);
+            this.model.weapon.model.shootingInterval = null;
         }
     }
 

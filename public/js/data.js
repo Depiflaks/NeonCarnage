@@ -65,7 +65,7 @@ const weaponSet = [
         x: 10,
         y: 5,
         battleType: "distant",
-        rapidity: 50,
+        rapidity: 1000,
         grouping: 1,
         deviation: 0.1,
         onGround: "pink",

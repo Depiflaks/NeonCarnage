@@ -3,8 +3,8 @@ import { WeaponModel } from "./WeaponModel.js";
 import { WeaponView } from "./WeaponView.js";
 
 class WeaponController {
-    constructor (player) {
-        this.model = new WeaponModel(player);
+    constructor (weapon) {
+        this.model = new WeaponModel(weapon);
         this.view = new WeaponView();
     }
 

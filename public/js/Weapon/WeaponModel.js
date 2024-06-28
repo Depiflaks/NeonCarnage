@@ -12,6 +12,7 @@ class WeaponModel extends Drawable {
         this.onGround = onGround;   
         this.inHand = inHand;
         this.status = WEAPON_STATE.onTheGround; 
+        this.shootingInterval;
     }
 }
 
