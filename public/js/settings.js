@@ -27,7 +27,7 @@ const PLAYER_SET = {
     bodyColor: "blue",
     speed: 6,
     visualField: {
-        range: 600,
+        range: 350,
         angleStep: 15 * RAD
     },
     pythagoreanFactor: Math.sqrt(2) / 2,

@@ -24,7 +24,9 @@ class GameView {
     updateFrame(field, player) {
         field.clearFrame(this.context);
         this.drawFrame(field, player);
+        field.hideCells();
         this.drawViewingRange(player, field)
+        
     }
 
     drawLine(x1, y1, x2, y2) {
@@ -55,35 +57,37 @@ class GameView {
             const directionX = Math.cos(angle) > 0;
             const startX = Math.floor(px / CELL_SET.w + directionX) * CELL_SET.w;
             const stepX = CELL_SET.w * (directionX ? 1 : -1);
-            let rayY;
-    
-            //this.drawLine(px, py, px + PLAYER_SET.visualField.range * Math.cos(angle), py + PLAYER_SET.visualField.range * Math.sin(angle));
-            for (let rayX = startX; true; rayX += stepX) {
-                rayY = (rayX - px) * tg + py;
-                this.drawCircle(rayX + field.x, rayY + field.y, 5);
+            let rayY = (startX - px) * tg + py, indexY;
 
-                if (directionX) {
-                    if (rayX >= px + PLAYER_SET.visualField.range * Math.cos(angle)) break;
-                } else {
-                    if (rayX <= py + PLAYER_SET.visualField.range * Math.cos(angle)) break;
-                }
-            }
-            //console.log(Math.sin(angle));
             const directionY = Math.sin(angle) < 0;
             const startY = Math.floor(py / CELL_SET.h + directionY) * CELL_SET.h;
             const stepY = CELL_SET.h * (directionY ? 1 : -1);
-            let rayX;
-
-            for (let rayY = startY; true; rayY += stepY) {
-                //console.log(rayY, stepY, startY);
-                //console.log(directionY)
+            let rayX, indexX;
+    
+            for (let rayX = startX; (rayX - px) ** 2 + ((rayX - px) * tg) ** 2 <= PLAYER_SET.visualField.range ** 2; rayX += stepX) {
+                rayY = (rayX - px) * tg + py;
+                indexX = Math.floor(rayX / CELL_SET.w);
+                indexY = Math.floor(rayY / CELL_SET.h);
+                if (!(0 <= indexX && indexX <= field.w && 0 <= indexY && indexY <= field.h)) break;
+                if (!field.cells[indexX][indexY]) break;
+                field.cells[indexX][indexY].active = true;
+                if (!(0 <= indexX - 1)) break;
+                if (!field.cells[indexX - 1][indexY]) break;
+                field.cells[indexX - 1][indexY].active = true;
+                //this.drawCircle(rayX + field.x, rayY + field.y, 5);
+            }
+            
+            for (let rayY = startY; ((rayY - py) / tg) ** 2 + (rayY - py) ** 2 <= PLAYER_SET.visualField.range ** 2; rayY += stepY) {
                 rayX = (rayY - py) / tg + px;
-                this.drawCircle(rayX + field.x, rayY + field.y, 5);
-                if (directionY) {
-                    if (rayY >= py - PLAYER_SET.visualField.range * Math.sin(angle)) break;
-                } else {
-                    if (rayY <= py - PLAYER_SET.visualField.range * Math.sin(angle)) break;
-                }
+                indexX = Math.floor(rayX / CELL_SET.w);
+                indexY = Math.floor(rayY / CELL_SET.h);
+                if (!(0 <= indexX && indexX <= field.w && 0 <= indexY && indexY <= field.h)) break;
+                if (!field.cells[indexX][indexY]) break;
+                field.cells[indexX][indexY].active = true;
+                if (!(0 <= indexY - 1)) break;
+                if (!field.cells[indexX][indexY - 1]) break;
+                field.cells[indexX][indexY - 1].active = true;
+                //this.drawCircle(rayX + field.x, rayY + field.y, 5);
             }
         }
     }

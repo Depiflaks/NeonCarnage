@@ -20,7 +20,6 @@ class Weapon extends Drawable {
     }
    
     draw(player, context) {
-        
         if (this.status === WEAPON_STATE.onTheGround) {
             const weaponX = this.x;
             const weaponY = this.y;
