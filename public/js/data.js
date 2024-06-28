@@ -65,8 +65,13 @@ const weaponSet = [
         x: 10,
         y: 5,
         battleType: "distant",
+<<<<<<< Updated upstream
         rapidity: 50,
         grouping: 1,
+=======
+        rapidity: 1000,
+        grouping: 10,
+>>>>>>> Stashed changes
         deviation: 0.1,
         onGround: "pink",
         inHand: "white"

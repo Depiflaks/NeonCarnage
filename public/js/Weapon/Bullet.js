@@ -2,7 +2,7 @@ import { BULLET_SET } from "../settings.js";
 import { Moveable } from "../Interface/Moveable.js";
 
 class Bullet extends Moveable {
-    constructor({x, y, angle, rapidity, deviation}) {
+    constructor({x, y, angle, deviation}) {
         super(x, y, BULLET_SET.w, BULLET_SET.h, BULLET_SET.radius);
 
         const angleDeviation = (Math.random() * 2 - 1) * deviation;

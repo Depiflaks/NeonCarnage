@@ -27,8 +27,13 @@ class PlayerController {
     }
 
     mouseDown(event) { 
+<<<<<<< Updated upstream
         if ((this.model.weapon != null) && (this.model.weapon.battleType == "distant")) {
             if (!this.model.weapon.shootingInterval) {
+=======
+        if ((this.model.weapon != null) && (this.model.weapon.model.battleType == "distant")) {
+            if ((!this.model.weapon.model.shootingInterval) && (!this.model.weapon.model.shotDelay)) {
+>>>>>>> Stashed changes
                 this.shot();  
                 this.model.weapon.shootingInterval = setInterval(() => this.shot(), this.model.weapon.rapidity);
             }
@@ -40,10 +45,19 @@ class PlayerController {
             const x = this.model.getPosition().x;
             const y = this.model.getPosition().y;
             const angle = this.model.getAngle();
+<<<<<<< Updated upstream
             const deviation = this.model.weapon.deviation;
             const rapidity = this.model.weapon.rapidity;
             this.model.bullets.push(new Bullet({x, y, angle, rapidity, deviation}));
+=======
+            const deviation = this.model.weapon.model.deviation;
+            this.model.bullets.push(new Bullet({x, y, angle, deviation}));
+            this.model.weapon.model.shotDelay = true;
+>>>>>>> Stashed changes
         }
+        setTimeout(() => {
+            this.model.weapon.model.shotDelay = false;
+        }, this.model.weapon.model.rapidity);
     }
 
     mouseUp(event)
