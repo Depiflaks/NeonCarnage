@@ -10,6 +10,9 @@ class GameController {
 
         this.player = new PlayerController(this.view.context, player);
         addEventListener("keydown", (event) => this.keyDown(event));
+        canvas.addEventListener('contextmenu', (event) => {
+            event.preventDefault(); // Отключаем контекстное меню при правом клике
+        });
     }
     
     moveFrame() {

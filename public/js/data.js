@@ -54,7 +54,7 @@ const weaponSet = [
         x: 3, 
         y: 2, 
         battleType: "close",  //ближний или дальний бой
-        rapidity: 10,           //скорострельность
+        rapidity: 10,           //скорострельность (задержка в миллисек)
         grouping: 10,           //кучность
         deviation: 0.5,          //отклонение
         onGround: "pink",       //текстура на земле
@@ -65,8 +65,8 @@ const weaponSet = [
         x: 10,
         y: 5,
         battleType: "distant",
-        rapidity: 10,
-        grouping: 10,
+        rapidity: 50,
+        grouping: 1,
         deviation: 0.1,
         onGround: "pink",
         inHand: "white"

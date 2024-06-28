@@ -45,11 +45,11 @@ const WEAPON_SET = {
 
 const BULLET_SET = {
     w: 20,
-    h: 20,
-    radius: 10,
-    speed: 10,
+    h: 40,
+    radius: 5,
+    speed: 20,
     pythagoreanFactor: Math.sqrt(2)/2,
-    color: "white",
+    color: "orange",
 };
 
 const KEYBOARD_E = 'KeyE';
