@@ -1,16 +1,13 @@
-// import {} from "../settings.js";
-
 class Trajectory {
     constructor({x, y, angle}, context) {
         this.x = x;
         this.y = y;
         this.angle = angle;
         this.context = context;
-        this.currentAngle = -Math.PI / 4; // Начальный угол дуги
-        this.endAngle = Math.PI / 4; // Конечный угол дуги
+        this.currentAngle = -Math.PI / 4; // Initial arc angle
+        this.endAngle = Math.PI / 4; // Final arc angle
         this.maxLength = 150;
         this.isAnimating = false;
-        //this.isLeftToRight = true; // Флаг для чередования сторон
         this.animationSpeed = 0.1;
     }
 
@@ -27,50 +24,34 @@ class Trajectory {
         this.context.stroke();
     }
 
-    animateStrike(model, onAnimationEnd) {
-        if (this.isAnimating) return; // Если анимация уже идет, не запускаем новую
+    animateStrike(model, isLeftToRight, onAnimationEnd) {
+        if (this.isAnimating) return;
 
-        this.isAnimating = true; // Устанавливаем флаг анимации в true
+        this.isAnimating = true;
+        console.log(isLeftToRight);
 
-        this.currentAngle = -Math.PI / 4; // Сбрасываем угол для новой анимации
+        const targetAngle = isLeftToRight ? this.endAngle : -Math.PI / 4;
+        const stepDirection = isLeftToRight ? -this.animationSpeed : this.animationSpeed;
 
-        /*if (this.isLeftToRight === true) {
-            this.currentAngle = Math.PI / 4; // Начальный угол дуги
-            this.endAngle = -Math.PI / 4; // Конечный угол дуги
-            this.animationSpeed = -this.animationSpeed;
-        } else {
-            this.currentAngle = -Math.PI / 4; // Начальный угол дуги
-            this.endAngle = Math.PI / 4; // Конечный угол дуги
-            this.animationSpeed = -this.animationSpeed;
-        }*/
-            const step = () => {
-                if (this.currentAngle < this.endAngle) {
-                    this.currentAngle += this.animationSpeed;
-                    this.x = model.x;
-                    this.y = model.y;
-                    this.draw();
-                    requestAnimationFrame(step);
-
-                } else {
-                    this.currentAngle = -Math.PI / 4; // Сбрасываем угол для будущих ударов
-                    this.isAnimating = false;
-                    if (onAnimationEnd) {
-                        onAnimationEnd();
-                    }
+        const step = () => {
+            if ((isLeftToRight && this.currentAngle > -Math.PI / 4) || (!isLeftToRight && this.currentAngle < this.endAngle)) {
+                this.currentAngle += stepDirection;
+                this.x = model.x;
+                this.y = model.y;
+                this.draw();
+                requestAnimationFrame(step);
+            } else {
+                this.currentAngle = -Math.PI / 4; // Reset angle for future strikes
+                this.isAnimating = false;
+                if (onAnimationEnd) {
+                    onAnimationEnd();
                 }
-            };
+            }
+        };
 
-        /*if(this.isLeftToRight === true) {
-            this.isLeftToRight = false;
-        } else {
-            this.isLeftToRight = true;
-        }*/
-            requestAnimationFrame(step);
-
-
-
+        this.currentAngle = targetAngle;
+        requestAnimationFrame(step);
     }
-
 }
 
 export { Trajectory }
