@@ -51,15 +51,15 @@ class GameView {
         px -= field.x;
         py -= field.y;
         //console.log(px, py);
-        for (let angle = 0 * RAD; angle <= 360 * RAD; angle += PLAYER_SET.visualField.angleStep) {
+        for (let angle = 90 * RAD; angle <= 180 * RAD; angle += PLAYER_SET.visualField.angleStep) {
             const tg = Math.tan(angle);
 
             const directionX = Math.cos(angle) > 0;
             const startX = Math.floor(px / CELL_SET.w + directionX) * CELL_SET.w;
             const stepX = CELL_SET.w * (directionX ? 1 : -1);
-            let rayY = (startX - px) * tg + py, indexY;
+            let rayY, indexY;
 
-            const directionY = Math.sin(angle) < 0;
+            const directionY = Math.sin(angle) > 0;
             const startY = Math.floor(py / CELL_SET.h + directionY) * CELL_SET.h;
             const stepY = CELL_SET.h * (directionY ? 1 : -1);
             let rayX, indexX;
@@ -68,26 +68,38 @@ class GameView {
                 rayY = (rayX - px) * tg + py;
                 indexX = Math.floor(rayX / CELL_SET.w);
                 indexY = Math.floor(rayY / CELL_SET.h);
+                for (let wall of field.verticalWalls) {
+                    //console.log(wall, indexY, indexY)
+                }
+                // if (field.verticalWalls.filter(
+                //     wall => ((wall.startIndY === indexY || wall.endIndY === indexY) && wall.startIndX === indexX)
+                // ).length > 0) break;
+
                 if (!(0 <= indexX && indexX <= field.w && 0 <= indexY && indexY <= field.h)) break;
                 if (!field.cells[indexX][indexY]) break;
                 field.cells[indexX][indexY].active = true;
                 if (!(0 <= indexX - 1)) break;
                 if (!field.cells[indexX - 1][indexY]) break;
                 field.cells[indexX - 1][indexY].active = true;
-                //this.drawCircle(rayX + field.x, rayY + field.y, 5);
+                this.drawCircle(rayX + field.x, rayY + field.y, 5);
             }
             
             for (let rayY = startY; ((rayY - py) / tg) ** 2 + (rayY - py) ** 2 <= PLAYER_SET.visualField.range ** 2; rayY += stepY) {
                 rayX = (rayY - py) / tg + px;
                 indexX = Math.floor(rayX / CELL_SET.w);
                 indexY = Math.floor(rayY / CELL_SET.h);
+
+                // if (field.horisontalWalls.filter(
+                //     wall => (wall.startIndY === indexY && (wall.startIndX === indexX || wall.endIndX === indexX))
+                // ).length > 0) break;
+
                 if (!(0 <= indexX && indexX <= field.w && 0 <= indexY && indexY <= field.h)) break;
                 if (!field.cells[indexX][indexY]) break;
                 field.cells[indexX][indexY].active = true;
                 if (!(0 <= indexY - 1)) break;
                 if (!field.cells[indexX][indexY - 1]) break;
                 field.cells[indexX][indexY - 1].active = true;
-                //this.drawCircle(rayX + field.x, rayY + field.y, 5);
+                this.drawCircle(rayX + field.x, rayY + field.y, 5);
             }
         }
     }

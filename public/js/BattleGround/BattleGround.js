@@ -36,7 +36,7 @@ class BattleGround extends Drawable {
         groundList.map(
             cell => {
                 const [x, y] = cell;
-                this.cells[x][y] = new Cell(x, y); 
+                this.cells[x][y] = new Cell(y, x); 
             }
         );
 
@@ -67,7 +67,7 @@ class BattleGround extends Drawable {
         this.weapons.map(weapon => {
             indexX = Math.floor((weapon.x - this.x) / CELL_SET.w);
             indexY = Math.floor((weapon.y - this.y) / CELL_SET.h);
-            console.log(indexX, indexY);
+            //console.log(indexX, indexY);
             if (this.cells[indexX][indexY].active) weapon.draw(player, context);
         });
     }

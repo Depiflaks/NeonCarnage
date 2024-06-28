@@ -80,9 +80,9 @@ class GameController {
     play() {
         this.update();
         this.view.updateFrame(this.model.field, this.player);
-        this.checkIntersections(this.player, this.model.field.verticalWalls + this.model.field.horisontalWalls);
+        this.checkIntersections(this.player, [].concat(this.model.field.verticalWalls, this.model.field.horisontalWalls));
         this.player.updatePosition();
-        requestAnimationFrame(() => {this.play()});
+        //requestAnimationFrame(() => {this.play()});
     }
 }
 
