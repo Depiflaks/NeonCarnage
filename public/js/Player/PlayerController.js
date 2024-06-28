@@ -3,6 +3,7 @@ import { Weapon } from "../Weapon/Weapon.js";
 import { Bullet } from "../Weapon/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { PlayerView } from "./PlayerView.js";
+import { Trajectory } from "../Weapon/Trajectory.js";
 
 class PlayerController {
     constructor(context, player) {
@@ -52,6 +53,33 @@ class PlayerController {
         {
             clearInterval(this.model.weapon.model.shootingInterval);
             this.model.weapon.model.shootingInterval = null;
+        }
+
+        this.model.weapon.battleType = "close";
+        if((this.model.weapon.battleType === "close")) {
+            this.strike();
+        }
+    }
+
+    strike() {
+        if (this.isStriking) return;
+        this.isStriking = true;
+
+        const weapon = this.model.weapon;
+
+        if (weapon.status === WEAPON_STATE.inTheHand) {
+            const { x, y } = this.model.getPosition();
+            const angle = this.model.getAngle();
+            const trajectory = new Trajectory({
+                x: x,
+                y: y,
+                angle: angle
+            }, this.view.context);
+
+            trajectory.animateStrike(this.model, this.isLeftToRight, () => {
+                this.isStriking = false;
+                this.isLeftToRight = !this.isLeftToRight;
+            });
         }
     }
 
