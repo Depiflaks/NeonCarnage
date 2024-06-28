@@ -17,6 +17,7 @@ class GameView {
             player.model.getPosition(), 
             player.model.getAngle()
         );
+        player.view.drawBullets(player.model.getBullets());
         field.drawWalls(this.context);
     }
 

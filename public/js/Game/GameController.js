@@ -10,6 +10,9 @@ class GameController {
 
         this.player = new PlayerController(this.view.context, player);
         addEventListener("keydown", (event) => this.keyDown(event));
+        canvas.addEventListener('contextmenu', (event) => {
+            event.preventDefault(); // Отключаем контекстное меню при правом клике
+        });
     }
     
     moveFrame() {
@@ -20,6 +23,22 @@ class GameController {
         const period = (Math.abs(dx) + Math.abs(dy) < 0.5) ? 1 : CAMERA.period;
         this.model.field.move(dx / period, dy / period);
         this.player.model.move(dx / period, dy / period);
+        
+        
+    }
+
+    updateBullets(player, barriers) {
+        player.bullets = player.bullets.filter(
+            bullet => {
+                bullet.updatePosition();
+                for (const barrier of barriers) {
+                    if (bullet.isIntersect(barrier)) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        );
     }
 
     keyDown(event) {
@@ -52,6 +71,7 @@ class GameController {
 
     update() {
         this.moveFrame();
+        this.updateBullets(this.player.model, this.model.field.walls);
     }
 
     checkIntersections(player, drawableArray) {

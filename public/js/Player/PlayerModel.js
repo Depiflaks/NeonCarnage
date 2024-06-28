@@ -12,6 +12,7 @@ class PlayerModel extends Moveable {
             d: 0,
             e: 0,
         };
+        this.bullets = [];
     }
 
     updatePosition() {
@@ -67,6 +68,10 @@ class PlayerModel extends Moveable {
         return { x: this.x, y: this.y };
     }
 
+    getBullets() {
+        return this.bullets;
+    }
+
     getKeyPressed() {
         return this.keyPressed;
     }
@@ -77,6 +82,15 @@ class PlayerModel extends Moveable {
 
     setWeapon(weapon) {
         this.weapon = weapon; 
+    }
+
+    move(dx, dy) {
+        super.move(dx, dy);
+        this.bullets.map(
+            bullet => {
+                bullet.move(dx, dy);
+            }
+        );
     }
 }
 

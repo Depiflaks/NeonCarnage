@@ -36,6 +36,14 @@ class PlayerView {
         this.context.lineTo(x + 300 * Math.cos(angle), y + 300 * Math.sin(angle));
         this.context.stroke();
     }
+
+    drawBullets(bullets) {
+        bullets.map(
+            bullet => {
+                bullet.draw(this.context);
+            }
+        );
+    }
 }
 
 export { PlayerView };

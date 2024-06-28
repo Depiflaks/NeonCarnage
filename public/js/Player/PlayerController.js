@@ -1,4 +1,6 @@
-import { PLAYER_SET } from "../settings.js";
+import { PLAYER_SET, WEAPON_STATE } from "../settings.js";
+import { Weapon } from "../Weapon/Weapon.js";
+import { Bullet } from "../Weapon/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { PlayerView } from "./PlayerView.js";
 
@@ -8,6 +10,9 @@ class PlayerController {
         this.view = new PlayerView(context);
 
         addEventListener("mousemove", (event) => this.mouseMove(event));
+        addEventListener("mousedown", (event) => this.mouseDown(event));
+        addEventListener("mouseleave", (event) => this.mouseUp(event));
+        addEventListener("mouseup", (event) => this.mouseUp(event));
         addEventListener("keydown", (event) => this.keyDown(event));
         addEventListener("keyup", (event) => this.keyUp(event));
     }
@@ -19,6 +24,35 @@ class PlayerController {
         const difference = { x: v2.x - v1.x, y: v2.y - v1.y };
         const angle = Math.atan2(difference.x, -difference.y) - Math.PI / 2;
         this.model.setAngle(angle);
+    }
+
+    mouseDown(event) { 
+        if ((this.model.weapon != null) && (this.model.weapon.battleType == "distant")) {
+            if (!this.model.weapon.shootingInterval) {
+                this.shot();  
+                this.model.weapon.shootingInterval = setInterval(() => this.shot(), this.model.weapon.rapidity);
+            }
+        }
+    }
+
+    shot() {
+        for (let i = 0; i < this.model.weapon.grouping; i++) {
+            const x = this.model.getPosition().x;
+            const y = this.model.getPosition().y;
+            const angle = this.model.getAngle();
+            const deviation = this.model.weapon.deviation;
+            const rapidity = this.model.weapon.rapidity;
+            this.model.bullets.push(new Bullet({x, y, angle, rapidity, deviation}));
+        }
+    }
+
+    mouseUp(event)
+    {
+        if((this.model.weapon != null) && (this.model.weapon.battleType == "distant"))
+        {
+            clearInterval(this.model.weapon.shootingInterval);
+            this.model.weapon.shootingInterval = null;
+        }
     }
 
     keyDown(event) {
