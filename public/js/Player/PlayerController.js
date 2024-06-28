@@ -34,7 +34,7 @@ class PlayerController {
                 this.model.weapon.model.shootingInterval = setInterval(() => this.shot(), this.model.weapon.model.rapidity);
             }
         }
-        if((this.model.weapon != null) && (this.model.weapon.battleType === "close")) {
+        if((this.model.weapon != null) && (this.model.weapon.model.battleType === "close")) {
             this.strike();
         }
     }
@@ -56,11 +56,6 @@ class PlayerController {
         {
             clearInterval(this.model.weapon.model.shootingInterval);
             this.model.weapon.model.shootingInterval = null;
-        }
-
-        this.model.weapon.battleType = "close";
-        if((this.model.weapon.battleType === "close")) {
-            this.strike();
         }
     }
 

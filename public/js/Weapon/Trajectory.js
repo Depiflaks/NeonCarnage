@@ -37,6 +37,7 @@ class Trajectory {
                 this.currentAngle += stepDirection;
                 this.x = model.x;
                 this.y = model.y;
+                this.angle = model.angle;
                 this.draw();
                 requestAnimationFrame(step);
             } else {
