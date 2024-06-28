@@ -4,8 +4,8 @@ class Trajectory {
         this.y = y;
         this.angle = angle;
         this.context = context;
-        this.currentAngle = -Math.PI / 4; // Initial arc angle
-        this.endAngle = Math.PI / 4; // Final arc angle
+        this.currentAngle = -Math.PI / 4;
+        this.endAngle = Math.PI / 4;
         this.maxLength = 150;
         this.isAnimating = false;
         this.animationSpeed = 0.1;
@@ -41,7 +41,7 @@ class Trajectory {
                 this.draw();
                 requestAnimationFrame(step);
             } else {
-                this.currentAngle = -Math.PI / 4; // Reset angle for future strikes
+                this.currentAngle = -Math.PI / 4;
                 this.isAnimating = false;
                 if (onAnimationEnd) {
                     onAnimationEnd();

@@ -36,8 +36,8 @@ class PlayerController {
     }
 
     strike() {
-        if (this.isStriking) return; // Если уже идет удар, новый не запускаем
-        this.isStriking = true; // Устанавливаем флаг удара
+        if (this.isStriking) return;
+        this.isStriking = true;
 
         const weapon = this.model.weapon;
 
@@ -51,8 +51,8 @@ class PlayerController {
             }, this.view.context);
 
             trajectory.animateStrike(this.model, this.isLeftToRight, () => {
-                this.isStriking = false; // Сбрасываем флаг удара после завершения анимации
-                this.isLeftToRight = !this.isLeftToRight; // Toggle the direction for the next strike
+                this.isStriking = false;
+                this.isLeftToRight = !this.isLeftToRight;
             });
         }
     }
