@@ -28,7 +28,6 @@ class Trajectory {
         if (this.isAnimating) return;
 
         this.isAnimating = true;
-        console.log(isLeftToRight);
 
         const targetAngle = isLeftToRight ? this.endAngle : -Math.PI / 4;
         const stepDirection = isLeftToRight ? -this.animationSpeed : this.animationSpeed;
