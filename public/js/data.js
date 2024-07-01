@@ -58,18 +58,20 @@ const weaponSet = [
         grouping: 10,           //кучность
         deviation: 0.5,          //отклонение
         onGround: "pink",       //текстура на земле
-        inHand: "white" //текстура в руках
+        inHand: "white", //текстура в руках
+        amount: 0 //количество пуль в магазине(для холодного - 0)
     },         
     {
         name: "wep2",
         x: 10,
         y: 5,
         battleType: "distant",
-        rapidity: 1000,
+        rapidity: 50,
         grouping: 1,
         deviation: 0.1,
         onGround: "pink",
-        inHand: "white"
+        inHand: "white",
+        amount: 20
     }
 ];
 

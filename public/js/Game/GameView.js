@@ -19,6 +19,7 @@ class GameView {
         );
         player.view.drawBullets(player.model.getBullets());
         field.drawWalls(this.context);
+        player.view.drawBulletAmount(player.model);
     }
 
     updateFrame(field, player) {

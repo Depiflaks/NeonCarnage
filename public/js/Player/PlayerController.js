@@ -40,13 +40,16 @@ class PlayerController {
     }
 
     shot() {
-        for (let i = 0; i < this.model.weapon.model.grouping; i++) {
-            const x = this.model.getPosition().x;
-            const y = this.model.getPosition().y;
-            const angle = this.model.getAngle();
-            const deviation = this.model.weapon.model.deviation;
-            const rapidity = this.model.weapon.model.rapidity;
-            this.model.bullets.push(new Bullet({x, y, angle, rapidity, deviation}));
+        if(this.model.weapon.model.amount > 0) {
+            this.model.weapon.model.amount -= 1;
+            for (let i = 0; i < this.model.weapon.model.grouping; i++) {
+                const x = this.model.getPosition().x;
+                const y = this.model.getPosition().y;
+                const angle = this.model.getAngle();
+                const deviation = this.model.weapon.model.deviation;
+                const rapidity = this.model.weapon.model.rapidity;
+                this.model.bullets.push(new Bullet({x, y, angle, rapidity, deviation}));
+            }
         }
     }
 
@@ -95,11 +98,20 @@ class PlayerController {
             'KeyA': 'a',
             'KeyS': 's',
             'KeyD': 'd',
+            'KeyR': 'r',
         };
         const key = keyMap[code];
         if (key) {
             this.model.setKeyPressed(key, state);
             this.updateSpeed();
+            this.updateBulletAmount();
+        }
+    }
+
+    updateBulletAmount() {
+        const keys = this.model.getKeyPressed();
+        if (keys.r) {
+            this.model.weapon.recharge();
         }
     }
 

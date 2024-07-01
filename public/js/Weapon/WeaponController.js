@@ -12,6 +12,11 @@ class WeaponController {
         this.model.x = player.x;
         this.model.y = player.y;
     }
+
+    recharge() {
+        this.model.amount = this.model.maxAmount;
+        console.log("Перезарядка!!!");
+    }
 }
 
 export { WeaponController };
