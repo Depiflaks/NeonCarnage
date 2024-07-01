@@ -15,7 +15,7 @@ class WeaponController {
 
     recharge() {
         this.model.amount = this.model.maxAmount;
-        console.log("Перезарядка!!!");
+        this.model.isRecharging = false;
     }
 }
 
