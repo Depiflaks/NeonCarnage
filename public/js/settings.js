@@ -1,4 +1,4 @@
-
+const RAD = Math.PI / 180;
 
 const WINDOW = {
     w: 1400,
@@ -9,12 +9,14 @@ const WINDOW = {
 const CELL_SET = {
     w: 150,
     h: 150,
-    c: "green",
+    activeColor: "green",
+    inactiveColor: "darkgreen",
 };
 
 const WALL_SET = {
     h: 20,
-    c: "orange",
+    activeColor: "orange",
+    inactiveColor: "brown",
 }
 
 const PLAYER_SET = {
@@ -24,7 +26,11 @@ const PLAYER_SET = {
     headColor: "red",
     bodyColor: "blue",
     speed: 6,
-    pythagoreanFactor: Math.sqrt(2)/2,
+    visualField: {
+        range: 350,
+        angleStep: 15 * RAD
+    },
+    pythagoreanFactor: Math.sqrt(2) / 2,
 }
 
 const CAMERA = {
@@ -60,4 +66,4 @@ const WEAPON_STATE = {
     inTheHand: 1,
 }
 
-export {WINDOW, CELL_SET, WALL_SET, PLAYER_SET, BULLET_SET, WEAPON_SET, CAMERA, KEYBOARD_E, MIN_DISTANCE, WEAPON_STATE}
+export {WINDOW, CELL_SET, WALL_SET, PLAYER_SET, BULLET_SET, WEAPON_SET, CAMERA, KEYBOARD_E, MIN_DISTANCE, WEAPON_STATE, RAD}

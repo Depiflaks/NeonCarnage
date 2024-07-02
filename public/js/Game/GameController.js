@@ -17,10 +17,10 @@ class GameController {
     
     moveFrame() {
         const [dx, dy] = [
-            CAMERA.center.x - this.player.model.getPosition().x, 
-            CAMERA.center.y - this.player.model.getPosition().y
+            Math.round(CAMERA.center.x - this.player.model.getPosition().x), 
+            Math.round(CAMERA.center.y - this.player.model.getPosition().y)
         ];
-        const period = (Math.abs(dx) + Math.abs(dy) < 0.5) ? 1 : CAMERA.period;
+        const period = (Math.abs(dx) + Math.abs(dy) < 5) ? 1 : CAMERA.period;
         this.model.field.move(dx / period, dy / period);
         this.player.model.move(dx / period, dy / period);
         
@@ -101,11 +101,10 @@ class GameController {
     play() {
         this.update();
         this.view.updateFrame(this.model.field, this.player);
-        this.checkIntersections(this.player, this.model.field.walls);
+        this.checkIntersections(this.player, [].concat(this.model.field.verticalWalls, this.model.field.horisontalWalls));
         this.player.updatePosition();
-        
         requestAnimationFrame(() => {this.play()});
-    }   
+    }
 }
 
 export { GameController };
