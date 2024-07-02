@@ -77,6 +77,8 @@ class BattleGround extends Drawable {
 
     hideCells() {
         this.cells.map(row => row.map(cell => cell.active = false));
+        //this.verticalWalls.map(wall => wall.active = false);
+        //this.horisontalWalls.map(wall => wall.active = false);
     }
 
     move(dx, dy) {

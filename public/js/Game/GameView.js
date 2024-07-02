@@ -67,15 +67,33 @@ class GameView {
             [x, y] = [ray.x / CELL_SET.w, ray.y / CELL_SET.h];
             if (vertical) {
                 if (x == wall.startIndX && wall.startIndY <= y && y <= wall.endIndY) {
+                    //wall.active = true;
                     return true;
                 }
             } else {
                 if (y == wall.startIndY && wall.startIndX <= x && x <= wall.endIndX) {
+                    //wall.active = true;
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    setActive(x, y, field, vertical) {
+        let indexX = Math.floor(x / CELL_SET.w);
+        let indexY = Math.floor(y / CELL_SET.h);
+        
+        if (!(0 <= indexX && indexX <= field.w && 0 <= indexY && indexY <= field.h)) return;
+        if (!field.cells[indexX][indexY]) return;
+        field.cells[indexX][indexY].active = true;
+
+        let deltaX = vertical ? -1 : 0;
+        let deltaY = vertical ? 0 : -1;
+        if (!(0 <= indexX + deltaX)) return;
+        if (!(0 <= indexY + deltaY)) return;
+        if (!field.cells[indexX + deltaX][indexY + deltaY]) return;
+        field.cells[indexX + deltaX][indexY + deltaY].active = true;
     }
 
     drawViewingRange(player, field) {
@@ -86,7 +104,7 @@ class GameView {
         const size = CELL_SET.w;
         const angleStep = PLAYER_SET.visualField.angleStep;
         const range = PLAYER_SET.visualField.range;
-        let vx, vy, hx, hy;
+        let delta;
         // vertical -> x
         // horisontal -> y
 
@@ -122,6 +140,7 @@ class GameView {
                 horisontal.x = px - (horisontal.y - py) / tg;
                 vertical.distant = this.distant(vertical.x - px, vertical.y - py);
                 horisontal.distant = this.distant(horisontal.x - px, horisontal.y - py);
+                delta = vertical.distant - horisontal.distant;
                 // проверка на выход из range
                 if (horisontal.distant > range) {
                     horisontal.inRange = false;
@@ -145,27 +164,26 @@ class GameView {
                     break;
                 }
                 // если горизонтальный луч коснулся стены, проверяем длину лучей
-                if (horisontal.isWall && (horisontal.distant - vertical.distant < 0)) {
+                if (horisontal.isWall && delta > 0) {
                     break;
                 }
                 // если вертикальный луч коснулся стены, проверяем длину лучей
-                if (vertical.isWall && (vertical.distant - horisontal.distant < 0)) {
+                if (vertical.isWall && delta < 0) {
                     break;
                 }
                 // пускаем лучи, которые находятся в области, дальше и обрабатываем точки
-                
-                if (vertical.inRange && !vertical.isWall) {
-                    console.log(vertical)
-                    this.drawCircle(vertical.x, vertical.y, 5, "blue", field);
+                if (vertical.inRange && !vertical.isWall && delta < 0) {
+                    this.setActive(vertical.x, vertical.y, field, true);
+                    //this.drawCircle(vertical.x, vertical.y, 5, "blue", field);
                     vertical.x += vertical.step;
                 }
-                if (horisontal.inRange && !horisontal.isWall) {
-                    console.log(horisontal)
-                    this.drawCircle(horisontal.x, horisontal.y, 5, "red", field);
+                if (horisontal.inRange && !horisontal.isWall && delta > 0) {
+                    this.setActive(horisontal.x, horisontal.y, field, false);
+                   // this.drawCircle(horisontal.x, horisontal.y, 5, "red", field);
                     horisontal.y += horisontal.step;
                 }
             }
-            this.strokeCircle(px, py, range, "red", field);
+            //this.strokeCircle(px, py, range, "red", field);
         }
 
         //     for (let rayX = startX; (rayX - px) ** 2 + ((rayX - px) * tg) ** 2 <= PLAYER_SET.visualField.range ** 2; rayX += stepX) {

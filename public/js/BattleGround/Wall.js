@@ -16,7 +16,7 @@ class Wall extends Drawable {
     }
 
     draw(context) {
-        context.fillStyle = this.active ? WALL_SET.activeColor : WALL_SET.inactiveColor;
+        context.fillStyle = WALL_SET.activeColor;
         context.fillRect(this.x, this.y, this.w, this.h);
     }
 
