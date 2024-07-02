@@ -65,13 +65,13 @@ class GameController {
     dropWeapon() {
         this.player.model.weapon.unsetPlayer(this.player.model);
         this.player.model.weapon.model.status = WEAPON_STATE.onTheGround;
-        console.log(this.player.model.weapon);
+        //console.log(this.player.model.weapon);
         this.player.model.weapon = null;
     }
 
     update() {
         this.moveFrame();
-        this.updateBullets(this.player.model, this.model.field.walls);
+        this.updateBullets(this.player.model, [].concat(this.model.field.verticalWalls, this.model.field.horisontalWalls));
     }
 
     checkIntersections(player, drawableArray) {

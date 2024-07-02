@@ -155,6 +155,7 @@ class PlayerController {
         }
         return false;
     }
+    
     updatePosition() {
         this.model.updatePosition();
     }

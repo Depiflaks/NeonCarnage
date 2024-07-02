@@ -60,10 +60,11 @@ class BattleGround extends Drawable {
     }
 
     drawWeapons(player, context) {
+        let indexX, indexY;
         this.weapons.map(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) / CELL_SET.w);
             indexY = Math.floor((weapon.model.y - this.y) / CELL_SET.h);
-
+            //console.log(indexX, indexY)
             if (this.cells[indexX][indexY].active) weapon.view.draw(
                 {
                     x: weapon.model.x, 

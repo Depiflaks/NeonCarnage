@@ -136,7 +136,7 @@ class GameView {
                 inRange: true,
                 isWall: false,
             }
-            while (true) {
+            for (let i = 0; i < 1000; i++) {
                 // считаем кординаты точки
                 vertical.y = py - (vertical.x - px) * tg;
                 horisontal.x = px - (horisontal.y - py) / tg;
