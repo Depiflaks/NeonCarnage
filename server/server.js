@@ -1,23 +1,18 @@
-const WebSocket = require('ws');
+const express = require('express');
+const path = require('path');
 
-const server = new WebSocket.Server({ port: 8080 });
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-server.on('connection', (ws) => {
-    console.log('Новое подключение');
+// Настройка Express для обслуживания статических файлов из папки public
+app.use(express.static(path.join(__dirname, 'public')));
 
-    ws.on('message', (message) => {
-        const data = JSON.parse(message);
-        console.log(`Получены данные: x=${data.x}, y=${data.y}`);
-        // Здесь можно добавить обработку полученных данных
-    });
-
-    ws.on('close', () => {
-        console.log('Соединение закрыто');
-    });
-
-    ws.on('error', (error) => {
-        console.error('Ошибка WebSocket: ', error);
-    });
+// Маршрут для отправки файла game.html при запросе /
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../templates/game/game.html'));
 });
 
-console.log('WebSocket сервер запущен на ws://localhost:8080');
+// Слушаем указанный порт и выводим сообщение о запуске сервера
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});

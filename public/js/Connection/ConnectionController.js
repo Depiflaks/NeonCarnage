@@ -1,6 +1,6 @@
 class ConnectionController {
     constructor() {
-        this.socket = new WebSocket('ws://localhost:8080');
+        this.socket = new WebSocket('wss://localhost:8080'); // либо путь к точке входа (хз)
 
         this.socket.addEventListener('open', () => {
             console.log('Соединение установлено');
