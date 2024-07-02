@@ -2,7 +2,7 @@ import { Cell } from "./Cell.js";
 import { VerticalWall} from "./VerticalWall.js";
 import { HorisontalWall} from "./HorisontalWall.js";
 import { CELL_SET, WINDOW } from "../settings.js";
-import { Weapon } from "../Weapon/Weapon.js";
+import { WeaponController } from "../Weapon/WeaponController.js";
 import { Drawable } from "../Interface/Drawable.js";
 
 class BattleGround extends Drawable {
