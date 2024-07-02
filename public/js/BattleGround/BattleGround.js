@@ -23,8 +23,6 @@ class BattleGround extends Drawable {
         this.horisontalWalls = [];
         this.weapons = [];
 
-        
-
         this.cells = Array.from({ length: maxX + 1 }, () => Array(maxY + 1).fill(null));
 
         weaponSet.map(
@@ -36,7 +34,7 @@ class BattleGround extends Drawable {
         groundList.map(
             cell => {
                 const [x, y] = cell;
-                this.cells[x][y] = new Cell(y, x); 
+                this.cells[x][y] = new Cell(x, y); 
             }
         );
 

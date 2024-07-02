@@ -29,79 +29,171 @@ class GameView {
         
     }
 
-    drawLine(x1, y1, x2, y2) {
+    drawLine(x1, y1, x2, y2, color, field) {
         this.context.lineWidth = 1;
-        this.context.strokeStyle = "red";
+        this.context.strokeStyle = color;
         this.context.beginPath();
-        this.context.moveTo(x1, y1);
-        this.context.lineTo(x2, y2);
+        this.context.moveTo(x1 + field.x, y1 + field.y);
+        this.context.lineTo(x2 + field.x, y2 + field.y);
         this.context.stroke();
         //console.log(123, x1, y1, x2, y2)
     }
 
-    drawCircle(x, y, radius) {
-        this.context.fillStyle = "red";
+    drawCircle(x, y, radius, color, field) {
+        this.context.fillStyle = color;
         this.context.beginPath();
-        this.context.arc(x, y, radius, 0, Math.PI * 2, true);
+        this.context.arc(x + field.x, y + field.y, radius, 0, Math.PI * 2, true);
         this.context.fill();
+    }
+
+    strokeCircle(x, y, radius, color, field) {
+        this.context.strokeStyle = color;
+        this.context.beginPath();
+        this.context.arc(x + field.x, y + field.y, radius, 0, Math.PI * 2, true);
+        this.context.stroke();
+    }
+
+    mapping(x, y) {
+        return [Math.floor(x / CELL_SET.w) * CELL_SET.w, Math.floor(y / CELL_SET.h) * CELL_SET.h]
+    }
+
+    distant(x, y) {
+        return Math.sqrt(x ** 2 + y ** 2);
+    }
+
+    wallsIntersect(ray, walls, vertical) {
+        let x, y
+        for (let wall of walls) {
+            [x, y] = [ray.x / CELL_SET.w, ray.y / CELL_SET.h];
+            if (vertical) {
+                if (x == wall.startIndX && wall.startIndY <= y && y <= wall.endIndY) {
+                    return true;
+                }
+            } else {
+                if (y == wall.startIndY && wall.startIndX <= x && x <= wall.endIndX) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     drawViewingRange(player, field) {
         let { x: px, y: py } = player.model.getPosition();
+
         px -= field.x;
         py -= field.y;
-        //console.log(px, py);
-        for (let angle = 90 * RAD; angle <= 180 * RAD; angle += PLAYER_SET.visualField.angleStep) {
+        const size = CELL_SET.w;
+        const angleStep = PLAYER_SET.visualField.angleStep;
+        const range = PLAYER_SET.visualField.range;
+        let vx, vy, hx, hy;
+        // vertical -> x
+        // horisontal -> y
+
+        for (let angle = 0 * RAD; angle <= 360 * RAD; angle += angleStep) {
             const tg = Math.tan(angle);
+            const sin = Math.sin(angle);
+            const cos = Math.cos(angle);
 
-            const directionX = Math.cos(angle) > 0;
-            const startX = Math.floor(px / CELL_SET.w + directionX) * CELL_SET.w;
-            const stepX = CELL_SET.w * (directionX ? 1 : -1);
-            let rayY, indexY;
+            let [startX, startY] = this.mapping(px, py);
+            startY += (sin < 0) ? size : 0;
+            startX += (cos > 0) ? size : 0;
 
-            const directionY = Math.sin(angle) > 0;
-            const startY = Math.floor(py / CELL_SET.h + directionY) * CELL_SET.h;
-            const stepY = CELL_SET.h * (directionY ? 1 : -1);
-            let rayX, indexX;
-    
-            for (let rayX = startX; (rayX - px) ** 2 + ((rayX - px) * tg) ** 2 <= PLAYER_SET.visualField.range ** 2; rayX += stepX) {
-                rayY = (rayX - px) * tg + py;
-                indexX = Math.floor(rayX / CELL_SET.w);
-                indexY = Math.floor(rayY / CELL_SET.h);
-                for (let wall of field.verticalWalls) {
-                    //console.log(wall, indexY, indexY)
+            const vertical = {
+                step: size * ((cos > 0) ? 1 : -1),
+                x: startX,
+                y: 0,
+                distant: 0,
+                inRange: true,
+                isWall: false,
+            }
+
+            const horisontal = {
+                step: size * ((sin < 0) ? 1 : -1),
+                x: 0,
+                y: startY,
+                distant: 0,
+                inRange: true,
+                isWall: false,
+            }
+            while (true) {
+                // считаем кординаты точки
+                vertical.y = py - (vertical.x - px) * tg;
+                horisontal.x = px - (horisontal.y - py) / tg;
+                vertical.distant = this.distant(vertical.x - px, vertical.y - py);
+                horisontal.distant = this.distant(horisontal.x - px, horisontal.y - py);
+                // проверка на выход из range
+                if (horisontal.distant > range) {
+                    horisontal.inRange = false;
+                };
+                if (vertical.distant > range) {
+                    vertical.inRange = false;
+                };
+                // проверка на касание со стеной
+                if (this.wallsIntersect(horisontal, field.horisontalWalls, false)) {
+                    horisontal.isWall = true;
                 }
-                // if (field.verticalWalls.filter(
-                //     wall => ((wall.startIndY === indexY || wall.endIndY === indexY) && wall.startIndX === indexX)
-                // ).length > 0) break;
-
-                if (!(0 <= indexX && indexX <= field.w && 0 <= indexY && indexY <= field.h)) break;
-                if (!field.cells[indexX][indexY]) break;
-                field.cells[indexX][indexY].active = true;
-                if (!(0 <= indexX - 1)) break;
-                if (!field.cells[indexX - 1][indexY]) break;
-                field.cells[indexX - 1][indexY].active = true;
-                this.drawCircle(rayX + field.x, rayY + field.y, 5);
+                if (this.wallsIntersect(vertical, field.verticalWalls, true)) {
+                    vertical.isWall = true;
+                }
+                // если оба луча вышли за область, заканчиваем цикл
+                if (!vertical.inRange && !horisontal.inRange) {
+                    break;
+                }
+                // если оба луча коснулись стены, заканчиваем цикл
+                if (vertical.isWall && horisontal.isWall) {
+                    break;
+                }
+                // если горизонтальный луч коснулся стены, проверяем длину лучей
+                if (horisontal.isWall && (horisontal.distant - vertical.distant < 0)) {
+                    break;
+                }
+                // если вертикальный луч коснулся стены, проверяем длину лучей
+                if (vertical.isWall && (vertical.distant - horisontal.distant < 0)) {
+                    break;
+                }
+                // пускаем лучи, которые находятся в области, дальше и обрабатываем точки
+                
+                if (vertical.inRange && !vertical.isWall) {
+                    console.log(vertical)
+                    this.drawCircle(vertical.x, vertical.y, 5, "blue", field);
+                    vertical.x += vertical.step;
+                }
+                if (horisontal.inRange && !horisontal.isWall) {
+                    console.log(horisontal)
+                    this.drawCircle(horisontal.x, horisontal.y, 5, "red", field);
+                    horisontal.y += horisontal.step;
+                }
             }
-            
-            for (let rayY = startY; ((rayY - py) / tg) ** 2 + (rayY - py) ** 2 <= PLAYER_SET.visualField.range ** 2; rayY += stepY) {
-                rayX = (rayY - py) / tg + px;
-                indexX = Math.floor(rayX / CELL_SET.w);
-                indexY = Math.floor(rayY / CELL_SET.h);
-
-                // if (field.horisontalWalls.filter(
-                //     wall => (wall.startIndY === indexY && (wall.startIndX === indexX || wall.endIndX === indexX))
-                // ).length > 0) break;
-
-                if (!(0 <= indexX && indexX <= field.w && 0 <= indexY && indexY <= field.h)) break;
-                if (!field.cells[indexX][indexY]) break;
-                field.cells[indexX][indexY].active = true;
-                if (!(0 <= indexY - 1)) break;
-                if (!field.cells[indexX][indexY - 1]) break;
-                field.cells[indexX][indexY - 1].active = true;
-                this.drawCircle(rayX + field.x, rayY + field.y, 5);
-            }
+            this.strokeCircle(px, py, range, "red", field);
         }
+
+        //     for (let rayX = startX; (rayX - px) ** 2 + ((rayX - px) * tg) ** 2 <= PLAYER_SET.visualField.range ** 2; rayX += stepX) {
+        //         rayY = (rayX - px) * tg + py;
+        //         indexX = Math.floor(rayX / CELL_SET.w);
+        //         indexY = Math.floor(rayY / CELL_SET.h);
+        //         if (!(0 <= indexX && indexX <= field.w && 0 <= indexY && indexY <= field.h)) break;
+        //         if (!field.cells[indexX][indexY]) break;
+        //         field.cells[indexX][indexY].active = true;
+        //         if (!(0 <= indexX - 1)) break;
+        //         if (!field.cells[indexX - 1][indexY]) break;
+        //         field.cells[indexX - 1][indexY].active = true;
+        //         this.drawCircle(rayX + field.x, rayY + field.y, 5);
+        //     }
+            
+        //     for (let rayY = startY; ((rayY - py) / tg) ** 2 + (rayY - py) ** 2 <= PLAYER_SET.visualField.range ** 2; rayY += stepY) {
+        //         rayX = (rayY - py) / tg + px;
+        //         indexX = Math.floor(rayX / CELL_SET.w);
+        //         indexY = Math.floor(rayY / CELL_SET.h);
+        //         if (!(0 <= indexX && indexX <= field.w && 0 <= indexY && indexY <= field.h)) break;
+        //         if (!field.cells[indexX][indexY]) break;
+        //         field.cells[indexX][indexY].active = true;
+        //         if (!(0 <= indexY - 1)) break;
+        //         if (!field.cells[indexX][indexY - 1]) break;
+        //         field.cells[indexX][indexY - 1].active = true;
+        //         this.drawCircle(rayX + field.x, rayY + field.y, 5);
+        //     }
+        // }
     }
 }
 
