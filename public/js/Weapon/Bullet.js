@@ -18,6 +18,7 @@ class Bullet extends Moveable {
     {
         context.beginPath();
         context.strokeStyle = this.color;
+        context.lineWidth = this.w;
         context.moveTo(this.x, this.y);
         context.lineTo(this.x + this.h * Math.cos(this.angle), this.y + this.h * Math.sin(this.angle));
         context.stroke();

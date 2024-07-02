@@ -36,6 +36,10 @@ const cellsList = [
 // ];
 
 const wallList = [
+    [0, 0, 0, 10], 
+    [0, 0, 14, 0], 
+    [0, 10, 14, 10], 
+    [14, 0, 14, 10], 
     [1, 6, 1, 7], 
     [1, 7, 2, 7], 
     [2, 2, 2, 3], 
@@ -80,12 +84,12 @@ const weaponSet = [
         x: 10,
         y: 5,
         battleType: "distant",
-        rapidity: 1000,
-        grouping: 10,
-        deviation: 0.2,
+        rapidity: 100,
+        grouping: 1,
+        deviation: 0.05,
         onGround: "pink",
         inHand: "white",
-        amount: 6,
+        amount: 80,
         rechargeTime: 3000
     }
 ];

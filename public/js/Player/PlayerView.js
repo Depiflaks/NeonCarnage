@@ -37,20 +37,6 @@ class PlayerView {
         this.context.stroke();
     }
 
-    drawBullets(bullets) {
-        bullets.map(
-            bullet => {
-                bullet.draw(this.context);
-            }
-        );
-    }
-
-    drawBulletAmount(player) {
-        if((player.weapon != null) && (player.weapon.model.battleType == "distant")) {
-            this.context.font = "48px serif";
-            this.context.fillText(player.weapon.model.amount, 10, 50);
-        }
-    }
 }
 
 export { PlayerView };

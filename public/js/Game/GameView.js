@@ -18,9 +18,25 @@ class GameView {
             player.model.getPosition(), 
             player.model.getAngle()
         );
-        player.view.drawBullets(player.model.getBullets());
+        this.drawBullets(player.model.getBullets(), field);
         field.drawWalls(this.context);
-        player.view.drawBulletAmount(player.model);
+        this.drawBulletAmount(player.model);
+    }
+
+    drawBullets(bullets, field) {
+        let indexX, indexY;
+        bullets.map(bullet => {
+            indexX = Math.floor((bullet.x + bullet.h * Math.cos(bullet.angle) - field.x) / CELL_SET.w);
+            indexY = Math.floor((bullet.y + bullet.h * Math.sin(bullet.angle) - field.y) / CELL_SET.h);
+            if (indexX >= 0 && indexX <= field.w && indexY >= 0 && indexY <= field.h && field.cells[indexX][indexY].active) bullet.draw(this.context);
+        });
+    }
+
+    drawBulletAmount(player) {
+        if((player.weapon != null) && (player.weapon.model.battleType == "distant")) {
+            this.context.font = "48px roboto";
+            this.context.fillText(player.weapon.model.amount, 10, 50);
+        }
     }
 
     updateFrame(field, player) {
@@ -28,7 +44,6 @@ class GameView {
         this.drawFrame(field, player);
         field.hideCells();
         this.drawViewingRange(player, field)
-        
     }
 
     drawLine(x1, y1, x2, y2, color, field) {

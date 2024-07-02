@@ -14,7 +14,7 @@ const CELL_SET = {
 };
 
 const WALL_SET = {
-    h: 20,
+    h: 15,
     activeColor: "orange",
     inactiveColor: "brown",
 }
@@ -27,7 +27,7 @@ const PLAYER_SET = {
     bodyColor: "blue",
     speed: 6,
     visualField: {
-        range: 350,
+        range: 600,
         angleStep: 15 * RAD
     },
     pythagoreanFactor: Math.sqrt(2) / 2,
@@ -50,12 +50,12 @@ const WEAPON_SET = {
 };
 
 const BULLET_SET = {
-    w: 20,
-    h: 40,
+    w: 5,
+    h: 70,
     radius: 5,
     speed: 20,
     pythagoreanFactor: Math.sqrt(2)/2,
-    color: "orange",
+    color: "yellow",
 };
 
 const KEYBOARD_E = 'KeyE';
