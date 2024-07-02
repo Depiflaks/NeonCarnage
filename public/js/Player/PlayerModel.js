@@ -18,6 +18,10 @@ class PlayerModel extends Moveable {
     updatePosition() {
         this.x += this.speedX;
         this.y += this.speedY;
+        if (this.weapon !== null) {
+            this.weapon.model.x = this.x;
+            this.weapon.model.y = this.y;
+        }
     }
 
     updatePositionY() {

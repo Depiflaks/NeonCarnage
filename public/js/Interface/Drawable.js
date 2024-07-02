@@ -4,6 +4,7 @@ class Drawable {
         this.y = y;
         this.w = w;
         this.h = h;
+        this.active = false;
     }
 
     move(dx, dy) {

@@ -2,14 +2,11 @@ import { CAMERA, KEYBOARD_E, MIN_DISTANCE, WEAPON_STATE } from "../settings.js";
 import { PlayerController } from '../Player/PlayerController.js';
 import { GameModel } from "./GameModel.js";
 import { GameView } from "./GameView.js";
-import { ConnectionController} from "../Connection/ConnectionController";
-
 
 class GameController {
     constructor(objects, player, canvas) {
         this.model = new GameModel(objects);
         this.view = new GameView(canvas);
-        this.connection = new ConnectionController();
 
         this.player = new PlayerController(this.view.context, player);
         addEventListener("keydown", (event) => this.keyDown(event));
@@ -20,10 +17,10 @@ class GameController {
     
     moveFrame() {
         const [dx, dy] = [
-            CAMERA.center.x - this.player.model.getPosition().x, 
-            CAMERA.center.y - this.player.model.getPosition().y
+            Math.round(CAMERA.center.x - this.player.model.getPosition().x), 
+            Math.round(CAMERA.center.y - this.player.model.getPosition().y)
         ];
-        const period = (Math.abs(dx) + Math.abs(dy) < 0.5) ? 1 : CAMERA.period;
+        const period = (Math.abs(dx) + Math.abs(dy) < 5) ? 1 : CAMERA.period;
         this.model.field.move(dx / period, dy / period);
         this.player.model.move(dx / period, dy / period);
         
@@ -68,15 +65,13 @@ class GameController {
     dropWeapon() {
         this.player.model.weapon.unsetPlayer(this.player.model);
         this.player.model.weapon.model.status = WEAPON_STATE.onTheGround;
-        console.log(this.player.model.weapon);
+        //console.log(this.player.model.weapon);
         this.player.model.weapon = null;
     }
 
     update() {
         this.moveFrame();
-        this.updateBullets(this.player.model, this.model.field.walls);
-        const { x, y } = this.player.model.getPosition();
-        this.connection.sendPosition(x, y);  // Отправка данных на сервер
+        this.updateBullets(this.player.model, [].concat(this.model.field.verticalWalls, this.model.field.horisontalWalls));
     }
 
     checkIntersections(player, drawableArray) {
@@ -106,11 +101,10 @@ class GameController {
     play() {
         this.update();
         this.view.updateFrame(this.model.field, this.player);
-        this.checkIntersections(this.player, this.model.field.walls);
+        this.checkIntersections(this.player, [].concat(this.model.field.verticalWalls, this.model.field.horisontalWalls));
         this.player.updatePosition();
-        
         requestAnimationFrame(() => {this.play()});
-    }   
+    }
 }
 
 export { GameController };

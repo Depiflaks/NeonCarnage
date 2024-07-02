@@ -25,7 +25,7 @@ class PlayerView {
         this.context.arc(x, y, PLAYER_SET.radius, 0, Math.PI * 2, true);
         this.context.fill();
 
-        this.drawViewLine(x, y, angle);
+        //this.drawViewLine(x, y, angle);
     }
 
     drawViewLine(x, y, angle) {
@@ -37,13 +37,6 @@ class PlayerView {
         this.context.stroke();
     }
 
-    drawBullets(bullets) {
-        bullets.map(
-            bullet => {
-                bullet.draw(this.context);
-            }
-        );
-    }
 }
 
 export { PlayerView };
