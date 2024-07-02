@@ -52,7 +52,7 @@ class BattleGround extends Drawable {
 
     update() {
         this.cells.map(row => row.map(cell => cell.update()));
-        this.hideCells();
+        //this.hideCells();
     }
 
     drawGround(context) {

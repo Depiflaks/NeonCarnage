@@ -65,21 +65,9 @@ class PlayerController {
         if (this.isStriking) return;
         this.isStriking = true;
 
-        const weapon = this.getWeapon().model;
-
-        if (weapon.status === WEAPON_STATE.inTheHand) {
-            const { x, y } = this.model.getPosition();
-            const angle = this.model.getAngle();
-            const trajectory = new Trajectory({
-                x: x,
-                y: y,
-                angle: angle
-            }, this.view.context);
-
-            trajectory.animateStrike(this.model, this.isLeftToRight, () => {
-                this.isStriking = false;
-                this.isLeftToRight = !this.isLeftToRight;
-            });
+        if (this.getWeapon().model.status === WEAPON_STATE.inTheHand) {
+            this.trajectory = new Trajectory();
+            this.trajectory.toLeft();
         }
     }
 

@@ -1,5 +1,6 @@
 import { Moveable } from "../Interface/Moveable.js";
 import { PLAYER_SET } from "../settings.js";
+import {Trajectory} from "../Weapon/Trajectory";
 
 class PlayerModel extends Moveable {
     constructor({x, y}) {
