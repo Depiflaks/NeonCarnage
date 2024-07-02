@@ -2,11 +2,14 @@ import { CAMERA, KEYBOARD_E, MIN_DISTANCE, WEAPON_STATE } from "../settings.js";
 import { PlayerController } from '../Player/PlayerController.js';
 import { GameModel } from "./GameModel.js";
 import { GameView } from "./GameView.js";
+import { ConnectionController} from "../Connection/ConnectionController";
+
 
 class GameController {
     constructor(objects, player, canvas) {
         this.model = new GameModel(objects);
         this.view = new GameView(canvas);
+        this.connection = new ConnectionController();
 
         this.player = new PlayerController(this.view.context, player);
         addEventListener("keydown", (event) => this.keyDown(event));
@@ -72,6 +75,8 @@ class GameController {
     update() {
         this.moveFrame();
         this.updateBullets(this.player.model, this.model.field.walls);
+        const { x, y } = this.player.model.getPosition();
+        this.connection.sendPosition(x, y);  // Отправка данных на сервер
     }
 
     checkIntersections(player, drawableArray) {
