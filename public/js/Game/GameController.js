@@ -2,107 +2,86 @@ import { CAMERA, KEYBOARD_E, MIN_DISTANCE, WEAPON_STATE } from "../settings.js";
 import { PlayerController } from '../Player/PlayerController.js';
 import { GameModel } from "./GameModel.js";
 import { GameView } from "./GameView.js";
+import { Tracing } from "../RayTracing/Tracing.js";
 
 class GameController {
     constructor(objects, player, canvas) {
         this.model = new GameModel(objects);
         this.view = new GameView(canvas);
-
         this.player = new PlayerController(this.view.context, player);
+        this.field = this.model.getField();
+        this.tracing = new Tracing(this.player, this.field);
+        
+        this.eventListeners(canvas);
+    }
+    
+    moveFrame() {
+        const {x, y} = this.player.getPosition()
+        const [dx, dy] = [
+            Math.round(CAMERA.center.x - x), 
+            Math.round(CAMERA.center.y - y)
+        ];
+        const period = (Math.abs(dx) + Math.abs(dy) < 5) ? 1 : CAMERA.period;
+        this.field.move(dx / period, dy / period);
+        this.player.move(dx / period, dy / period);
+    }
+
+    addWeapon() {
+        const { x, y } = this.player.getPosition();
+        this.field.weapons.map(weapon => {
+            const distance = Math.sqrt((weapon.model.x - x)**2 + (weapon.model.y - y)**2);
+            if ((distance <= MIN_DISTANCE) && !this.player.getWeapon()) {
+                weapon.model.status = WEAPON_STATE.inTheHand;
+                this.player.setWeapon(weapon);
+            }
+        });
+    }
+
+    update() {
+        this.moveFrame();
+        this.field.update();
+        this.checkIntersections([].concat(this.field.verticalWalls, this.field.horisontalWalls));
+        this.player.update();
+        //this.tracing.updateViewRange();
+    }
+
+    bulletsIntersection(barriers) {
+        this.player.setBullets(this.player.getBullets().filter(
+            bullet => {
+                bullet.updatePosition();
+                for (const barrier of barriers) {
+                    if (bullet.isIntersect(barrier)) return false;
+                }
+                return true;
+            }
+        ));
+    }
+
+    checkIntersections(drawableArray) {
+        this.bulletsIntersection(drawableArray)
+        for (const obj of drawableArray) {
+            this.player.check(obj);
+        }
+    }
+
+    eventListeners(canvas) {
         addEventListener("keydown", (event) => this.keyDown(event));
         canvas.addEventListener('contextmenu', (event) => {
             event.preventDefault(); // Отключаем контекстное меню при правом клике
         });
     }
-    
-    moveFrame() {
-        const [dx, dy] = [
-            Math.round(CAMERA.center.x - this.player.model.getPosition().x), 
-            Math.round(CAMERA.center.y - this.player.model.getPosition().y)
-        ];
-        const period = (Math.abs(dx) + Math.abs(dy) < 5) ? 1 : CAMERA.period;
-        this.model.field.move(dx / period, dy / period);
-        this.player.model.move(dx / period, dy / period);
-        
-        
-    }
-
-    updateBullets(player, barriers) {
-        player.bullets = player.bullets.filter(
-            bullet => {
-                bullet.updatePosition();
-                for (const barrier of barriers) {
-                    if (bullet.isIntersect(barrier)) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-        );
-    }
 
     keyDown(event) {
-        if ((event.code == KEYBOARD_E) && (this.player.model.weapon === null)) {
-            this.distanceCheck();
+        if ((event.code == KEYBOARD_E) && (!this.player.getWeapon())) {
+            this.addWeapon();
         } else if (event.code == KEYBOARD_E) {
-            this.dropWeapon();
+            this.player.dropWeapon();
         }
     }
 
-    distanceCheck() {
-        const { x, y } = this.player.model.getPosition();
-        this.model.field.weapons.map(
-            weapon => {
-                const distance = Math.sqrt((weapon.model.x - x)**2 + (weapon.model.y - y)**2);
-                if ((distance <= MIN_DISTANCE) && (this.player.model.weapon === null)) {
-                    weapon.model.status = WEAPON_STATE.inTheHand;
-                    this.player.model.setWeapon(weapon);
-                }
-            }
-        )
-    }
-    
-    dropWeapon() {
-        this.player.model.weapon.unsetPlayer(this.player.model);
-        this.player.model.weapon.model.status = WEAPON_STATE.onTheGround;
-        //console.log(this.player.model.weapon);
-        this.player.model.weapon = null;
-    }
-
-    update() {
-        this.moveFrame();
-        this.updateBullets(this.player.model, [].concat(this.model.field.verticalWalls, this.model.field.horisontalWalls));
-    }
-
-    checkIntersections(player, drawableArray) {
-        for (const drawableObj of drawableArray) {
-
-            player.model.updatePositionY();
-            if(player.model.isIntersect(drawableObj)) {
-                player.model.stepBackY();
-                player.model.resetSpeedY();
-            }
-            else {
-                player.model.stepBackY();
-            }
-
-            player.model.updatePositionX();
-            if(player.model.isIntersect(drawableObj)) {
-                player.model.stepBackX();
-                player.model.resetSpeedX();
-            }
-            else {
-                player.model.stepBackX();
-            }
-        }
-        return false;
-    }
-    
     play() {
         this.update();
-        this.view.updateFrame(this.model.field, this.player);
-        this.checkIntersections(this.player, [].concat(this.model.field.verticalWalls, this.model.field.horisontalWalls));
-        this.player.updatePosition();
+        this.view.updateFrame(this.field, this.player);
         requestAnimationFrame(() => {this.play()});
     }
 }

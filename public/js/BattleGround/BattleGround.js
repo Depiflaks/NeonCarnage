@@ -50,6 +50,11 @@ class BattleGround extends Drawable {
         )
     };
 
+    update() {
+        this.cells.map(row => row.map(cell => cell.update()));
+        this.hideCells();
+    }
+
     drawGround(context) {
         this.cells.map(row => row.map(cell => cell.draw(context)));
     }
@@ -59,7 +64,7 @@ class BattleGround extends Drawable {
         this.verticalWalls.map(wall => wall.draw(context));
     }
 
-    drawWeapons(player, context) {
+    drawWeapons({x, y}, context) {
         let indexX, indexY;
         this.weapons.map(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) / CELL_SET.w);
@@ -70,10 +75,10 @@ class BattleGround extends Drawable {
                     x: weapon.model.x, 
                     y: weapon.model.y,
                     status: weapon.model.status,
-                    onGround: weapon.model.onGround,
-                    inHand: weapon.model.inHand
+                    onGroundColor: weapon.model.onGround,
+                    inHandColor: weapon.model.inHand
                 }, 
-                player, 
+                {x, y}, 
                 context
             );
         })
@@ -85,9 +90,10 @@ class BattleGround extends Drawable {
     }
 
     hideCells() {
-        this.cells.map(row => row.map(cell => cell.active = false));
-        //this.verticalWalls.map(wall => wall.active = false);
-        //this.horisontalWalls.map(wall => wall.active = false);
+        this.cells.map(row => row.map(cell => {
+            cell.active = false
+            cell.activeDirection = 1;
+        }));
     }
 
     move(dx, dy) {

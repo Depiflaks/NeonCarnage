@@ -24,28 +24,16 @@ class PlayerModel extends Moveable {
         }
     }
 
-    updatePositionY() {
+    checkY(obj) {
         this.y += this.speedY;
-    }
-
-    updatePositionX() {
-        this.x += this.speedX;
-    }
-
-    stepBackY() {
+        if (this.isIntersect(obj)) this.speedY = 0;
         this.y -= this.speedY;
     }
 
-    stepBackX() {
+    checkX(obj) {
+        this.x += this.speedX;
+        if (this.isIntersect(obj)) this.speedX = 0;
         this.x -= this.speedX;
-    }
-
-    resetSpeedY() {
-        this.speedY = 0;
-    }
-
-    resetSpeedX() {
-        this.speedX = 0;
     }
 
     setSpeed(direction, value) {
@@ -56,36 +44,16 @@ class PlayerModel extends Moveable {
         }
     }
 
-    setAngle(value) {
-        this.angle = value;
+    getSpeed() {
+        return { speedX: this.speedX, speedY: this.speedY };
     }
 
     setKeyPressed(key, value) {
         this.keyPressed[key] = value;
     }
 
-    getAngle() {
-        return this.angle;
-    }
-
-    getPosition() {
-        return { x: this.x, y: this.y };
-    }
-
-    getBullets() {
-        return this.bullets;
-    }
-
     getKeyPressed() {
         return this.keyPressed;
-    }
-
-    getSpeed() {
-        return { speedX: this.speedX, speedY: this.speedY };
-    }
-
-    setWeapon(weapon) {
-        this.weapon = weapon; 
     }
 
     move(dx, dy) {

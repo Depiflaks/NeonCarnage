@@ -1,5 +1,4 @@
 import { PLAYER_SET, WEAPON_STATE } from "../settings.js";
-import { Weapon } from "../Weapon/Weapon.js";
 import { Bullet } from "../Weapon/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { PlayerView } from "./PlayerView.js";
@@ -19,35 +18,35 @@ class PlayerController {
     }
 
     mouseMove(event) {
-        const { x, y } = this.model.getPosition();
+        const { x, y } = this.getPosition();
         const v1 = { x: 1, y: 0 };
         const v2 = { x: event.x - x, y: event.y - y };
         const difference = { x: v2.x - v1.x, y: v2.y - v1.y };
         const angle = Math.atan2(difference.x, -difference.y) - Math.PI / 2;
-        this.model.setAngle(angle);
+        this.setAngle(angle);
     }
 
     mouseDown(event) { 
-        if ((this.model.weapon != null) && (this.model.weapon.model.battleType == "distant")) {
-            if (!this.model.weapon.model.shootingInterval) {
+        if ((this.getWeapon()) && (this.getWeapon().model.battleType == "distant")) {
+            if (!this.getWeapon().model.shootingInterval) {
                 this.shot();  
-                this.model.weapon.model.shootingInterval = setInterval(() => this.shot(), this.model.weapon.model.rapidity);
+                this.getWeapon().model.shootingInterval = setInterval(() => this.shot(), this.getWeapon().model.rapidity);
             }
         }
-        if((this.model.weapon != null) && (this.model.weapon.model.battleType === "close")) {
+        if((this.getWeapon()) && (this.getWeapon().model.battleType === "close")) {
             this.strike();
         }
     }
 
     shot() {
-        if(this.model.weapon.model.amount > 0) {
-            this.model.weapon.model.amount -= 1;
-            for (let i = 0; i < this.model.weapon.model.grouping; i++) {
-                const x = this.model.getPosition().x;
-                const y = this.model.getPosition().y;
+        if(this.getWeapon().model.amount > 0) {
+            this.getWeapon().model.amount -= 1;
+            for (let i = 0; i < this.getWeapon().model.grouping; i++) {
+                const x = this.getPosition().x;
+                const y = this.getPosition().y;
                 const angle = this.model.getAngle();
-                const deviation = this.model.weapon.model.deviation;
-                const rapidity = this.model.weapon.model.rapidity;
+                const deviation = this.getWeapon().model.deviation;
+                const rapidity = this.getWeapon().model.rapidity;
                 this.model.bullets.push(new Bullet({x, y, angle, rapidity, deviation}));
             }
         }
@@ -55,10 +54,10 @@ class PlayerController {
 
     mouseUp(event)
     {
-        if((this.model.weapon != null) && (this.model.weapon.model.battleType == "distant"))
+        if(this.getWeapon() && (this.getWeapon().model.battleType == "distant"))
         {
-            clearInterval(this.model.weapon.model.shootingInterval);
-            this.model.weapon.model.shootingInterval = null;
+            clearInterval(this.getWeapon().model.shootingInterval);
+            this.getWeapon().model.shootingInterval = null;
         }
     }
 
@@ -66,7 +65,7 @@ class PlayerController {
         if (this.isStriking) return;
         this.isStriking = true;
 
-        const weapon = this.model.weapon.model;
+        const weapon = this.getWeapon().model;
 
         if (weapon.status === WEAPON_STATE.inTheHand) {
             const { x, y } = this.model.getPosition();
@@ -82,6 +81,12 @@ class PlayerController {
                 this.isLeftToRight = !this.isLeftToRight;
             });
         }
+    }
+
+    dropWeapon() {
+        this.getWeapon().unsetPlayer(this.model);
+        this.getWeapon().model.status = WEAPON_STATE.onTheGround;
+        this.setWeapon(null);
     }
 
     keyDown(event) {
@@ -110,9 +115,9 @@ class PlayerController {
 
     updateBulletAmount() {
         const keys = this.model.getKeyPressed();
-        if ((keys.r) && (!this.model.weapon.model.isRecharging)) {
-            this.model.weapon.model.isRecharging = true;
-            setTimeout(() => this.model.weapon.recharge(), this.model.weapon.model.rechargeTime);
+        if (this.getWeapon() && (keys.r) && (!this.getWeapon().model.isRecharging)) {
+            this.getWeapon().model.isRecharging = true;
+            setTimeout(() => this.getWeapon().recharge(), this.getWeapon().model.rechargeTime);
         }
     }
 
@@ -135,29 +140,45 @@ class PlayerController {
         this.model.setSpeed('y', speedY);
     }
 
+    check(obj) {
+        this.model.checkX(obj);
+        this.model.checkY(obj);
+    }
+    
     update() {
         this.model.updatePosition();
     }
 
-    checkIntersections(drawableArray) {
-        for (const drawableObj of drawableArray) {
-            this.model.updatePosition()
-            if (this.model.isIntersect(drawableObj)) {
-                while(this.model.isIntersect(drawableObj))
-                {
-                    this.model.stepBack();
-                }
-                return true;
-            }
-            else {
-                this.model.stepBack();
-            }
-        }
-        return false;
+    setAngle(value) {
+        this.model.angle = value;
+    }
+
+    getAngle() {
+        return this.model.angle;
+    }
+
+    getPosition() {
+        return { x: this.model.x, y: this.model.y };
+    }
+
+    getBullets() {
+        return this.model.bullets;
+    }
+
+    setBullets(bullets) {
+        this.model.bullets = bullets;
+    }
+
+    getWeapon() {
+        return this.model.weapon; 
     }
     
-    updatePosition() {
-        this.model.updatePosition();
+    setWeapon(weapon) {
+        this.model.weapon = weapon; 
+    }
+
+    move(dx, dy) {
+        this.model.move(dx, dy);
     }
 }
 

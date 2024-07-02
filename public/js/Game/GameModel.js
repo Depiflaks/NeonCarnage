@@ -7,7 +7,9 @@ class GameModel {
         this.field = new BattleGround(cellsList, wallsList, weaponList);
     }
 
-    
+    getField() {
+        return this.field;
+    }
 }
 
 export { GameModel };

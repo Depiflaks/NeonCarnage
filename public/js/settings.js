@@ -2,21 +2,22 @@ const RAD = Math.PI / 180;
 
 const WINDOW = {
     w: 1400,
-    h: 1000,
+    h: 1080,
     c: "black",
 };
 
 const CELL_SET = {
     w: 150,
     h: 150,
-    activeColor: "green",
-    inactiveColor: "darkgreen",
+    activeAlpha: 0,
+    inactiveAlpha: 0.4,
+    deltaAlpha: 0.01,
+    color: "green",
 };
 
 const WALL_SET = {
     h: 15,
-    activeColor: "orange",
-    inactiveColor: "brown",
+    color: "orange",
 }
 
 const PLAYER_SET = {

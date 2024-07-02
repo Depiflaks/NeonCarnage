@@ -4,12 +4,12 @@ class WeaponView {
     constructor() {
     }
 
-    draw({x, y, status, onGround, inHand}, player, context) {
+    draw({x, y, status, onGroundColor, inHandColor}, {x: px, y: py}, context) {
         if (status === WEAPON_STATE.onTheGround) {
-            this.drawOnGround(x, y, onGround, context);  
+            this.drawOnGround(x, y, onGroundColor, context);  
         }
         if (status === WEAPON_STATE.inTheHand) {
-            this.drawInHand(inHand, player, context);
+            this.drawInHand(inHandColor, {px, py}, context);
         }
     }
 
@@ -20,11 +20,10 @@ class WeaponView {
         context.fillRect(weaponX, weaponY, WEAPON_SET.w, WEAPON_SET.h); 
     }
 
-    drawInHand(inHand, player, context) {
-        const { x, y } = player.getPosition();
+    drawInHand(inHand, {px, py}, context) {
         const angle = player.getAngle();
-        const weaponX = x + PLAYER_SET.w * Math.cos(angle + Math.PI / 2) / 2;
-        const weaponY = y + PLAYER_SET.w * Math.sin(angle + Math.PI / 2) / 2;
+        const weaponX = px + PLAYER_SET.w * Math.cos(angle + Math.PI / 2) / 2;
+        const weaponY = py + PLAYER_SET.w * Math.sin(angle + Math.PI / 2) / 2;
         context.lineWidth = WEAPON_SET.w;
         context.strokeStyle = inHand;
         context.beginPath();
