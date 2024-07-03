@@ -1,7 +1,7 @@
 import { Cell } from "./Cell.js";
 import { VerticalWall} from "./VerticalWall.js";
 import { HorisontalWall} from "./HorisontalWall.js";
-import { CELL_SET, WINDOW } from "../settings.js";
+import { CELL, WINDOW } from "../CONST.js";
 import { WeaponController } from "../Weapon/WeaponController.js";
 import { Drawable } from "../Interface/Drawable.js";
 
@@ -50,6 +50,11 @@ class BattleGround extends Drawable {
         )
     };
 
+    update() {
+        this.cells.map(row => row.map(cell => cell.update()));
+        this.hideCells();
+    }
+
     drawGround(context) {
         this.cells.map(row => row.map(cell => cell.draw(context)));
     }
@@ -59,21 +64,21 @@ class BattleGround extends Drawable {
         this.verticalWalls.map(wall => wall.draw(context));
     }
 
-    drawWeapons(player, context) {
+    drawWeapons({x, y}, angle, context) {
         let indexX, indexY;
         this.weapons.map(weapon => {
-            indexX = Math.floor((weapon.model.x - this.x) / CELL_SET.w);
-            indexY = Math.floor((weapon.model.y - this.y) / CELL_SET.h);
+            indexX = Math.floor((weapon.model.x - this.x) / CELL.w);
+            indexY = Math.floor((weapon.model.y - this.y) / CELL.h);
             //console.log(indexX, indexY)
             if (this.cells[indexX][indexY].active) weapon.view.draw(
                 {
                     x: weapon.model.x, 
                     y: weapon.model.y,
                     status: weapon.model.status,
-                    onGround: weapon.model.onGround,
-                    inHand: weapon.model.inHand
+                    onGroundColor: weapon.model.onGroundColor,
+                    inHandColor: weapon.model.inHandColor
                 }, 
-                player, 
+                {x, y}, angle,
                 context
             );
         })
@@ -85,9 +90,10 @@ class BattleGround extends Drawable {
     }
 
     hideCells() {
-        this.cells.map(row => row.map(cell => cell.active = false));
-        //this.verticalWalls.map(wall => wall.active = false);
-        //this.horisontalWalls.map(wall => wall.active = false);
+        this.cells.map(row => row.map(cell => {
+            cell.active = false
+            cell.activeDirection = 1;
+        }));
     }
 
     move(dx, dy) {

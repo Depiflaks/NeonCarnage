@@ -1,14 +1,32 @@
-import { CELL_SET } from "../settings.js";
+import { CELL } from "../CONST.js";
 import { Drawable } from "../Interface/Drawable.js";
 
 class Cell extends Drawable {
     constructor(x, y) {
-        super(x * CELL_SET.w, y * CELL_SET.h, CELL_SET.w, CELL_SET.h);
+        super(x * CELL.w, y * CELL.h, CELL.w, CELL.h);
+        this.alpha = CELL.activeAlpha;
+        this.activeDirection = 0;
     }
     
     draw(context) {
-        context.fillStyle = this.active ? CELL_SET.activeColor : CELL_SET.inactiveColor;
-        context.fillRect(this.x, this.y, CELL_SET.w, CELL_SET.h);
+        context.fillStyle = CELL.color;
+        context.fillRect(this.x, this.y, CELL.w, CELL.h);
+        context.globalAlpha = this.alpha;
+        context.fillStyle = 'black';
+        context.fillRect(this.x, this.y, CELL.w, CELL.h);
+        context.globalAlpha = 1.0;
+    }
+
+    update() {
+        this.alpha += CELL.deltaAlpha * this.activeDirection;
+        if (this.alpha > CELL.inactiveAlpha) { 
+            this.alpha = CELL.inactiveAlpha;
+            this.activeDirection = 0;
+        }
+        if (this.alpha < CELL.activeAlpha) {
+            this.alpha = CELL.activeAlpha;
+            this.activeDirection = 0;
+        }
     }
 }
 

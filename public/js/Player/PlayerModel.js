@@ -1,9 +1,9 @@
 import { Moveable } from "../Interface/Moveable.js";
-import { PLAYER_SET } from "../settings.js";
+import { PLAYER } from "../CONST.js";
 
 class PlayerModel extends Moveable {
     constructor({x, y}) {
-        super(x, y, PLAYER_SET.w, PLAYER_SET.h, PLAYER_SET.radius);
+        super(x, y, PLAYER.w, PLAYER.h, PLAYER.radius);
         this.weapon = null;
         this.keyPressed = {
             w: 0,
@@ -24,28 +24,24 @@ class PlayerModel extends Moveable {
         }
     }
 
-    updatePositionY() {
+    checkY(obj) {
         this.y += this.speedY;
+        if (this.isIntersect(obj)) {
+            this.y -= this.speedY;
+            this.speedY = 0;
+        } else {
+            this.y -= this.speedY;
+        }
     }
 
-    updatePositionX() {
+    checkX(obj) {
         this.x += this.speedX;
-    }
-
-    stepBackY() {
-        this.y -= this.speedY;
-    }
-
-    stepBackX() {
-        this.x -= this.speedX;
-    }
-
-    resetSpeedY() {
-        this.speedY = 0;
-    }
-
-    resetSpeedX() {
-        this.speedX = 0;
+        if (this.isIntersect(obj)) {
+            this.x -= this.speedX;
+            this.speedX = 0;
+        } else {
+            this.x -= this.speedX;
+        }
     }
 
     setSpeed(direction, value) {
@@ -56,36 +52,16 @@ class PlayerModel extends Moveable {
         }
     }
 
-    setAngle(value) {
-        this.angle = value;
+    getSpeed() {
+        return { speedX: this.speedX, speedY: this.speedY };
     }
 
     setKeyPressed(key, value) {
         this.keyPressed[key] = value;
     }
 
-    getAngle() {
-        return this.angle;
-    }
-
-    getPosition() {
-        return { x: this.x, y: this.y };
-    }
-
-    getBullets() {
-        return this.bullets;
-    }
-
     getKeyPressed() {
         return this.keyPressed;
-    }
-
-    getSpeed() {
-        return { speedX: this.speedX, speedY: this.speedY };
-    }
-
-    setWeapon(weapon) {
-        this.weapon = weapon; 
     }
 
     move(dx, dy) {

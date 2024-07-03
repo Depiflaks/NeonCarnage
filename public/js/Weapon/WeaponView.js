@@ -1,35 +1,33 @@
-import { WEAPON_SET, PLAYER_SET, CELL_SET, WEAPON_STATE } from "../settings.js";
+import { WEAPON, PLAYER, CELL, WEAPON_STATE } from "../CONST.js";
 
 class WeaponView {
     constructor() {
     }
 
-    draw({x, y, status, onGround, inHand}, player, context) {
+    draw({x, y, status, onGroundColor, inHandColor}, {x: px, y: py}, angle, context) {
         if (status === WEAPON_STATE.onTheGround) {
-            this.drawOnGround(x, y, onGround, context);  
+            this.drawOnGround(x, y, onGroundColor, context);  
         }
         if (status === WEAPON_STATE.inTheHand) {
-            this.drawInHand(inHand, player, context);
+            this.drawInHand(inHandColor, {px, py}, angle, context);
         }
     }
 
-    drawOnGround(x, y, onGround, context) {
+    drawOnGround(x, y, color, context) {
         const weaponX = x;
         const weaponY = y;
-        context.fillStyle = onGround;
-        context.fillRect(weaponX, weaponY, WEAPON_SET.w, WEAPON_SET.h); 
+        context.fillStyle = color;
+        context.fillRect(weaponX, weaponY, WEAPON.w, WEAPON.h); 
     }
 
-    drawInHand(inHand, player, context) {
-        const { x, y } = player.getPosition();
-        const angle = player.getAngle();
-        const weaponX = x + PLAYER_SET.w * Math.cos(angle + Math.PI / 2) / 2;
-        const weaponY = y + PLAYER_SET.w * Math.sin(angle + Math.PI / 2) / 2;
-        context.lineWidth = WEAPON_SET.w;
-        context.strokeStyle = inHand;
+    drawInHand(color, {px, py}, angle, context) {
+        const weaponX = px + PLAYER.w * Math.cos(angle + Math.PI / 2) / 2;
+        const weaponY = py + PLAYER.w * Math.sin(angle + Math.PI / 2) / 2;
+        context.lineWidth = WEAPON.w;
+        context.strokeStyle = color;
         context.beginPath();
         context.moveTo(weaponX, weaponY);
-        context.lineTo(weaponX + WEAPON_SET.h * Math.cos(angle), weaponY + WEAPON_SET.h * Math.sin(angle));
+        context.lineTo(weaponX + WEAPON.h * Math.cos(angle), weaponY + WEAPON.h * Math.sin(angle));
         context.stroke();
     }
 }
