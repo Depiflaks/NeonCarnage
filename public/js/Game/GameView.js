@@ -11,13 +11,19 @@ class GameView {
         this.context = canvas.getContext("2d");
     }
 
-    drawFrame(field, player) {
+    drawFrame(field, player, players) {
         field.drawGround(this.context);
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         player.view.draw(
             player.getPosition(), 
             player.getAngle()
         );
+        players.forEach(player => {
+            player.player.view.draw(
+                player.player.getPosition(), 
+                player.player.getAngle()
+            );
+        });
         this.drawBullets(player.getBullets(), field);
         field.drawWalls(this.context);
         this.drawBulletAmount(player);
@@ -39,9 +45,9 @@ class GameView {
         }
     }
 
-    updateFrame(field, player) {
+    updateFrame(field, player, players) {
         field.clearFrame(this.context);
-        this.drawFrame(field, player);
+        this.drawFrame(field, player, players);
     }
 
     drawLine(x1, y1, x2, y2, color, field) {

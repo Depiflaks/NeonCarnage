@@ -22,20 +22,28 @@ server.listen(PORT, () => {
   console.log('Listening on port ' + PORT);
 });
 
-const ws = new WebSocket.Server({ server });
+const wss = new WebSocket.Server({ server });
 
-ws.on('connection', (connection, req) => {
+wss.getUniqueID = function () {
+  function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+  }
+  return s4() + s4() + '-' + s4();
+};
+
+wss.on('connection', (connection, req) => {
   const ip = req.socket.remoteAddress;
+  connection.id = wss.getUniqueID()
   console.log(`Connected ${ip}`);
   connection.on('message', (message) => {
-
     console.log('Received: ' + message);
-    for (const client of ws.clients) {
+    const {x, y} = JSON.parse(message);
+    for (const client of wss.clients) {
       if (client.readyState !== WebSocket.OPEN) continue;
       if (client === connection) continue;
-      client.send(message, { binary: false });
+      id = connection.id;
+      client.send(JSON.stringify({id, x, y}), { binary: false });
     }
-    
   });
   connection.on('close', () => {
     console.log(`Disconnected ${ip}`);

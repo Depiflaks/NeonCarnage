@@ -9,10 +9,12 @@ class GameController {
     constructor(objects, player, canvas) {
         this.model = new GameModel(objects);
         this.view = new GameView(canvas);
-        this.connection = new ConnectionController();
+        this.players = [];
+        this.field = this.model.getField();
+        this.connection = new ConnectionController(this.players, this.field, this.view.context);
         this.player = new PlayerController(this.view.context, player);
 
-        this.field = this.model.getField();
+        
         this.tracing = new Tracing(this.player, this.field);
         
         this.lastTime = 0;
@@ -42,19 +44,14 @@ class GameController {
         });
     }
 
-sendPosition(x, y) {
-    if (this.socket.readyState === WebSocket.OPEN) {
-        const data = JSON.stringify({ x, y });
-        this.socket.send(data);
-    }
-}
-
     update() {
         this.field.update();
         this.checkIntersections([].concat(this.field.verticalWalls, this.field.horisontalWalls));
         this.player.update();
         this.moveFrame();
         this.tracing.updateViewRange();
+        const { x, y } = this.player.getPosition();
+        this.connection.sendPosition(x - this.field.x, y - this.field.y); 
     }
 
     bulletsIntersection(barriers) {
@@ -105,7 +102,7 @@ sendPosition(x, y) {
         if (deltaTime >= DURATION) {
             //console.log(timestamp)
             this.update();
-            this.view.updateFrame(this.field, this.player);
+            this.view.updateFrame(this.field, this.player, this.players);
 
             this.lastTime = timestamp
         }
