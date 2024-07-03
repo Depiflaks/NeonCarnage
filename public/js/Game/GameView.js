@@ -14,10 +14,12 @@ class GameView {
     drawFrame(field, player, players) {
         field.drawGround(this.context);
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
+        field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         player.view.draw(
             player.getPosition(), 
             player.getAngle()
         );
+        if (player.getTrajectory()) player.getTrajectory().draw(this.context)
         players.forEach(player => {
             player.player.view.draw(
                 player.player.getPosition(), 

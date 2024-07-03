@@ -1,57 +1,91 @@
-class Trajectory {
-    constructor({x, y, angle}, context) {
+import { TRAJECTORY } from "../CONST.js";
+import { Drawable } from "../Interface/Drawable.js";
+
+class Trajectory extends Drawable {
+    constructor() {
+        super(0, 0, TRAJECTORY.width, TRAJECTORY.height);
+        this.angle = 0;
+        this.currentAngle = 0;
+        this.deltaAngle = TRAJECTORY.deltaAngle;
+        this.isAnimating = false;
+        this.animationSpeed = TRAJECTORY.animationSpeed;
+        this.direction = 0;
+    }
+
+    draw(context) {
+        const { currentEndX, currentEndY } = this.calculateEndCoordinates();
+
+        context.lineWidth = this.h;
+        context.strokeStyle = TRAJECTORY.strokeStyle;
+        context.beginPath();
+        context.moveTo(this.x, this.y);
+        context.lineTo(currentEndX, currentEndY);
+        context.stroke();
+    }
+
+    toLeft() {
+        this.isAnimating = true;
+        this.currentAngle = -this.deltaAngle;
+        this.direction = 1;
+    }
+
+    toRight() {
+        this.isAnimating = true;
+        this.currentAngle = this.deltaAngle;
+        this.direction = -1;
+    }
+
+    update({ x, y }, angle, isStriking) {
+        if (!this.isAnimating) return;
         this.x = x;
         this.y = y;
         this.angle = angle;
-        this.context = context;
-        this.currentAngle = -Math.PI / 4;
-        this.endAngle = Math.PI / 4;
-        this.maxLength = 150;
-        this.isAnimating = false;
-        this.animationSpeed = 0.1;
+        this.currentAngle += this.animationSpeed * this.direction;
+        if (this.direction === 1 && this.currentAngle > this.deltaAngle) {
+            if (isStriking) {
+                this.toRight();
+            } else {
+                this.isAnimating = false;
+            }
+        }
+        if (this.direction === -1 && this.currentAngle < -this.deltaAngle) {
+            if (isStriking) {
+                this.toLeft();
+            } else {
+                this.isAnimating = false;
+            }
+        }
     }
 
-    draw() {
-        const length = this.maxLength;
+    isIntersect(wall) {
+        const { currentEndX, currentEndY } = this.calculateEndCoordinates();
+
+        const trajectoryLine = { x1: this.x, y1: this.y, x2: currentEndX, y2: currentEndY };
+        const wallLine = { x1: wall.x, y1: wall.y, x2: wall.x + wall.w, y2: wall.y + wall.h };
+
+        return this.checkLineIntersection(trajectoryLine, wallLine);
+    }
+
+    calculateEndCoordinates() {
+        const length = this.w;
         const currentEndX = this.x + length * Math.cos(this.angle + this.currentAngle);
         const currentEndY = this.y + length * Math.sin(this.angle + this.currentAngle);
-
-        this.context.lineWidth = 10;
-        this.context.strokeStyle = "red";
-        this.context.beginPath();
-        this.context.moveTo(this.x, this.y);
-        this.context.lineTo(currentEndX, currentEndY);
-        this.context.stroke();
+        return { currentEndX, currentEndY };
     }
 
-    animateStrike(model, isLeftToRight, onAnimationEnd) {
-        if (this.isAnimating) return;
+    // Метод для проверки пересечения двух линий
+    checkLineIntersection(line1, line2) {
+        const { x1, y1, x2, y2 } = line1;
+        const { x1: x3, y1: y3, x2: x4, y2: y4 } = line2;
 
-        this.isAnimating = true;
+        const denominator = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
+        if (denominator === 0) return false;
 
-        const targetAngle = isLeftToRight ? this.endAngle : -Math.PI / 4;
-        const stepDirection = isLeftToRight ? -this.animationSpeed : this.animationSpeed;
+        const ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denominator;
+        const ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denominator;
 
-        const step = () => {
-            if ((isLeftToRight && this.currentAngle > -Math.PI / 4) || (!isLeftToRight && this.currentAngle < this.endAngle)) {
-                this.currentAngle += stepDirection;
-                this.x = model.x;
-                this.y = model.y;
-                this.angle = model.angle;
-                this.draw();
-                requestAnimationFrame(step);
-            } else {
-                this.currentAngle = -Math.PI / 4;
-                this.isAnimating = false;
-                if (onAnimationEnd) {
-                    onAnimationEnd();
-                }
-            }
-        };
-
-        this.currentAngle = targetAngle;
-        requestAnimationFrame(step);
+        return (ua >= 0 && ua <= 1) && (ub >= 0 && ub <= 1);
     }
 }
 
-export { Trajectory }
+export { Trajectory };

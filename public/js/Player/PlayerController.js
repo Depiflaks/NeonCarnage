@@ -18,6 +18,8 @@ class PlayerController {
     }
 
     mouseMove(event) {
+        if (this.getStacked())
+            return
         const { x, y } = this.getPosition();
         const v1 = { x: 1, y: 0 };
         const v2 = { x: event.x - x, y: event.y - y };
@@ -26,20 +28,20 @@ class PlayerController {
         this.setAngle(angle);
     }
 
-    mouseDown(event) { 
-        if ((this.getWeapon()) && (this.getWeapon().model.battleType == "distant")) {
+    mouseDown(event) {
+        if ((this.getWeapon()) && (this.getWeapon().model.battleType === "distant")) {
             if (!this.getWeapon().model.shootingInterval) {
-                this.shot();  
+                this.shot();
                 this.getWeapon().model.shootingInterval = setInterval(() => this.shot(), this.getWeapon().model.rapidity);
             }
         }
-        if((this.getWeapon()) && (this.getWeapon().model.battleType === "close")) {
+        if ((this.getWeapon()) && (this.getWeapon().model.battleType === "close")) {
             this.strike();
         }
     }
 
     shot() {
-        if(this.getWeapon().model.amount > 0) {
+        if (this.getWeapon().model.amount > 0) {
             this.getWeapon().model.amount -= 1;
             for (let i = 0; i < this.getWeapon().model.grouping; i++) {
                 const x = this.getPosition().x;
@@ -47,40 +49,30 @@ class PlayerController {
                 const angle = this.getAngle();
                 const deviation = this.getWeapon().model.deviation;
                 const rapidity = this.getWeapon().model.rapidity;
-                this.model.bullets.push(new Bullet({x, y, angle, rapidity, deviation}));
+                this.model.bullets.push(new Bullet({ x, y, angle, rapidity, deviation }));
             }
         }
     }
 
-    mouseUp(event)
-    {
-        if(this.getWeapon() && (this.getWeapon().model.battleType == "distant"))
-        {
+    mouseUp(event) {
+        if (this.getWeapon() && (this.getWeapon().model.battleType === "distant")) {
             clearInterval(this.getWeapon().model.shootingInterval);
             this.getWeapon().model.shootingInterval = null;
+        }
+        if (this.getWeapon() && (this.getWeapon().model.battleType === "close")) {
+            this.model.removeTrajectory();
+            this.setStacked(false);
+            this.setIsStriking(false);
         }
     }
 
     strike() {
-        if (this.isStriking) return;
-        this.isStriking = true;
+        if (this.getIsStriking() || (!this.getIsStriking() && this.getTrajectory())) return;
 
-        const weapon = this.getWeapon().model;
+        this.setIsStriking(true);
 
-        if (weapon.status === WEAPON_STATE.inTheHand) {
-            const { x, y } = this.getPosition();
-            const angle = this.getAngle();
-            const trajectory = new Trajectory({
-                x: x,
-                y: y,
-                angle: angle
-            }, this.view.context);
-
-            trajectory.animateStrike(this.model, this.isLeftToRight, () => {
-                this.isStriking = false;
-                this.isLeftToRight = !this.isLeftToRight;
-            });
-        }
+        this.model.createTrajectory();
+        this.getTrajectory().toLeft();
     }
 
     dropWeapon() {
@@ -144,9 +136,19 @@ class PlayerController {
         this.model.checkX(obj);
         this.model.checkY(obj);
     }
-    
+
     update() {
+        if (this.getStacked())
+            return
         this.model.updatePosition();
+
+        if (this.getTrajectory()) {
+            if (this.getTrajectory().isAnimating) {
+                this.getTrajectory().update(this.getPosition(), this.getAngle(), this.getIsStriking());
+            } else {
+                this.model.removeTrajectory();
+            }
+        }
     }
 
     setAngle(value) {
@@ -170,15 +172,35 @@ class PlayerController {
     }
 
     getWeapon() {
-        return this.model.weapon; 
+        return this.model.weapon;
     }
-    
+
     setWeapon(weapon) {
-        this.model.weapon = weapon; 
+        this.model.weapon = weapon;
+    }
+
+    getTrajectory() {
+        return this.model.trajectory;
     }
 
     move(dx, dy) {
         this.model.move(dx, dy);
+    }
+
+    setIsStriking(value) {
+        this.model.isStriking = value;
+    }
+
+    getIsStriking() {
+        return this.model.isStriking;
+    }
+
+    setStacked(value) {
+        this.model.stacked = value;
+    }
+
+    getStacked() {
+        return this.model.stacked;
     }
 }
 
