@@ -61,9 +61,9 @@ class PlayerController {
         }
         if (this.getWeapon() && (this.getWeapon().model.battleType === "close")) {
             if (this.getStacked() === true) {
-                this.setStacked(false);
+                this.setStacked(false)
+                this.removeTrajectory();
             }
-            this.model.removeTrajectory();
             this.setIsStriking(false);
         }
     }
@@ -73,7 +73,7 @@ class PlayerController {
 
         this.setIsStriking(true);
 
-        this.model.createTrajectory();
+        this.createTrajectory();
         this.getTrajectory().toLeft();
     }
 
@@ -147,7 +147,7 @@ class PlayerController {
             if (this.getTrajectory().isAnimating) {
                 this.getTrajectory().update(this.getPosition(), this.getAngle(), this.getIsStriking());
             } else {
-                this.model.removeTrajectory();
+                this.removeTrajectory();
             }
         }
     }
@@ -178,6 +178,14 @@ class PlayerController {
 
     setWeapon(weapon) {
         this.model.weapon = weapon;
+    }
+
+    createTrajectory() {
+        this.model.trajectory = new Trajectory(this.model.x, this.model.y, this.model.angle);
+    }
+
+    removeTrajectory() {
+        this.model.trajectory = null;
     }
 
     getTrajectory() {
