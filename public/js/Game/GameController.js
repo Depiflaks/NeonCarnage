@@ -2,7 +2,7 @@ import { CAMERA, KEYBOARD_E, MIN_DISTANCE, WEAPON_STATE } from "../settings.js";
 import { PlayerController } from '../Player/PlayerController.js';
 import { GameModel } from "./GameModel.js";
 import { GameView } from "./GameView.js";
-import {ConnectionController} from "../Connection/ConnectionController";
+import {ConnectionController} from "../Connection/ConnectionController.js";
 
 class GameController {
     constructor(objects, player, canvas) {
@@ -10,11 +10,12 @@ class GameController {
         this.view = new GameView(canvas);
         this.connection = new ConnectionController();
         this.player = new PlayerController(this.view.context, player);
-<<<<<<< Updated upstream:public/js/Game/GameController.js
+        
         addEventListener("keydown", (event) => this.keyDown(event));
         canvas.addEventListener('contextmenu', (event) => {
-            event.preventDefault(); // Отключаем контекстное меню при правом клике
-=======
+            event.preventDefault();
+        });
+
         this.field = this.model.getField();
         this.tracing = new Tracing(this.player, this.field);
         
@@ -43,7 +44,6 @@ class GameController {
     
         socket.addEventListener('error', (error) => {
             console.error('Ошибка WebSocket: ', error);
->>>>>>> Stashed changes:Game/GameController.js
         });
     }
     
@@ -59,10 +59,6 @@ class GameController {
         
     }
 
-<<<<<<< Updated upstream:public/js/Game/GameController.js
-    updateBullets(player, barriers) {
-        player.bullets = player.bullets.filter(
-=======
     addWeapon() {
         const { x, y } = this.player.getPosition();
         this.field.weapons.map(weapon => {
@@ -93,7 +89,6 @@ class GameController {
 
     bulletsIntersection(barriers) {
         this.player.setBullets(this.player.getBullets().filter(
->>>>>>> Stashed changes:Game/GameController.js
             bullet => {
                 bullet.updatePosition();
                 for (const barrier of barriers) {
@@ -102,7 +97,7 @@ class GameController {
                     }
                 }
                 return true;
-            }
+            })
         );
     }
 

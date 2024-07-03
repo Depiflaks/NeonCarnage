@@ -1,5 +1,4 @@
 import { PLAYER_SET, WEAPON_STATE } from "../settings.js";
-import { Weapon } from "../Weapon/Weapon.js";
 import { Bullet } from "../Weapon/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { PlayerView } from "./PlayerView.js";
@@ -139,23 +138,6 @@ class PlayerController {
         this.model.updatePosition();
     }
 
-<<<<<<< Updated upstream:public/js/Player/PlayerController.js
-    checkIntersections(drawableArray) {
-        for (const drawableObj of drawableArray) {
-            this.model.updatePosition()
-            if (this.model.isIntersect(drawableObj)) {
-                while(this.model.isIntersect(drawableObj))
-                {
-                    this.model.stepBack();
-                }
-                return true;
-            }
-            else {
-                this.model.stepBack();
-            }
-        }
-        return false;
-=======
     setAngle(value) {
         this.model.angle = value;
     }
@@ -186,7 +168,6 @@ class PlayerController {
 
     getWeapon() {
         return this.model.weapon; 
->>>>>>> Stashed changes:Player/PlayerController.js
     }
     
     updatePosition() {

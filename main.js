@@ -1,6 +1,4 @@
-import { GameController } from "./Game/GameController.js";
-import { GameModel } from "./Game/GameModel.js";
-import { GameView } from "./Game/GameView.js";
+import { GameController } from "./public/js/Game/GameController.js";
 import { groundList, wallList, weaponSet } from "./data.js";
 
 const canvas = document.getElementById("canvas");
