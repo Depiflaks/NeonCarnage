@@ -1,30 +1,44 @@
-import WebSocket from "ws";
+import WebSocket, { WebSocketServer } from 'ws';
 
 class WebSocketController {
-    constructor(server) {
-        
-        this.wss = new WebSocket.Server({ server });
+    constructor(server, map) {
+        this.socket = new WebSocketServer({ server });
+        this.map = map;
+        this.socket.on('connection', (connection, req) => {this.onConnection(connection, req)});
+    }
 
-        this.wss.on('connection', (connection, req) => {
-            const ip = req.socket.remoteAddress;
-            connection.id = this.getUniqueID()
-            console.log(`Connected ${ip}`);
+    init(connection, req) {
+        const ip = req.socket.remoteAddress;
+        connection.id = this.getUniqueID();
+        console.log(`Connected ${ip}`);
 
-            connection.on('message', (message) => {
-                console.log('Received: ' + message);
-                const {x, y} = JSON.parse(message);
-                for (const client of this.wss.clients) {
-                    if (client.readyState !== WebSocket.OPEN) continue;
-                    if (client === connection) continue;
-                    id = connection.id;
-                    client.send(JSON.stringify({id, x, y}), { binary: false });
-                }
-            });
+        // дописать отправку карты
+        //client.send(JSON.stringify({ id, x, y }), { binary: false });
 
-            connection.on('close', () => {
-                console.log(`Disconnected ${ip}`);
-            });
-        });
+        return ip;
+    }
+
+    onConnection(connection, req) {
+        const ip = this.init(connection, req);
+
+        connection.on('message', (message) => {this.onMessage(message, connection)});
+
+        connection.on('close', () => {this.onClose(ip)});
+    }
+
+    onMessage(message, connection) {
+        //console.log('Received: ' + message);
+        const { x, y } = JSON.parse(message);
+        for (const client of this.socket.clients) {
+            if (client.readyState !== WebSocket.OPEN) continue;
+            if (client === connection) continue;
+            const id = connection.id;
+            client.send(JSON.stringify({ id, x, y }), { binary: false });
+        }
+    }
+
+    onClose(ip) {
+        console.log(`Disconnected ${ip}`);
     }
 
     getUniqueID() {

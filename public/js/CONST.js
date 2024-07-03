@@ -4,7 +4,7 @@ const DURATION = 1000 / FPS;
 
 const SERVER = {
     sergey: 'ws://10.250.104.142:8000/',
-    ignat: 'ws://10.250.104.176:8000',
+    ignat: 'ws://10.250.104.176:8000/',
 }
 
 const WINDOW = {
