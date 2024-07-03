@@ -12,6 +12,8 @@ class GameController {
         this.field = this.model.getField();
         this.tracing = new Tracing(this.player, this.field);
         
+        this.lastTime = 0;
+
         this.eventListeners(canvas);
     }
     
@@ -38,10 +40,10 @@ class GameController {
     }
 
     update() {
-        this.moveFrame();
         this.field.update();
         this.checkIntersections([].concat(this.field.verticalWalls, this.field.horisontalWalls));
         this.player.update();
+        this.moveFrame();
         //this.tracing.updateViewRange();
     }
 
@@ -94,25 +96,18 @@ class GameController {
         }
     }
 
-    // loop(timestamp) {
-    //     const deltaTime = timestamp - this.lastTime;
+    loop(timestamp) {
+        const deltaTime = timestamp - this.lastTime;
 
-    //     if (deltaTime >= DURATION) {
-    //         //console.log(timestamp)
-    //         this.update();
-    //         this.view.updateFrame(this.field, this.player);
+        if (deltaTime >= DURATION) {
+            //console.log(timestamp)
+            this.update();
+            this.view.updateFrame(this.field, this.player);
 
-    //         this.lastTime = timestamp
-    //     }
+            this.lastTime = timestamp
+        }
         
-    //     requestAnimationFrame((timestamp) => {this.loop(timestamp)});
-    // }
-
-    loop() {
-        this.update();
-        this.view.updateFrame(this.field, this.player);
-        
-        requestAnimationFrame(() => {this.loop()});
+        requestAnimationFrame((timestamp) => {this.loop(timestamp)});
     }
 }
 

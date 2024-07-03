@@ -1,5 +1,5 @@
 const RAD = Math.PI / 180;
-const FPS = 120;
+const FPS = 90;
 const DURATION = 1000 / FPS;
 
 const WINDOW = {
