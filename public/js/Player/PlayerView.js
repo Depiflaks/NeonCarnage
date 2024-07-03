@@ -25,7 +25,7 @@ class PlayerView {
         this.context.arc(x, y, PLAYER.radius, 0, Math.PI * 2, true);
         this.context.fill();
 
-        //this.drawHealthBar(x, y, PLAYER.health);
+        this.drawHealthBar(x, y, PLAYER.health);
 
 
         //this.drawViewLine(x, y, angle);
