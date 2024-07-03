@@ -36,7 +36,7 @@ wss.on('connection', (connection, req) => {
   connection.id = wss.getUniqueID()
   console.log(`Connected ${ip}`);
   connection.on('message', (message) => {
-    console.log('Received: ' + message);
+    //console.log('Received: ' + message);
     const {x, y} = JSON.parse(message);
     for (const client of wss.clients) {
       if (client.readyState !== WebSocket.OPEN) continue;
