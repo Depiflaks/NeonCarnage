@@ -1,4 +1,4 @@
-import { CAMERA, KEYBOARD_E, MIN_DISTANCE, WEAPON_STATE } from "../settings.js";
+import { CAMERA, DURATION, KEYBOARD_E, WEAPON, WEAPON_STATE } from "../CONST.js";
 import { PlayerController } from '../Player/PlayerController.js';
 import { GameModel } from "./GameModel.js";
 import { GameView } from "./GameView.js";
@@ -12,6 +12,8 @@ class GameController {
         this.field = this.model.getField();
         this.tracing = new Tracing(this.player, this.field);
         
+        this.lastTime = 0;
+
         this.eventListeners(canvas);
     }
     
@@ -21,7 +23,7 @@ class GameController {
             Math.round(CAMERA.center.x - x), 
             Math.round(CAMERA.center.y - y)
         ];
-        const period = (Math.abs(dx) + Math.abs(dy) < 5) ? 1 : CAMERA.period;
+        const period = CAMERA.period;
         this.field.move(dx / period, dy / period);
         this.player.move(dx / period, dy / period);
     }
@@ -38,10 +40,10 @@ class GameController {
     }
 
     update() {
-        this.moveFrame();
         this.field.update();
         this.checkIntersections([].concat(this.field.verticalWalls, this.field.horisontalWalls));
         this.player.update();
+        this.moveFrame();
         //this.tracing.updateViewRange();
     }
 
@@ -80,10 +82,33 @@ class GameController {
         }
     }
 
-    play() {
-        this.update();
-        this.view.updateFrame(this.field, this.player);
-        requestAnimationFrame(() => {this.play()});
+    eventListeners(canvas) {
+        addEventListener("keydown", (event) => this.keyDown(event));
+        canvas.addEventListener('contextmenu', (event) => {
+            event.preventDefault(); // Отключаем контекстное меню при правом клике
+        });
+    }
+
+    keyDown(event) {
+        if ((event.code == KEYBOARD_E) && (!this.player.getWeapon())) {
+            this.addWeapon();
+        } else if (event.code == KEYBOARD_E) {
+            this.player.dropWeapon();
+        }
+    }
+
+    loop(timestamp) {
+        const deltaTime = timestamp - this.lastTime;
+
+        if (deltaTime >= DURATION) {
+            //console.log(timestamp)
+            this.update();
+            this.view.updateFrame(this.field, this.player);
+
+            this.lastTime = timestamp
+        }
+        
+        requestAnimationFrame((timestamp) => {this.loop(timestamp)});
     }
 }
 

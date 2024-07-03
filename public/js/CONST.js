@@ -1,4 +1,6 @@
 const RAD = Math.PI / 180;
+const FPS = 90;
+const DURATION = 1000 / FPS;
 
 const WINDOW = {
     w: 1400,
@@ -6,7 +8,7 @@ const WINDOW = {
     c: "black",
 };
 
-const CELL_SET = {
+const CELL = {
     w: 150,
     h: 150,
     activeAlpha: 0,
@@ -15,12 +17,13 @@ const CELL_SET = {
     color: "green",
 };
 
-const WALL_SET = {
+
+const WALL = {
     h: 15,
     color: "orange",
 }
 
-const PLAYER_SET = {
+const PLAYER = {
     radius: 20,
     w: 60,
     h: 30,
@@ -42,15 +45,15 @@ const CAMERA = {
     period: 10
 }
 
-const WEAPON_SET = {
+const WEAPON = {
     w: 20,
     h: 30,
     color: "pink",
-    statOnGround: 0,
-    statInHand: 1, 
+    minDistance: 40
+
 };
 
-const BULLET_SET = {
+const BULLET = {
     w: 5,
     h: 70,
     radius: 5,
@@ -59,12 +62,12 @@ const BULLET_SET = {
     color: "yellow",
 };
 
+
 const KEYBOARD_E = 'KeyE';
-const MIN_DISTANCE = 40;
 
 const WEAPON_STATE = {
     onTheGround: 0, 
     inTheHand: 1,
 }
 
-export {WINDOW, CELL_SET, WALL_SET, PLAYER_SET, BULLET_SET, WEAPON_SET, CAMERA, KEYBOARD_E, MIN_DISTANCE, WEAPON_STATE, RAD}
+export {WINDOW, CELL, WALL, PLAYER, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION}

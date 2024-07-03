@@ -1,17 +1,17 @@
-import { BULLET_SET } from "../settings.js";
+import { BULLET } from "../CONST.js";
 import { Moveable } from "../Interface/Moveable.js";
 
 class Bullet extends Moveable {
     constructor({x, y, angle, rapidity, deviation}) {
-        super(x, y, BULLET_SET.w, BULLET_SET.h, BULLET_SET.radius);
+        super(x, y, BULLET.w, BULLET.h, BULLET.radius);
 
         const angleDeviation = (Math.random() * 2 - 1) * deviation;
         const adjustedAngle = angle + angleDeviation;
 
-        this.speedX = BULLET_SET.speed * Math.cos(adjustedAngle);
-        this.speedY = BULLET_SET.speed * Math.sin(adjustedAngle);
+        this.speedX = BULLET.speed * Math.cos(adjustedAngle);
+        this.speedY = BULLET.speed * Math.sin(adjustedAngle);
         this.angle = adjustedAngle;
-        this.color = BULLET_SET.color;
+        this.color = BULLET.color;
     }
 
     draw(context)

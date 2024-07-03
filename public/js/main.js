@@ -18,4 +18,4 @@ const gameController = new GameController(
     canvas
 );
 
-gameController.play();
+gameController.loop();
