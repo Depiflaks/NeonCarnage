@@ -1,3 +1,4 @@
+// CONST.js
 const RAD = Math.PI / 180;
 const FPS = 90;
 const DURATION = 1000 / FPS;
@@ -17,11 +18,10 @@ const CELL = {
     color: "green",
 };
 
-
 const WALL = {
     h: 15,
     color: "orange",
-}
+};
 
 const PLAYER = {
     radius: 20,
@@ -32,25 +32,24 @@ const PLAYER = {
     speed: 6,
     visualField: {
         range: 600,
-        angleStep: 15 * RAD
+        angleStep: 15 * RAD,
     },
     pythagoreanFactor: Math.sqrt(2) / 2,
-}
+};
 
 const CAMERA = {
     center: {
         x: WINDOW.w / 2,
         y: WINDOW.h / 2,
     },
-    period: 10
-}
+    period: 10,
+};
 
 const WEAPON = {
     w: 20,
     h: 30,
     color: "pink",
-    minDistance: 40
-
+    minDistance: 40,
 };
 
 const BULLET = {
@@ -58,16 +57,23 @@ const BULLET = {
     h: 70,
     radius: 5,
     speed: 20,
-    pythagoreanFactor: Math.sqrt(2)/2,
+    pythagoreanFactor: Math.sqrt(2) / 2,
     color: "yellow",
 };
-
 
 const KEYBOARD_E = 'KeyE';
 
 const WEAPON_STATE = {
-    onTheGround: 0, 
+    onTheGround: 0,
     inTheHand: 1,
-}
+};
 
-export {WINDOW, CELL, WALL, PLAYER, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION}
+const TRAJECTORY = {
+    width: 150,
+    height: 10,
+    deltaAngle: Math.PI / 3,
+    animationSpeed: 0.05,
+    strokeStyle: "red"
+};
+
+export {WINDOW, CELL, WALL, PLAYER, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY};

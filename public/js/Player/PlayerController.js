@@ -182,6 +182,7 @@ class PlayerController {
     getTrajectory() {
         return this.model.trajectory;
     }
+
     move(dx, dy) {
         this.model.move(dx, dy);
     }

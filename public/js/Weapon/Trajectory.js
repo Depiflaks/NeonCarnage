@@ -1,23 +1,22 @@
-import {Drawable} from "../Interface/Drawable.js";
+import { TRAJECTORY } from "../CONST.js";
+import { Drawable } from "../Interface/Drawable.js";
 
 class Trajectory extends Drawable {
     constructor() {
-        super(0, 0, 150, 10);
+        super(0, 0, TRAJECTORY.width, TRAJECTORY.height);
         this.angle = 0;
         this.currentAngle = 0;
-        this.deltaAngle = Math.PI / 4;
+        this.deltaAngle = TRAJECTORY.deltaAngle;
         this.isAnimating = false;
-        this.animationSpeed = 0.1;
+        this.animationSpeed = TRAJECTORY.animationSpeed;
         this.direction = 0;
     }
 
     draw(context) {
-        const length = this.w;
-        const currentEndX = this.x + length * Math.cos(this.angle + this.currentAngle);
-        const currentEndY = this.y + length * Math.sin(this.angle + this.currentAngle);
+        const { currentEndX, currentEndY } = this.calculateEndCoordinates();
 
         context.lineWidth = this.h;
-        context.strokeStyle = "red";
+        context.strokeStyle = TRAJECTORY.strokeStyle;
         context.beginPath();
         context.moveTo(this.x, this.y);
         context.lineTo(currentEndX, currentEndY);
@@ -36,8 +35,8 @@ class Trajectory extends Drawable {
         this.direction = -1;
     }
 
-    update({x, y}, angle, isStriking) {
-        if (!this.isAnimating) return
+    update({ x, y }, angle, isStriking) {
+        if (!this.isAnimating) return;
         this.x = x;
         this.y = y;
         this.angle = angle;
@@ -57,6 +56,36 @@ class Trajectory extends Drawable {
             }
         }
     }
+
+    isIntersect(wall) {
+        const { currentEndX, currentEndY } = this.calculateEndCoordinates();
+
+        const trajectoryLine = { x1: this.x, y1: this.y, x2: currentEndX, y2: currentEndY };
+        const wallLine = { x1: wall.x, y1: wall.y, x2: wall.x + wall.w, y2: wall.y + wall.h };
+
+        return this.checkLineIntersection(trajectoryLine, wallLine);
+    }
+
+    calculateEndCoordinates() {
+        const length = this.w;
+        const currentEndX = this.x + length * Math.cos(this.angle + this.currentAngle);
+        const currentEndY = this.y + length * Math.sin(this.angle + this.currentAngle);
+        return { currentEndX, currentEndY };
+    }
+
+    // Метод для проверки пересечения двух линий
+    checkLineIntersection(line1, line2) {
+        const { x1, y1, x2, y2 } = line1;
+        const { x1: x3, y1: y3, x2: x4, y2: y4 } = line2;
+
+        const denominator = (y4 - y3) * (x2 - x1) - (x4 - x3) * (y2 - y1);
+        if (denominator === 0) return false;
+
+        const ua = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / denominator;
+        const ub = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / denominator;
+
+        return (ua >= 0 && ua <= 1) && (ub >= 0 && ub <= 1);
+    }
 }
 
-export { Trajectory }
+export { Trajectory };
