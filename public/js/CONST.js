@@ -35,6 +35,7 @@ const PLAYER = {
         angleStep: 15 * RAD,
     },
     pythagoreanFactor: Math.sqrt(2) / 2,
+    health: 5
 };
 
 const CAMERA = {

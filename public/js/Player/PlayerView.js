@@ -25,7 +25,26 @@ class PlayerView {
         this.context.arc(x, y, PLAYER.radius, 0, Math.PI * 2, true);
         this.context.fill();
 
+        //this.drawHealthBar(x, y, PLAYER.health);
+
+
         //this.drawViewLine(x, y, angle);
+    }
+
+    drawHealthBar(x, y, health) {
+        const barWidth = PLAYER.w;
+        const barHeight = 20;
+        const offset = 15;
+        const maxHealth = 5;
+
+        // Background
+        this.context.fillStyle = "gray";
+        this.context.fillRect(x - barWidth / 2, y - PLAYER.radius - offset - barHeight, barWidth, barHeight);
+
+        // Health
+        const healthWidth = (barWidth * health) / maxHealth;
+        this.context.fillStyle = "red";
+        this.context.fillRect(x - barWidth / 2, y - PLAYER.radius - offset - barHeight, healthWidth, barHeight);
     }
 
     drawViewLine(x, y, angle) {

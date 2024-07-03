@@ -17,6 +17,8 @@ class PlayerModel extends Moveable {
             e: 0,
         };
         this.bullets = [];
+        this.health = PLAYER.health;
+
     }
 
     updatePosition() {
@@ -60,6 +62,10 @@ class PlayerModel extends Moveable {
 
     getKeyPressed() {
         return this.keyPressed;
+    }
+
+    getHealth() {
+        return this.health;
     }
 
     move(dx, dy) {
