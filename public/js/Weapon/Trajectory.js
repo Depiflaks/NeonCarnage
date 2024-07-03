@@ -2,9 +2,9 @@ import { TRAJECTORY } from "../CONST.js";
 import { Drawable } from "../Interface/Drawable.js";
 
 class Trajectory extends Drawable {
-    constructor(x, y) {
+    constructor(x, y, angle) {
         super(x, y, TRAJECTORY.width, TRAJECTORY.height);
-        this.angle = 0;
+        this.angle = angle;
         this.currentAngle = 0;
         this.deltaAngle = TRAJECTORY.deltaAngle;
         this.isAnimating = false;

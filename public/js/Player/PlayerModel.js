@@ -28,13 +28,7 @@ class PlayerModel extends Moveable {
         }
     }
 
-    createTrajectory() {
-        this.trajectory = new Trajectory(this.x, this.y);
-    }
 
-    removeTrajectory() {
-        this.trajectory = null;
-    }
 
     checkY(obj) {
         this.y += this.speedY;
