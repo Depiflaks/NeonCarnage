@@ -29,7 +29,7 @@ class PlayerModel extends Moveable {
     }
 
     createTrajectory() {
-        this.trajectory = new Trajectory();
+        this.trajectory = new Trajectory(this.x, this.y);
     }
 
     removeTrajectory() {

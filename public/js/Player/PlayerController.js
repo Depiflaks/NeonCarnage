@@ -60,14 +60,16 @@ class PlayerController {
             this.getWeapon().model.shootingInterval = null;
         }
         if (this.getWeapon() && (this.getWeapon().model.battleType === "close")) {
+            if (this.getStacked() === true) {
+                this.setStacked(false);
+            }
             this.model.removeTrajectory();
-            this.setStacked(false);
             this.setIsStriking(false);
         }
     }
 
     strike() {
-        if (this.getIsStriking() || (!this.getIsStriking() && this.getTrajectory())) return;
+        if (this.getIsStriking() || (!this.getIsStriking() && this.getTrajectory()) || this.getStacked() === true) return;
 
         this.setIsStriking(true);
 
@@ -138,8 +140,7 @@ class PlayerController {
     }
 
     update() {
-        if (this.getStacked())
-            return
+        if (this.getStacked()) return
         this.model.updatePosition();
 
         if (this.getTrajectory()) {
@@ -185,6 +186,9 @@ class PlayerController {
 
     move(dx, dy) {
         this.model.move(dx, dy);
+        if (this.getTrajectory()){
+            this.getTrajectory().move(dx, dy);
+        }
     }
 
     setIsStriking(value) {
