@@ -2,7 +2,7 @@ import {Drawable} from "../Interface/Drawable.js";
 
 class Trajectory extends Drawable {
     constructor() {
-        super(0, 0, 150, 20);
+        super(0, 0, 150, 10);
         this.angle = 0;
         this.currentAngle = 0;
         this.deltaAngle = Math.PI / 4;
@@ -12,11 +12,11 @@ class Trajectory extends Drawable {
     }
 
     draw(context) {
-        const length = this.maxLength;
+        const length = this.w;
         const currentEndX = this.x + length * Math.cos(this.angle + this.currentAngle);
         const currentEndY = this.y + length * Math.sin(this.angle + this.currentAngle);
 
-        context.lineWidth = 10;
+        context.lineWidth = this.h;
         context.strokeStyle = "red";
         context.beginPath();
         context.moveTo(this.x, this.y);
