@@ -91,7 +91,7 @@ sendPosition(x, y) {
             bullet => {
                 bullet.updatePosition();
                 for (const barrier of barriers) {
-                    if (bullet.isIntersect(barrier)) return false;
+                    if (bullet.isIntersectLines(barrier)) return false;
                 }
                 return true;
             }

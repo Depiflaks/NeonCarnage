@@ -56,7 +56,7 @@ const WEAPON = {
 const BULLET = {
     w: 5,
     h: 70,
-    radius: 5,
+    radius: 70,
     speed: 20,
     pythagoreanFactor: Math.sqrt(2)/2,
     color: "yellow",
