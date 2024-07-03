@@ -72,8 +72,9 @@ class GameController {
         for (const wall of walls) {
             if (this.player.getTrajectory() && this.player.getTrajectory().isIntersect(wall)) {
                 //this.player.getTrajectory().direction *= -1;
+                //console.log('intersect: ', wall);
                 this.player.setStacked(true);
-                break
+                break;
             }
         }
     }

@@ -2,7 +2,7 @@ import { TRAJECTORY } from "../CONST.js";
 import { Drawable } from "../Interface/Drawable.js";
 
 class Trajectory extends Drawable {
-    constructor() {
+    constructor(x, y) {
         super(0, 0, TRAJECTORY.width, TRAJECTORY.height);
         this.angle = 0;
         this.currentAngle = 0;
@@ -10,6 +10,8 @@ class Trajectory extends Drawable {
         this.isAnimating = false;
         this.animationSpeed = TRAJECTORY.animationSpeed;
         this.direction = 0;
+        this.x = x;
+        this.y = y;
     }
 
     draw(context) {
@@ -57,20 +59,25 @@ class Trajectory extends Drawable {
         }
     }
 
-    isIntersect(wall) {
-        const { currentEndX, currentEndY } = this.calculateEndCoordinates();
-
-        const trajectoryLine = { x1: this.x, y1: this.y, x2: currentEndX, y2: currentEndY };
-        const wallLine = { x1: wall.x, y1: wall.y, x2: wall.x + wall.w, y2: wall.y + wall.h };
-
-        return this.checkLineIntersection(trajectoryLine, wallLine);
-    }
-
     calculateEndCoordinates() {
         const length = this.w;
         const currentEndX = this.x + length * Math.cos(this.angle + this.currentAngle);
         const currentEndY = this.y + length * Math.sin(this.angle + this.currentAngle);
         return { currentEndX, currentEndY };
+    }
+
+    isIntersect(wall) {
+        const { currentEndX, currentEndY } = this.calculateEndCoordinates();
+
+        const trajectoryLine = { x1: this.x, y1: this.y, x2: currentEndX, y2: currentEndY };
+        const wallLines = [
+            { x1: wall.x, y1: wall.y, x2: wall.x + wall.w, y2: wall.y }, // верхняя грань
+            { x1: wall.x + wall.w, y1: wall.y, x2: wall.x + wall.w, y2: wall.y + wall.h }, // правая грань
+            { x1: wall.x + wall.w, y1: wall.y + wall.h, x2: wall.x, y2: wall.y + wall.h }, // нижняя грань
+            { x1: wall.x, y1: wall.y + wall.h, x2: wall.x, y2: wall.y } // левая грань
+        ];
+
+        return wallLines.some(wallLine => this.checkLineIntersection(trajectoryLine, wallLine));
     }
 
     // Метод для проверки пересечения двух линий

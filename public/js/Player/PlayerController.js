@@ -60,14 +60,16 @@ class PlayerController {
             this.getWeapon().model.shootingInterval = null;
         }
         if (this.getWeapon() && (this.getWeapon().model.battleType === "close")) {
-            this.model.removeTrajectory();
-            this.setStacked(false);
+            if (this.getStacked() === true) {
+                this.setStacked(false);
+                this.model.removeTrajectory();
+            }
             this.setIsStriking(false);
         }
     }
 
     strike() {
-        if (this.getIsStriking() || (!this.getIsStriking() && this.getTrajectory())) return;
+        if (this.getIsStriking() || (!this.getIsStriking() && this.getTrajectory()) || this.getStacked() === true) return;
 
         this.setIsStriking(true);
 
