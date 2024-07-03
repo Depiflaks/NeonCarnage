@@ -62,8 +62,8 @@ class PlayerController {
         if (this.getWeapon() && (this.getWeapon().model.battleType === "close")) {
             if (this.getStacked() === true) {
                 this.setStacked(false);
-                this.model.removeTrajectory();
             }
+            this.model.removeTrajectory();
             this.setIsStriking(false);
         }
     }
@@ -140,8 +140,7 @@ class PlayerController {
     }
 
     update() {
-        if (this.getStacked())
-            return
+        if (this.getStacked()) return
         this.model.updatePosition();
 
         if (this.getTrajectory()) {
@@ -187,6 +186,9 @@ class PlayerController {
 
     move(dx, dy) {
         this.model.move(dx, dy);
+        if (this.getTrajectory()){
+            this.getTrajectory().move(dx, dy);
+        }
     }
 
     setIsStriking(value) {

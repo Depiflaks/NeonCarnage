@@ -3,15 +3,13 @@ import { Drawable } from "../Interface/Drawable.js";
 
 class Trajectory extends Drawable {
     constructor(x, y) {
-        super(0, 0, TRAJECTORY.width, TRAJECTORY.height);
+        super(x, y, TRAJECTORY.width, TRAJECTORY.height);
         this.angle = 0;
         this.currentAngle = 0;
         this.deltaAngle = TRAJECTORY.deltaAngle;
         this.isAnimating = false;
         this.animationSpeed = TRAJECTORY.animationSpeed;
         this.direction = 0;
-        this.x = x;
-        this.y = y;
     }
 
     draw(context) {

@@ -4,8 +4,8 @@ const FPS = 90;
 const DURATION = 1000 / FPS;
 
 const WINDOW = {
-    w: 1400,
-    h: 1080,
+    w: 1000,
+    h: 700,
     c: "black",
 };
 
