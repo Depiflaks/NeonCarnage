@@ -54,20 +54,40 @@ class WeaponController {
         return this.model.status;
     }
 
+    setStatus(value) {
+        this.model.status = value;
+    }
+
     getShootingInterval() {
         return this.model.shootingInterval;
+    }
+
+    setShootingInterval(value) {
+        this.model.shootingInterval = value;
     }
 
     getAmount() {
         return this.model.amount;
     }
 
+    setAmount(value) {
+        this.model.amount = value;
+    }
+
+    decAmount() {
+        this.model.amount -= 1;
+    }
+
     getMaxAmount() {
         return this.model.maxAmount;
     }
 
-    getIsRecharging() {
+    isRecharging() {
         return this.model.isRecharging;
+    }
+
+    setRecharging(value) {
+        this.model.isRecharging = value;
     }
 
     getRechargeTime() {

@@ -29,37 +29,37 @@ class PlayerController {
     }
 
     mouseDown(event) {
-        if ((this.getWeapon()) && (this.getWeapon().model.battleType === "distant")) {
-            if (!this.getWeapon().model.shootingInterval) {
+        if ((this.getWeapon()) && (this.getWeapon().getBattleType() === "distant")) {
+            if (!this.getWeapon().getShootingInterval()) {
                 this.shot();
-                this.getWeapon().model.shootingInterval = setInterval(() => this.shot(), this.getWeapon().model.rapidity);
+                this.getWeapon().setShootingInterval(setInterval(() => this.shot(), this.getWeapon().getRapidity()));
             }
         }
-        if ((this.getWeapon()) && (this.getWeapon().model.battleType === "close")) {
+        if ((this.getWeapon()) && (this.getWeapon().getBattleType() === "close")) {
             this.strike();
         }
     }
 
     shot() {
-        if (this.getWeapon().model.amount > 0) {
-            this.getWeapon().model.amount -= 1;
-            for (let i = 0; i < this.getWeapon().model.grouping; i++) {
+        if (this.getWeapon().getAmount() > 0) {
+            this.getWeapon().decAmount();
+            for (let i = 0; i < this.getWeapon().getGrouping(); i++) {
                 const x = this.getPosition().x;
                 const y = this.getPosition().y;
                 const angle = this.getAngle();
-                const deviation = this.getWeapon().model.deviation;
-                const rapidity = this.getWeapon().model.rapidity;
+                const deviation = this.getWeapon().getDeviation();
+                const rapidity = this.getWeapon().getRapidity();
                 this.model.bullets.push(new Bullet({ x, y, angle, rapidity, deviation }));
             }
         }
     }
 
     mouseUp(event) {
-        if (this.getWeapon() && (this.getWeapon().model.battleType === "distant")) {
-            clearInterval(this.getWeapon().model.shootingInterval);
-            this.getWeapon().model.shootingInterval = null;
+        if (this.getWeapon() && (this.getWeapon().getBattleType() === "distant")) {
+            clearInterval(this.getWeapon().getShootingInterval());
+            this.getWeapon().setShootingInterval(null);
         }
-        if (this.getWeapon() && (this.getWeapon().model.battleType === "close")) {
+        if (this.getWeapon() && (this.getWeapon().getBattleType() === "close")) {
             if (this.getStacked() === true) {
                 this.setStacked(false)
                 this.removeTrajectory();
@@ -79,7 +79,7 @@ class PlayerController {
 
     dropWeapon() {
         this.getWeapon().unsetPlayer(this.model);
-        this.getWeapon().model.status = WEAPON_STATE.onTheGround;
+        this.getWeapon().setStatus(WEAPON_STATE.onTheGround);
         this.setWeapon(null);
     }
 
@@ -109,9 +109,9 @@ class PlayerController {
 
     updateBulletAmount() {
         const keys = this.model.getKeyPressed();
-        if (this.getWeapon() && (keys.r) && (!this.getWeapon().model.isRecharging)) {
-            this.getWeapon().model.isRecharging = true;
-            setTimeout(() => this.getWeapon().recharge(), this.getWeapon().model.rechargeTime);
+        if (this.getWeapon() && (keys.r) && (!this.getWeapon().isRecharging())) {
+            this.getWeapon().setRecharging(true);
+            setTimeout(() => this.getWeapon().recharge(), this.getWeapon().getRechargeTime());
         }
     }
 
