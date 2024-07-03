@@ -3,8 +3,8 @@ const FPS = 90;
 const DURATION = 1000 / FPS;
 
 const WINDOW = {
-    w: 1400,
-    h: 1080,
+    w: 1200,
+    h: 900,
     c: "black",
 };
 
@@ -29,7 +29,7 @@ const PLAYER = {
     h: 30,
     headColor: "red",
     bodyColor: "blue",
-    speed: 6,
+    speed: 8,
     visualField: {
         range: 600,
         angleStep: 15 * RAD

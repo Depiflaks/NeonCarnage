@@ -13,7 +13,7 @@ class GameView {
 
     drawFrame(field, player) {
         field.drawGround(this.context);
-        field.drawWeapons(player.getPosition(), this.context);
+        field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         player.view.draw(
             player.getPosition(), 
             player.getAngle()
@@ -26,8 +26,8 @@ class GameView {
     drawBullets(bullets, field) {
         let indexX, indexY;
         bullets.map(bullet => {
-            indexX = Math.floor((bullet.x + bullet.h * Math.cos(bullet.angle) - field.x) / CELL_SET.w);
-            indexY = Math.floor((bullet.y + bullet.h * Math.sin(bullet.angle) - field.y) / CELL_SET.h);
+            indexX = Math.floor((bullet.x + bullet.h * Math.cos(bullet.angle) - field.x) / CELL.w);
+            indexY = Math.floor((bullet.y + bullet.h * Math.sin(bullet.angle) - field.y) / CELL.h);
             if (indexX >= 0 && indexX <= field.w && indexY >= 0 && indexY <= field.h && field.cells[indexX][indexY].active) bullet.draw(this.context);
         });
     }

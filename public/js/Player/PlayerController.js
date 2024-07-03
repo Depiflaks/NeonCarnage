@@ -44,7 +44,7 @@ class PlayerController {
             for (let i = 0; i < this.getWeapon().model.grouping; i++) {
                 const x = this.getPosition().x;
                 const y = this.getPosition().y;
-                const angle = this.model.getAngle();
+                const angle = this.getAngle();
                 const deviation = this.getWeapon().model.deviation;
                 const rapidity = this.getWeapon().model.rapidity;
                 this.model.bullets.push(new Bullet({x, y, angle, rapidity, deviation}));
@@ -68,8 +68,8 @@ class PlayerController {
         const weapon = this.getWeapon().model;
 
         if (weapon.status === WEAPON_STATE.inTheHand) {
-            const { x, y } = this.model.getPosition();
-            const angle = this.model.getAngle();
+            const { x, y } = this.getPosition();
+            const angle = this.getAngle();
             const trajectory = new Trajectory({
                 x: x,
                 y: y,

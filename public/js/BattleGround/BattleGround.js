@@ -64,7 +64,7 @@ class BattleGround extends Drawable {
         this.verticalWalls.map(wall => wall.draw(context));
     }
 
-    drawWeapons({x, y}, context) {
+    drawWeapons({x, y}, angle, context) {
         let indexX, indexY;
         this.weapons.map(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) / CELL.w);
@@ -78,7 +78,7 @@ class BattleGround extends Drawable {
                     onGroundColor: weapon.model.onGround,
                     inHandColor: weapon.model.inHand
                 }, 
-                {x, y}, 
+                {x, y}, angle,
                 context
             );
         })
