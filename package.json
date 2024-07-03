@@ -1,4 +1,5 @@
 {
+<<<<<<< Updated upstream
   "name": "NeonCarnage",
   "version": "1.0.0",
   "dependencies": {
@@ -7,5 +8,16 @@
   },
   "devDependencies": {
     "@types/ws": "^8.5.10"
+=======
+  "name": "live-table-example",
+  "version": "1.0.0",
+  "author": "Timur Shemsedinov <timur.shemsedinov@gmail.com>",
+  "description": "Live Table Websocket Example",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "node": "^20.15.0",
+    "ws": "^8.11.0"
+>>>>>>> Stashed changes
   }
 }
