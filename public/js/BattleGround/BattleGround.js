@@ -1,7 +1,7 @@
 import { Cell } from "./Cell.js";
 import { VerticalWall} from "./VerticalWall.js";
 import { HorisontalWall} from "./HorisontalWall.js";
-import { CELL_SET, WINDOW } from "../settings.js";
+import { CELL, WINDOW } from "../CONST.js";
 import { WeaponController } from "../Weapon/WeaponController.js";
 import { Drawable } from "../Interface/Drawable.js";
 
@@ -67,8 +67,8 @@ class BattleGround extends Drawable {
     drawWeapons({x, y}, context) {
         let indexX, indexY;
         this.weapons.map(weapon => {
-            indexX = Math.floor((weapon.model.x - this.x) / CELL_SET.w);
-            indexY = Math.floor((weapon.model.y - this.y) / CELL_SET.h);
+            indexX = Math.floor((weapon.model.x - this.x) / CELL.w);
+            indexY = Math.floor((weapon.model.y - this.y) / CELL.h);
             //console.log(indexX, indexY)
             if (this.cells[indexX][indexY].active) weapon.view.draw(
                 {

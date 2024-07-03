@@ -1,4 +1,4 @@
-import { PLAYER_SET, WEAPON_STATE } from "../settings.js";
+import { PLAYER, WEAPON_STATE } from "../CONST.js";
 import { Bullet } from "../Weapon/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { PlayerView } from "./PlayerView.js";
@@ -126,14 +126,14 @@ class PlayerController {
         let speedX = 0;
         let speedY = 0;
 
-        if (keys.w) speedY = -PLAYER_SET.speed;
-        if (keys.a) speedX = -PLAYER_SET.speed;
-        if (keys.s) speedY = PLAYER_SET.speed;
-        if (keys.d) speedX = PLAYER_SET.speed;
+        if (keys.w) speedY = -PLAYER.speed;
+        if (keys.a) speedX = -PLAYER.speed;
+        if (keys.s) speedY = PLAYER.speed;
+        if (keys.d) speedX = PLAYER.speed;
 
         if ((keys.w && keys.d) || (keys.d && keys.s) || (keys.s && keys.a) || (keys.w && keys.a)) {
-            speedX *= PLAYER_SET.pythagoreanFactor;
-            speedY *= PLAYER_SET.pythagoreanFactor;
+            speedX *= PLAYER.pythagoreanFactor;
+            speedY *= PLAYER.pythagoreanFactor;
         }
 
         this.model.setSpeed('x', speedX);

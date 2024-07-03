@@ -1,4 +1,4 @@
-import { CELL_SET, PLAYER_SET, RAD } from "../settings.js";
+import { CELL, PLAYER, RAD } from "../CONST.js";
 import { Ray } from "./Ray.js";
 
 class Tracing {
@@ -8,13 +8,13 @@ class Tracing {
     }
 
     mapping(x, y) {
-        return [Math.floor(x / CELL_SET.w) * CELL_SET.w, Math.floor(y / CELL_SET.h) * CELL_SET.h]
+        return [Math.floor(x / CELL.w) * CELL.w, Math.floor(y / CELL.h) * CELL.h]
     }
 
     wallsIntersect(ray, walls, vertical) {
         let x, y
         for (let wall of walls) {
-            [x, y] = [ray.x / CELL_SET.w, ray.y / CELL_SET.h];
+            [x, y] = [ray.x / CELL.w, ray.y / CELL.h];
             if (vertical) {
                 if (x == wall.startIndX && wall.startIndY <= y && y <= wall.endIndY) {
                     return true;
@@ -30,8 +30,8 @@ class Tracing {
 
     setActive(x, y, vertical) {
         console.log(123);
-        let indexX = Math.floor(x / CELL_SET.w);
-        let indexY = Math.floor(y / CELL_SET.h);
+        let indexX = Math.floor(x / CELL.w);
+        let indexY = Math.floor(y / CELL.h);
         
         if (!(0 <= indexX && indexX <= this.field.w && 0 <= indexY && indexY <= this.field.h)) return;
         if (!this.field.cells[indexX][indexY]) return;
@@ -55,9 +55,9 @@ class Tracing {
         }
         px -= field.x;
         py -= field.y;
-        const size = CELL_SET.w;
-        const angleStep = PLAYER_SET.visualField.angleStep;
-        const range = PLAYER_SET.visualField.range;
+        const size = CELL.w;
+        const angleStep = PLAYER.visualField.angleStep;
+        const range = PLAYER.visualField.range;
         let delta;
 
         for (let angle = 0 * RAD; angle <= 360 * RAD; angle += angleStep) {
@@ -90,7 +90,7 @@ class Tracing {
                 // проверка на касание со стеной
                 horisontal.isWall |= this.wallsIntersect(horisontal, this.field.horisontalWalls, false);
                 vertical.isWall |= this.wallsIntersect(vertical, this.field.verticalWalls, true);
-                console.log(horisontal, vertical);
+                //console.log(horisontal, vertical);
                 const breakCondition = {
                     inRange: !vertical.inRange && !horisontal.inRange, // если оба луча вышли за область
                     isWall: vertical.isWall && horisontal.isWall, // если оба луча коснулись стены

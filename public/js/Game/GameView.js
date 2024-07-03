@@ -1,6 +1,6 @@
 import { Cell } from "../BattleGround/Cell.js";
 import { PlayerView } from "../Player/PlayerView.js";
-import { WINDOW, RAD, PLAYER_SET, CELL_SET } from "../settings.js";
+import { WINDOW, RAD, PLAYER, CELL } from "../CONST.js";
 
 
 class GameView {
