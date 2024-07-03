@@ -28,18 +28,24 @@ class PlayerModel extends Moveable {
         }
     }
 
-
-
     checkY(obj) {
         this.y += this.speedY;
-        if (this.isIntersect(obj)) this.speedY = 0;
-        this.y -= this.speedY;
+        if (this.isIntersect(obj)) {
+            this.y -= this.speedY;
+            this.speedY = 0;
+        } else {
+            this.y -= this.speedY;
+        }
     }
 
     checkX(obj) {
         this.x += this.speedX;
-        if (this.isIntersect(obj)) this.speedX = 0;
-        this.x -= this.speedX;
+        if (this.isIntersect(obj)) {
+            this.x -= this.speedX;
+            this.speedX = 0;
+        } else {
+            this.x -= this.speedX;
+        }
     }
 
     setSpeed(direction, value) {
