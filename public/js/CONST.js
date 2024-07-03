@@ -2,6 +2,11 @@ const RAD = Math.PI / 180;
 const FPS = 90;
 const DURATION = 1000 / FPS;
 
+const SERVER = {
+    sergey: 'ws://10.250.104.142:8000/',
+    ignat: 'ws://10.250.104.176:8000',
+}
+
 const WINDOW = {
     w: 1200,
     h: 900,
@@ -70,4 +75,4 @@ const WEAPON_STATE = {
     inTheHand: 1,
 }
 
-export {WINDOW, CELL, WALL, PLAYER, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION}
+export {WINDOW, CELL, WALL, PLAYER, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, SERVER}

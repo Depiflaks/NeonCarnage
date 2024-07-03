@@ -1,18 +1,43 @@
 const express = require('express');
 const path = require('path');
+const http = require('http');
+const WebSocket = require('ws');
+
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// Настройка Express для обслуживания статических файлов из папки public
-app.use(express.static(path.join(__dirname, 'public')));
+const server = http.createServer(app);
 
-// Маршрут для отправки файла game.html при запросе /
+const PORT = 8000;
+
+
+app.use('/public', express.static(path.join(__dirname, '../public')));
+
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../templates/game/game.html'));
+  res.sendFile(path.join(__dirname, '../templates/game/game.html'));
 });
 
-// Слушаем указанный порт и выводим сообщение о запуске сервера
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+// Запускаем сервер на порту 8000
+server.listen(PORT, () => {
+  console.log('Listening on port ' + PORT);
+});
+
+const ws = new WebSocket.Server({ server });
+
+ws.on('connection', (connection, req) => {
+  const ip = req.socket.remoteAddress;
+  console.log(`Connected ${ip}`);
+  connection.on('message', (message) => {
+
+    console.log('Received: ' + message);
+    for (const client of ws.clients) {
+      if (client.readyState !== WebSocket.OPEN) continue;
+      if (client === connection) continue;
+      client.send(message, { binary: false });
+    }
+    
+  });
+  connection.on('close', () => {
+    console.log(`Disconnected ${ip}`);
+  });
 });

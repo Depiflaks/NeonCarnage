@@ -1,18 +1,10 @@
+import { SERVER } from "../CONST.js";
+
 class ConnectionController {
     constructor() {
-        this.socket = new WebSocket('wss://localhost:8080'); // либо путь к точке входа (хз)
-
-        this.socket.addEventListener('open', () => {
-            console.log('Соединение установлено');
-        });
-
-        this.socket.addEventListener('close', () => {
-            console.log('Соединение закрыто');
-        });
-
-        this.socket.addEventListener('error', (error) => {
-            console.error('Ошибка WebSocket: ', error);
-        });
+        // вебсокет у каждого свой... типа
+        this.socket = new WebSocket(SERVER.sergey);
+        this.initEventListeners();
     }
 
     sendPosition(x, y) {
@@ -20,6 +12,28 @@ class ConnectionController {
             const data = JSON.stringify({ x, y });
             this.socket.send(data);
         }
+    }
+
+    initEventListeners() {
+        this.socket.addEventListener('open', ({ data }) => {
+            console.log('Соединение установлено');
+        });
+    
+        this.socket.addEventListener('message', ({ data }) => {
+            const change = JSON.parse(data);
+            console.log(change);
+            //const {x, y} = this.player.getPosition();
+            //this.player.model.x = change.x + this.field.x;
+            //this.player.model.y = change.y + this.field.y;
+        });
+    
+        this.socket.addEventListener('close', ({ data }) => {
+            console.log('Соединение закрыто');
+        });
+    
+        this.socket.addEventListener('error', (error) => {
+            console.error('Ошибка WebSocket: ', error);
+        });
     }
 }
 

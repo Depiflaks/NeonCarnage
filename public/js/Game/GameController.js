@@ -1,4 +1,4 @@
-import { CAMERA, DURATION, KEYBOARD_E, WEAPON, WEAPON_STATE } from "../CONST.js";
+import { CAMERA, DURATION, KEYBOARD_E, SERVER, WEAPON, WEAPON_STATE } from "../CONST.js";
 import { PlayerController } from '../Player/PlayerController.js';
 import { GameModel } from "./GameModel.js";
 import { GameView } from "./GameView.js";
@@ -11,42 +11,13 @@ class GameController {
         this.view = new GameView(canvas);
         this.connection = new ConnectionController();
         this.player = new PlayerController(this.view.context, player);
-        
-        addEventListener("keydown", (event) => this.keyDown(event));
-        canvas.addEventListener('contextmenu', (event) => {
-            event.preventDefault();
-        });
 
         this.field = this.model.getField();
         this.tracing = new Tracing(this.player, this.field);
         
         this.lastTime = 0;
 
-        this.eventListeners(canvas);
-
-        const socket = new WebSocket('ws://10.250.104.176:8000/');
-    
-        this.socket = socket;
-    
-        socket.addEventListener('open', ({ data }) => {
-            console.log('Соединение установлено');
-        });
-    
-        socket.addEventListener('message', ({ data }) => {
-            const change = JSON.parse(data);
-            const {x, y} = this.player.getPosition();
-            this.player.model.x = change.x + this.field.x;
-            this.player.model.y = change.y + this.field.y;
-        });
-    
-        socket.addEventListener('close', ({ data }) => {
-            console.log('Соединение закрыто');
-        });
-    
-        socket.addEventListener('error', (error) => {
-            console.error('Ошибка WebSocket: ', error);
-        });
-        this.eventListeners(canvas);
+        this.initEventListeners(canvas);
     }
     
     moveFrame() {
@@ -105,13 +76,6 @@ sendPosition(x, y) {
         }
     }
 
-    eventListeners(canvas) {
-        addEventListener("keydown", (event) => this.keyDown(event));
-        canvas.addEventListener('contextmenu', (event) => {
-            event.preventDefault(); // Отключаем контекстное меню при правом клике
-        });
-    }
-
     keyDown(event) {
         if ((event.code == KEYBOARD_E) && (!this.player.getWeapon())) {
             this.addWeapon();
@@ -120,7 +84,7 @@ sendPosition(x, y) {
         }
     }
 
-    eventListeners(canvas) {
+    initEventListeners(canvas) {
         addEventListener("keydown", (event) => this.keyDown(event));
         canvas.addEventListener('contextmenu', (event) => {
             event.preventDefault(); // Отключаем контекстное меню при правом клике
