@@ -71,8 +71,8 @@ class GameController {
     intersectTrajectory(walls) {
         for (const wall of walls) {
             if (this.player.getTrajectory() && this.player.getTrajectory().isIntersect(wall)) {
-                this.player.getTrajectory().direction *= -1;
-                //this.player.model.removeTrajectory();
+                //this.player.getTrajectory().direction *= -1;
+                this.player.setStacked(true);
                 break
             }
         }
@@ -89,6 +89,7 @@ class GameController {
         if ((event.code === KEYBOARD_E) && (!this.player.getWeapon())) {
             this.addWeapon();
         } else if (event.code === KEYBOARD_E) {
+            this.player.setStacked(false);
             this.player.dropWeapon();
             if (this.player.getTrajectory()) {
                 this.player.model.removeTrajectory();

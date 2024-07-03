@@ -1,12 +1,14 @@
 import { Moveable } from "../Interface/Moveable.js";
 import { PLAYER } from "../CONST.js";
-import {Trajectory} from "../Weapon/Trajectory.js";
+import { Trajectory } from "../Weapon/Trajectory.js";
 
 class PlayerModel extends Moveable {
-    constructor({x, y}) {
+    constructor({ x, y }) {
         super(x, y, PLAYER.w, PLAYER.h, PLAYER.radius);
         this.weapon = null;
         this.trajectory = null;
+        this.isStriking = false;
+        this.stacked = false;
         this.keyPressed = {
             w: 0,
             a: 0,
@@ -68,12 +70,9 @@ class PlayerModel extends Moveable {
 
     move(dx, dy) {
         super.move(dx, dy);
-        this.bullets.map(
-            bullet => {
-                bullet.move(dx, dy);
-            }
-        );
+        this.bullets.forEach(bullet => bullet.move(dx, dy));
     }
+
 }
 
 export { PlayerModel };
