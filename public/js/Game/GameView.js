@@ -33,9 +33,9 @@ class GameView {
     }
 
     drawBulletAmount(player) {
-        if((player.getWeapon() != null) && (player.getWeapon().model.battleType == "distant")) {
+        if((player.getWeapon() != null) && (player.getWeapon().getButtleType() == "distant")) {
             this.context.font = "48px roboto";
-            this.context.fillText(player.getWeapon().model.amount, 10, 50);
+            this.context.fillText(player.getWeapon().getAmount(), 10, 50);
         }
     }
 
