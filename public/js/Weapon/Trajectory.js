@@ -1,11 +1,11 @@
-class Trajectory {
+import {Drawable} from "../Interface/Drawable.js";
+
+class Trajectory extends Drawable {
     constructor() {
-        this.x = 0;
-        this.y = 0;
+        super(0, 0, 150, 20);
         this.angle = 0;
         this.currentAngle = 0;
         this.deltaAngle = Math.PI / 4;
-        this.maxLength = 150;
         this.isAnimating = false;
         this.animationSpeed = 0.1;
         this.direction = 0;
@@ -36,44 +36,26 @@ class Trajectory {
         this.direction = -1;
     }
 
-    update() {
+    update({x, y}, angle, isStriking) {
         if (!this.isAnimating) return
+        this.x = x;
+        this.y = y;
+        this.angle = angle;
         this.currentAngle += this.animationSpeed * this.direction;
         if (this.direction === 1 && this.currentAngle > this.deltaAngle) {
-            this.isAnimating = false;
+            if (isStriking) {
+                this.toRight();
+            } else {
+                this.isAnimating = false;
+            }
         }
         if (this.direction === -1 && this.currentAngle < -this.deltaAngle) {
-            this.isAnimating = false;
-        }
-    }
-    
-
-    animateStrike(model, isLeftToRight, onAnimationEnd) {
-        if (this.isAnimating) return;
-        this.isAnimating = true;
-
-        const targetAngle = isLeftToRight ? this.deltaAngle : -this.deltaAngle;
-        const stepDirection = isLeftToRight ? -this.animationSpeed : this.animationSpeed;
-
-        const step = () => {
-            if ((isLeftToRight && this.currentAngle > -this.deltaAngle) || (!isLeftToRight && this.currentAngle < this.deltaAngle)) {
-                this.currentAngle += stepDirection;
-                this.x = model.x;
-                this.y = model.y;
-                this.angle = model.angle;
-                this.draw();
-                requestAnimationFrame(step);
+            if (isStriking) {
+                this.toLeft();
             } else {
-                this.currentAngle = -this.deltaAngle;
                 this.isAnimating = false;
-                if (onAnimationEnd) {
-                    onAnimationEnd();
-                }
             }
-        };
-
-        this.currentAngle = targetAngle;
-        requestAnimationFrame(step);
+        }
     }
 }
 

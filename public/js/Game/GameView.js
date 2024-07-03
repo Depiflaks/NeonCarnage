@@ -13,11 +13,12 @@ class GameView {
 
     drawFrame(field, player) {
         field.drawGround(this.context);
-        field.drawWeapons(player.getPosition(), this.context);
+        field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         player.view.draw(
             player.getPosition(), 
             player.getAngle()
         );
+        if (player.getTrajectory()) player.getTrajectory().draw(this.context)
         this.drawBullets(player.getBullets(), field);
         field.drawWalls(this.context);
         this.drawBulletAmount(player);

@@ -59,6 +59,7 @@ class GameController {
 
     checkIntersections(drawableArray) {
         this.bulletsIntersection(drawableArray)
+
         for (const obj of drawableArray) {
             this.player.check(obj);
         }

@@ -1,11 +1,12 @@
 import { Moveable } from "../Interface/Moveable.js";
 import { PLAYER_SET } from "../settings.js";
-import {Trajectory} from "../Weapon/Trajectory";
+import {Trajectory} from "../Weapon/Trajectory.js";
 
 class PlayerModel extends Moveable {
     constructor({x, y}) {
         super(x, y, PLAYER_SET.w, PLAYER_SET.h, PLAYER_SET.radius);
         this.weapon = null;
+        this.trajectory = null;
         this.keyPressed = {
             w: 0,
             a: 0,
@@ -23,6 +24,14 @@ class PlayerModel extends Moveable {
             this.weapon.model.x = this.x;
             this.weapon.model.y = this.y;
         }
+    }
+
+    createTrajectory() {
+        this.trajectory = new Trajectory();
+    }
+
+    removeTrajectory() {
+        this.trajectory = null;
     }
 
     checkY(obj) {

@@ -9,6 +9,8 @@ class PlayerController {
         this.model = new PlayerModel(player);
         this.view = new PlayerView(context);
 
+        this.isStriking = false;
+
         addEventListener("mousemove", (event) => this.mouseMove(event));
         addEventListener("mousedown", (event) => this.mouseDown(event));
         addEventListener("mouseleave", (event) => this.mouseUp(event));
@@ -27,7 +29,7 @@ class PlayerController {
     }
 
     mouseDown(event) { 
-        if ((this.getWeapon()) && (this.getWeapon().model.battleType == "distant")) {
+        if ((this.getWeapon()) && (this.getWeapon().model.battleType === "distant")) {
             if (!this.getWeapon().model.shootingInterval) {
                 this.shot();  
                 this.getWeapon().model.shootingInterval = setInterval(() => this.shot(), this.getWeapon().model.rapidity);
@@ -44,7 +46,7 @@ class PlayerController {
             for (let i = 0; i < this.getWeapon().model.grouping; i++) {
                 const x = this.getPosition().x;
                 const y = this.getPosition().y;
-                const angle = this.model.getAngle();
+                const angle = this.getAngle();
                 const deviation = this.getWeapon().model.deviation;
                 const rapidity = this.getWeapon().model.rapidity;
                 this.model.bullets.push(new Bullet({x, y, angle, rapidity, deviation}));
@@ -54,21 +56,24 @@ class PlayerController {
 
     mouseUp(event)
     {
-        if(this.getWeapon() && (this.getWeapon().model.battleType == "distant"))
+        if (this.getWeapon() && (this.getWeapon().model.battleType === "distant"))
         {
             clearInterval(this.getWeapon().model.shootingInterval);
             this.getWeapon().model.shootingInterval = null;
         }
+        if (this.getWeapon() && (this.getWeapon().model.battleType === "close"))
+        {
+            this.isStriking = false;
+        }
     }
 
     strike() {
-        if (this.isStriking) return;
+        if (this.isStriking || (!this.isStriking && this.getTrajectory())) return;
+
         this.isStriking = true;
 
-        if (this.getWeapon().model.status === WEAPON_STATE.inTheHand) {
-            this.trajectory = new Trajectory();
-            this.trajectory.toLeft();
-        }
+        this.model.createTrajectory();
+        this.getTrajectory().toLeft();
     }
 
     dropWeapon() {
@@ -135,6 +140,15 @@ class PlayerController {
     
     update() {
         this.model.updatePosition();
+
+        if (this.getTrajectory()) {
+            if (this.getTrajectory().isAnimating) {
+                this.getTrajectory().update(this.getPosition(), this.getAngle(), this.isStriking);
+            } else {
+                this.model.removeTrajectory();
+            }
+        }
+
     }
 
     setAngle(value) {
@@ -165,6 +179,9 @@ class PlayerController {
         this.model.weapon = weapon; 
     }
 
+    getTrajectory() {
+        return this.model.trajectory;
+    }
     move(dx, dy) {
         this.model.move(dx, dy);
     }
