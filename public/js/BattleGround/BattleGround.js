@@ -52,7 +52,7 @@ class BattleGround extends Drawable {
 
     update() {
         this.cells.map(row => row.map(cell => cell.update()));
-        //this.hideCells();
+        this.hideCells();
     }
 
     drawGround(context) {
@@ -75,8 +75,8 @@ class BattleGround extends Drawable {
                     x: weapon.model.x, 
                     y: weapon.model.y,
                     status: weapon.model.status,
-                    onGroundColor: weapon.model.onGround,
-                    inHandColor: weapon.model.inHand
+                    onGroundColor: weapon.model.onGroundColor,
+                    inHandColor: weapon.model.inHandColor
                 }, 
                 {x, y}, angle,
                 context

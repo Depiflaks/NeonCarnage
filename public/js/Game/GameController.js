@@ -1,21 +1,26 @@
-import { CAMERA, DURATION, KEYBOARD_E, WEAPON, WEAPON_STATE } from "../CONST.js";
+import { CAMERA, DURATION, KEYBOARD_E, SERVER, WEAPON, WEAPON_STATE } from "../CONST.js";
 import { PlayerController } from '../Player/PlayerController.js';
 import { GameModel } from "./GameModel.js";
 import { GameView } from "./GameView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
 import { Trajectory } from "../Weapon/Trajectory.js";
+import {ConnectionController} from "../Connection/ConnectionController.js";
 
 class GameController {
     constructor(objects, player, canvas) {
         this.model = new GameModel(objects);
         this.view = new GameView(canvas);
-        this.player = new PlayerController(this.view.context, player);
+        this.players = [];
         this.field = this.model.getField();
+        this.connection = new ConnectionController(this.players, this.field, this.view.context);
+        this.player = new PlayerController(this.view.context, player);
+
+        
         this.tracing = new Tracing(this.player, this.field);
 
         this.lastTime = 0;
 
-        this.eventListeners(canvas);
+        this.initEventListeners(canvas);
     }
 
     moveFrame() {
@@ -45,7 +50,9 @@ class GameController {
         this.checkIntersections([].concat(this.field.verticalWalls, this.field.horisontalWalls));
         this.player.update();
         this.moveFrame();
-        //this.tracing.updateViewRange();
+        this.tracing.updateViewRange();
+        const { x, y } = this.player.getPosition();
+        this.connection.sendPosition(x - this.field.x, y - this.field.y); 
     }
 
     bulletsIntersection(barriers) {
@@ -53,7 +60,7 @@ class GameController {
             bullet => {
                 bullet.updatePosition();
                 for (const barrier of barriers) {
-                    if (bullet.isIntersect(barrier)) return false;
+                    if (bullet.isIntersectLines(barrier)) return false;
                 }
                 return true;
             }
@@ -82,7 +89,7 @@ class GameController {
         }
     }
 
-    eventListeners(canvas) {
+    initEventListeners(canvas) {
         addEventListener("keydown", (event) => this.keyDown(event));
         canvas.addEventListener('contextmenu', (event) => {
             event.preventDefault(); // Отключаем контекстное меню при правом клике
@@ -106,7 +113,7 @@ class GameController {
 
         if (deltaTime >= DURATION) {
             this.update();
-            this.view.updateFrame(this.field, this.player);
+            this.view.updateFrame(this.field, this.player, this.players);
 
             this.lastTime = timestamp;
         }

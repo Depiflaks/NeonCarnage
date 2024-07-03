@@ -26,15 +26,6 @@ const cellsList = [
     '1111111111', 
     '1111111111'];
 
-// const cellsList = [
-//     '111111111', 
-//     '111111111',
-//     '111111111', 
-//     '111111111', 
-//     '111111111', 
-//     '111111111', 
-// ];
-
 const wallList = [
     [0, 0, 0, 10], 
     [0, 0, 14, 0], 
@@ -60,10 +51,6 @@ const wallList = [
     [11, 8, 13, 8], 
     [13, 5, 14, 5]
 ];
-
-// const wallList = [
-//     [3, 3, 3, 4], 
-// ];
 
 const weaponSet = [
     {
@@ -94,7 +81,6 @@ const weaponSet = [
     }
 ];
 
-// const weaponSet = [];
 
 const groundList = convertFields(cellsList);
 

@@ -29,7 +29,7 @@ class Tracing {
     }
 
     setActive(x, y, vertical) {
-        console.log(123);
+        //console.log(123);
         let indexX = Math.floor(x / CELL.w);
         let indexY = Math.floor(y / CELL.h);
         
@@ -85,28 +85,29 @@ class Tracing {
                 horisontal.matchDistant();
                 delta = vertical.distant - horisontal.distant;
                 // проверка на выход из range
-                horisontal.inRange &= horisontal.distant > range;
-                vertical.inRange &= vertical.distant > range;
+                horisontal.inRange &= horisontal.distant <= range;
+                vertical.inRange &= vertical.distant <= range;
                 // проверка на касание со стеной
                 horisontal.isWall |= this.wallsIntersect(horisontal, this.field.horisontalWalls, false);
                 vertical.isWall |= this.wallsIntersect(vertical, this.field.verticalWalls, true);
-                //console.log(horisontal, vertical);
                 const breakCondition = {
                     inRange: !vertical.inRange && !horisontal.inRange, // если оба луча вышли за область
                     isWall: vertical.isWall && horisontal.isWall, // если оба луча коснулись стены
                     horisontalWall: horisontal.isWall && delta > 0, // если горизонтальный луч коснулся стены
                     verticalWall: vertical.isWall && delta < 0 // если вертикальный луч коснулся стены
                 }
-                if (Object.values(breakCondition).some(value => value === true)) break;
+                //console.log(breakCondition);
+                if (Object.values(breakCondition).some(value => value)) break;
                 // пускаем лучи, которые находятся в области, дальше и обрабатываем точки
                 if (vertical.inRange && !vertical.isWall && delta < 0) {
-                    this.setActive(vertical.x, vertical.y, field, true);
+                    this.setActive(vertical.x, vertical.y, true);
                     vertical.x += vertical.step;
                 }
                 if (horisontal.inRange && !horisontal.isWall && delta > 0) {
-                    this.setActive(horisontal.x, horisontal.y, field, false);
+                    this.setActive(horisontal.x, horisontal.y, false);
                     horisontal.y += horisontal.step;
                 }
+                //break;
             }
         }
     }

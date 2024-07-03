@@ -11,15 +11,21 @@ class GameView {
         this.context = canvas.getContext("2d");
     }
 
-    drawFrame(field, player) {
+    drawFrame(field, player, players) {
         field.drawGround(this.context);
+        field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         player.view.draw(
             player.getPosition(),
             player.getAngle()
         );
-        if (player.getTrajectory())
-            player.getTrajectory().draw(this.context)
+        if (player.getTrajectory()) player.getTrajectory().draw(this.context)
+        players.forEach(player => {
+            player.player.view.draw(
+                player.player.getPosition(), 
+                player.player.getAngle()
+            );
+        });
         this.drawBullets(player.getBullets(), field);
         field.drawWalls(this.context);
         this.drawBulletAmount(player);
@@ -28,22 +34,22 @@ class GameView {
     drawBullets(bullets, field) {
         let indexX, indexY;
         bullets.map(bullet => {
-            indexX = Math.floor((bullet.x + bullet.h * Math.cos(bullet.angle) - field.x) / CELL_SET.w);
-            indexY = Math.floor((bullet.y + bullet.h * Math.sin(bullet.angle) - field.y) / CELL_SET.h);
+            indexX = Math.floor((bullet.x + bullet.h * Math.cos(bullet.angle) - field.x) / CELL.w);
+            indexY = Math.floor((bullet.y + bullet.h * Math.sin(bullet.angle) - field.y) / CELL.h);
             if (indexX >= 0 && indexX <= field.w && indexY >= 0 && indexY <= field.h && field.cells[indexX][indexY].active) bullet.draw(this.context);
         });
     }
 
     drawBulletAmount(player) {
-        if((player.getWeapon() != null) && (player.getWeapon().model.battleType === "distant")) {
+        if((player.getWeapon() != null) && (player.getWeapon().getBattleType() == "distant")) {
             this.context.font = "48px roboto";
-            this.context.fillText(player.getWeapon().model.amount, 10, 50);
+            this.context.fillText(player.getWeapon().getAmount(), 10, 50);
         }
     }
 
-    updateFrame(field, player) {
+    updateFrame(field, player, players) {
         field.clearFrame(this.context);
-        this.drawFrame(field, player);
+        this.drawFrame(field, player, players);
     }
 
     drawLine(x1, y1, x2, y2, color, field) {

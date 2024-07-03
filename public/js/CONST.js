@@ -3,9 +3,14 @@ const RAD = Math.PI / 180;
 const FPS = 90;
 const DURATION = 1000 / FPS;
 
+const SERVER = {
+    sergey: 'ws://10.250.104.142:8000/',
+    ignat: 'ws://10.250.104.176:8000',
+}
+
 const WINDOW = {
-    w: 1000,
-    h: 700,
+    w: 1200,
+    h: 900,
     c: "black",
 };
 
@@ -29,7 +34,7 @@ const PLAYER = {
     h: 30,
     headColor: "red",
     bodyColor: "blue",
-    speed: 6,
+    speed: 8,
     visualField: {
         range: 600,
         angleStep: 15 * RAD,
@@ -56,7 +61,7 @@ const WEAPON = {
 const BULLET = {
     w: 5,
     h: 70,
-    radius: 5,
+    radius: 70,
     speed: 20,
     pythagoreanFactor: Math.sqrt(2) / 2,
     color: "yellow",
@@ -77,4 +82,4 @@ const TRAJECTORY = {
     strokeStyle: "red"
 };
 
-export {WINDOW, CELL, WALL, PLAYER, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY};
+export {WINDOW, CELL, WALL, PLAYER, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER};
