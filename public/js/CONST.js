@@ -67,6 +67,10 @@ const BULLET = {
     color: "yellow",
 };
 
+const ENEMY = {
+    period: 5,
+}
+
 const KEYBOARD_E = 'KeyE';
 
 const WEAPON_STATE = {
@@ -82,4 +86,4 @@ const TRAJECTORY = {
     strokeStyle: "red"
 };
 
-export {WINDOW, CELL, WALL, PLAYER, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER};
+export {WINDOW, CELL, WALL, PLAYER, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};

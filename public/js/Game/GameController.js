@@ -8,14 +8,15 @@ import {ConnectionController} from "../Connection/ConnectionController.js";
 
 class GameController {
     constructor(objects, player, canvas) {
-        this.model = new GameModel(objects);
+        this.model = new GameModel(objects, player);
         this.view = new GameView(canvas);
-        this.players = [];
-        this.field = this.model.getField();
-        this.connection = new ConnectionController(this.players, this.field, this.view.context);
-        this.player = new PlayerController(this.view.context, player);
 
-        
+        this.enemies = this.model.getEnemies();
+        this.field = this.model.getField();
+        this.player = this.model.getPlayer();
+
+        this.connection = new ConnectionController(this.player, this.enemies, this.field);
+
         this.tracing = new Tracing(this.player, this.field);
 
         this.lastTime = 0;

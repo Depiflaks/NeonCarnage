@@ -5,9 +5,8 @@ import { PlayerView } from "./PlayerView.js";
 import { Trajectory } from "../Weapon/Trajectory.js";
 
 class PlayerController {
-    constructor(context, player) {
+    constructor(player) {
         this.model = new PlayerModel(player);
-        this.view = new PlayerView(context);
 
         addEventListener("mousemove", (event) => this.mouseMove(event));
         addEventListener("mousedown", (event) => this.mouseDown(event));

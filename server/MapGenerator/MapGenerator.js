@@ -5,7 +5,7 @@ class MapGenerator {
 
     }
 
-    getMap() {
+    create() {
         return {
             cells: groundList,
             walls: wallList,

@@ -9,23 +9,23 @@ class GameView {
         canvas.width = WINDOW.w;
         canvas.height = WINDOW.h;
         this.context = canvas.getContext("2d");
+        this.playerView = new PlayerView(this.context);
     }
 
-    drawFrame(field, player, players) {
+    drawFrame(field, player) {
         field.drawGround(this.context);
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
-        field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
-        player.view.draw(
+        this.playerView.draw(
             player.getPosition(),
             player.getAngle()
         );
         if (player.getTrajectory()) player.getTrajectory().draw(this.context)
-        players.forEach(player => {
-            player.player.view.draw(
-                player.player.getPosition(), 
-                player.player.getAngle()
-            );
-        });
+        // players.forEach(player => {
+        //     player.player.view.draw(
+        //         player.player.getPosition(), 
+        //         player.player.getAngle()
+        //     );
+        // });
         this.drawBullets(player.getBullets(), field);
         field.drawWalls(this.context);
         this.drawBulletAmount(player);

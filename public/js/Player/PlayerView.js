@@ -28,15 +28,6 @@ class PlayerView {
         //this.drawViewLine(x, y, angle);
     }
 
-    drawViewLine(x, y, angle) {
-        this.context.lineWidth = 2;
-        this.context.strokeStyle = "red";
-        this.context.beginPath();
-        this.context.moveTo(x, y);
-        this.context.lineTo(x + 300 * Math.cos(angle), y + 300 * Math.sin(angle));
-        this.context.stroke();
-    }
-
 }
 
 export { PlayerView };
