@@ -62,11 +62,13 @@ const AMMUNITION = {
     w: 20,
     h: 30,
     color: "yellow",
+    midDistance: 40,
 }
 const BONUS = {
     w: 20,
     h: 30,
     color: "blue",
+    midDistance: 40,
 }
 const BULLET = {
     w: 5,

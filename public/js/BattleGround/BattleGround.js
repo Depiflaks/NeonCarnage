@@ -138,8 +138,8 @@ class BattleGround extends Drawable {
         this.verticalWalls.map(wall => wall.move(dx, dy));
         this.horisontalWalls.map(wall => wall.move(dx, dy));
         this.weapons.map(weapon => weapon.model.move(dx, dy));
-        this.ammunition.forEach(ammunition => ammunition.move(dx, dy));
-        this.bonuses.forEach(bonus => bonus.move(dx, dy));
+        this.ammunition.map(ammunition => ammunition.move(dx, dy));
+        this.bonuses.map(bonus => bonus.move(dx, dy));
     }
 }
 
