@@ -46,7 +46,7 @@ class GameController {
 
     update() {
         this.field.update();
-        this.checkIntersections([].concat(this.field.verticalWalls, this.field.horisontalWalls));
+        this.checkIntersections([].concat(this.field.verticalWalls, this.field.horizontalWalls));
         this.player.update();
         this.moveFrame();
         this.tracing.updateViewRange();

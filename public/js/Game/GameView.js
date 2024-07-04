@@ -16,6 +16,7 @@ class GameView {
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         player.view.draw(
             player.getPosition(), 
+            player.getWeapon(),
             player.getAngle()
         );
         players.forEach(player => {
