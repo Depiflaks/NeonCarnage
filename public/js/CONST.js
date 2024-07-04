@@ -19,7 +19,7 @@ const CELL = {
     w: 150,
     h: 150,
     activeAlpha: 0,
-    inactiveAlpha: 0.4,
+    inactiveAlpha: 0.5,
     deltaAlpha: 0.01,
     src: "public/assets/BattleGround/cell.png",
 };
@@ -45,7 +45,7 @@ const PLAYER = {
     headColor: "public/assets/Player/Skin3/head.png",
     bodyColor: "public/assets/Player/Skin3/body.png",
     bodyWithWeapon: "public/assets/Player/Skin3/bodyWithWeapon.png",
-    speed: 6,
+    speed: 8,
     visualField: {
         range: 600,
         angleStep: 15 * RAD,

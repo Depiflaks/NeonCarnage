@@ -13,8 +13,8 @@ class Cell extends Drawable {
     draw(context) {
         context.drawImage(this.cellImg, this.x, this.y, CELL.w, CELL.h)
         context.globalAlpha = this.alpha;
-        // context.fillStyle = 'black';
-        // context.fillRect(this.x, this.y, CELL.w, CELL.h);
+        context.fillStyle = 'black';
+        context.fillRect(this.x, this.y, CELL.w, CELL.h);
         context.globalAlpha = 1.0;
     }
 

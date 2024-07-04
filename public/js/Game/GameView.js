@@ -17,11 +17,13 @@ class GameView {
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         this.playerView.draw(
             player.getPosition(),
+            player.getWeapon(),
             player.getAngle()
         );
         if (player.getTrajectory()) player.getTrajectory().draw(this.context);
         Object.values(enemies).map(enemy => {this.playerView.draw(
             enemy.getPosition(),
+            enemy.getWeapon(),
             enemy.getAngle(),
         )})
         this.drawBullets(player.getBullets(), field);
