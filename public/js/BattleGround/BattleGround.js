@@ -1,6 +1,6 @@
 import { Cell } from "./Cell.js";
 import { VerticalWall} from "./VerticalWall.js";
-import { HorisontalWall} from "./HorisontalWall.js";
+import { HorizontalWall} from "./HorizontalWall.js";
 import { CELL, WINDOW } from "../CONST.js";
 import { WeaponController } from "../Weapon/WeaponController.js";
 import { Drawable } from "../Interface/Drawable.js";
@@ -20,7 +20,7 @@ class BattleGround extends Drawable {
         super(0, 0, maxX, maxY);
         this.cells = [];
         this.verticalWalls = [];
-        this.horisontalWalls = [];
+        this.horizontalWalls = [];
         this.weapons = [];
 
         this.cells = Array.from({ length: maxX + 1 }, () => Array(maxY + 1).fill(null));
@@ -44,7 +44,7 @@ class BattleGround extends Drawable {
                 if (startX === endX) {
                     this.verticalWalls.push(new VerticalWall(startX, startY, endX, endY));
                 } else if (startY === endY) {
-                    this.horisontalWalls.push(new HorisontalWall(startX, startY, endX, endY));
+                    this.horizontalWalls.push(new HorizontalWall(startX, startY, endX, endY));
                 }
             } 
         )
@@ -60,7 +60,7 @@ class BattleGround extends Drawable {
     }
 
     drawWalls(context) {
-        this.horisontalWalls.map(wall => wall.draw(context));
+        this.horizontalWalls.map(wall => wall.draw(context));
         this.verticalWalls.map(wall => wall.draw(context));
     }
 
@@ -100,7 +100,7 @@ class BattleGround extends Drawable {
         super.move(dx, dy);
         this.cells.map(row => row.map(cell => cell.move(dx, dy)));
         this.verticalWalls.map(wall => wall.move(dx, dy));
-        this.horisontalWalls.map(wall => wall.move(dx, dy));
+        this.horizontalWalls.map(wall => wall.move(dx, dy));
         this.weapons.map(weapon => weapon.model.move(dx, dy));
     }
 }

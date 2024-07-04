@@ -11,7 +11,7 @@ class WebSocketController {
         const ip = req.socket.remoteAddress;
         connection.id = this.getUniqueID();
         console.log(`Connected ${ip}`);
-
+        this.sendInit(connection);
         // дописать отправку карты
         //client.send(JSON.stringify({ id, x, y }), { binary: false });
 
@@ -39,6 +39,22 @@ class WebSocketController {
 
     onClose(ip) {
         console.log(`Disconnected ${ip}`);
+    }
+
+    sendInit() {
+        
+    }
+
+    sendResponse() {
+
+    }
+
+    send(connection, type, data) {
+        const responseData = {
+            type,
+            data
+        };
+        connection.send(JSON.stringify(responseData), { binary: false });
     }
 
     getUniqueID() {
