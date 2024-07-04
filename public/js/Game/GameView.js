@@ -20,7 +20,7 @@ class GameView {
             player.getAngle()
         );
         if (player.getTrajectory()) player.getTrajectory().draw(this.context);
-        enemies.map(enemy => {this.playerView.draw(
+        Object.values(enemies).map(enemy => {this.playerView.draw(
             enemy.getPosition(),
             enemy.getAngle(),
         )})

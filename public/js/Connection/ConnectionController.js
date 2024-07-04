@@ -15,6 +15,7 @@ class ConnectionController {
     sendPosition({x, y, angle}) {
         //console.log(x, y)
         if (this.socket.readyState === WebSocket.OPEN) {
+            //console.log(x, y, angle)
             const data = JSON.stringify({ x, y, angle });
             this.socket.send(data);
         }
@@ -36,7 +37,7 @@ class ConnectionController {
 
     onMessage(data) {
         const change = JSON.parse(data);
-        console.log(change);
+        //console.log(change);
         const enemyId = change.id;
 
         const enemyX = change.x + this.field.x;
@@ -49,6 +50,8 @@ class ConnectionController {
                 x: enemyX,
                 y: enemyY,
             });
+            this.enemies[enemyId].setAngle(enemyAngle);
+            //console.log(enemyX, enemyY, enemyAngle);
         } else {
             // Если игрока нет, создаем нового и добавляем его в массив
             const enemy = new EnemyController({

@@ -29,7 +29,7 @@ class WebSocketController {
     onMessage(message, connection) {
         const { x, y, angle } = JSON.parse(message);
         for (const client of this.socket.clients) {
-            console.log('Received: ' + message);
+            //console.log('Received: ' + message);
             if (client.readyState !== WebSocket.OPEN) continue;
             if (client === connection) continue;
             const id = connection.id;

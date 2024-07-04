@@ -1,3 +1,3 @@
-const PORT = 8002;
+const PORT = 8000;
 
 export {PORT};

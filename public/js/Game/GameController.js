@@ -33,7 +33,7 @@ class GameController {
         const period = CAMERA.period;
         this.field.move(dx / period, dy / period);
         this.player.move(dx / period, dy / period);
-        this.enemies.map(enemy => {
+        Object.values(this.enemies).map(enemy => {
             enemy.move(dx / period, dy / period);
         });
     }
@@ -53,9 +53,10 @@ class GameController {
         this.field.update();
         this.checkIntersections([].concat(this.field.verticalWalls, this.field.horizontalWalls));
         this.player.update();
-        this.enemies.map(enemy => {
+        Object.values(this.enemies).map(enemy => {
+            //console.log(enemy)
             enemy.update();
-        });
+        })
         this.moveFrame();
         this.tracing.updateViewRange();
     }
@@ -120,7 +121,7 @@ class GameController {
             this.update();
             this.view.updateFrame(this.field, this.player, this.enemies);
             const { x, y } = this.player.getPosition();
-            this.connection.sendPosition({x: x - this.field.x, y: y - this.field.y, angle: this.player.getAngle}); 
+            this.connection.sendPosition({x: x - this.field.x, y: y - this.field.y, angle: this.player.getAngle()}); 
             this.lastTime = timestamp;
         }
 
