@@ -4,10 +4,11 @@ import { HorisontalWall} from "./HorisontalWall.js";
 import { CELL, WINDOW } from "../CONST.js";
 import { WeaponController } from "../Weapon/WeaponController.js";
 import { Drawable } from "../Interface/Drawable.js";
+import { Bonus } from "../Collectable/Bonus.js";
+import { Ammunition } from "../Collectable/Ammunition.js";
 
 class BattleGround extends Drawable {
-    constructor(groundList, wallList, weaponSet) {
-
+    constructor(groundList, wallList, weaponSet, ammunitionSet, bonusSet) {
         let maxX = 0;
         let maxY = 0;
         groundList.map(
@@ -22,12 +23,26 @@ class BattleGround extends Drawable {
         this.verticalWalls = [];
         this.horisontalWalls = [];
         this.weapons = [];
+        this.ammunition = [];
+        this.bonuses = [];
 
         this.cells = Array.from({ length: maxX + 1 }, () => Array(maxY + 1).fill(null));
 
         weaponSet.map(
             weapon => {
                 this.weapons.push(new WeaponController(weapon));
+            }
+        );
+
+        ammunitionSet.map(
+            ammunition => {
+                this.ammunition.push(new Ammunition(ammunition.x, ammunition.y, ammunition.color, ammunition.amount));
+            }
+        );
+
+        bonusSet.map(
+            bonus => {
+                this.bonuses.push(new Bonus(bonus.x, bonus.y, bonus.color, bonus.effect));
             }
         );
 
@@ -69,7 +84,6 @@ class BattleGround extends Drawable {
         this.weapons.map(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) / CELL.w);
             indexY = Math.floor((weapon.model.y - this.y) / CELL.h);
-            //console.log(indexX, indexY)
             if (this.cells[indexX][indexY].active) weapon.view.draw(
                 {
                     x: weapon.model.x, 
@@ -82,6 +96,28 @@ class BattleGround extends Drawable {
                 context
             );
         })
+    }
+
+    drawAmmunition(context) {
+        let indexX, indexY;
+        this.ammunition.map(ammunition => {
+            indexX = Math.floor((ammunition.x - this.x) / CELL.w);
+            indexY = Math.floor((ammunition.y - this.y) / CELL.h);
+            if (this.cells[indexX][indexY].active) {
+                ammunition.draw(context);
+            }
+        });
+    }
+
+    drawBonuses(context) {
+        let indexX, indexY;
+        this.bonuses.map(bonus => {
+            indexX = Math.floor((bonus.x - this.x) / CELL.w);
+            indexY = Math.floor((bonus.y - this.y) / CELL.h);
+            if (this.cells[indexX][indexY].active) {
+                bonus.draw(context);
+            }
+        });
     }
 
     clearFrame(context) {
@@ -102,6 +138,8 @@ class BattleGround extends Drawable {
         this.verticalWalls.map(wall => wall.move(dx, dy));
         this.horisontalWalls.map(wall => wall.move(dx, dy));
         this.weapons.map(weapon => weapon.model.move(dx, dy));
+        this.ammunition.forEach(ammunition => ammunition.move(dx, dy));
+        this.bonuses.forEach(bonus => bonus.move(dx, dy));
     }
 }
 

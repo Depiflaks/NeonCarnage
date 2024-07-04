@@ -81,7 +81,36 @@ const weaponSet = [
     }
 ];
 
+const ammunitionSet = [
+    {
+        x: 10,
+        y: 7,
+        color: "yellow",
+        amount: 10
+    },
+    {
+        x: 7,
+        y: 7,
+        color: "yellow",
+        amount: 15
+    }
+];
+
+const bonusSet = [
+    {
+        x: 7,
+        y: 4,
+        color: "blue",
+        effect: "speed"
+    },
+    {
+        x: 5,
+        y: 5,
+        color: "blue",
+        effect: "shield"
+    }
+];
 
 const groundList = convertFields(cellsList);
 
-export {wallList, weaponSet, groundList}
+export {wallList, weaponSet, groundList, ammunitionSet, bonusSet}

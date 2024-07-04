@@ -15,6 +15,8 @@ class GameView {
         field.drawGround(this.context);
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
+        field.drawBonuses(this.context);
+        field.drawAmmunition(this.context);
         player.view.draw(
             player.getPosition(),
             player.getAngle()
@@ -41,7 +43,7 @@ class GameView {
     }
 
     drawBulletAmount(player) {
-        if((player.getWeapon() != null) && (player.getWeapon().getBattleType() == "distant")) {
+        if((player.getWeapon() != null) && (player.getWeapon().getBattleType() === "distant")) {
             this.context.font = "48px roboto";
             this.context.fillText(player.getWeapon().getAmount(), 10, 50);
         }
