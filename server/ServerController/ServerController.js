@@ -5,6 +5,7 @@ import express from 'express';
 import path from 'path';
 import http from 'http';
 import { fileURLToPath } from 'url';
+import { MapGenerator } from '../MapGenerator/MapGenerator.js';
 
 class ServerController {
     constructor() {
@@ -24,8 +25,14 @@ class ServerController {
         this.server.listen(this.port, () => {
             console.log('Listening on port ' + this.port);
         });
+        
+        this.generanor = new MapGenerator();
 
-        this.webSocket = new WebSocketController(this.server);
+        this.webSocket = new WebSocketController(this.server, this.getMap());
+    }
+
+    getMap() {
+        return this.generanor.create();
     }
 }
 

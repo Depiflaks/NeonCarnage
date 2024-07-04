@@ -73,27 +73,27 @@ class Tracing {
                 size * ((cos > 0) ? 1 : -1),
                 startX, 0, px, py
             );
-            const horisontal = new Ray(
+            const horizontal = new Ray(
                 size * ((sin < 0) ? 1 : -1),
                 0, startY, px, py
             );
             for (let i = 0; i < 100; i++) {
                 // считаем кординаты точки
                 vertical.matchY(tg);
-                horisontal.matchX(tg);
+                horizontal.matchX(tg);
                 vertical.matchDistant();
-                horisontal.matchDistant();
-                delta = vertical.distant - horisontal.distant;
+                horizontal.matchDistant();
+                delta = vertical.distant - horizontal.distant;
                 // проверка на выход из range
-                horisontal.inRange &= horisontal.distant <= range;
+                horizontal.inRange &= horizontal.distant <= range;
                 vertical.inRange &= vertical.distant <= range;
                 // проверка на касание со стеной
-                horisontal.isWall |= this.wallsIntersect(horisontal, this.field.horisontalWalls, false);
+                horizontal.isWall |= this.wallsIntersect(horizontal, this.field.horizontalWalls, false);
                 vertical.isWall |= this.wallsIntersect(vertical, this.field.verticalWalls, true);
                 const breakCondition = {
-                    inRange: !vertical.inRange && !horisontal.inRange, // если оба луча вышли за область
-                    isWall: vertical.isWall && horisontal.isWall, // если оба луча коснулись стены
-                    horisontalWall: horisontal.isWall && delta > 0, // если горизонтальный луч коснулся стены
+                    inRange: !vertical.inRange && !horizontal.inRange, // если оба луча вышли за область
+                    isWall: vertical.isWall && horizontal.isWall, // если оба луча коснулись стены
+                    horizontalWall: horizontal.isWall && delta > 0, // если горизонтальный луч коснулся стены
                     verticalWall: vertical.isWall && delta < 0 // если вертикальный луч коснулся стены
                 }
                 //console.log(breakCondition);
@@ -103,9 +103,9 @@ class Tracing {
                     this.setActive(vertical.x, vertical.y, true);
                     vertical.x += vertical.step;
                 }
-                if (horisontal.inRange && !horisontal.isWall && delta > 0) {
-                    this.setActive(horisontal.x, horisontal.y, false);
-                    horisontal.y += horisontal.step;
+                if (horizontal.inRange && !horizontal.isWall && delta > 0) {
+                    this.setActive(horizontal.x, horizontal.y, false);
+                    horizontal.y += horizontal.step;
                 }
                 //break;
             }

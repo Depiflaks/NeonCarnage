@@ -4,7 +4,8 @@ const FPS = 90;
 const DURATION = 1000 / FPS;
 
 const SERVER = {
-    sergey: 'ws://10.250.104.142:8000/',
+    sergey: 'ws://10.250.104.142:8002/',
+    sergey_home: 'ws://192.168.1.131:8000/',
     ignat: 'ws://10.250.104.176:8000/',
 }
 

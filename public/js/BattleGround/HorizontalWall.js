@@ -1,7 +1,7 @@
 import { Wall } from "./Wall.js";
 import { WALL } from "../CONST.js";
 
-class HorisontalWall extends Wall {
+class HorizontalWall extends Wall {
     constructor(startX, startY, endX, endY){
         super(startX, startY, endX, endY);
         this.x = this.startX;
@@ -11,4 +11,4 @@ class HorisontalWall extends Wall {
     }
 }
 
-export { HorisontalWall }
+export { HorizontalWall }
