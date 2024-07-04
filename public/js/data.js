@@ -65,7 +65,7 @@ const weaponSet = [
         inHand: "public/assets/Weapon/weaponUp51.png", //текстура в руках
         amount: 0, //количество пуль в магазине(для холодного - 0)
         rechargeTime: 0 //время перезарядки
-    },         
+    },
     {
         name: "wep2",
         x: 10,

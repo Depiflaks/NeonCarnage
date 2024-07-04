@@ -8,14 +8,15 @@ import {ConnectionController} from "../Connection/ConnectionController.js";
 
 class GameController {
     constructor(objects, player, canvas) {
-        this.model = new GameModel(objects);
+        this.model = new GameModel(objects, player);
         this.view = new GameView(canvas);
-        this.players = [];
-        this.field = this.model.getField();
-        this.connection = new ConnectionController(this.players, this.field, this.view.context);
-        this.player = new PlayerController(this.view.context, player);
 
-        
+        this.enemies = this.model.getEnemies();
+        this.field = this.model.getField();
+        this.player = this.model.getPlayer();
+
+        this.connection = new ConnectionController(this.player, this.enemies, this.field);
+
         this.tracing = new Tracing(this.player, this.field);
 
         this.lastTime = 0;
@@ -32,6 +33,9 @@ class GameController {
         const period = CAMERA.period;
         this.field.move(dx / period, dy / period);
         this.player.move(dx / period, dy / period);
+        Object.values(this.enemies).map(enemy => {
+            enemy.move(dx / period, dy / period);
+        });
     }
 
     addWeapon() {
@@ -49,10 +53,12 @@ class GameController {
         this.field.update();
         this.checkIntersections([].concat(this.field.verticalWalls, this.field.horizontalWalls));
         this.player.update();
+        Object.values(this.enemies).map(enemy => {
+            //console.log(enemy)
+            enemy.update();
+        })
         this.moveFrame();
         this.tracing.updateViewRange();
-        const { x, y } = this.player.getPosition();
-        this.connection.sendPosition(x - this.field.x, y - this.field.y); 
     }
 
     bulletsIntersection(barriers) {
@@ -113,8 +119,9 @@ class GameController {
 
         if (deltaTime >= DURATION) {
             this.update();
-            this.view.updateFrame(this.field, this.player, this.players);
-
+            this.view.updateFrame(this.field, this.player, this.enemies);
+            const { x, y } = this.player.getPosition();
+            this.connection.sendPosition({x: x - this.field.x, y: y - this.field.y, angle: this.player.getAngle()}); 
             this.lastTime = timestamp;
         }
 

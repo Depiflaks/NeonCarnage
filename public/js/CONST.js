@@ -4,7 +4,7 @@ const FPS = 90;
 const DURATION = 1000 / FPS;
 
 const SERVER = {
-    sergey: 'ws://10.250.104.142:8002/',
+    sergey: 'ws://10.250.104.142:8000/',
     sergey_home: 'ws://192.168.1.131:8000/',
     ignat: 'ws://10.250.104.176:8000/',
 }
@@ -77,6 +77,10 @@ const BULLET = {
     color: "yellow",
 };
 
+const ENEMY = {
+    period: 10,
+}
+
 const KEYBOARD_E = 'KeyE';
 
 const WEAPON_STATE = {
@@ -92,4 +96,4 @@ const TRAJECTORY = {
     strokeStyle: "red"
 };
 
-export {WINDOW, CELL, WALL, PLAYER, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER};
+export {WINDOW, CELL, WALL, PLAYER, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};
