@@ -9,8 +9,10 @@ class WeaponModel extends Drawable {
         this.rapidity = rapidity;
         this.grouping = grouping;
         this.deviation = deviation;
-        this.onGround = onGround;   
-        this.inHand = inHand;
+        this.onGround = new Image();
+        this.onGround.src = onGround;
+        this.inHand = new Image();
+        this.inHand.src = inHand;
         this.status = WEAPON_STATE.onTheGround; 
         this.shootingInterval;
         this.amount = amount;

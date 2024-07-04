@@ -14,21 +14,31 @@ const CELL = {
     activeAlpha: 0,
     inactiveAlpha: 0.4,
     deltaAlpha: 0.01,
-    color: "green",
+    src: "../../assets/BattleGround/cell.png",
 };
 
 
 const WALL = {
     h: 15,
-    color: "orange",
+    verticalStartImage: "../../assets/BattleGround/verticalWallStart.png",
+    verticalEndImage: "../../assets/BattleGround/verticalWallEnd.png",
+    verticalBetweenImage: "../../assets/BattleGround/verticalWallBetween.png",
+    verticalImage: "../../assets/BattleGround/verticalWall.png",
+    horizontalStartImage: "../../assets/BattleGround/horizontalWallStart.png",
+    horizontalEndImage: "../../assets/BattleGround/horizontalWallEnd.png",
+    horizontalBetweenImage: "../../assets/BattleGround/horizontalWallBetween.png",
+    horizontalImage: "../../assets/BattleGround/horizontalWall.png"
 }
 
 const PLAYER = {
-    radius: 20,
-    w: 60,
-    h: 30,
-    headColor: "red",
-    bodyColor: "blue",
+    radius: 30,
+    w: 100,
+    h: 60,
+    wWithWeapon: 120,
+    hWithWeapon: 120,
+    headColor: "../../assets/Player/Skin3/head.png",
+    bodyColor: "../../assets/Player/Skin3/body.png",
+    bodyWithWeapon: "../../assets/Player/Skin3/bodyWithWeapon.png",
     speed: 6,
     visualField: {
         range: 600,
@@ -46,9 +56,8 @@ const CAMERA = {
 }
 
 const WEAPON = {
-    w: 20,
-    h: 30,
-    color: "pink",
+    w: 80,
+    h: 120,
     minDistance: 40
 
 };

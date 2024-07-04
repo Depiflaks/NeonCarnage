@@ -1,4 +1,4 @@
-import { PLAYER, WEAPON_STATE } from "../CONST.js";
+import { PLAYER, WEAPON, WEAPON_STATE } from "../CONST.js";
 import { Bullet } from "../Weapon/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { PlayerView } from "./PlayerView.js";
@@ -42,9 +42,9 @@ class PlayerController {
         if(this.getWeapon().model.amount > 0) {
             this.getWeapon().model.amount -= 1;
             for (let i = 0; i < this.getWeapon().model.grouping; i++) {
-                const x = this.getPosition().x;
-                const y = this.getPosition().y;
-                const angle = this.model.getAngle();
+                const angle = this.getAngle();
+                const x = this.getPosition().x + WEAPON.h * Math.cos(angle);
+                const y = this.getPosition().y + WEAPON.h * Math.sin(angle);
                 const deviation = this.getWeapon().model.deviation;
                 const rapidity = this.getWeapon().model.rapidity;
                 this.model.bullets.push(new Bullet({x, y, angle, rapidity, deviation}));
@@ -68,8 +68,8 @@ class PlayerController {
         const weapon = this.getWeapon().model;
 
         if (weapon.status === WEAPON_STATE.inTheHand) {
-            const { x, y } = this.model.getPosition();
-            const angle = this.model.getAngle();
+            const { x, y } = this.getPosition();
+            const angle = this.getAngle();
             const trajectory = new Trajectory({
                 x: x,
                 y: y,

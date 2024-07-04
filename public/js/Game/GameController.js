@@ -32,7 +32,7 @@ class GameController {
         const { x, y } = this.player.getPosition();
         this.field.weapons.map(weapon => {
             const distance = Math.sqrt((weapon.model.x - x)**2 + (weapon.model.y - y)**2);
-            if ((distance <= MIN_DISTANCE) && !this.player.getWeapon()) {
+            if ((distance <= WEAPON.minDistance) && !this.player.getWeapon()) {
                 weapon.model.status = WEAPON_STATE.inTheHand;
                 this.player.setWeapon(weapon);
             }
@@ -41,7 +41,7 @@ class GameController {
 
     update() {
         this.field.update();
-        this.checkIntersections([].concat(this.field.verticalWalls, this.field.horisontalWalls));
+        this.checkIntersections([].concat(this.field.verticalWalls, this.field.horizontalWalls));
         this.player.update();
         this.moveFrame();
         //this.tracing.updateViewRange();
