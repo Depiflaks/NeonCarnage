@@ -12,20 +12,18 @@ class GameView {
         this.playerView = new PlayerView(this.context);
     }
 
-    drawFrame(field, player) {
+    drawFrame(field, player, enemies) {
         field.drawGround(this.context);
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         this.playerView.draw(
             player.getPosition(),
             player.getAngle()
         );
-        if (player.getTrajectory()) player.getTrajectory().draw(this.context)
-        // players.forEach(player => {
-        //     player.player.view.draw(
-        //         player.player.getPosition(), 
-        //         player.player.getAngle()
-        //     );
-        // });
+        if (player.getTrajectory()) player.getTrajectory().draw(this.context);
+        enemies.map(enemy => {this.playerView.draw(
+            enemy.getPosition(),
+            enemy.getAngle(),
+        )})
         this.drawBullets(player.getBullets(), field);
         field.drawWalls(this.context);
         this.drawBulletAmount(player);

@@ -33,6 +33,9 @@ class GameController {
         const period = CAMERA.period;
         this.field.move(dx / period, dy / period);
         this.player.move(dx / period, dy / period);
+        this.enemies.map(enemy => {
+            enemy.move(dx / period, dy / period);
+        });
     }
 
     addWeapon() {
@@ -50,10 +53,11 @@ class GameController {
         this.field.update();
         this.checkIntersections([].concat(this.field.verticalWalls, this.field.horizontalWalls));
         this.player.update();
+        this.enemies.map(enemy => {
+            enemy.update();
+        });
         this.moveFrame();
         this.tracing.updateViewRange();
-        const { x, y } = this.player.getPosition();
-        this.connection.sendPosition(x - this.field.x, y - this.field.y); 
     }
 
     bulletsIntersection(barriers) {
@@ -114,8 +118,9 @@ class GameController {
 
         if (deltaTime >= DURATION) {
             this.update();
-            this.view.updateFrame(this.field, this.player, this.players);
-
+            this.view.updateFrame(this.field, this.player, this.enemies);
+            const { x, y } = this.player.getPosition();
+            this.connection.sendPosition({x: x - this.field.x, y: y - this.field.y, angle: this.player.getAngle}); 
             this.lastTime = timestamp;
         }
 

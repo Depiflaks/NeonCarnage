@@ -27,13 +27,13 @@ class WebSocketController {
     }
 
     onMessage(message, connection) {
-        //console.log('Received: ' + message);
-        const { x, y } = JSON.parse(message);
+        const { x, y, angle } = JSON.parse(message);
         for (const client of this.socket.clients) {
+            console.log('Received: ' + message);
             if (client.readyState !== WebSocket.OPEN) continue;
             if (client === connection) continue;
             const id = connection.id;
-            client.send(JSON.stringify({ id, x, y }), { binary: false });
+            client.send(JSON.stringify({ id, x, y, angle }), { binary: false });
         }
     }
 

@@ -1,3 +1,4 @@
+import { PLAYER } from "../CONST.js";
 import { Moveable } from "../Interface/Moveable.js";
 
 class EnemyModel extends Moveable {

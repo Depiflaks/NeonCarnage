@@ -12,9 +12,10 @@ class ConnectionController {
         this.context = context;
     }
 
-    sendPosition(x, y) {
+    sendPosition({x, y, angle}) {
+        //console.log(x, y)
         if (this.socket.readyState === WebSocket.OPEN) {
-            const data = JSON.stringify({ x, y });
+            const data = JSON.stringify({ x, y, angle });
             this.socket.send(data);
         }
     }
@@ -35,18 +36,16 @@ class ConnectionController {
 
     onMessage(data) {
         const change = JSON.parse(data);
+        console.log(change);
         const enemyId = change.id;
 
         const enemyX = change.x + this.field.x;
         const enemyY = change.y + this.field.y;
         const enemyAngle = change.angle;
 
-        // Найти индекс игрока по id
-        const playerIndex = this.enemies.findIndex(enemy => enemy.id === enemyId);
-
-        if (playerIndex !== -1) {
+        if (this.enemies[enemyId]) {
             // Если игрок существует, обновляем его координаты
-            this.enemies[enemyId].sendPosition({
+            this.enemies[enemyId].setPosition({
                 x: enemyX,
                 y: enemyY,
             });
@@ -57,10 +56,7 @@ class ConnectionController {
                 y: enemyY,
                 angle: enemyAngle,
             });
-            this.enemies.push({
-                id: enemyId,
-                player: player
-            });
+            this.enemies[enemyId] = enemy;
         }
     }
 
