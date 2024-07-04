@@ -16,7 +16,8 @@ class GameView {
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         player.view.draw(
-            player.getPosition(),
+            player.getPosition(), 
+            player.getWeapon(),
             player.getAngle()
         );
         if (player.getTrajectory()) player.getTrajectory().draw(this.context)

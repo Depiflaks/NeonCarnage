@@ -14,12 +14,6 @@ class Wall extends Drawable {
         this.endX = endX * CELL.w;
         this.endY = endY * CELL.h;
     }
-
-    draw(context) {
-        context.fillStyle = WALL.color;
-        context.fillRect(this.x, this.y, this.w, this.h);
-    }
-
 }
 
 export { Wall }

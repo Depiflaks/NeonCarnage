@@ -47,12 +47,12 @@ class BattleGround extends Drawable {
                     this.horizontalWalls.push(new HorizontalWall(startX, startY, endX, endY));
                 }
             } 
-        )
+        );
     };
 
     update() {
         this.cells.map(row => row.map(cell => cell.update()));
-        this.hideCells();
+        // this.hideCells();
     }
 
     drawGround(context) {
@@ -69,14 +69,13 @@ class BattleGround extends Drawable {
         this.weapons.map(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) / CELL.w);
             indexY = Math.floor((weapon.model.y - this.y) / CELL.h);
-            //console.log(indexX, indexY)
             if (this.cells[indexX][indexY].active) weapon.view.draw(
                 {
                     x: weapon.model.x, 
                     y: weapon.model.y,
                     status: weapon.model.status,
-                    onGroundColor: weapon.model.onGroundColor,
-                    inHandColor: weapon.model.inHandColor
+                    onGround: weapon.model.onGround,
+                    inHand: weapon.model.inHand
                 }, 
                 {x, y}, angle,
                 context
