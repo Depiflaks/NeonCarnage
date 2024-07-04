@@ -40,7 +40,8 @@ const PLAYER = {
         angleStep: 15 * RAD,
     },
     pythagoreanFactor: Math.sqrt(2) / 2,
-    health: 4
+    health: 4,
+    maxHealth: 5,
 };
 
 const CAMERA = {

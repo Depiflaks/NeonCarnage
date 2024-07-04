@@ -13,7 +13,7 @@ class WeaponModel extends Drawable {
         this.inHandColor = inHand;
         this.status = WEAPON_STATE.onTheGround; 
         this.shootingInterval;
-        this.amount = amount;
+        this.amount = 30;
         this.maxAmount = amount;
         this.isRecharging = false;
         this.rechargeTime = rechargeTime;

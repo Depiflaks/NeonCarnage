@@ -42,7 +42,7 @@ class BattleGround extends Drawable {
 
         bonusSet.map(
             bonus => {
-                this.bonuses.push(new Bonus(bonus.x, bonus.y, bonus.color, bonus.effect));
+                this.bonuses.push(new Bonus(bonus.x, bonus.y, bonus.color, bonus.amount));
             }
         );
 

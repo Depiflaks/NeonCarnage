@@ -18,6 +18,7 @@ class PlayerModel extends Moveable {
         };
         this.bullets = [];
         this.health = PLAYER.health;
+        this.maxHealth = PLAYER.maxHealth;
 
     }
 
@@ -72,6 +73,14 @@ class PlayerModel extends Moveable {
 
     getHealth() {
         return this.health;
+    }
+
+    getMaxHealth() {
+        return this.maxHealth;
+    }
+
+    setHealth(value) {
+        this.health = value;
     }
 
     move(dx, dy) {

@@ -86,13 +86,13 @@ const ammunitionSet = [
         x: 10,
         y: 7,
         color: "yellow",
-        amount: 10
+        amount: 40
     },
     {
         x: 7,
         y: 7,
         color: "yellow",
-        amount: 15
+        amount: 95
     }
 ];
 
@@ -101,13 +101,13 @@ const bonusSet = [
         x: 7,
         y: 4,
         color: "blue",
-        effect: "speed"
+        amount: 1,
     },
     {
         x: 5,
         y: 5,
         color: "blue",
-        effect: "shield"
+        amount: 2,
     }
 ];
 

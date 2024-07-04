@@ -50,24 +50,45 @@ class GameController {
         this.field.ammunition = this.field.ammunition.filter(ammunition => {
             const distance = Math.sqrt((ammunition.x - x) ** 2 + (ammunition.y - y) ** 2);
             if (distance <= AMMUNITION.midDistance) {
-                //this.player.setBullets()
-                return false;
+                const weapon = this.player.getWeapon();
+                console.log(weapon);
+                if (weapon && weapon.model.battleType === "distant") {
+                    const currentAmount = weapon.model.amount;
+                    const maxAmount = weapon.model.maxAmount;
+
+                    if (currentAmount < maxAmount) {
+                        const amountToAdd = Math.min(ammunition.amount, maxAmount - currentAmount);
+                        weapon.model.amount = Math.min(currentAmount + ammunition.amount, maxAmount);
+                    }
+                    return false;
+                }
             }
             return true;
         });
     }
 
-    takeBonus(){
+    takeBonus() {
         const { x, y } = this.player.getPosition();
         this.field.bonuses = this.field.bonuses.filter(bonus => {
             const distance = Math.sqrt((bonus.x - x) ** 2 + (bonus.y - y) ** 2);
             if (distance <= BONUS.midDistance) {
-                //this.player.setHealth()
-                return false;
+                const currentHealth = this.player.model.getHealth();
+                const maxHealth = this.player.model.getMaxHealth();
+
+                if (currentHealth < maxHealth) {
+                    const healthToAdd = Math.min(bonus.amount, maxHealth - currentHealth);
+                    console.log(this.player.model.getHealth());
+                    this.player.model.setHealth(currentHealth + healthToAdd);
+                    console.log(this.player.model.getHealth());
+                    return false;
+                }
+
             }
             return true;
         });
     }
+
+
 
 
     update() {

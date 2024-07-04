@@ -1,10 +1,10 @@
 import {BONUS, CELL} from "../CONST.js";
 import {Collectable} from "./Collectable.js";
 class Bonus extends Collectable {
-    constructor(x, y, color, effect) {
+    constructor(x, y, color, amount) {
         super(x, y)
         this.color = BONUS.color;
-        this.effect = effect;
+        this.amount = amount;
     }
 
     draw(context) {

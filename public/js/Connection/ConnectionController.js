@@ -4,7 +4,7 @@ import { PlayerController } from '../Player/PlayerController.js';
 class ConnectionController {
     constructor(players, field, context) {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.sergey);
+        this.socket = new WebSocket(SERVER.ignat);
         this.initEventListeners();
         this.players = players;
         this.field = field;
