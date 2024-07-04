@@ -11,9 +11,6 @@ class WebSocketController {
         const ip = req.socket.remoteAddress;
         connection.id = this.getUniqueID();
         console.log(`Connected ${ip}`);
-        this.sendInit(connection);
-        // дописать отправку карты
-        //client.send(JSON.stringify({ id, x, y }), { binary: false });
 
         return ip;
     }
@@ -27,13 +24,22 @@ class WebSocketController {
     }
 
     onMessage(message, connection) {
-        //console.log('Received: ' + message);
-        const { x, y } = JSON.parse(message);
-        for (const client of this.socket.clients) {
-            if (client.readyState !== WebSocket.OPEN) continue;
-            if (client === connection) continue;
-            const id = connection.id;
-            client.send(JSON.stringify({ id, x, y }), { binary: false });
+        console.log('Received: ' + message);
+        const data = JSON.parse(message);
+        if (data.type == "init") {
+            this.sendInit(connection);
+        }
+        if(data.type == "request") {
+            for (const client of this.socket.clients) {
+                if (client.readyState !== WebSocket.OPEN) continue;
+                if (client === connection) continue;
+                const id = connection.id;
+                const x = data.x;
+                const y = data.y;
+                const responseData = { id, x, y };
+                const type = "response";
+                client.send(JSON.stringify({ type, data }), { binary: false });
+            }
         }
     }
 
@@ -41,8 +47,8 @@ class WebSocketController {
         console.log(`Disconnected ${ip}`);
     }
 
-    sendInit() {
-        
+    sendInit(connection) {
+        this.send(connection, "init", { map: this.map })
     }
 
     sendResponse() {

@@ -4,17 +4,22 @@ import { GameModel } from "./GameModel.js";
 import { GameView } from "./GameView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
 import { Trajectory } from "../Weapon/Trajectory.js";
-import {ConnectionController} from "../Connection/ConnectionController.js";
+
 
 class GameController {
-    constructor(objects, player, canvas) {
-        this.model = new GameModel(objects);
-        this.view = new GameView(canvas);
-        this.players = [];
-        this.field = this.model.getField();
-        this.connection = new ConnectionController(this.players, this.field, this.view.context);
-        this.player = new PlayerController(this.view.context, player);
+    constructor(canvas, context, connection, mapData, playerData) {
+        console.log(mapData);
+        console.log(playerData);
+        this.connection = connection;
 
+        this.view = new GameView(context);
+        this.players = connection.getPlayers();
+    
+        this.model = new GameModel(mapData);
+
+        this.field = this.model.getField();
+        
+        this.player = new PlayerController(this.view.context, playerData);
         
         this.tracing = new Tracing(this.player, this.field);
 
@@ -51,6 +56,7 @@ class GameController {
         this.player.update();
         this.moveFrame();
         this.tracing.updateViewRange();
+        this.players = this.connection.getPlayers();
         const { x, y } = this.player.getPosition();
         this.connection.sendPosition(x - this.field.x, y - this.field.y); 
     }
@@ -110,12 +116,13 @@ class GameController {
 
     loop(timestamp) {
         const deltaTime = timestamp - this.lastTime;
+        if (this.field != null) {
+            if (deltaTime >= DURATION) {
+                this.update();
+                this.view.updateFrame(this.field, this.player, this.players);
 
-        if (deltaTime >= DURATION) {
-            this.update();
-            this.view.updateFrame(this.field, this.player, this.players);
-
-            this.lastTime = timestamp;
+                this.lastTime = timestamp;
+            }
         }
 
         requestAnimationFrame((timestamp) => { this.loop(timestamp) });

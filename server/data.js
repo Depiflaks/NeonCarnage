@@ -81,7 +81,12 @@ const weaponSet = [
     }
 ];
 
+const playerSet = {
+    x: 1440,
+    y: 700
+};
+
 
 const groundList = convertFields(cellsList);
 
-export {wallList, weaponSet, groundList}
+export {wallList, weaponSet, groundList, playerSet}

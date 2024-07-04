@@ -1,15 +1,16 @@
-import { groundList, wallList, weaponSet } from "../data.js";
+import { groundList, wallList, weaponSet, playerSet } from "../data.js";
 
 class MapGenerator {
     constructor() {
 
     }
 
-    getMap() {
+    create() {
         return {
             cells: groundList,
             walls: wallList,
             weapons: weaponSet,
+            player: playerSet
         }
     }
 }

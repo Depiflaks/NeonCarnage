@@ -26,14 +26,19 @@ class ServerController {
             console.log('Listening on port ' + this.port);
         });
         
-        this.generanor = new MapGenerator();
+        this.generator = new MapGenerator();
 
         this.webSocket = new WebSocketController(this.server, this.getMap());
     }
 
     getMap() {
-        return this.generanor.create();
+        return this.generator.create();
     }
+
+    getPlayer() {
+        return this.generator.createPlayer();
+    }
+
 }
 
 export { ServerController };

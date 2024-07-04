@@ -4,11 +4,8 @@ import { WINDOW, RAD, PLAYER, CELL } from "../CONST.js";
 
 
 class GameView {
-    constructor(canvas) {
-        this.canvas = canvas
-        canvas.width = WINDOW.w;
-        canvas.height = WINDOW.h;
-        this.context = canvas.getContext("2d");
+    constructor(context) {
+        this.context = context;
     }
 
     drawFrame(field, player, players) {
