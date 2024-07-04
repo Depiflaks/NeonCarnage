@@ -83,9 +83,9 @@ class Tracing {
                 horizontal.matchX(tg);
                 vertical.matchDistant();
                 horizontal.matchDistant();
-                delta = vertical.distant - hozisontal.distant;
+                delta = vertical.distant - horizontal.distant;
                 // проверка на выход из range
-                horisontal.inRange &= horisontal.distant <= range;
+                horizontal.inRange &= horizontal.distant <= range;
                 vertical.inRange &= vertical.distant <= range;
                 // проверка на касание со стеной
                 horizontal.isWall |= this.wallsIntersect(horizontal, this.field.horizontalWalls, false);
@@ -103,9 +103,9 @@ class Tracing {
                     this.setActive(vertical.x, vertical.y, true);
                     vertical.x += vertical.step;
                 }
-                if (horisontal.inRange && !horisontal.isWall && delta > 0) {
-                    this.setActive(horisontal.x, horisontal.y, false);
-                    horisontal.y += horisontal.step;
+                if (horizontal.inRange && !horizontal.isWall && delta > 0) {
+                    this.setActive(horizontal.x, horizontal.y, false);
+                    horizontal.y += horizontal.step;
                 }
                 //break;
             }

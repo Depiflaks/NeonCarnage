@@ -19,20 +19,20 @@ const CELL = {
     activeAlpha: 0,
     inactiveAlpha: 0.4,
     deltaAlpha: 0.01,
-    src: "../../assets/BattleGround/cell.png",
+    src: "public/assets/BattleGround/cell.png",
 };
 
 
 const WALL = {
     h: 15,
-    verticalStartImage: "../../assets/BattleGround/verticalWallStart.png",
-    verticalEndImage: "../../assets/BattleGround/verticalWallEnd.png",
-    verticalBetweenImage: "../../assets/BattleGround/verticalWallBetween.png",
-    verticalImage: "../../assets/BattleGround/verticalWall.png",
-    horizontalStartImage: "../../assets/BattleGround/horizontalWallStart.png",
-    horizontalEndImage: "../../assets/BattleGround/horizontalWallEnd.png",
-    horizontalBetweenImage: "../../assets/BattleGround/horizontalWallBetween.png",
-    horizontalImage: "../../assets/BattleGround/horizontalWall.png"
+    verticalStartImage: "public/assets/BattleGround/verticalWallStart.png",
+    verticalEndImage: "public/assets/BattleGround/verticalWallEnd.png",
+    verticalBetweenImage: "public/assets/BattleGround/verticalWallBetween.png",
+    verticalImage: "public/assets/BattleGround/verticalWall.png",
+    horizontalStartImage: "public/assets/BattleGround/horizontalWallStart.png",
+    horizontalEndImage: "public/assets/BattleGround/horizontalWallEnd.png",
+    horizontalBetweenImage: "public/assets/BattleGround/horizontalWallBetween.png",
+    horizontalImage: "public/assets/BattleGround/horizontalWall.png"
 }
 
 const PLAYER = {
@@ -41,9 +41,9 @@ const PLAYER = {
     h: 60,
     wWithWeapon: 120,
     hWithWeapon: 120,
-    headColor: "../../assets/Player/Skin3/head.png",
-    bodyColor: "../../assets/Player/Skin3/body.png",
-    bodyWithWeapon: "../../assets/Player/Skin3/bodyWithWeapon.png",
+    headColor: "public/assets/Player/Skin3/head.png",
+    bodyColor: "public/assets/Player/Skin3/body.png",
+    bodyWithWeapon: "public/assets/Player/Skin3/bodyWithWeapon.png",
     speed: 6,
     visualField: {
         range: 600,

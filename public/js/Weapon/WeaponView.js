@@ -5,12 +5,10 @@ class WeaponView {
     }
 
     draw({x, y, status, onGroundColor, inHandColor}, {x: px, y: py}, angle, context) {
-    draw({x, y, status, onGroundColor, inHandColor}, {x: px, y: py}, angle, context) {
         if (status === WEAPON_STATE.onTheGround) {
             this.drawOnGround(x, y, onGroundColor, context);  
         }
         if (status === WEAPON_STATE.inTheHand) {
-            this.drawInHand(inHandColor, {px, py}, angle, context);
             this.drawInHand(inHandColor, {px, py}, angle, context);
         }
     }

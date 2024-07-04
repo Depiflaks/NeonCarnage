@@ -61,8 +61,8 @@ const weaponSet = [
         rapidity: 10,           //скорострельность (задержка в миллисек)
         grouping: 10,           //кучность
         deviation: 0.5,          //отклонение
-        onGround: "../../assets/Weapon/weapon5.png",       //текстура на земле
-        inHand: "../../assets/Weapon/weaponUp51.png", //текстура в руках
+        onGround: "public/assets/Weapon/weapon5.png",       //текстура на земле
+        inHand: "public/assets/Weapon/weaponUp51.png", //текстура в руках
         amount: 0, //количество пуль в магазине(для холодного - 0)
         rechargeTime: 0 //время перезарядки
     },         
@@ -74,8 +74,8 @@ const weaponSet = [
         rapidity: 100,
         grouping: 1,
         deviation: 0.05,
-        onGround: "../../assets/Weapon/weapon1.png",
-        inHand: "../../assets/Weapon/weaponUp1.png",
+        onGround: "public/assets/Weapon/weapon1.png",
+        inHand: "public/assets/Weapon/weaponUp1.png",
         amount: 80,
         rechargeTime: 3000
     },
@@ -87,8 +87,8 @@ const weaponSet = [
         rapidity: 100,
         grouping: 1,
         deviation: 0.05,
-        onGround: "../../assets/Weapon/weapon2.png",
-        inHand: "../../assets/Weapon/weaponUp2.png",
+        onGround: "public/assets/Weapon/weapon2.png",
+        inHand: "public/assets/Weapon/weaponUp2.png",
         amount: 80,
         rechargeTime: 3000
     },
@@ -100,8 +100,8 @@ const weaponSet = [
         rapidity: 100,
         grouping: 1,
         deviation: 0.05,
-        onGround: "../../assets/Weapon/weapon3.png",
-        inHand: "../../assets/Weapon/weaponUp31.png",
+        onGround: "public/assets/Weapon/weapon3.png",
+        inHand: "public/assets/Weapon/weaponUp31.png",
         amount: 80,
         rechargeTime: 3000
     },
@@ -113,8 +113,8 @@ const weaponSet = [
         rapidity: 100,
         grouping: 1,
         deviation: 0.05,
-        onGround: "../../assets/Weapon/weapon4.png",
-        inHand: "../../assets/Weapon/weaponUp41.png",
+        onGround: "public/assets/Weapon/weapon4.png",
+        inHand: "public/assets/Weapon/weaponUp41.png",
         amount: 80,
         rechargeTime: 3000
     }
