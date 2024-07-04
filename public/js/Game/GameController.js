@@ -57,10 +57,9 @@ class GameController {
                     const maxAmount = weapon.model.maxAmount;
 
                     if (currentAmount < maxAmount) {
-                        const amountToAdd = Math.min(ammunition.amount, maxAmount - currentAmount);
                         weapon.model.amount = Math.min(currentAmount + ammunition.amount, maxAmount);
+                        return false;
                     }
-                    return false;
                 }
             }
             return true;
