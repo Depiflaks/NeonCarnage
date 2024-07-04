@@ -31,6 +31,8 @@ class GameView {
         this.drawBullets(player.getBullets(), field);
         field.drawWalls(this.context);
         this.drawBulletAmount(player);
+        player.view.drawHealthBar(PLAYER.health);
+
     }
 
     drawBullets(bullets, field) {
