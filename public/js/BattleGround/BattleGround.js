@@ -74,8 +74,8 @@ class BattleGround extends Drawable {
                     x: weapon.model.x, 
                     y: weapon.model.y,
                     status: weapon.model.status,
-                    onGroundColor: weapon.model.onGroundColor,
-                    inHandColor: weapon.model.inHandColor
+                    onGround: weapon.model.onGround,
+                    inHand: weapon.model.inHand
                 }, 
                 {x, y}, angle,
                 context
