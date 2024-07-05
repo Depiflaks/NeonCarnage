@@ -16,4 +16,6 @@ const gameController = new GameController(
     document
 );
 
+console.log(localStorage.getItem("responseData"));
+
 gameController.start();
