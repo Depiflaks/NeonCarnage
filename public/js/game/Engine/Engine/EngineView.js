@@ -13,6 +13,7 @@ class EngineView {
 
     drawFrame(field, player, enemies) {
         field.drawGround(this.context);
+        this.drawBullets(player.getBullets(), field);
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         field.drawBonuses(this.context);
         field.drawAmmunition(this.context);
@@ -27,7 +28,6 @@ class EngineView {
             enemy.getWeapon(),
             enemy.getAngle(),
         )})
-        this.drawBullets(player.getBullets(), field);
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());
         this.drawBulletAmount(player);

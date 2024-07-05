@@ -62,8 +62,8 @@ class PlayerController extends EntityController {
             this.getWeapon().decAmount();
             for (let i = 0; i < this.getWeapon().getGrouping(); i++) {
                 const angle = this.getAngle();
-                const x = this.getPosition().x + WEAPON.h * Math.cos(angle);
-                const y = this.getPosition().y + WEAPON.h * Math.sin(angle);
+                const x = this.getPosition().x + WEAPON.h/4.1 * Math.cos(angle);
+                const y = this.getPosition().y + WEAPON.h/4.1 * Math.sin(angle);
                 const deviation = this.getWeapon().getDeviation();
                 const rapidity = this.getWeapon().getRapidity();
                 this.model.bullets.push(new Bullet({ x, y, angle, rapidity, deviation }));

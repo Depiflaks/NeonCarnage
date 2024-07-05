@@ -4,21 +4,21 @@ import { Drawable } from "../Interface/Drawable.js";
 class Trajectory extends Drawable {
     constructor(x, y, angle) {
         super(x, y, TRAJECTORY.width, TRAJECTORY.height);
-        this.angle = angle;
-        this.currentAngle = 0;
         this.deltaAngle = TRAJECTORY.deltaAngle;
-        this.isAnimating = false;
         this.animationSpeed = TRAJECTORY.animationSpeed;
+        this.handPoint = TRAJECTORY.handPoint;
+        this.currentAngle = 0;
+        this.isAnimating = false;
         this.direction = 0;
+        this.angle = angle;
     }
 
     draw(context) {
         const { currentEndX, currentEndY } = this.calculateEndCoordinates();
-
         context.lineWidth = this.h;
         context.strokeStyle = TRAJECTORY.strokeStyle;
         context.beginPath();
-        context.moveTo(this.x, this.y);
+        context.moveTo(this.x + this.handPoint * Math.cos(this.angle + this.currentAngle), this.y + this.handPoint * Math.sin(this.angle + this.currentAngle));
         context.lineTo(currentEndX, currentEndY);
         context.stroke();
     }

@@ -25,7 +25,7 @@ const CELL = {
 };
 
 const WALL = {
-    h: 15,
+    h: 25,
     verticalStartImage: "public/assets/BattleGround/verticalWallStart.png",
     verticalEndImage: "public/assets/BattleGround/verticalWallEnd.png",
     verticalBetweenImage: "public/assets/BattleGround/verticalWallBetween.png",
@@ -88,7 +88,7 @@ const BULLET = {
     w: 5,
     h: 70,
     radius: 70,
-    speed: 20,
+    speed: 52,
     pythagoreanFactor: Math.sqrt(2) / 2,
     color: "yellow",
 };
@@ -105,10 +105,11 @@ const WEAPON_STATE = {
 };
 
 const TRAJECTORY = {
-    width: 150,
+    handPoint: 40,
+    width: 175,
     height: 10,
     deltaAngle: Math.PI / 3,
-    animationSpeed: 0.05,
+    animationSpeed: 0.07,
     strokeStyle: "red"
 };
 
