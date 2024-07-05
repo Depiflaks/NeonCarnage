@@ -51,7 +51,6 @@ class GameController {
             const distance = Math.sqrt((ammunition.x - x) ** 2 + (ammunition.y - y) ** 2);
             if (distance <= AMMUNITION.midDistance) {
                 const weapon = this.player.getWeapon();
-                console.log(weapon);
                 if (weapon && weapon.model.battleType === "distant") {
                     const currentAmount = weapon.model.amount;
                     const maxAmount = weapon.model.maxAmount;
