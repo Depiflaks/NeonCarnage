@@ -1,4 +1,4 @@
-import { ENTITY, RAD } from "../../CONST.js";
+import { ENTITY, RAD, INTERFACE } from "../../CONST.js";
 
 class EntityView {
     constructor(context) {
@@ -9,8 +9,19 @@ class EntityView {
         this.bodyImage.src = ENTITY.bodyColor;
         this.bodyWithWeaponImage = new Image();
         this.bodyWithWeaponImage.src = ENTITY.bodyWithWeapon;
+        this.cursor = new Image();
+        this.cursor.src = INTERFACE.cursor;
+
+        this.initMouseTracking();
+
     }
 
+    initMouseTracking() {
+        document.addEventListener('mousemove', (event) => {
+            this.cursorX = event.clientX;
+            this.cursorY = event.clientY;
+        });
+    }
     draw({x, y}, weapon, angle) {
         this.context.save();
         this.context.translate(x, y);
@@ -22,6 +33,15 @@ class EntityView {
             this.context.drawImage(this.bodyImage, -ENTITY.w/2, -ENTITY.h/2, ENTITY.w, ENTITY.h);
             this.context.drawImage(this.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
         }
+        this.context.restore();
+
+        this.drawCursor();
+
+    }
+
+    drawCursor() {
+        this.context.save();
+        this.context.drawImage(this.cursor, this.cursorX - this.cursor.width / 2, this.cursorY - this.cursor.height / 2);
         this.context.restore();
     }
 

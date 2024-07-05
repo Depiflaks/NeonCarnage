@@ -55,6 +55,10 @@ const ENTITY = {
     maxHealth: 5,
 };
 
+const INTERFACE = {
+    cursor: "public/assets/Interface/cursor.png",
+}
+
 const CAMERA = {
     center: {
         x: WINDOW.w / 2,
@@ -113,4 +117,4 @@ const TRAJECTORY = {
     strokeStyle: "red"
 };
 
-export {WINDOW, AMMUNITION, CELL, WALL, ENTITY, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};
+export {WINDOW, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};
