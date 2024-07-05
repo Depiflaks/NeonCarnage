@@ -45,7 +45,7 @@ class EngineController {
 
     update() {
         this.field.update();
-        this.checkIntersections([].concat(this.field.verticalWalls, this.field.horizontalWalls));
+        this.checkIntersections([].concat(this.field.verticalWalls, this.field.horizontalWalls), this.enemies);
         this.takeAmmunition();
         this.takeBonus();
         this.player.update();
@@ -74,7 +74,7 @@ class EngineController {
         });
     }
 
-    bulletsIntersection(barriers) {
+    bulletsIntersectionWall(barriers) {
         this.player.setBullets(this.player.getBullets().filter(
             bullet => {
                 bullet.updatePosition();
@@ -86,8 +86,25 @@ class EngineController {
         ));
     }
 
-    checkIntersections(drawableArray) {
-        this.bulletsIntersection(drawableArray);
+    bulletsIntersectionEnemy(enemies) {
+        this.player.setBullets(this.player.getBullets().filter(
+            bullet => {
+                console.log(enemies);
+                for (const enemy of enemies) {
+                    console.log(enemyies);
+                    if (bullet.isIntersectEnemy(enemy.model)) {
+                        console.log("Попал!!!")
+                        return false;
+                    }
+                }
+                return true;
+            }
+        ));
+    }
+
+    checkIntersections(drawableArray, moveableArray) {
+        this.bulletsIntersectionWall(drawableArray);
+        this.bulletsIntersectionEnemy(moveableArray);
         this.intersectTrajectory(drawableArray);
         for (const obj of drawableArray) {
             this.player.check(obj);
