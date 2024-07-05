@@ -15,7 +15,7 @@ class GameController {
         this.connection = new ConnectionController(this.players, this.field, this.view.context);
         this.player = new PlayerController(this.view.context, player);
 
-        
+
         this.tracing = new Tracing(this.player, this.field);
 
         this.lastTime = 0;
@@ -44,50 +44,23 @@ class GameController {
             }
         });
     }
-
     takeAmmunition() {
-        const { x, y } = this.player.getPosition();
+        const playerPosition = this.player.getPosition();
         this.field.ammunition = this.field.ammunition.filter(ammunition => {
-            const distance = Math.sqrt((ammunition.x - x) ** 2 + (ammunition.y - y) ** 2);
-            if (distance <= AMMUNITION.midDistance) {
-                const weapon = this.player.getWeapon();
-                if (weapon && weapon.model.battleType === "distant") {
-                    const currentAmount = weapon.model.amount;
-                    const maxAmount = weapon.model.maxAmount;
-
-                    if (currentAmount < maxAmount) {
-                        weapon.model.amount = Math.min(currentAmount + ammunition.amount, maxAmount);
-                        return false;
-                    }
-                }
+            const weapon = this.player.getWeapon();
+            if (weapon && weapon.isDistantWeapon()) {
+                return weapon.pickupAmmunition(ammunition, playerPosition);
             }
             return true;
         });
     }
 
     takeBonus() {
-        const { x, y } = this.player.getPosition();
+        const playerPosition = this.player.getPosition();
         this.field.bonuses = this.field.bonuses.filter(bonus => {
-            const distance = Math.sqrt((bonus.x - x) ** 2 + (bonus.y - y) ** 2);
-            if (distance <= BONUS.midDistance) {
-                const currentHealth = this.player.model.getHealth();
-                const maxHealth = this.player.model.getMaxHealth();
-
-                if (currentHealth < maxHealth) {
-                    const healthToAdd = Math.min(bonus.amount, maxHealth - currentHealth);
-                    console.log(this.player.model.getHealth());
-                    this.player.model.setHealth(currentHealth + healthToAdd);
-                    console.log(this.player.model.getHealth());
-                    return false;
-                }
-
-            }
-            return true;
+            return this.player.pickupBonus(bonus, playerPosition);
         });
     }
-
-
-
 
     update() {
         this.field.update();
@@ -98,7 +71,7 @@ class GameController {
         this.moveFrame();
         this.tracing.updateViewRange();
         const { x, y } = this.player.getPosition();
-        this.connection.sendPosition(x - this.field.x, y - this.field.y); 
+        this.connection.sendPosition(x - this.field.x, y - this.field.y);
     }
 
     bulletsIntersection(barriers) {

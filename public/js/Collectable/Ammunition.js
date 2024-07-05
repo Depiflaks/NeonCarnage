@@ -13,11 +13,6 @@ class Ammunition extends Collectable {
         context.fillStyle = this.color;
         context.fillRect(ammoX, ammoY, AMMUNITION.w, AMMUNITION.h);
     }
-
-    move(dx, dy) {
-        this.x += dx;
-        this.y += dy;
-    }
 }
 
 export { Ammunition };

@@ -13,11 +13,6 @@ class Bonus extends Collectable {
         context.fillStyle = this.color;
         context.fillRect(bonusX, bonusY, BONUS.w, BONUS.h);
     }
-
-    move(dx, dy) {
-        this.x += dx;
-        this.y += dy;
-    }
 }
 
 export { Bonus };

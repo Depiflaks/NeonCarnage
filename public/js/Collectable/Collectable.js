@@ -4,9 +4,7 @@ import {CELL} from "../CONST.js";
 
 class Collectable extends Drawable {
     constructor(x, y) {
-        super(0, 0, 20, 20);
-        this.x = x * CELL.w + CELL.w * 0.5;
-        this.y = y * CELL.h + CELL.h * 0.5;
+        super(x * CELL.w + CELL.w * 0.5, y * CELL.h + CELL.h * 0.5, 20, 20);
     }
 
     draw(context) {

@@ -1,11 +1,32 @@
 
 import { WeaponModel } from "./WeaponModel.js";
 import { WeaponView } from "./WeaponView.js";
+import { AMMUNITION } from "../CONST.js";
 
 class WeaponController {
     constructor (weapon) {
         this.model = new WeaponModel(weapon);
         this.view = new WeaponView();
+    }
+
+    pickupAmmunition(ammunition, playerPosition) {
+        const { x, y } = playerPosition;
+        const distance = Math.sqrt((ammunition.x - x) ** 2 + (ammunition.y - y) ** 2);
+
+        if (distance <= AMMUNITION.minDistance) {
+            const currentAmount = this.getAmount();
+            const maxAmount = this.getMaxAmount();
+
+            if (currentAmount < maxAmount) {
+                this.setAmount(Math.min(currentAmount + ammunition.amount, maxAmount));
+                return false;
+            }
+        }
+        return true;
+    }
+
+    isDistantWeapon() {
+        return this.model.battleType === "distant";
     }
 
     unsetPlayer(player) {
