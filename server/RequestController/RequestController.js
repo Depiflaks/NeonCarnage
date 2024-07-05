@@ -10,10 +10,22 @@ class RequestController {
         this.app.use('/public', express.static(path.join(__dirname, '../../public')));
 
         this.app.get('/', (req, res) => {
+            res.sendFile(path.join(__dirname, '../../templates/main/main.html'));
+        });
+
+        this.app.get('/game', (req, res) => {
             res.sendFile(path.join(__dirname, '../../templates/game/game.html'));
         });
 
+        app.post('/create', (req, res) => {
+            console.log('Create new Session');
+
+            const responseData = {
+                message: 'Data received successfully',
+            };
         
+            res.json(responseData);
+        });
     }
 }
 
