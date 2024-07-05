@@ -15,7 +15,6 @@ class Trajectory extends Drawable {
 
     draw(context) {
         const { currentEndX, currentEndY } = this.calculateEndCoordinates();
-
         context.lineWidth = this.h;
         context.strokeStyle = TRAJECTORY.strokeStyle;
         context.beginPath();
