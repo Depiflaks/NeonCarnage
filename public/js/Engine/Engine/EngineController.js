@@ -48,6 +48,8 @@ class EngineController {
     update() {
         this.field.update();
         this.checkIntersections([].concat(this.field.verticalWalls, this.field.horizontalWalls));
+        this.takeAmmunition();
+        this.takeBonus();
         this.player.update();
         Object.values(this.enemies).map(enemy => {
             //console.log(enemy)
@@ -55,6 +57,23 @@ class EngineController {
         })
         this.moveFrame();
         this.tracing.updateViewRange();
+    }
+
+    takeAmmunition() {
+        const playerPosition = this.player.getPosition();
+        this.field.ammunition = this.field.ammunition.filter(ammunition => {
+            const weapon = this.player.getWeapon();
+            if (weapon && weapon.isDistant()) {
+                return weapon.pickupAmmunition(ammunition, playerPosition);
+            }
+            return true;
+        });
+    }
+
+    takeBonus() {
+        this.field.bonuses = this.field.bonuses.filter(bonus => {
+            return this.player.pickupBonus(bonus);
+        });
     }
 
     bulletsIntersection(barriers) {

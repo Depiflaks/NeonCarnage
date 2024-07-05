@@ -17,6 +17,8 @@ class PlayerModel extends Moveable {
             e: 0,
         };
         this.bullets = [];
+        this.health = PLAYER.health;
+        this.maxHealth = PLAYER.maxHealth;
     }
 
     updatePosition() {

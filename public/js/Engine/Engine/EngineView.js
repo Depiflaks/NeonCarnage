@@ -14,6 +14,8 @@ class EngineView {
     drawFrame(field, player, enemies) {
         field.drawGround(this.context);
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
+        field.drawBonuses(this.context);
+        field.drawAmmunition(this.context);
         this.playerView.draw(
             player.getPosition(),
             player.getWeapon(),
@@ -27,6 +29,7 @@ class EngineView {
         )})
         this.drawBullets(player.getBullets(), field);
         field.drawWalls(this.context);
+        this.playerView.drawHealthBar(player.getHealth());
         this.drawBulletAmount(player);
     }
 

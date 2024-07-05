@@ -1,4 +1,4 @@
-import { PLAYER, WEAPON, WEAPON_STATE } from "../../CONST.js";
+import { BONUS, PLAYER, WEAPON, WEAPON_STATE } from "../../CONST.js";
 import { Bullet } from "../Weapon/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { PlayerView } from "./PlayerView.js";
@@ -37,6 +37,23 @@ class PlayerController {
         if ((this.getWeapon()) && (this.getWeapon().getBattleType() === "close")) {
             this.strike();
         }
+    }
+
+    pickupBonus(bonus) {
+        const { x, y } = this.getPosition();
+        const distance = Math.sqrt((bonus.x - x) ** 2 + (bonus.y - y) ** 2);
+
+        if (distance <= BONUS.minDistance) {
+            const currentHealth = this.getHealth();
+            const maxHealth = this.getMaxHealth();
+
+            if (currentHealth < maxHealth) {
+                const healthToAdd = Math.min(bonus.amount, maxHealth - currentHealth);
+                this.setHealth(currentHealth + healthToAdd);
+                return false;
+            }
+        }
+        return true;
     }
 
     shot() {
@@ -161,6 +178,18 @@ class PlayerController {
 
     getPosition() {
         return { x: this.model.x, y: this.model.y };
+    }
+
+    getHealth() {
+        return this.model.health;
+    }
+
+    getMaxHealth() {
+        return this.model.maxHealth;
+    }
+
+    setHealth(value) {
+        this.model.health = value;
     }
 
     getBullets() {

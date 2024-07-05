@@ -51,6 +51,8 @@ const PLAYER = {
         angleStep: 15 * RAD,
     },
     pythagoreanFactor: Math.sqrt(2) / 2,
+    health: 4,
+    maxHealth: 5,
 };
 
 const CAMERA = {
@@ -67,6 +69,20 @@ const WEAPON = {
     minDistance: 40
 
 };
+
+const AMMUNITION = {
+    w: 20,
+    h: 30,
+    color: "yellow",
+    minDistance: 40,
+}
+
+const BONUS = {
+    w: 20,
+    h: 30,
+    color: "blue",
+    minDistance: 40,
+}
 
 const BULLET = {
     w: 5,
@@ -96,4 +112,4 @@ const TRAJECTORY = {
     strokeStyle: "red"
 };
 
-export {WINDOW, CELL, WALL, PLAYER, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};
+export {WINDOW, AMMUNITION, CELL, WALL, PLAYER, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};
