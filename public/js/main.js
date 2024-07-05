@@ -1,4 +1,4 @@
-import { EngineController } from "./Engine/EngineController.js";
+import { EngineController } from "./Engine/Engine/EngineController.js";
 import { groundList, wallList, weaponSet } from "./data.js";
 
 const canvas = document.getElementById("canvas");

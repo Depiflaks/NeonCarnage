@@ -1,6 +1,6 @@
-import { BattleGround } from "../BattleGround/BattleGround.js";
-import { PlayerModel } from "../Player/PlayerModel.js";
-import {ammunitionSet, bonusSet} from "../data.js";
+import { BattleGround } from "../../BattleGround/BattleGround.js";
+import { PlayerModel } from "../../Player/PlayerModel.js";
+import {ammunitionSet, bonusSet} from "../../data.js";
 
 
 class EngineModel {

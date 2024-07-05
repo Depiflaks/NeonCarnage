@@ -1,6 +1,6 @@
-import { Cell } from "../BattleGround/Cell.js";
-import { PlayerView } from "../Player/PlayerView.js";
-import { WINDOW, RAD, PLAYER, CELL } from "../CONST.js";
+import { Cell } from "../../BattleGround/Cell.js";
+import { PlayerView } from "../../Player/PlayerView.js";
+import { WINDOW, RAD, PLAYER, CELL } from "../../CONST.js";
 
 
 class EngineView {

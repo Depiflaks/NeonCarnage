@@ -1,10 +1,10 @@
-import {AMMUNITION, BONUS, CAMERA, DURATION, KEYBOARD_E, SERVER, WEAPON, WEAPON_STATE} from "../CONST.js";
-import { PlayerController } from '../Player/PlayerController.js';
+import {AMMUNITION, BONUS, CAMERA, DURATION, KEYBOARD_E, SERVER, WEAPON, WEAPON_STATE} from "../../CONST.js";
+import { PlayerController } from '../../Player/PlayerController.js';
 import { EngineModel } from "./EngineModel.js";
 import { EngineView } from "./EngineView.js";
-import { Tracing } from "../RayTracing/Tracing.js";
-import { Trajectory } from "../Weapon/Trajectory.js";
-import {ConnectionController} from "../Connection/ConnectionController.js";
+import { Tracing } from "../../RayTracing/Tracing.js";
+import { Trajectory } from "../../Weapon/Trajectory.js";
+import {ConnectionController} from "../../Connection/ConnectionController.js";
 
 class EngineController {
     constructor(objects, player, canvas) {
