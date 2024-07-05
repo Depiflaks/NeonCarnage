@@ -1,12 +1,13 @@
-import { PLAYER, WEAPON, WEAPON_STATE } from "../../CONST.js";
+import { ENTITY, WEAPON, WEAPON_STATE } from "../../CONST.js";
 import { Bullet } from "../Weapon/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
-import { PlayerView } from "./PlayerView.js";
-import { Trajectory } from "../Weapon/Trajectory.js";
+import { EntityController } from "../Entity/EntityController.js";
 
-class PlayerController {
+class PlayerController extends EntityController {
     constructor(player) {
+        super();    
         this.model = new PlayerModel(player);
+        
 
         addEventListener("mousemove", (event) => this.mouseMove(event));
         addEventListener("mousedown", (event) => this.mouseDown(event));
@@ -119,14 +120,14 @@ class PlayerController {
         let speedX = 0;
         let speedY = 0;
 
-        if (keys.w) speedY = -PLAYER.speed;
-        if (keys.a) speedX = -PLAYER.speed;
-        if (keys.s) speedY = PLAYER.speed;
-        if (keys.d) speedX = PLAYER.speed;
+        if (keys.w) speedY = -ENTITY.speed;
+        if (keys.a) speedX = -ENTITY.speed;
+        if (keys.s) speedY = ENTITY.speed;
+        if (keys.d) speedX = ENTITY.speed;
 
         if ((keys.w && keys.d) || (keys.d && keys.s) || (keys.s && keys.a) || (keys.w && keys.a)) {
-            speedX *= PLAYER.pythagoreanFactor;
-            speedY *= PLAYER.pythagoreanFactor;
+            speedX *= ENTITY.pythagoreanFactor;
+            speedY *= ENTITY.pythagoreanFactor;
         }
 
         this.model.setSpeed('x', speedX);
@@ -151,14 +152,6 @@ class PlayerController {
         }
     }
 
-    setAngle(value) {
-        this.model.angle = value;
-    }
-
-    getAngle() {
-        return this.model.angle;
-    }
-
     getPosition() {
         return { x: this.model.x, y: this.model.y };
     }
@@ -169,26 +162,6 @@ class PlayerController {
 
     setBullets(bullets) {
         this.model.bullets = bullets;
-    }
-
-    getWeapon() {
-        return this.model.weapon;
-    }
-
-    setWeapon(weapon) {
-        this.model.weapon = weapon;
-    }
-
-    createTrajectory() {
-        this.model.trajectory = new Trajectory(this.model.x, this.model.y, this.model.angle);
-    }
-
-    removeTrajectory() {
-        this.model.trajectory = null;
-    }
-
-    getTrajectory() {
-        return this.model.trajectory;
     }
 
     move(dx, dy) {

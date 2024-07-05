@@ -1,4 +1,4 @@
-import { CELL, PLAYER, RAD } from "../../CONST.js";
+import { CELL, ENTITY, RAD } from "../../CONST.js";
 import { Ray } from "./Ray.js";
 
 class Tracing {
@@ -56,8 +56,8 @@ class Tracing {
         px -= field.x;
         py -= field.y;
         const size = CELL.w;
-        const angleStep = PLAYER.visualField.angleStep;
-        const range = PLAYER.visualField.range;
+        const angleStep = ENTITY.visualField.angleStep;
+        const range = ENTITY.visualField.range;
         let delta;
 
         for (let angle = 0 * RAD; angle <= 360 * RAD; angle += angleStep) {

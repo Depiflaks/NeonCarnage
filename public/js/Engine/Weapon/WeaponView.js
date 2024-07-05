@@ -1,4 +1,4 @@
-import { WEAPON, PLAYER, CELL, WEAPON_STATE, RAD } from "../../CONST.js";
+import { WEAPON, ENTITY, CELL, WEAPON_STATE, RAD } from "../../CONST.js";
 
 class WeaponView {
     constructor() {
@@ -20,7 +20,7 @@ class WeaponView {
     }
 
     drawInHand(inHand, {px, py}, angle, context) {
-        const weaponX = -PLAYER.h / 2;
+        const weaponX = -ENTITY.h / 2;
         const weaponY = -inHand.height;
         const rotateX = px;
         const rotateY = py;

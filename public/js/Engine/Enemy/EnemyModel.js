@@ -1,14 +1,12 @@
-import { PLAYER } from "../../CONST.js";
-import { Moveable } from "../Interface/Moveable.js";
+import { ENTITY } from "../../CONST.js";
+import { EntityModel } from "../Entity/EntityModel.js";
 
-class EnemyModel extends Moveable {
+class EnemyModel extends EntityModel {
     constructor({ x, y, angle }) {
-        super(x, y, PLAYER.w, PLAYER.h, PLAYER.radius);
+        super({x, y});
         this.factX = 0;
         this.factY = 0;
-        this.weapon = null;
         this.angle = angle;
-        this.trajectory = null;
     }
 }
 

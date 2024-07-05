@@ -1,0 +1,12 @@
+import { ENTITY } from "../../CONST.js";
+import { Moveable } from "../Interface/Moveable.js";
+
+class EntityModel extends Moveable {
+    constructor({ x, y }) {
+        super(x, y, ENTITY.w, ENTITY.h, ENTITY.radius);
+        this.weapon = null;
+        this.trajectory = null;
+    }
+}
+
+export {EntityModel}
