@@ -17,8 +17,8 @@ class PlayerModel extends EntityModel {
             e: 0,
         };
         this.bullets = [];
-        this.health = PLAYER.health;
-        this.maxHealth = PLAYER.maxHealth;
+        this.health = ENTITY.health;
+        this.maxHealth = ENTITY.maxHealth;
     }
 
     updatePosition() {

@@ -29,7 +29,7 @@ class EngineView {
         )})
         this.drawBullets(player.getBullets(), field);
         field.drawWalls(this.context);
-        this.playerView.drawHealthBar(player.getHealth());
+        this.entityView.drawHealthBar(player.getHealth());
         this.drawBulletAmount(player);
     }
 

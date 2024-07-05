@@ -25,6 +25,39 @@ class EntityView {
         this.context.restore();
     }
 
+    drawEnemyHealthBar(x, y, health) {
+        const barWidth = PLAYER.w;
+        const barHeight = 20;
+        const offset = 15;
+        const maxHealth = 5;
+
+        // Background
+        this.context.fillStyle = "gray";
+        this.context.fillRect(x - barWidth / 2, y - PLAYER.radius - offset - barHeight, barWidth, barHeight);
+
+        // Health
+        const healthWidth = (barWidth * health) / maxHealth;
+        this.context.fillStyle = "red";
+        this.context.fillRect(x - barWidth / 2, y - PLAYER.radius - offset - barHeight, healthWidth, barHeight);
+    }
+
+    drawHealthBar(health) {
+        const barWidth = 100;
+        const barHeight = 20;
+        const offsetY = 65;
+        const offsetX = 10;
+        const maxHealth = 5;
+
+        // Background
+        this.context.fillStyle = "gray";
+        this.context.fillRect(offsetX, ENTITY.radius + offsetY - barHeight, barWidth, barHeight);
+
+        // Health
+        const healthWidth = (barWidth * health) / maxHealth;
+        this.context.fillStyle = "red";
+        this.context.fillRect(offsetX, ENTITY.radius + offsetY - barHeight, healthWidth, barHeight);
+    }
+
 }
 
 export { EntityView };
