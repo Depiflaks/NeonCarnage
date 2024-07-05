@@ -96,6 +96,8 @@ class PlayerController {
     dropWeapon() {
         this.getWeapon().unsetPlayer(this.model);
         this.getWeapon().setStatus(WEAPON_STATE.onTheGround);
+        clearInterval(this.getWeapon().getShootingInterval());
+        this.getWeapon().setShootingInterval(null);
         this.setWeapon(null);
     }
 
@@ -218,6 +220,14 @@ class PlayerController {
 
     getTrajectory() {
         return this.model.trajectory;
+    }
+
+    setAnimating(value) {
+        this.model.trajectory.isAnimating = value;
+    }
+
+    getAnimating() {
+        return this.model.trajectory.isAnimating;
     }
 
     move(dx, dy) {

@@ -124,7 +124,8 @@ class EngineController {
             this.player.setStacked(false);
             this.player.dropWeapon();
             if (this.player.getTrajectory()) {
-                this.player.model.removeTrajectory();
+                this.player.setAnimating(false);
+                this.player.removeTrajectory();
             }
         }
     }
