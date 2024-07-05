@@ -127,10 +127,10 @@ class PlayerController {
 
     updateBulletAmount() {
         const keys = this.model.getKeyPressed();
-        if (this.getWeapon() && (keys.r) && (!this.getWeapon().isRecharging())) {
-            this.getWeapon().setRecharging(true);
-            setTimeout(() => this.getWeapon().recharge(), this.getWeapon().getRechargeTime());
-        }
+        // if (this.getWeapon() && (keys.r) && (!this.getWeapon().isRecharging())) {
+        //     this.getWeapon().setRecharging(true);
+        //     setTimeout(() => this.getWeapon().recharge(), this.getWeapon().getRechargeTime());
+        // }
     }
 
     updateSpeed() {
