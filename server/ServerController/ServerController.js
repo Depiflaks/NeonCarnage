@@ -2,10 +2,9 @@ import { PORT } from '../SERV_CONST.js';
 import { WebSocketController } from '../WebSocketController/WebSocketController.js';
 
 import express from 'express';
-import path from 'path';
 import http from 'http';
-import { fileURLToPath } from 'url';
 import { MapGenerator } from '../MapGenerator/MapGenerator.js';
+import { RequestController } from '../RequestController/RequestController.js';
 
 class ServerController {
     constructor() {
@@ -13,14 +12,7 @@ class ServerController {
         this.app = express();
         this.server = http.createServer(this.app);
 
-        // Получение текущего каталога при использовании модулей ES6
-        const __filename = fileURLToPath(import.meta.url);
-        const __dirname = path.dirname(__filename);
-
-        this.app.use('/public', express.static(path.join(__dirname, '../../public')));
-        this.app.get('/', (req, res) => {
-            res.sendFile(path.join(__dirname, '../../templates/game/game.html'));
-        });
+        this.request = new RequestController(this.app);
 
         this.server.listen(this.port, () => {
             console.log('Listening on port ' + this.port);

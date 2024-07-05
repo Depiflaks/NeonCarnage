@@ -7,17 +7,6 @@ class WebSocketController {
         this.socket.on('connection', (connection, req) => {this.onConnection(connection, req)});
     }
 
-    init(connection, req) {
-        const ip = req.socket.remoteAddress;
-        connection.id = this.getUniqueID();
-        console.log(`Connected ${ip}`);
-        this.sendInit(connection);
-        // дописать отправку карты
-        //client.send(JSON.stringify({ id, x, y }), { binary: false });
-
-        return ip;
-    }
-
     onConnection(connection, req) {
         const ip = this.init(connection, req);
 
@@ -26,33 +15,53 @@ class WebSocketController {
         connection.on('close', () => {this.onClose(ip)});
     }
 
+    init(connection, req) {
+        const ip = req.socket.remoteAddress;
+        connection.id = this.getUniqueID();
+        console.log(`Connected ${ip}`);
+        //this.sendInit(connection, this.map);
+
+        return ip;
+    }
+
     onMessage(message, connection) {
-        const { x, y, angle } = JSON.parse(message);
-        for (const client of this.socket.clients) {
-            //console.log('Received: ' + message);
-            if (client.readyState !== WebSocket.OPEN) continue;
-            if (client === connection) continue;
-            const id = connection.id;
-            client.send(JSON.stringify({ id, x, y, angle }), { binary: false });
+        const data = JSON.parse(message);
+        if (data.type === 'map') {
+            this.sendInit(connection, this.map);
+        } else if (data.type === "update") {
+            for (const client of this.socket.clients) {
+                //console.log('Received: ' + message);
+                if (client.readyState !== WebSocket.OPEN) continue;
+                if (client === connection) continue;
+    
+                const json_data = {
+                    id: connection.id,
+                    x: data.body.x,
+                    y: data.body.y,
+                    angle: data.body.angle
+                }
+                this.sendResponse(client, json_data)
+            }
         }
+        
     }
 
     onClose(ip) {
         console.log(`Disconnected ${ip}`);
     }
 
-    sendInit() {
-        
+    sendInit(connection, data) {
+        this.send(connection, "init", data)
     }
 
-    sendResponse() {
-
+    sendResponse(connection, data) {
+        this.send(connection, "response", data)
     }
 
     send(connection, type, data) {
         const responseData = {
-            type,
-            data
+            type: type,
+            body: data
         };
         connection.send(JSON.stringify(responseData), { binary: false });
     }

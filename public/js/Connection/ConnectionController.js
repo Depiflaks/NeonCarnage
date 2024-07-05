@@ -1,30 +1,39 @@
 import { SERVER } from "../CONST.js";
-import { EnemyController } from "../Enemy/EnemyController.js";
+import { EnemyController } from "../Engine/Enemy/EnemyController.js";
 
 class ConnectionController {
-    constructor(player, enemies, field, context) {
+    constructor(player, enemies, field) {
         // вебсокет у каждого свой... типа
         this.socket = new WebSocket(SERVER.sergey);
         this.initEventListeners();
         this.player = player;
         this.enemies = enemies;
         this.field = field;
-        this.context = context;
     }
 
     sendPosition({x, y, angle}) {
-        //console.log(x, y)
+        const body = {
+            x: x,
+            y: y,
+            angle: angle,
+        }
+        this.send("update", body);
+    }
+
+    send(type, body) {
         if (this.socket.readyState === WebSocket.OPEN) {
-            //console.log(x, y, angle)
-            const data = JSON.stringify({ x, y, angle });
-            this.socket.send(data);
+            const data = {
+                type: type,
+                body: body
+            };
+            this.socket.send(JSON.stringify(data));
         }
     }
 
     initEventListeners() {
         this.socket.addEventListener('open', ({ data }) => {this.onOpen(data)});
     
-        this.socket.addEventListener('message', ({ data }) => {this.onMessage(data)});
+        this.socket.addEventListener('message', ({ data }) => {this.onMessage(JSON.parse(data))});
     
         this.socket.addEventListener('close', ({ data }) => {this.onClose(data)});
     
@@ -36,13 +45,30 @@ class ConnectionController {
     }
 
     onMessage(data) {
-        const change = JSON.parse(data);
-        //console.log(change);
-        const enemyId = change.id;
+        const type = data.type;
+        const body = data.body;
+        switch (type) {
+            case "init":
+                this.init()
+                break;
+            case "response":
+                this.response(body);
+                break
+            default:
+                break;
+        }
+    }
 
-        const enemyX = change.x + this.field.x;
-        const enemyY = change.y + this.field.y;
-        const enemyAngle = change.angle;
+    init() {
+        console.log(body)
+    }
+
+    response(body) {
+        const enemyId = body.id;
+
+        const enemyX = body.x + this.field.x;
+        const enemyY = body.y + this.field.y;
+        const enemyAngle = body.angle;
 
         if (this.enemies[enemyId]) {
             // Если игрок существует, обновляем его координаты

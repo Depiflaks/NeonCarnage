@@ -1,8 +1,6 @@
 import { GameController } from "./Game/GameController.js";
 import { groundList, wallList, weaponSet } from "./data.js";
 
-const canvas = document.getElementById("canvas");
-
 const gameController = new GameController(
     {
         cellsList: groundList,
@@ -13,7 +11,7 @@ const gameController = new GameController(
         x: 1420,
         y: 682,
     },
-    canvas
+    document
 );
 
-gameController.loop();
+gameController.start();
