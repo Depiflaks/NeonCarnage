@@ -1,9 +1,9 @@
-import { GameController } from "./Game/GameController.js";
+import { EngineController } from "./Engine/EngineController.js";
 import { groundList, wallList, weaponSet } from "./data.js";
 
 const canvas = document.getElementById("canvas");
 
-const gameController = new GameController(
+const gameController = new EngineController(
     {
         cellsList: groundList,
         wallsList: wallList,

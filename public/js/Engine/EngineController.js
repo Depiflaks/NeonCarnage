@@ -1,15 +1,15 @@
 import {AMMUNITION, BONUS, CAMERA, DURATION, KEYBOARD_E, SERVER, WEAPON, WEAPON_STATE} from "../CONST.js";
 import { PlayerController } from '../Player/PlayerController.js';
-import { GameModel } from "./GameModel.js";
-import { GameView } from "./GameView.js";
+import { EngineModel } from "./EngineModel.js";
+import { EngineView } from "./EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
 import { Trajectory } from "../Weapon/Trajectory.js";
 import {ConnectionController} from "../Connection/ConnectionController.js";
 
-class GameController {
+class EngineController {
     constructor(objects, player, canvas) {
-        this.model = new GameModel(objects);
-        this.view = new GameView(canvas);
+        this.model = new EngineModel(objects);
+        this.view = new EngineView(canvas);
         this.players = [];
         this.field = this.model.getField();
         this.connection = new ConnectionController(this.players, this.field, this.view.context);
@@ -141,4 +141,4 @@ class GameController {
     }
 }
 
-export { GameController };
+export { EngineController };

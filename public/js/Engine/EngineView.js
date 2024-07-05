@@ -3,7 +3,7 @@ import { PlayerView } from "../Player/PlayerView.js";
 import { WINDOW, RAD, PLAYER, CELL } from "../CONST.js";
 
 
-class GameView {
+class EngineView {
     constructor(canvas) {
         this.canvas = canvas
         canvas.width = WINDOW.w;
@@ -81,4 +81,4 @@ class GameView {
 }
 
 
-export { GameView };
+export { EngineView };

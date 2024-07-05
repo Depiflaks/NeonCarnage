@@ -3,7 +3,7 @@ import { PlayerModel } from "../Player/PlayerModel.js";
 import {ammunitionSet, bonusSet} from "../data.js";
 
 
-class GameModel {
+class EngineModel {
     constructor({cellsList, wallsList, weaponList}) {
         this.field = new BattleGround(cellsList, wallsList, weaponList, ammunitionSet, bonusSet);
     }
@@ -13,4 +13,4 @@ class GameModel {
     }
 }
 
-export { GameModel };
+export { EngineModel };
