@@ -1,5 +1,5 @@
-import { PlayerView } from "../Player/PlayerView.js";
-import { WINDOW, RAD, PLAYER, CELL } from "../../CONST.js";
+import { EntityView } from "../Entity/EntityView.js";
+import { WINDOW, RAD, ENTITY, CELL } from "../../CONST.js";
 
 
 class EngineView {
@@ -8,7 +8,7 @@ class EngineView {
         canvas.width = WINDOW.w;
         canvas.height = WINDOW.h;
         this.context = canvas.getContext("2d");
-        this.playerView = new PlayerView(this.context);
+        this.entityView = new EntityView(this.context);
     }
 
     drawFrame(field, player, enemies) {
@@ -16,13 +16,13 @@ class EngineView {
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         field.drawBonuses(this.context);
         field.drawAmmunition(this.context);
-        this.playerView.draw(
+        this.entityView.draw(
             player.getPosition(),
             player.getWeapon(),
             player.getAngle()
         );
         if (player.getTrajectory()) player.getTrajectory().draw(this.context);
-        Object.values(enemies).map(enemy => {this.playerView.draw(
+        Object.values(enemies).map(enemy => {this.entityView.draw(
             enemy.getPosition(),
             enemy.getWeapon(),
             enemy.getAngle(),

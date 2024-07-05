@@ -1,5 +1,4 @@
 import { CAMERA, DURATION, KEYBOARD_E, WEAPON, WEAPON_STATE } from "../../CONST.js";
-
 import { EngineModel } from "./EngineModel.js";
 import { EngineView } from "./EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
@@ -12,7 +11,6 @@ class EngineController {
         this.enemies = this.model.getEnemies();
         this.field = this.model.getField();
         this.player = this.model.getPlayer();
-
         this.tracing = new Tracing(this.player, this.field);
 
         this.lastTime = 0;

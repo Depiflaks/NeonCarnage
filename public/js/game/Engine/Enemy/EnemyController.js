@@ -1,8 +1,10 @@
 import { ENEMY } from "../../CONST.js";
+import { EntityController } from "../Entity/EntityController.js";
 import { EnemyModel } from "./EnemyModel.js"
 
-class EnemyController {
+class EnemyController extends EntityController{
     constructor(player) {
+        super();
         this.model = new EnemyModel(player);
     }
 
@@ -13,22 +15,6 @@ class EnemyController {
 
     getPosition() {
         return {x: this.model.factX, y: this.model.factY};
-    }
-
-    setWeapon(weapon) {
-        this.model.weapon = weapon;
-    }
-
-    getWeapon() {
-        return this.model.weapon;
-    }
-
-    setAngle(angle) {
-        this.model.angle = angle;
-    }
-
-    getAngle() {
-        return this.model.angle;
     }
 
     update() {

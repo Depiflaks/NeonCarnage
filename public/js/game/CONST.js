@@ -36,7 +36,7 @@ const WALL = {
     horizontalImage: "public/assets/BattleGround/horizontalWall.png"
 }
 
-const PLAYER = {
+const ENTITY = {
     radius: 30,
     w: 100,
     h: 60,
@@ -112,4 +112,4 @@ const TRAJECTORY = {
     strokeStyle: "red"
 };
 
-export {WINDOW, AMMUNITION, CELL, WALL, PLAYER, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};
+export {WINDOW, AMMUNITION, CELL, WALL, ENTITY, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};

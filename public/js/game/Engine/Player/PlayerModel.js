@@ -1,12 +1,12 @@
-import { Moveable } from "../Interface/Moveable.js";
-import { PLAYER } from "../../CONST.js";
+import { EntityModel } from "../Entity/EntityModel.js";
+import { ENTITY } from "../../CONST.js";
 import { Trajectory } from "../Weapon/Trajectory.js";
 
-class PlayerModel extends Moveable {
+class PlayerModel extends EntityModel {
     constructor({ x, y }) {
-        super(x, y, PLAYER.w, PLAYER.h, PLAYER.radius);
-        this.weapon = null;
-        this.trajectory = null;
+        super({x, y});
+        this.speedX = 0;
+        this.speedY = 0;
         this.isStriking = false;
         this.stacked = false;
         this.keyPressed = {
