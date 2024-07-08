@@ -90,11 +90,7 @@ class EngineController {
         this.player.setBullets(this.player.getBullets().filter(
             bullet => {
                 let hit = false;
-<<<<<<< Updated upstream
-                Object.values(enemies).forEach(enemy => {
-=======
                 Object.entries(this.enemies).forEach(([id, enemy]) => {
->>>>>>> Stashed changes
                     if (bullet.isIntersectEnemy(enemy.model)) {
                         hit = true;
                         if (this.player.model.damage[id] == undefined) {

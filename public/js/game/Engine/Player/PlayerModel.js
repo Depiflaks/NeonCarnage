@@ -16,14 +16,11 @@ class PlayerModel extends EntityModel {
             d: 0,
             e: 0,
         };
-<<<<<<< Updated upstream
         this.bullets = [];
         this.health = ENTITY.health;
         this.maxHealth = ENTITY.maxHealth;
-=======
         this.damage = {};
         
->>>>>>> Stashed changes
     }
 
     updatePosition() {

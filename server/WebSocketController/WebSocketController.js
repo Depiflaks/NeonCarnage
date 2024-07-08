@@ -29,20 +29,6 @@ class WebSocketController {
         if (data.type === 'map') {
             this.sendInit(connection, this.map);
         } else if (data.type === "update") {
-<<<<<<< Updated upstream
-            for (const client of this.socket.clients) {
-                //console.log('Received: ' + message);
-                if (client.readyState !== WebSocket.OPEN) continue;
-                if (client === connection) continue;
-    
-                const json_data = {
-                    id: connection.id,
-                    x: data.body.x,
-                    y: data.body.y,
-                    angle: data.body.angle
-                }
-                this.sendResponse(client, json_data)
-=======
             this.doUpdate(connection, data.body);
         }
     }
@@ -74,7 +60,6 @@ class WebSocketController {
                     maxHealth: player.maxHealth
                 },
                 damage: {damage}
->>>>>>> Stashed changes
             }
         }
         

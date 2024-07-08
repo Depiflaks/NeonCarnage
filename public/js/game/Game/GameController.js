@@ -16,10 +16,6 @@ class GameController {
         this.engine.connection = this.connection;
     }
 
-<<<<<<< Updated upstream
-    start() {
-        this.engine.loop();
-=======
     loop(timestamp) {
         const deltaTime = timestamp - this.lastTime;
         if (deltaTime >= DURATION) {
@@ -29,7 +25,6 @@ class GameController {
         }
 
         requestAnimationFrame((timestamp) => { this.loop(timestamp) });
->>>>>>> Stashed changes
     }
 
     
