@@ -6,10 +6,8 @@ class GameController {
     constructor(objects, document) {
         this.document = document;
         this.canvas = this.document.getElementById("canvas");
-
-        this.connection = new ConnectionController();
-
-        this.engine = new EngineController(objects, this.connection, this.canvas);
+        this.canvas.style.cursor = 'none';
+        this.engine = new EngineController(objects, player, this.canvas);
 
         this.connection.setObj(this.engine.player, this.engine.field, this.engine.enemies);
 
