@@ -1,4 +1,4 @@
-import { CAMERA, DURATION, KEYBOARD_E, WEAPON, WEAPON_STATE } from "../../CONST.js";
+import { CAMERA, KEYBOARD_E, WEAPON, WEAPON_STATE } from "../../CONST.js";
 import { EngineModel } from "./EngineModel.js";
 import { EngineView } from "./EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
@@ -13,8 +13,7 @@ class EngineController {
         this.player = this.model.getPlayer();
         this.tracing = new Tracing(this.player, this.field);
 
-        this.connection = connection
-        this.lastTime = 0;
+        this.connection = connection;
 
         this.initEventListeners(canvas);
     }

@@ -1,5 +1,6 @@
 import { SERVER } from "../CONST.js";
 import { EnemyController } from "../Engine/Enemy/EnemyController.js";
+import { Bullet } from "../Engine/Weapon/Bullet.js";
 
 class ConnectionController {
     constructor() {
@@ -15,7 +16,7 @@ class ConnectionController {
         this.enemies = enemies;
     }
 
-    sendPosition() {
+    sendData() {
         const {x, y} = this.player.getPosition();
         const angle = this.player.getAngle();
         const weapon = this.player.getWeaponId();
@@ -28,6 +29,13 @@ class ConnectionController {
             },
             bullets: []
         }
+        body.bullets = this.player.getBullets().map(bullet => {
+            const {x, y} = bullet.getPosition();
+            return {
+                x: x - this.field.x, 
+                y: y - this.field.y, 
+                angle: bullet.getAngle()};
+        })
         this.send("update", body);
     }
 
@@ -75,31 +83,29 @@ class ConnectionController {
     }
 
     response(body) {
+        //console.log(body);
         const player = body.player;
         const id = player.id;
         const x = player.x + this.field.x;
         const y = player.y + this.field.y;
         const angle = player.angle;
-        const weapon = player.weapon
+        const weapon = player.weapon;
 
-        if (this.enemies[id]) {
-            // Если игрок существует, обновляем его координаты
-            this.enemies[id].setPosition({
-                x: x,
-                y: y,
-            });
-            this.enemies[id].setAngle(angle);
-            //console.log(x, y, angle);
-        } else {
-            // Если игрока нет, создаем нового и добавляем его в массив
-            const enemy = new EnemyController({
-                x: x,
-                y: y,
-                angle: angle,
-                weaponId: weapon,
-            });
-            this.enemies[id] = enemy;
+        if (!this.enemies[id]) {
+            this.enemies[id] = new EnemyController({x: 0, y: 0, angle: 0, weaponId: null});
         }
+        this.enemies[id].setPosition({
+            x: x,
+            y: y,
+        });
+        this.enemies[id].setAngle(angle);
+        this.enemies[id].setWeaponId(weapon);
+        this.enemies[id].setBullets(body.bullets.map(bullet => {
+            return new Bullet({
+                x: bullet.x + this.field.x, 
+                y: bullet.y + this.field.y, 
+                angle: bullet.angle})
+        }))
     }
 
     onClose(data) {
