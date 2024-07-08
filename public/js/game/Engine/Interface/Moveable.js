@@ -11,10 +11,11 @@ class Moveable extends Drawable {
     }
 
     isIntersectEnemy(obj) {
-        const deltaX = obj.x - this.x;
-        const deltaY = obj.y - this.y;
+        const deltaX = obj.x - this.x - this.h * Math.cos(this.angle);
+        const deltaY = obj.y - this.y - this.h * Math.sin(this.angle);
+        //context.lineTo(this.x + this.h * Math.cos(this.angle), this.y + this.h * Math.sin(this.angle));
         const distanceSquared = deltaX * deltaX + deltaY * deltaY;
-        const combinedRadius = ENTITY.radius + obj.radius;
+        const combinedRadius = ENTITY.radius;
         return distanceSquared <= (combinedRadius * combinedRadius);
     }
     
