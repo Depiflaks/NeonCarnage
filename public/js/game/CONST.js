@@ -1,7 +1,9 @@
 // CONST.js
 const RAD = Math.PI / 180;
 const FPS = 90;
-const DURATION = 1000 / FPS;
+const RPS = 40;
+const FRAME_DURATION = 1000 / FPS;
+const REQUEST_DURATION = 1000 / RPS;
 
 const SERVER = {
     sergey: 'ws://10.250.104.142:8000/',
@@ -88,7 +90,7 @@ const BULLET = {
     w: 5,
     h: 70,
     radius: 70,
-    speed: 52,
+    speed: 25,
     pythagoreanFactor: Math.sqrt(2) / 2,
     color: "yellow",
 };
@@ -113,4 +115,4 @@ const TRAJECTORY = {
     strokeStyle: "red"
 };
 
-export {WINDOW, AMMUNITION, CELL, WALL, ENTITY, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};
+export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, AMMUNITION, CELL, WALL, ENTITY, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};

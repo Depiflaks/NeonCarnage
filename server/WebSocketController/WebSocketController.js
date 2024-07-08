@@ -49,7 +49,7 @@ class WebSocketController {
                     angle: player.angle,
                     weapon: player.weapon,
                 },
-                
+                bullets: body.bullets,
             }
             this.sendResponse(client, data)
         }
