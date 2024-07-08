@@ -77,6 +77,74 @@ const WEAPON = {
 
 };
 
+const WEAPON_MODELS = {
+    knife: {
+        name: "knife",
+        battleType: "close",  //ближний или дальний бой
+        rapidity: 10,           //скорострельность (задержка в миллисек)
+        grouping: 10,           //кучность
+        deviation: 0.5,          //отклонение
+        onGround: "public/assets/Weapon/weapon5.png",       //текстура на земле
+        inHand: "public/assets/Weapon/weaponUp5.png", //текстура в руках
+        amount: 0, //количество пуль в магазине(для холодного - 0)
+        rechargeTime: 0, //время перезарядки
+        w: 20,
+        h: 50,
+    },
+    rifle: {
+        name: "rifle",
+        battleType: "distant",
+        rapidity: 100,
+        grouping: 1,
+        deviation: 0.05,
+        onGround: "public/assets/Weapon/weapon1.png",
+        inHand: "public/assets/Weapon/weaponUp1.png",
+        amount: 80,
+        rechargeTime: 3000,
+        w: 40,
+        h: 120,
+    },
+    machineGun: {
+        name: "machineGun",
+        battleType: "distant",
+        rapidity: 100,
+        grouping: 1,
+        deviation: 0.05,
+        onGround: "public/assets/Weapon/weapon2.png",
+        inHand: "public/assets/Weapon/weaponUp2.png",
+        amount: 80,
+        rechargeTime: 3000,
+        w: 40,
+        h: 80,
+    },
+    pistol: {
+        name: "pistol",
+        battleType: "distant",
+        rapidity: 100,
+        grouping: 1,
+        deviation: 0.05,
+        onGround: "public/assets/Weapon/weapon3.png",
+        inHand: "public/assets/Weapon/weaponUp3.png",
+        amount: 80,
+        rechargeTime: 3000,
+        w: 40,
+        h: 80,
+    },
+    glock: {
+        name: "glock",
+        battleType: "distant",
+        rapidity: 100,
+        grouping: 1,
+        deviation: 0.05,
+        onGround: "public/assets/Weapon/weapon4.png",
+        inHand: "public/assets/Weapon/weaponUp4.png",
+        amount: 80,
+        rechargeTime: 3000,
+        w: 40,
+        h: 80,
+    }
+}
+
 const AMMUNITION = {
     w: 50,
     h: 50,
@@ -121,4 +189,4 @@ const TRAJECTORY = {
     knifeRightImage: "public/assets/Weapon/knifeRight1.png",
 };
 
-export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};
+export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};

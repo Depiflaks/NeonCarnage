@@ -48,6 +48,7 @@ class BattleGround extends Drawable {
             }
         );
 
+
         groundList.map(
             cell => {
                 const [x, y] = cell;
@@ -87,19 +88,14 @@ class BattleGround extends Drawable {
             indexX = Math.floor((weapon.model.x - this.x) / CELL.w);
             indexY = Math.floor((weapon.model.y - this.y) / CELL.h);
             if (this.cells[indexX][indexY].active) weapon.view.draw(
-                {
-                    x: weapon.model.x, 
-                    y: weapon.model.y,
-                    status: weapon.model.status,
-                    onGround: weapon.model.onGround,
-                    inHand: weapon.model.inHand,
-                    animation: animation
-                }, 
+                weapon.model, 
+                animation,
                 {x, y}, angle,
                 context
             );
         })
     }
+
 
     drawAmmunition(context) {
         let indexX, indexY;
