@@ -28,15 +28,10 @@ class EntityView {
             this.context.drawImage(this.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
         }
         this.context.restore();
-
-
-
     }
 
     drawCursor(cursor) {
-        this.context.save();
         this.context.drawImage(this.cursor, cursor.x - this.cursor.width / 2, cursor.y - this.cursor.height / 2);
-        this.context.restore();
     }
 
     drawEnemyHealthBar(x, y, health) {
