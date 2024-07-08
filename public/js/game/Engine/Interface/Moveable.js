@@ -11,16 +11,13 @@ class Moveable extends Drawable {
     }
 
     isIntersectEnemy(obj) {
-        console.log(obj);
-        const nearestX = Math.max(obj.x, Math.min(this.x, obj.x + ENTITY.w));
-        const nearestY = Math.max(obj.y, Math.min(this.y, obj.y + ENTITY.h));
-
-        const deltaX = this.x - nearestX;
-        const deltaY = this.y - nearestY;
-
-        return (deltaX * deltaX + deltaY * deltaY) <= (ENTITY.radius * ENTITY.radius);
+        const deltaX = obj.x - this.x;
+        const deltaY = obj.y - this.y;
+        const distanceSquared = deltaX * deltaX + deltaY * deltaY;
+        const combinedRadius = ENTITY.radius + obj.radius;
+        return distanceSquared <= (combinedRadius * combinedRadius);
     }
-
+    
     isIntersect(obj) {
         const nearestX = Math.max(obj.x, Math.min(this.x, obj.x + obj.w));
         const nearestY = Math.max(obj.y, Math.min(this.y, obj.y + obj.h));
