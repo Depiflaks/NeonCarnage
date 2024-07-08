@@ -13,7 +13,6 @@ class EntityView {
         this.cursor.src = INTERFACE.cursor;
 
         this.initMouseTracking();
-        this.startCursorAnimation();
 
         this.cursorX = WINDOW.w/2;
         this.cursorY = WINDOW.h/2;
@@ -27,13 +26,6 @@ class EntityView {
         });
     }
 
-    startCursorAnimation() {
-        const update = () => {
-            this.drawCursor();
-            requestAnimationFrame(update);
-        };
-        requestAnimationFrame(update);
-    }
 
     draw({x, y}, weapon, angle) {
         this.context.save();
@@ -52,9 +44,9 @@ class EntityView {
 
     }
 
-    drawCursor() {
+    drawCursor(cursor) {
         this.context.save();
-        this.context.drawImage(this.cursor, this.cursorX - this.cursor.width / 2, this.cursorY - this.cursor.height / 2);
+        this.context.drawImage(this.cursor, cursor.x - this.cursor.width / 2, cursor.y - this.cursor.height / 2);
         this.context.restore();
     }
 

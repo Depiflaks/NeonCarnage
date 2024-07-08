@@ -1,13 +1,15 @@
-import { BONUS, ENTITY, WEAPON, WEAPON_STATE } from "../../CONST.js";
+import { WINDOW, BONUS, ENTITY, WEAPON, WEAPON_STATE } from "../../CONST.js";
 import { Bullet } from "../Weapon/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { EntityController } from "../Entity/EntityController.js";
 
 class PlayerController extends EntityController {
     constructor(player) {
-        super();    
+        super();
         this.model = new PlayerModel(player);
-        
+
+        this.cursorX = WINDOW.w / 2;
+        this.cursorY = WINDOW.h / 2;
 
         addEventListener("mousemove", (event) => this.mouseMove(event));
         addEventListener("mousedown", (event) => this.mouseDown(event));
@@ -18,13 +20,16 @@ class PlayerController extends EntityController {
     }
 
     mouseMove(event) {
-        if (this.getStacked())
-            return
+        this.cursorX = event.clientX;
+        this.cursorY = event.clientY;
         const { x, y } = this.getPosition();
         const v1 = { x: 1, y: 0 };
         const v2 = { x: event.x - x, y: event.y - y };
         const difference = { x: v2.x - v1.x, y: v2.y - v1.y };
         const angle = Math.atan2(difference.x, -difference.y) - Math.PI / 2;
+
+        if (this.getStacked())
+            return
         this.setAngle(angle);
     }
 
@@ -169,6 +174,10 @@ class PlayerController extends EntityController {
                 this.removeTrajectory();
             }
         }
+    }
+
+    getCursorPosition() {
+        return { x: this.cursorX, y: this.cursorY };
     }
 
     getPosition() {

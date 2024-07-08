@@ -7,6 +7,7 @@ class EngineModel {
         this.field = new BattleGround(cellsList, wallsList, weaponList, ammunitionSet, bonusSet);
         this.player = new PlayerController(player);
         this.enemies = [];
+        this.shaking = false;
     }
 
     getField() {

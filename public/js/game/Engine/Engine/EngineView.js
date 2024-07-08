@@ -20,7 +20,7 @@ class EngineView {
         this.entityView.draw(
             player.getPosition(),
             player.getWeapon(),
-            player.getAngle()
+            player.getAngle(),
         );
         if (player.getTrajectory()) player.getTrajectory().draw(this.context);
         Object.values(enemies).map(enemy => {this.entityView.draw(
@@ -31,7 +31,7 @@ class EngineView {
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());
         this.drawBulletAmount(player);
-        this.entityView.drawCursor();
+        this.entityView.drawCursor(player.getCursorPosition());
     }
 
     drawBullets(bullets, field) {
