@@ -79,7 +79,7 @@ const WEAPON_MODELS = {
         grouping: 10,           //кучность
         deviation: 0.5,          //отклонение
         onGround: "public/assets/Weapon/weapon5.png",       //текстура на земле
-        inHand: "public/assets/Weapon/weaponUp5.png", //текстура в руках
+        inHand: "public/assets/Weapon/weaponUp51.png", //текстура в руках
         amount: 0, //количество пуль в магазине(для холодного - 0)
         rechargeTime: 0, //время перезарядки
         w: 20,
@@ -109,7 +109,7 @@ const WEAPON_MODELS = {
         amount: 80,
         rechargeTime: 3000,
         w: 40,
-        h: 80,
+        h: 130,
     },
     pistol: {
         name: "pistol",
@@ -118,11 +118,11 @@ const WEAPON_MODELS = {
         grouping: 1,
         deviation: 0.05,
         onGround: "public/assets/Weapon/weapon3.png",
-        inHand: "public/assets/Weapon/weaponUp3.png",
+        inHand: "public/assets/Weapon/weaponUp31.png",
         amount: 80,
         rechargeTime: 3000,
-        w: 40,
-        h: 80,
+        w: 30,
+        h: 100,
     },
     glock: {
         name: "glock",
@@ -131,11 +131,11 @@ const WEAPON_MODELS = {
         grouping: 1,
         deviation: 0.05,
         onGround: "public/assets/Weapon/weapon4.png",
-        inHand: "public/assets/Weapon/weaponUp4.png",
+        inHand: "public/assets/Weapon/weaponUp41.png",
         amount: 80,
         rechargeTime: 3000,
-        w: 40,
-        h: 80,
+        w: 30,
+        h: 100,
     }
 }
 
@@ -179,8 +179,8 @@ const TRAJECTORY = {
     height: 10,
     deltaAngle: Math.PI / 3,
     animationSpeed: 0.07,
-    knifeLeftImage: "public/assets/Weapon/knifeLeft1.png",
-    knifeRightImage: "public/assets/Weapon/knifeRight1.png",
+    knifeLeftImage: "public/assets/Weapon/knifeLeft12.png",
+    knifeRightImage: "public/assets/Weapon/knifeRight12.png",
 };
 
 export {WINDOW, AMMUNITION, CELL, WALL, ENTITY, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};
