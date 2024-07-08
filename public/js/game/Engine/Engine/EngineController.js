@@ -4,8 +4,8 @@ import { EngineView } from "./EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
 
 class EngineController {
-    constructor(objects, player, canvas) {
-        this.model = new EngineModel(objects, player);
+    constructor(objects, connection, canvas) {
+        this.model = new EngineModel(objects);
         this.view = new EngineView(canvas);
         
         this.enemies = this.model.getEnemies();
@@ -13,6 +13,7 @@ class EngineController {
         this.player = this.model.getPlayer();
         this.tracing = new Tracing(this.player, this.field);
 
+        this.connection = connection
         this.lastTime = 0;
 
         this.initEventListeners(canvas);

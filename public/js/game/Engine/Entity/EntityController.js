@@ -36,6 +36,14 @@ class EntityController {
         this.model.weapon = weapon;
     }
 
+    getWeaponId() {
+        return this.model.weaponId;
+    }
+
+    setWeaponId(id) {
+        this.model.weaponId = id;
+    }
+
     createTrajectory() {
         this.model.trajectory = new Trajectory(this.model.x, this.model.y, this.model.angle);
     }

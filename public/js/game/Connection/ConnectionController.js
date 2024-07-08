@@ -2,20 +2,31 @@ import { SERVER } from "../CONST.js";
 import { EnemyController } from "../Engine/Enemy/EnemyController.js";
 
 class ConnectionController {
-    constructor(player, enemies, field) {
+    constructor() {
         // вебсокет у каждого свой... типа
         this.socket = new WebSocket(SERVER.sergey);
+        this.enemies = {};
         this.initEventListeners();
-        this.player = player;
-        this.enemies = enemies;
-        this.field = field;
     }
 
-    sendPosition({x, y, angle}) {
+    setObj(player, field, enemies) {
+        this.player = player;
+        this.field = field;
+        this.enemies = enemies;
+    }
+
+    sendPosition() {
+        const {x, y} = this.player.getPosition();
+        const angle = this.player.getAngle();
+        const weapon = this.player.getWeaponId();
         const body = {
-            x: x,
-            y: y,
-            angle: angle,
+            player: {
+                x: x - this.field.x, 
+                y: y - this.field.y, 
+                angle: angle, 
+                weapon: weapon
+            },
+            damage: {}
         }
         this.send("update", body);
     }
@@ -64,28 +75,30 @@ class ConnectionController {
     }
 
     response(body) {
-        const enemyId = body.id;
+        const player = body.player;
+        const id = player.id;
+        const x = player.x + this.field.x;
+        const y = player.y + this.field.y;
+        const angle = player.angle;
+        const weapon = player.weapon
 
-        const enemyX = body.x + this.field.x;
-        const enemyY = body.y + this.field.y;
-        const enemyAngle = body.angle;
-
-        if (this.enemies[enemyId]) {
+        if (this.enemies[id]) {
             // Если игрок существует, обновляем его координаты
-            this.enemies[enemyId].setPosition({
-                x: enemyX,
-                y: enemyY,
+            this.enemies[id].setPosition({
+                x: x,
+                y: y,
             });
-            this.enemies[enemyId].setAngle(enemyAngle);
-            //console.log(enemyX, enemyY, enemyAngle);
+            this.enemies[id].setAngle(angle);
+            //console.log(x, y, angle);
         } else {
             // Если игрока нет, создаем нового и добавляем его в массив
             const enemy = new EnemyController({
-                x: enemyX,
-                y: enemyY,
-                angle: enemyAngle,
+                x: x,
+                y: y,
+                angle: angle,
+                weaponId: weapon,
             });
-            this.enemies[enemyId] = enemy;
+            this.enemies[id] = enemy;
         }
     }
 

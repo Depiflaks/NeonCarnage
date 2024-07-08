@@ -1,4 +1,5 @@
 import WebSocket, { WebSocketServer } from 'ws';
+import crypto from 'crypto';
 
 class WebSocketController {
     constructor(server, map) {
@@ -8,44 +9,54 @@ class WebSocketController {
     }
 
     onConnection(connection, req) {
-        const ip = this.init(connection, req);
+        this.init(connection, req);
 
         connection.on('message', (message) => {this.onMessage(message, connection)});
 
-        connection.on('close', () => {this.onClose(ip)});
+        connection.on('close', () => {this.onClose(req)});
     }
 
     init(connection, req) {
         const ip = req.socket.remoteAddress;
-        connection.id = this.getUniqueID();
+        connection.id = this.getUniqueID(ip);
         console.log(`Connected ${ip}`);
         //this.sendInit(connection, this.map);
-        return ip;
     }
 
     onMessage(message, connection) {
         const data = JSON.parse(message);
         if (data.type === 'map') {
-            this.sendInit(connection, this.map);
+            this.doMap(connection);
         } else if (data.type === "update") {
-            for (const client of this.socket.clients) {
-                //console.log('Received: ' + message);
-                if (client.readyState !== WebSocket.OPEN) continue;
-                if (client === connection) continue;
-    
-                const json_data = {
-                    id: connection.id,
-                    x: data.body.x,
-                    y: data.body.y,
-                    angle: data.body.angle
-                }
-                this.sendResponse(client, json_data)
-            }
+            this.doUpdate(connection, data.body);
         }
-        
     }
 
-    onClose(ip) {
+    doMap(connection) {
+        this.sendInit(connection, this.map);
+    }
+
+    doUpdate(connection, body) {
+        for (const client of this.socket.clients) {
+            const player = body.player;
+            if (client.readyState !== WebSocket.OPEN) continue;
+            if (client === connection) continue;
+            const data = {
+                player: {
+                    id: connection.id,
+                    x: player.x,
+                    y: player.y,
+                    angle: player.angle,
+                    weapon: player.weapon,
+                },
+                
+            }
+            this.sendResponse(client, data)
+        }
+    }
+
+    onClose(req) {
+        const ip = req.socket.remoteAddress;
         console.log(`Disconnected ${ip}`);
     }
 
@@ -65,11 +76,8 @@ class WebSocketController {
         connection.send(JSON.stringify(responseData), { binary: false });
     }
 
-    getUniqueID() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-        }
-        return s4() + s4() + '-' + s4();
+    getUniqueID(ipAddress) {
+        return crypto.createHash('sha256').update(ipAddress).digest('hex');
     }
 }
 

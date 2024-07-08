@@ -3,19 +3,15 @@ import { DURATION } from "../CONST.js";
 import { EngineController } from "../Engine/Engine/EngineController.js";
 
 class GameController {
-    constructor(objects, player, document) {
+    constructor(objects, document) {
         this.document = document;
         this.canvas = this.document.getElementById("canvas");
 
-        this.engine = new EngineController(objects, player, this.canvas);
+        this.connection = new ConnectionController();
 
-        this.connection = new ConnectionController(
-            this.engine.player, 
-            this.engine.enemies, 
-            this.engine.field
-        );
+        this.engine = new EngineController(objects, this.connection, this.canvas);
 
-        this.engine.connection = this.connection;
+        this.connection.setObj(this.engine.player, this.engine.field, this.engine.enemies);
 
         this.lastTime = 0;
     }
@@ -24,8 +20,7 @@ class GameController {
         const deltaTime = timestamp - this.lastTime;
         if (deltaTime >= DURATION) {
             this.engine.nextFrame();
-            const { x, y } = this.engine.player.getPosition();
-            this.connection.sendPosition({x: x - this.engine.field.x, y: y - this.engine.field.y, angle: this.engine.player.getAngle()}); 
+            this.connection.sendPosition(); 
             this.lastTime = timestamp;
         }
 
