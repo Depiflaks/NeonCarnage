@@ -55,6 +55,7 @@ class EngineController {
             enemy.update();
         })
         this.move();
+        this.model.updateShake();
     }
 
     takeAmmunition() {
@@ -147,7 +148,7 @@ class EngineController {
     nextFrame() {
         //console.log(this.enemies);
         this.update();
-        this.view.update(this.field, this.player, this.enemies);
+        this.view.update(this.field, this.player, this.enemies, this.model.isShaking());
     }
 }
 

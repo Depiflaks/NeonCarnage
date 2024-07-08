@@ -1,5 +1,5 @@
 import { EntityView } from "../Entity/EntityView.js";
-import { WINDOW, RAD, ENTITY, CELL } from "../../CONST.js";
+import {WINDOW, RAD, ENTITY, CELL, SHAKE} from "../../CONST.js";
 
 
 class EngineView {
@@ -9,6 +9,8 @@ class EngineView {
         canvas.height = WINDOW.h;
         this.context = canvas.getContext("2d");
         this.entityView = new EntityView(this.context);
+        this.shakeOffsetX = 0;
+        this.shakeOffsetY = 0;
     }
 
     draw(field, player, enemies) {
@@ -39,15 +41,34 @@ class EngineView {
     }
 
     drawBulletAmount(player) {
-        if((player.getWeapon() != null) && (player.getWeapon().getBattleType() == "distant")) {
+        if((player.getWeapon() != null) && (player.getWeapon().getBattleType() === "distant")) {
             this.context.font = "48px roboto";
             this.context.fillText(player.getWeapon().getAmount(), 10, 50);
         }
     }
 
-    update(field, player, enemies) {
+    update(field, player, enemies, isShaking) {
         field.clearFrame(this.context);
+
+        if (isShaking) {
+            this.applyShake();
+        } else {
+            this.resetShake();
+        }
         this.draw(field, player, enemies);
+    }
+
+    applyShake() {
+        this.shakeOffsetX = Math.random() * SHAKE.scale - SHAKE.relocateRange;
+        this.shakeOffsetY = Math.random() * SHAKE.scale - SHAKE.relocateRange;
+        this.context.save();
+        this.context.translate(this.shakeOffsetX, this.shakeOffsetY);
+    }
+
+    resetShake() {
+        this.context.restore();
+        this.shakeOffsetX = 0;
+        this.shakeOffsetY = 0;
     }
 
     drawLine(x1, y1, x2, y2, color, field) {

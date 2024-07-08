@@ -69,6 +69,8 @@ class PlayerModel extends EntityModel {
         return this.keyPressed;
     }
 
+
+
     move(dx, dy) {
         super.move(dx, dy);
         this.bullets.forEach(bullet => bullet.move(dx, dy));

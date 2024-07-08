@@ -7,7 +7,6 @@ class EngineModel {
         this.field = new BattleGround(cells, walls, weapons, ammunitions, bonuses);
         this.player = new PlayerController(player);
         this.enemies = [];
-        this.shaking = false;
     }
 
     getField() {
@@ -20,6 +19,20 @@ class EngineModel {
 
     getPlayer() {
         return this.player;
+    }
+
+
+
+    updateShake() {
+        if (this.player.model.shakeDuration > 0) {
+            this.player.model.shakeDuration -= 1;
+        } else {
+            this.player.model.shaking = false;
+        }
+    }
+
+    isShaking() {
+        return this.player.model.shaking;
     }
 }
 

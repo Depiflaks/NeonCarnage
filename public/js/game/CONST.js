@@ -62,6 +62,12 @@ const INTERFACE = {
     cursor: "public/assets/Interface/cursor.png",
 }
 
+const SHAKE = {
+    duration: 2,
+    scale: 10,
+    relocateRange: 5, // scale / 2
+}
+
 const CAMERA = {
     center: {
         x: WINDOW.w / 2,
@@ -121,4 +127,4 @@ const TRAJECTORY = {
     knifeRightImage: "public/assets/Weapon/knifeRight1.png",
 };
 
-export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};
+export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};
