@@ -87,11 +87,11 @@ class EngineController {
         ));
     }
 
-    bulletsIntersectionEnemy(enemies) {
+    bulletsIntersectionEnemy() {
         this.player.setBullets(this.player.getBullets().filter(
             bullet => {
                 let hit = false;
-                Object.values(enemies).forEach(enemy => {
+                Object.values(this.enemies).forEach(enemy => {
                     if (bullet.isIntersectEnemy(enemy.model)) {
                         console.log("Попал!!!");
                         hit = true;
