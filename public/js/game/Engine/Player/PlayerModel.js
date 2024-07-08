@@ -17,7 +17,7 @@ class PlayerModel extends EntityModel {
             d: 0,
             e: 0,
         };
-        this.bullets = [];
+        
     }
 
     updatePosition() {

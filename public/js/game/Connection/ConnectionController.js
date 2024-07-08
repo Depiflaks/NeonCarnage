@@ -26,7 +26,7 @@ class ConnectionController {
                 angle: angle, 
                 weapon: weapon
             },
-            damage: {}
+            bullets: []
         }
         this.send("update", body);
     }

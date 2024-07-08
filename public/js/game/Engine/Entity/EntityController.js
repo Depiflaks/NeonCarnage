@@ -59,6 +59,14 @@ class EntityController {
     isActive() {
         return this.model.active
     }
+
+    getBullets() {
+        return this.model.bullets;
+    }
+
+    setBullets(bullets) {
+        this.model.bullets = bullets;
+    }
 }
 
 export {EntityController}

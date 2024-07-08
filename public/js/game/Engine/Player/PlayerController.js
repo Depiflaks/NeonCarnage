@@ -65,8 +65,10 @@ class PlayerController extends EntityController {
                 const x = this.getPosition().x + WEAPON.h/4.1 * Math.cos(angle);
                 const y = this.getPosition().y + WEAPON.h/4.1 * Math.sin(angle);
                 const deviation = this.getWeapon().getDeviation();
+                const angleDeviation = (Math.random() * 2 - 1) * deviation;
+                const adjustedAngle = angle + angleDeviation;
                 const rapidity = this.getWeapon().getRapidity();
-                this.model.bullets.push(new Bullet({ x, y, angle, rapidity, deviation }));
+                this.model.bullets.push(new Bullet({ x, y, angle: adjustedAngle }));
             }
         }
     }
@@ -169,14 +171,6 @@ class PlayerController extends EntityController {
                 this.removeTrajectory();
             }
         }
-    }
-
-    getBullets() {
-        return this.model.bullets;
-    }
-
-    setBullets(bullets) {
-        this.model.bullets = bullets;
     }
 
     setAnimating(value) {
