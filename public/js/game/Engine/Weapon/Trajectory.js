@@ -1,4 +1,4 @@
-import { TRAJECTORY } from "../../CONST.js";
+import { ENTITY, TRAJECTORY, RAD } from "../../CONST.js";
 import { Drawable } from "../Interface/Drawable.js";
 
 class Trajectory extends Drawable {
@@ -24,12 +24,13 @@ class Trajectory extends Drawable {
         context.translate(this.x + this.h, this.y + this.w);
         context.rotate(this.angle + this.currentAngle + 90 * RAD);
         if (this.direction === 1) {
-            context.drawImage(this.weaponLeft, this.x - currentEndX - PLAYER.h * 2, currentEndY - this.y - this.w/2);
+            context.drawImage(this.weaponLeft, this.x - currentEndX - ENTITY.h * 2, currentEndY - this.y - this.w/2);
         } else {
-            context.drawImage(this.weaponRight, this.x - currentEndX - PLAYER.h, currentEndY - this.y - this.w/2);
+            context.drawImage(this.weaponRight, this.x - currentEndX - ENTITY.h, currentEndY - this.y - this.w/2);
         }
         context.restore();
     }
+
 
     toLeft() {
         this.isAnimating = true;

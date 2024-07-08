@@ -15,8 +15,8 @@ class EntityView {
         if (!entity.isActive()) return;
         const {x, y} = entity.getPosition();
         const angle = entity.getAngle();
-        const animation = entity.getTrajectory();
         const weapon = entity.getWeapon();
+        const animation = entity.getTrajectory();
         this.context.save();
         this.context.translate(x, y);
         this.context.rotate(angle + 90 * RAD);
@@ -29,6 +29,7 @@ class EntityView {
         }
         this.context.restore();
     }
+
 
     drawEnemyHealthBar(x, y, health) {
         const barWidth = PLAYER.w;

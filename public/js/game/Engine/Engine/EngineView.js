@@ -14,11 +14,11 @@ class EngineView {
     draw(field, player, enemies) {
         field.drawGround(this.context);
         this.drawBullets(player.getBullets(), field);
-        field.drawWeapons(player.getPosition(), player.getAngle(), player.getTrajectory(), this.context);
         field.drawBonuses(this.context);
+        field.drawWeapons(player.getPosition(), player.getAngle(), player.getTrajectory(), this.context);
         field.drawAmmunition(this.context);
-        this.entityView.draw(player);
         if (player.getTrajectory()) player.getTrajectory().draw(this.context);
+        this.entityView.draw(player);
         Object.values(enemies).map(enemy => {this.entityView.draw(enemy)})
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());

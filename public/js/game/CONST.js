@@ -113,7 +113,6 @@ const TRAJECTORY = {
     animationSpeed: 0.07,
     knifeLeftImage: "public/assets/Weapon/knifeLeft1.png",
     knifeRightImage: "public/assets/Weapon/knifeRight1.png",
-
 };
 
 export {WINDOW, AMMUNITION, CELL, WALL, ENTITY, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};
