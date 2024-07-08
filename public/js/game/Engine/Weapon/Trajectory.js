@@ -11,16 +11,24 @@ class Trajectory extends Drawable {
         this.isAnimating = false;
         this.direction = 0;
         this.angle = angle;
+        this.weaponLeft = new Image();
+        this.weaponLeft.src = TRAJECTORY.knifeLeftImage;
+        this.weaponRight = new Image();
+        this.weaponRight.src = TRAJECTORY.knifeRightImage;
+
     }
 
     draw(context) {
         const { currentEndX, currentEndY } = this.calculateEndCoordinates();
-        context.lineWidth = this.h;
-        context.strokeStyle = TRAJECTORY.strokeStyle;
-        context.beginPath();
-        context.moveTo(this.x + this.handPoint * Math.cos(this.angle + this.currentAngle), this.y + this.handPoint * Math.sin(this.angle + this.currentAngle));
-        context.lineTo(currentEndX, currentEndY);
-        context.stroke();
+        context.save();
+        context.translate(this.x + this.h, this.y + this.w);
+        context.rotate(this.angle + this.currentAngle + 90 * RAD);
+        if (this.direction === 1) {
+            context.drawImage(this.weaponLeft, this.x - currentEndX - PLAYER.h * 2, currentEndY - this.y - this.w/2);
+        } else {
+            context.drawImage(this.weaponRight, this.x - currentEndX - PLAYER.h, currentEndY - this.y - this.w/2);
+        }
+        context.restore();
     }
 
     toLeft() {

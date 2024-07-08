@@ -7,6 +7,7 @@ const SERVER = {
     sergey: 'ws://10.250.104.142:8000/',
     sergey_home: 'ws://192.168.1.131:8000/',
     ignat: 'ws://10.250.104.176:8000/',
+    liuba: 'ws://10.250.104.170:8000/',
 }
 
 const WINDOW = {
@@ -39,9 +40,9 @@ const WALL = {
 const ENTITY = {
     radius: 30,
     w: 100,
-    h: 60,
-    wWithWeapon: 120,
-    hWithWeapon: 120,
+    h: 40,
+    wWithWeapon: 90,
+    hWithWeapon: 100,
     headColor: "public/assets/Player/Skin3/head.png",
     bodyColor: "public/assets/Player/Skin3/body.png",
     bodyWithWeapon: "public/assets/Player/Skin3/bodyWithWeapon.png",
@@ -110,7 +111,9 @@ const TRAJECTORY = {
     height: 10,
     deltaAngle: Math.PI / 3,
     animationSpeed: 0.07,
-    strokeStyle: "red"
+    knifeLeftImage: "public/assets/Weapon/knifeLeft1.png",
+    knifeRightImage: "public/assets/Weapon/knifeRight1.png",
+
 };
 
 export {WINDOW, AMMUNITION, CELL, WALL, ENTITY, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};
