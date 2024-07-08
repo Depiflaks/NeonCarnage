@@ -63,12 +63,12 @@ class WeaponController {
         return this.model.deviation;
     }
 
-    getOnGroundColor() {
-        return this.model.onGroundColor;
+    getOnGround() {
+        return this.model.onGround;
     }
 
-    getInHandColor() {
-        return this.model.inHandColor;
+    getInHand() {
+        return this.model.inHand;
     }
 
     getStatus() {

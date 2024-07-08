@@ -9,7 +9,7 @@ import { Ammunition } from "../Collectable/Ammunition.js";
 
 class BattleGround extends Drawable {
     constructor(groundList, wallList, weaponSet, ammunitionSet, bonusSet) {
-
+        
         let maxX = 0;
         let maxY = 0;
         groundList.map(
@@ -37,13 +37,14 @@ class BattleGround extends Drawable {
 
         ammunitionSet.map(
             ammunition => {
-                this.ammunition.push(new Ammunition(ammunition.x, ammunition.y, ammunition.color, ammunition.amount));
+                this.ammunition.push(new Ammunition(ammunition.x, ammunition.y, ammunition.image, ammunition.amount));
             }
         );
 
         bonusSet.map(
             bonus => {
-                this.bonuses.push(new Bonus(bonus.x, bonus.y, bonus.color, bonus.amount));
+                console.log(bonus);
+                this.bonuses.push(new Bonus(bonus.x, bonus.y, bonus.image, bonus.amount));
             }
         );
 
@@ -80,7 +81,7 @@ class BattleGround extends Drawable {
         this.verticalWalls.map(wall => wall.draw(context));
     }
 
-    drawWeapons({x, y}, angle, context) {
+    drawWeapons({x, y}, angle, animation, context) {
         let indexX, indexY;
         this.weapons.map(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) / CELL.w);
@@ -91,7 +92,8 @@ class BattleGround extends Drawable {
                     y: weapon.model.y,
                     status: weapon.model.status,
                     onGround: weapon.model.onGround,
-                    inHand: weapon.model.inHand
+                    inHand: weapon.model.inHand,
+                    animation: animation
                 }, 
                 {x, y}, angle,
                 context

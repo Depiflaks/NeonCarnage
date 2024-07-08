@@ -9,6 +9,7 @@ const SERVER = {
     sergey: 'ws://10.250.104.142:8000/',
     sergey_home: 'ws://192.168.1.131:8000/',
     ignat: 'ws://10.250.104.176:8000/',
+    liuba: 'ws://10.250.104.170:8000/',
 }
 
 const WINDOW = {
@@ -41,9 +42,9 @@ const WALL = {
 const ENTITY = {
     radius: 30,
     w: 100,
-    h: 60,
-    wWithWeapon: 120,
-    hWithWeapon: 120,
+    h: 40,
+    wWithWeapon: 90,
+    hWithWeapon: 100,
     headColor: "public/assets/Player/Skin3/head.png",
     bodyColor: "public/assets/Player/Skin3/body.png",
     bodyWithWeapon: "public/assets/Player/Skin3/bodyWithWeapon.png",
@@ -77,16 +78,16 @@ const WEAPON = {
 };
 
 const AMMUNITION = {
-    w: 20,
-    h: 30,
-    color: "yellow",
+    w: 50,
+    h: 50,
+    image: "public/assets/Bonuses/cartridges.png",
     minDistance: 40,
 }
 
 const BONUS = {
-    w: 20,
-    h: 30,
-    color: "blue",
+    w: 50,
+    h: 50,
+    image: "public/assets/Bonuses/aidKit.png",
     minDistance: 40,
 }
 
@@ -96,7 +97,7 @@ const BULLET = {
     radius: 70,
     speed: 25,
     pythagoreanFactor: Math.sqrt(2) / 2,
-    color: "yellow",
+    image: "public/assets/Bonuses/cartridges.png",
 };
 
 const ENEMY = {
@@ -116,7 +117,8 @@ const TRAJECTORY = {
     height: 10,
     deltaAngle: Math.PI / 3,
     animationSpeed: 0.07,
-    strokeStyle: "red"
+    knifeLeftImage: "public/assets/Weapon/knifeLeft1.png",
+    knifeRightImage: "public/assets/Weapon/knifeRight1.png",
 };
 
 export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};
