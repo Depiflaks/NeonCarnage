@@ -1,21 +1,48 @@
-import { SERVER } from "../CONST.js";
+import { SERVER, ENTITY } from "../CONST.js";
 import { EnemyController } from "../Engine/Enemy/EnemyController.js";
 
 class ConnectionController {
     constructor(player, enemies, field) {
         // вебсокет у каждого свой... типа
+<<<<<<< Updated upstream
         this.socket = new WebSocket(SERVER.sergey);
+=======
+        this.socket = new WebSocket(SERVER.ignat);
+        this.enemies = {};
+>>>>>>> Stashed changes
         this.initEventListeners();
         this.player = player;
         this.enemies = enemies;
         this.field = field;
     }
 
+<<<<<<< Updated upstream
     sendPosition({x, y, angle}) {
         const body = {
             x: x,
             y: y,
             angle: angle,
+=======
+    sendData() {
+        const {x, y} = this.player.getPosition();
+        const angle = this.player.getAngle();
+        const weapon = this.player.getWeaponId();
+        const health = ENTITY.health;
+        const maxHealth = ENTITY.maxHealth;
+        const damage = this.player.model.damage;
+        this.player.model.damage = {};
+        const body = {
+            player: {
+                x: x - this.field.x, 
+                y: y - this.field.y, 
+                angle: angle, 
+                weapon: weapon,
+                health: health,
+                maxHealth: maxHealth
+            },
+            bullets: [],
+            damage: damage,
+>>>>>>> Stashed changes
         }
         this.send("update", body);
     }
@@ -64,7 +91,20 @@ class ConnectionController {
     }
 
     response(body) {
+<<<<<<< Updated upstream
         const enemyId = body.id;
+=======
+        const player = body.player;
+        const id = player.id;
+        const x = player.x + this.field.x;
+        const y = player.y + this.field.y;
+        const angle = player.angle;
+        const weapon = player.weapon;
+        const health = player.health;
+        const maxHealth = player.maxHealth;
+        const currentHealth = this.player.getHealth();
+        this.player.model.health -= body.damage.damage;
+>>>>>>> Stashed changes
 
         const enemyX = body.x + this.field.x;
         const enemyY = body.y + this.field.y;
@@ -81,9 +121,18 @@ class ConnectionController {
         } else {
             // Если игрока нет, создаем нового и добавляем его в массив
             const enemy = new EnemyController({
+<<<<<<< Updated upstream
                 x: enemyX,
                 y: enemyY,
                 angle: enemyAngle,
+=======
+                x: x,
+                y: y,
+                angle: angle,
+                weaponId: weapon,
+                health: health,
+                maxHealth: maxHealth
+>>>>>>> Stashed changes
             });
             this.enemies[enemyId] = enemy;
         }

@@ -90,10 +90,19 @@ class EngineController {
         this.player.setBullets(this.player.getBullets().filter(
             bullet => {
                 let hit = false;
+<<<<<<< Updated upstream
                 Object.values(enemies).forEach(enemy => {
+=======
+                Object.entries(this.enemies).forEach(([id, enemy]) => {
+>>>>>>> Stashed changes
                     if (bullet.isIntersectEnemy(enemy.model)) {
-                        console.log("Попал!!!");
                         hit = true;
+                        if (this.player.model.damage[id] == undefined) {
+                            this.player.model.damage[id] = {shotDown: 1};
+                        }
+                        else {
+                            this.player.model.damage[id].shotDown += 1;
+                        }
                     }
                 });
                 return !hit;

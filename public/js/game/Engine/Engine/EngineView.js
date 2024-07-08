@@ -30,6 +30,7 @@ class EngineView {
         this.drawBullets(player.getBullets(), field);
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());
+        Object.values(enemies).map(enemy => {this.entityView.drawEnemyHealthBar(enemy.x, enemy.y, enemy.health)});
         this.drawBulletAmount(player);
     }
 
