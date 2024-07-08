@@ -12,19 +12,9 @@ class EntityView {
         this.cursor = new Image();
         this.cursor.src = INTERFACE.cursor;
 
-        this.initMouseTracking();
-
-        this.cursorX = WINDOW.w/2;
-        this.cursorY = WINDOW.h/2;
 
     }
 
-    initMouseTracking() {
-        document.addEventListener('mousemove', (event) => {
-            this.cursorX = event.clientX;
-            this.cursorY = event.clientY;
-        });
-    }
 
 
     draw({x, y}, weapon, angle) {
