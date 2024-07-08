@@ -1,4 +1,5 @@
 import { Drawable } from "./Drawable.js";
+import { ENTITY } from "../../CONST.js";
 
 class Moveable extends Drawable {
     constructor(x, y, w, h, radius) {
@@ -9,6 +10,15 @@ class Moveable extends Drawable {
         this.speedY = 0;
     }
 
+    isIntersectEnemy(obj) {
+        const deltaX = obj.x - this.x - this.h * Math.cos(this.angle);
+        const deltaY = obj.y - this.y - this.h * Math.sin(this.angle);
+        //context.lineTo(this.x + this.h * Math.cos(this.angle), this.y + this.h * Math.sin(this.angle));
+        const distanceSquared = deltaX * deltaX + deltaY * deltaY;
+        const combinedRadius = ENTITY.radius;
+        return distanceSquared <= (combinedRadius * combinedRadius);
+    }
+    
     isIntersect(obj) {
         const nearestX = Math.max(obj.x, Math.min(this.x, obj.x + obj.w));
         const nearestY = Math.max(obj.y, Math.min(this.y, obj.y + obj.h));

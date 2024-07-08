@@ -75,7 +75,7 @@ class EngineController {
         });
     }
 
-    bulletsIntersection(barriers) {
+    bulletsIntersectionWall(barriers) {
         this.player.setBullets(this.player.getBullets().filter(
             bullet => {
                 bullet.updatePosition();
@@ -87,8 +87,24 @@ class EngineController {
         ));
     }
 
-    checkIntersections(drawableArray) {
-        this.bulletsIntersection(drawableArray);
+    bulletsIntersectionEnemy(enemies) {
+        this.player.setBullets(this.player.getBullets().filter(
+            bullet => {
+                let hit = false;
+                Object.values(enemies).forEach(enemy => {
+                    if (bullet.isIntersectEnemy(enemy.model)) {
+                        console.log("Попал!!!");
+                        hit = true;
+                    }
+                });
+                return !hit;
+            }
+        ));
+    }    
+
+    checkIntersections(drawableArray, moveableArray) {
+        this.bulletsIntersectionWall(drawableArray);
+        this.bulletsIntersectionEnemy(moveableArray);
         this.intersectTrajectory(drawableArray);
         for (const obj of drawableArray) {
             this.player.check(obj);
