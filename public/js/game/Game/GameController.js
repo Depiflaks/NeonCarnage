@@ -24,8 +24,8 @@ class GameController {
         const deltaTime = timestamp - this.lastTime;
         if (deltaTime >= DURATION) {
             this.engine.nextFrame();
-            // const { x, y } = this.player.getPosition();
-            // this.connection.sendPosition({x: x - this.field.x, y: y - this.field.y, angle: this.player.getAngle()}); 
+            const { x, y } = this.engine.player.getPosition();
+            this.connection.sendPosition({x: x - this.engine.field.x, y: y - this.engine.field.y, angle: this.engine.player.getAngle()}); 
             this.lastTime = timestamp;
         }
 

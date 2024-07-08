@@ -20,7 +20,6 @@ class WebSocketController {
         connection.id = this.getUniqueID();
         console.log(`Connected ${ip}`);
         //this.sendInit(connection, this.map);
-
         return ip;
     }
 

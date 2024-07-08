@@ -129,6 +129,7 @@ class EngineController {
     }
 
     nextFrame() {
+        //console.log(this.enemies);
         this.update();
         this.view.update(this.field, this.player, this.enemies);
     }
