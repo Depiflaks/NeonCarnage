@@ -59,6 +59,12 @@ const INTERFACE = {
     cursor: "public/assets/Interface/cursor.png",
 }
 
+const SHAKE = {
+    duration: 2,
+    scale: 10,
+    relocateRange: 5, // scale / 2
+}
+
 const CAMERA = {
     center: {
         x: WINDOW.w / 2,
@@ -117,4 +123,4 @@ const TRAJECTORY = {
     strokeStyle: "red"
 };
 
-export {WINDOW, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};
+export {WINDOW, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};

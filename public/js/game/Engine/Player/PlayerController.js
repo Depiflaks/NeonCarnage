@@ -1,4 +1,4 @@
-import { WINDOW, BONUS, ENTITY, WEAPON, WEAPON_STATE } from "../../CONST.js";
+import {WINDOW, BONUS, ENTITY, WEAPON, WEAPON_STATE, SHAKE} from "../../CONST.js";
 import { Bullet } from "../Weapon/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { EntityController } from "../Entity/EntityController.js";
@@ -75,7 +75,13 @@ class PlayerController extends EntityController {
                 const rapidity = this.getWeapon().getRapidity();
                 this.model.bullets.push(new Bullet({ x, y, angle: adjustedAngle }));
             }
+            this.setShaking(SHAKE.duration);
         }
+    }
+
+    setShaking(duration) {
+        this.model.shaking = true;
+        this.model.shakeDuration = duration;
     }
 
     mouseUp(event) {

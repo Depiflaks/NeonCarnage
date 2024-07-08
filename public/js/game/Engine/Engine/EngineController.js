@@ -14,7 +14,6 @@ class EngineController {
         this.tracing = new Tracing(this.player, this.field);
 
         this.connection = connection
-        this.lastTime = 0;
 
         this.initEventListeners(canvas);
     }
@@ -56,6 +55,7 @@ class EngineController {
             enemy.update();
         })
         this.move();
+        this.model.updateShake();
     }
 
     takeAmmunition() {
@@ -148,7 +148,7 @@ class EngineController {
     nextFrame() {
         //console.log(this.enemies);
         this.update();
-        this.view.update(this.field, this.player, this.enemies);
+        this.view.update(this.field, this.player, this.enemies, this.model.isShaking());
     }
 }
 
