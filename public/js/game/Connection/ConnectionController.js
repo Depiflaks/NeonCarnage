@@ -4,6 +4,7 @@ import { EnemyController } from "../Engine/Enemy/EnemyController.js";
 class ConnectionController {
     constructor(player, enemies, field) {
         // вебсокет у каждого свой... типа
+        this.socket = new WebSocket(SERVER.liuba);
         this.initEventListeners();
         this.player = player;
         this.enemies = enemies;

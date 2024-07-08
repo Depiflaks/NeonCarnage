@@ -72,16 +72,16 @@ const WEAPON = {
 };
 
 const AMMUNITION = {
-    w: 20,
-    h: 30,
-    color: "yellow",
+    w: 50,
+    h: 50,
+    image: "public/assets/Bonuses/cartridges.png",
     minDistance: 40,
 }
 
 const BONUS = {
-    w: 20,
-    h: 30,
-    color: "blue",
+    w: 50,
+    h: 50,
+    image: "public/assets/Bonuses/aidKit.png",
     minDistance: 40,
 }
 
@@ -91,7 +91,7 @@ const BULLET = {
     radius: 70,
     speed: 52,
     pythagoreanFactor: Math.sqrt(2) / 2,
-    color: "yellow",
+    image: "public/assets/Bonuses/cartridges.png",
 };
 
 const ENEMY = {

@@ -124,13 +124,13 @@ const ammunitionSet = [
     {
         x: 10,
         y: 7,
-        color: "yellow",
+        image: "public/assets/Bonuses/cartridges.png",
         amount: 40
     },
     {
         x: 7,
         y: 7,
-        color: "yellow",
+        image: "public/assets/Bonuses/cartridges.png",
         amount: 95
     }
 ];
@@ -139,13 +139,13 @@ const bonusSet = [
     {
         x: 7,
         y: 4,
-        color: "blue",
+        image: "public/assets/Bonuses/aidKit.png",
         amount: 1,
     },
     {
         x: 5,
         y: 5,
-        color: "blue",
+        image: "public/assets/Bonuses/aidKit.png",
         amount: 2,
     }
 ];

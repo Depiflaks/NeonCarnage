@@ -1,17 +1,17 @@
-import {AMMUNITION, CELL} from '../../CONST.js'
+import {AMMUNITION} from '../../CONST.js'
 import {Collectable} from "./Collectable.js";
 class Ammunition extends Collectable {
-    constructor(x, y, color, amount) {
+    constructor(x, y, image, amount) {
         super(x, y);
-        this.color = AMMUNITION.color;
+        this.image = new Image();
+        this.image.src = image;
         this.amount = amount;
     }
 
     draw(context) {
-        const ammoX = this.x;
-        const ammoY = this.y;
-        context.fillStyle = this.color;
-        context.fillRect(ammoX, ammoY, AMMUNITION.w, AMMUNITION.h);
+        const ammoX = this.x - AMMUNITION.w / 2;
+        const ammoY = this.y - AMMUNITION.h / 2;
+        context.drawImage(this.image, ammoX, ammoY, AMMUNITION.w, AMMUNITION.h);
     }
 }
 
