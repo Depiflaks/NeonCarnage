@@ -11,11 +11,14 @@ class EntityView {
         this.bodyWithWeaponImage.src = ENTITY.bodyWithWeapon;
     }
 
-    draw({x, y}, weapon, angle) {
+    draw(entity) {
+        if (!entity.isActive()) return;
+        const {x, y} = entity.getPosition();
+        const angle = entity.getAngle();
         this.context.save();
         this.context.translate(x, y);
         this.context.rotate(angle + 90 * RAD);
-        if (weapon != null) {
+        if (entity.getWeapon()) {
             this.context.drawImage(this.bodyWithWeaponImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
             this.context.drawImage(this.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
         } else {

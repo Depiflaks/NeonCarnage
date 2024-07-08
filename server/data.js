@@ -55,17 +55,17 @@ const wallList = [
 const weaponSet = [
     {
         name: "wep1", 
-        x: 10, 
+        x: 3, 
         y: 6, 
         battleType: "close",  //ближний или дальний бой
         rapidity: 10,           //скорострельность (задержка в миллисек)
         grouping: 10,           //кучность
         deviation: 0.5,          //отклонение
-        onGround: "pink",       //текстура на земле
-        inHand: "white", //текстура в руках
+        onGround: "public/assets/Weapon/weapon5.png",       //текстура на земле
+        inHand: "public/assets/Weapon/weaponUp51.png", //текстура в руках
         amount: 0, //количество пуль в магазине(для холодного - 0)
         rechargeTime: 0 //время перезарядки
-    },         
+    },
     {
         name: "wep2",
         x: 10,
@@ -74,14 +74,83 @@ const weaponSet = [
         rapidity: 100,
         grouping: 1,
         deviation: 0.05,
-        onGround: "pink",
-        inHand: "white",
+        onGround: "public/assets/Weapon/weapon1.png",
+        inHand: "public/assets/Weapon/weaponUp1.png",
         amount: 80,
         rechargeTime: 3000
+    },
+    {
+        name: "wep3",
+        x: 6,
+        y: 2,
+        battleType: "distant",
+        rapidity: 100,
+        grouping: 1,
+        deviation: 0.05,
+        onGround: "public/assets/Weapon/weapon2.png",
+        inHand: "public/assets/Weapon/weaponUp2.png",
+        amount: 80,
+        rechargeTime: 3000
+    },
+    {
+        name: "wep4",
+        x: 7,
+        y: 9,
+        battleType: "distant",
+        rapidity: 100,
+        grouping: 1,
+        deviation: 0.05,
+        onGround: "public/assets/Weapon/weapon3.png",
+        inHand: "public/assets/Weapon/weaponUp31.png",
+        amount: 80,
+        rechargeTime: 3000
+    },
+    {
+        name: "wep5",
+        x: 8,
+        y: 7,
+        battleType: "distant",
+        rapidity: 100,
+        grouping: 1,
+        deviation: 0.05,
+        onGround: "public/assets/Weapon/weapon4.png",
+        inHand: "public/assets/Weapon/weaponUp41.png",
+        amount: 80,
+        rechargeTime: 3000
+    }
+];
+
+const ammunitionSet = [
+    {
+        x: 10,
+        y: 7,
+        color: "yellow",
+        amount: 40
+    },
+    {
+        x: 7,
+        y: 7,
+        color: "yellow",
+        amount: 95
+    }
+];
+
+const bonusSet = [
+    {
+        x: 7,
+        y: 4,
+        color: "blue",
+        amount: 1,
+    },
+    {
+        x: 5,
+        y: 5,
+        color: "blue",
+        amount: 2,
     }
 ];
 
 
 const groundList = convertFields(cellsList);
 
-export {wallList, weaponSet, groundList}
+export {wallList, weaponSet, groundList, bonusSet, ammunitionSet}

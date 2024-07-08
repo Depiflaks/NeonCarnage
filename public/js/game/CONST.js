@@ -48,7 +48,7 @@ const ENTITY = {
     speed: 8,
     visualField: {
         range: 600,
-        angleStep: 15 * RAD,
+        angleStep: 5 * RAD,
     },
     pythagoreanFactor: Math.sqrt(2) / 2,
     health: 4,

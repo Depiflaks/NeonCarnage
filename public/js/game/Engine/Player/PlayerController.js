@@ -171,22 +171,6 @@ class PlayerController extends EntityController {
         }
     }
 
-    getPosition() {
-        return { x: this.model.x, y: this.model.y };
-    }
-
-    getHealth() {
-        return this.model.health;
-    }
-
-    getMaxHealth() {
-        return this.model.maxHealth;
-    }
-
-    setHealth(value) {
-        this.model.health = value;
-    }
-
     getBullets() {
         return this.model.bullets;
     }

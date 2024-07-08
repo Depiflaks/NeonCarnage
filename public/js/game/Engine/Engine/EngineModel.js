@@ -3,8 +3,8 @@ import { PlayerController } from "../Player/PlayerController.js";
 
 
 class EngineModel {
-    constructor({cellsList, wallsList, weaponList, ammunitionSet, bonusSet}, player) {
-        this.field = new BattleGround(cellsList, wallsList, weaponList, ammunitionSet, bonusSet);
+    constructor({cells, walls, weapons, ammunitions, bonuses}, player) {
+        this.field = new BattleGround(cells, walls, weapons, ammunitions, bonuses);
         this.player = new PlayerController(player);
         this.enemies = [];
     }

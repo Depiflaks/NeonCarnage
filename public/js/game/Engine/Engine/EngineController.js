@@ -18,7 +18,7 @@ class EngineController {
         this.initEventListeners(canvas);
     }
 
-    moveFrame() {
+    move() {
         const { x, y } = this.player.getPosition();
         const [dx, dy] = [
             Math.round(CAMERA.center.x - x),
@@ -45,16 +45,16 @@ class EngineController {
 
     update() {
         this.field.update();
+        this.tracing.updateViewRange();
         this.checkIntersections([].concat(this.field.verticalWalls, this.field.horizontalWalls));
         this.takeAmmunition();
         this.takeBonus();
         this.player.update();
         Object.values(this.enemies).map(enemy => {
-            //console.log(enemy)
+            enemy.checkActive(this.field);
             enemy.update();
         })
-        this.moveFrame();
-        this.tracing.updateViewRange();
+        this.move();
     }
 
     takeAmmunition() {
@@ -128,18 +128,9 @@ class EngineController {
         }
     }
 
-    loop(timestamp) {
-        const deltaTime = timestamp - this.lastTime;
-
-        if (deltaTime >= DURATION) {
-            this.update();
-            this.view.updateFrame(this.field, this.player, this.enemies);
-            const { x, y } = this.player.getPosition();
-            this.connection.sendPosition({x: x - this.field.x, y: y - this.field.y, angle: this.player.getAngle()}); 
-            this.lastTime = timestamp;
-        }
-
-        requestAnimationFrame((timestamp) => { this.loop(timestamp) });
+    nextFrame() {
+        this.update();
+        this.view.update(this.field, this.player, this.enemies);
     }
 }
 

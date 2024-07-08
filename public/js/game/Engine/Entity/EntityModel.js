@@ -6,6 +6,8 @@ class EntityModel extends Moveable {
         super(x, y, ENTITY.w, ENTITY.h, ENTITY.radius);
         this.weapon = null;
         this.trajectory = null;
+        this.health = ENTITY.health;
+        this.maxHealth = ENTITY.maxHealth;
     }
 }
 

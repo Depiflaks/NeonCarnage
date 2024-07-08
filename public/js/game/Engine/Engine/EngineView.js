@@ -11,23 +11,15 @@ class EngineView {
         this.entityView = new EntityView(this.context);
     }
 
-    drawFrame(field, player, enemies) {
+    draw(field, player, enemies) {
         field.drawGround(this.context);
         this.drawBullets(player.getBullets(), field);
         field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
         field.drawBonuses(this.context);
         field.drawAmmunition(this.context);
-        this.entityView.draw(
-            player.getPosition(),
-            player.getWeapon(),
-            player.getAngle()
-        );
+        this.entityView.draw(player);
         if (player.getTrajectory()) player.getTrajectory().draw(this.context);
-        Object.values(enemies).map(enemy => {this.entityView.draw(
-            enemy.getPosition(),
-            enemy.getWeapon(),
-            enemy.getAngle(),
-        )})
+        Object.values(enemies).map(enemy => {this.entityView.draw(enemy)})
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());
         this.drawBulletAmount(player);
@@ -49,9 +41,9 @@ class EngineView {
         }
     }
 
-    updateFrame(field, player, players) {
+    update(field, player, enemies) {
         field.clearFrame(this.context);
-        this.drawFrame(field, player, players);
+        this.draw(field, player, enemies);
     }
 
     drawLine(x1, y1, x2, y2, color, field) {

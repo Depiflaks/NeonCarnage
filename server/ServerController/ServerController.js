@@ -11,15 +11,13 @@ class ServerController {
         this.port = PORT;
         this.app = express();
         this.server = http.createServer(this.app);
-
-        this.request = new RequestController(this.app);
+        this.generanor = new MapGenerator();
+        this.request = new RequestController(this.app, this.generanor);
 
         this.server.listen(this.port, () => {
             console.log('Listening on port ' + this.port);
         });
         
-        this.generanor = new MapGenerator();
-
         this.webSocket = new WebSocketController(this.server, this.getMap());
     }
 

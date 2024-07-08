@@ -11,6 +11,10 @@ class Drawable {
         this.x += dx;
         this.y += dy;
     }
+
+    isActive() {
+        return this.active ? true : false
+    }
 }
 
 export { Drawable };

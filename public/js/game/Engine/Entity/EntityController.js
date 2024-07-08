@@ -1,7 +1,24 @@
+import { CELL } from "../../CONST.js";
 import { Trajectory } from "../Weapon/Trajectory.js";
 
 class EntityController {
     constructor() {}
+
+    getPosition() {
+        return { x: this.model.x, y: this.model.y };
+    }
+
+    getHealth() {
+        return this.model.health;
+    }
+
+    getMaxHealth() {
+        return this.model.maxHealth;
+    }
+
+    setHealth(value) {
+        this.model.health = value;
+    }
 
     setAngle(angle) {
         this.model.angle = angle;
@@ -29,6 +46,10 @@ class EntityController {
 
     getTrajectory() {
         return this.model.trajectory;
+    }
+
+    isActive() {
+        return this.model.active
     }
 }
 
