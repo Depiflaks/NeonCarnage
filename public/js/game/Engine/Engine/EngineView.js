@@ -31,6 +31,7 @@ class EngineView {
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());
         this.drawBulletAmount(player);
+        this.entityView.drawCursor();
     }
 
     drawBullets(bullets, field) {
