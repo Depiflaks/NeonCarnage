@@ -15,7 +15,7 @@ class EngineView {
         field.drawGround(this.context);
         this.drawBullets(player.getBullets(), field);
         field.drawBonuses(this.context);
-        field.drawWeapons(player.getPosition(), player.getAngle(), player.getTrajectory(), this.context);
+        field.drawWeapons(player, enemies, this.context);
         field.drawAmmunition(this.context);
         this.entityView.draw(player);
         if (player.getTrajectory()) player.getTrajectory().draw(this.context);

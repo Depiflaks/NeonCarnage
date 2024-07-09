@@ -82,15 +82,15 @@ class BattleGround extends Drawable {
         this.verticalWalls.map(wall => wall.draw(context));
     }
 
-    drawWeapons({x, y}, angle, animation, context) {
+    drawWeapons(player, enemies, context) {
         let indexX, indexY;
         this.weapons.map(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) / CELL.w);
             indexY = Math.floor((weapon.model.y - this.y) / CELL.h);
             if (this.cells[indexX][indexY].active) weapon.view.draw(
-                weapon.model, 
-                animation,
-                {x, y}, angle,
+                weapon,
+                player,
+                enemies,
                 context
             );
         })

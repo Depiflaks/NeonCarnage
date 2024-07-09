@@ -107,9 +107,9 @@ const WEAPON_MODELS = {
     machineGun: {
         name: "machineGun",
         battleType: "distant",
-        rapidity: 100,
-        grouping: 1,
-        deviation: 0.05,
+        rapidity: 500,
+        grouping: 10,
+        deviation: 0.2,
         onGround: "public/assets/Weapon/weapon2.png",
         inHand: "public/assets/Weapon/weaponUp2.png",
         amount: 80,
