@@ -1,12 +1,15 @@
 // CONST.js
 const RAD = Math.PI / 180;
 const FPS = 90;
-const DURATION = 1000 / FPS;
+const RPS = 40;
+const FRAME_DURATION = 1000 / FPS;
+const REQUEST_DURATION = 1000 / RPS;
 
 const SERVER = {
     sergey: 'ws://10.250.104.142:8000/',
     sergey_home: 'ws://192.168.1.131:8000/',
     ignat: 'ws://10.250.104.176:8000/',
+    liuba: 'ws://10.250.104.170:8000/',
 }
 
 const WINDOW = {
@@ -25,7 +28,7 @@ const CELL = {
 };
 
 const WALL = {
-    h: 15,
+    h: 25,
     verticalStartImage: "public/assets/BattleGround/verticalWallStart.png",
     verticalEndImage: "public/assets/BattleGround/verticalWallEnd.png",
     verticalBetweenImage: "public/assets/BattleGround/verticalWallBetween.png",
@@ -39,21 +42,31 @@ const WALL = {
 const ENTITY = {
     radius: 30,
     w: 100,
-    h: 60,
-    wWithWeapon: 120,
-    hWithWeapon: 120,
+    h: 40,
+    wWithWeapon: 90,
+    hWithWeapon: 100,
     headColor: "public/assets/Player/Skin3/head.png",
     bodyColor: "public/assets/Player/Skin3/body.png",
     bodyWithWeapon: "public/assets/Player/Skin3/bodyWithWeapon.png",
     speed: 8,
     visualField: {
         range: 600,
-        angleStep: 15 * RAD,
+        angleStep: 5 * RAD,
     },
     pythagoreanFactor: Math.sqrt(2) / 2,
     health: 4,
     maxHealth: 5,
 };
+
+const INTERFACE = {
+    cursor: "public/assets/Interface/cursor.png",
+}
+
+const SHAKE = {
+    duration: 2,
+    scale: 10,
+    relocateRange: 5, // scale / 2
+}
 
 const CAMERA = {
     center: {
@@ -71,16 +84,16 @@ const WEAPON = {
 };
 
 const AMMUNITION = {
-    w: 20,
-    h: 30,
-    color: "yellow",
+    w: 50,
+    h: 50,
+    image: "public/assets/Bonuses/cartridges.png",
     minDistance: 40,
 }
 
 const BONUS = {
-    w: 20,
-    h: 30,
-    color: "blue",
+    w: 50,
+    h: 50,
+    image: "public/assets/Bonuses/aidKit.png",
     minDistance: 40,
 }
 
@@ -88,9 +101,9 @@ const BULLET = {
     w: 5,
     h: 70,
     radius: 70,
-    speed: 20,
+    speed: 25,
     pythagoreanFactor: Math.sqrt(2) / 2,
-    color: "yellow",
+    image: "public/assets/Bonuses/cartridges.png",
 };
 
 const ENEMY = {
@@ -105,11 +118,13 @@ const WEAPON_STATE = {
 };
 
 const TRAJECTORY = {
-    width: 150,
+    handPoint: 40,
+    width: 175,
     height: 10,
     deltaAngle: Math.PI / 3,
-    animationSpeed: 0.05,
-    strokeStyle: "red"
+    animationSpeed: 0.07,
+    knifeLeftImage: "public/assets/Weapon/knifeLeft1.png",
+    knifeRightImage: "public/assets/Weapon/knifeRight1.png",
 };
 
-export {WINDOW, AMMUNITION, CELL, WALL, ENTITY, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, DURATION, TRAJECTORY, SERVER, ENEMY};
+export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};

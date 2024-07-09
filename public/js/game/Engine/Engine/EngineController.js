@@ -1,11 +1,11 @@
-import { CAMERA, DURATION, KEYBOARD_E, WEAPON, WEAPON_STATE } from "../../CONST.js";
+import { CAMERA, KEYBOARD_E, WEAPON, WEAPON_STATE } from "../../CONST.js";
 import { EngineModel } from "./EngineModel.js";
 import { EngineView } from "./EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
 
 class EngineController {
-    constructor(objects, player, canvas) {
-        this.model = new EngineModel(objects, player);
+    constructor(objects, connection, canvas) {
+        this.model = new EngineModel(objects);
         this.view = new EngineView(canvas);
         
         this.enemies = this.model.getEnemies();
@@ -13,12 +13,12 @@ class EngineController {
         this.player = this.model.getPlayer();
         this.tracing = new Tracing(this.player, this.field);
 
-        this.lastTime = 0;
+        this.connection = connection;
 
         this.initEventListeners(canvas);
     }
 
-    moveFrame() {
+    move() {
         const { x, y } = this.player.getPosition();
         const [dx, dy] = [
             Math.round(CAMERA.center.x - x),
@@ -45,16 +45,17 @@ class EngineController {
 
     update() {
         this.field.update();
-        this.checkIntersections([].concat(this.field.verticalWalls, this.field.horizontalWalls), this.enemies);
+        this.tracing.updateViewRange();
+        this.checkIntersections([].concat(this.field.verticalWalls, this.field.horizontalWalls));
         this.takeAmmunition();
         this.takeBonus();
         this.player.update();
         Object.values(this.enemies).map(enemy => {
-            //console.log(enemy)
+            enemy.checkActive(this.field);
             enemy.update();
         })
-        this.moveFrame();
-        this.tracing.updateViewRange();
+        this.move();
+        this.model.updateShake();
     }
 
     takeAmmunition() {
@@ -86,7 +87,7 @@ class EngineController {
         ));
     }
 
-    bulletsIntersectionEnemy(enemies) {
+    bulletsIntersectionEnemy() {
         this.player.setBullets(this.player.getBullets().filter(
             bullet => {
                 let hit = false;
@@ -149,18 +150,10 @@ class EngineController {
         }
     }
 
-    loop(timestamp) {
-        const deltaTime = timestamp - this.lastTime;
-
-        if (deltaTime >= DURATION) {
-            this.update();
-            this.view.updateFrame(this.field, this.player, this.enemies);
-            const { x, y } = this.player.getPosition();
-            this.connection.sendPosition({x: x - this.field.x, y: y - this.field.y, angle: this.player.getAngle()}); 
-            this.lastTime = timestamp;
-        }
-
-        requestAnimationFrame((timestamp) => { this.loop(timestamp) });
+    nextFrame() {
+        //console.log(this.enemies);
+        this.update();
+        this.view.update(this.field, this.player, this.enemies, this.model.isShaking());
     }
 }
 

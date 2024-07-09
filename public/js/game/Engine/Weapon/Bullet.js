@@ -2,15 +2,11 @@ import { BULLET } from "../../CONST.js";
 import { Moveable } from "../Interface/Moveable.js";
 
 class Bullet extends Moveable {
-    constructor({x, y, angle, deviation}) {
+    constructor({x, y, angle}) {
         super(x, y, BULLET.w, BULLET.h, BULLET.radius);
-
-        const angleDeviation = (Math.random() * 2 - 1) * deviation;
-        const adjustedAngle = angle + angleDeviation;
-
-        this.speedX = BULLET.speed * Math.cos(adjustedAngle);
-        this.speedY = BULLET.speed * Math.sin(adjustedAngle);
-        this.angle = adjustedAngle;
+        this.speedX = BULLET.speed * Math.cos(angle);
+        this.speedY = BULLET.speed * Math.sin(angle);
+        this.angle = angle;
         this.color = BULLET.color;
     }
 
@@ -22,14 +18,6 @@ class Bullet extends Moveable {
         context.moveTo(this.x, this.y);
         context.lineTo(this.x + this.h * Math.cos(this.angle), this.y + this.h * Math.sin(this.angle));
         context.stroke();
-    }
-
-    setSpeed(direction, value) {
-        if (direction === 'x') {
-            this.speedX = value;
-        } else if (direction === 'y') {
-            this.speedY = value;
-        }
     }
 
     setAngle(value) {

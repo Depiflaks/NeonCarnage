@@ -1,4 +1,4 @@
-import { ENTITY, RAD } from "../../CONST.js";
+import {ENTITY, RAD, INTERFACE, WINDOW} from "../../CONST.js";
 
 class EntityView {
     constructor(context) {
@@ -9,20 +9,31 @@ class EntityView {
         this.bodyImage.src = ENTITY.bodyColor;
         this.bodyWithWeaponImage = new Image();
         this.bodyWithWeaponImage.src = ENTITY.bodyWithWeapon;
+        this.cursor = new Image();
+        this.cursor.src = INTERFACE.cursor;
     }
 
-    draw({x, y}, weapon, angle) {
+    draw(entity) {
+        if (!entity.isActive()) return;
+        const {x, y} = entity.getPosition();
+        const angle = entity.getAngle();
+        const weapon = entity.getWeapon();
+        const animation = entity.getTrajectory();
         this.context.save();
         this.context.translate(x, y);
         this.context.rotate(angle + 90 * RAD);
-        if (weapon != null) {
-            this.context.drawImage(this.bodyWithWeaponImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
+        if (((animation === null) && (weapon === null)) || (((animation != null) && (animation.isAnimating)) && (weapon != null))) {
+            this.context.drawImage(this.bodyImage, -ENTITY.w/2, -ENTITY.h/2, ENTITY.w, ENTITY.h);
             this.context.drawImage(this.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
         } else {
-            this.context.drawImage(this.bodyImage, -ENTITY.w/2, -ENTITY.h/2, ENTITY.w, ENTITY.h);
+            this.context.drawImage(this.bodyWithWeaponImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
             this.context.drawImage(this.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
         }
         this.context.restore();
+    }
+
+    drawCursor(cursor) {
+        this.context.drawImage(this.cursor, cursor.x - this.cursor.width / 2, cursor.y - this.cursor.height / 2);
     }
 
     drawEnemyHealthBar(x, y, health) {

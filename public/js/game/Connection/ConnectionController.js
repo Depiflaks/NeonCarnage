@@ -1,15 +1,19 @@
 import { SERVER, ENTITY } from "../CONST.js";
 import { EnemyController } from "../Engine/Enemy/EnemyController.js";
+import { Bullet } from "../Engine/Weapon/Bullet.js";
 
 class ConnectionController {
-    constructor(player, enemies, field) {
+    constructor() {
         // вебсокет у каждого свой... типа
         this.socket = new WebSocket(SERVER.ignat);
         this.enemies = {};
         this.initEventListeners();
+    }
+
+    setObj(player, field, enemies) {
         this.player = player;
-        this.enemies = enemies;
         this.field = field;
+        this.enemies = enemies;
     }
 
     sendData() {
@@ -32,6 +36,13 @@ class ConnectionController {
             bullets: [],
             damage: damage,
         }
+        body.bullets = this.player.getBullets().map(bullet => {
+            const {x, y} = bullet.getPosition();
+            return {
+                x: x - this.field.x, 
+                y: y - this.field.y, 
+                angle: bullet.getAngle()};
+        })
         this.send("update", body);
     }
 
@@ -90,26 +101,21 @@ class ConnectionController {
         const currentHealth = this.player.getHealth();
         this.player.model.health -= body.damage.damage;
 
-        if (this.enemies[id]) {
-            // Если игрок существует, обновляем его координаты
-            this.enemies[id].setPosition({
-                x: x,
-                y: y,
-            });
-            this.enemies[id].setAngle(enemyAngle);
-            //console.log(enemyX, enemyY, enemyAngle);
-        } else {
-            // Если игрока нет, создаем нового и добавляем его в массив
-            const enemy = new EnemyController({
-                x: x,
-                y: y,
-                angle: angle,
-                weaponId: weapon,
-                health: health,
-                maxHealth: maxHealth
-            });
-            this.enemies[id] = enemy;
+        if (!this.enemies[id]) {
+            this.enemies[id] = new EnemyController({x: 0, y: 0, angle: 0, weaponId: null});
         }
+        this.enemies[id].setPosition({
+            x: x,
+            y: y,
+        });
+        this.enemies[id].setAngle(angle);
+        this.enemies[id].setWeaponId(weapon);
+        this.enemies[id].setBullets(body.bullets.map(bullet => {
+            return new Bullet({
+                x: bullet.x + this.field.x, 
+                y: bullet.y + this.field.y, 
+                angle: bullet.angle})
+        }))
     }
 
     onClose(data) {

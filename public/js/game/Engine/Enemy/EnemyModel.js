@@ -2,7 +2,7 @@ import { ENTITY } from "../../CONST.js";
 import { EntityModel } from "../Entity/EntityModel.js";
 
 class EnemyModel extends EntityModel {
-    constructor({ x, y, angle, health, maxHealth }) {
+    constructor({ x, y, angle, health, maxHealth, weaponId }) {
         super({x, y});
         this.factX = 0;
         this.factY = 0;

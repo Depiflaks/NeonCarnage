@@ -1,27 +1,30 @@
 import {ConnectionController} from "../Connection/ConnectionController.js";
+import { FRAME_DURATION, REQUEST_DURATION } from "../CONST.js";
 import { EngineController } from "../Engine/Engine/EngineController.js";
 
 class GameController {
-    constructor(objects, player, document) {
+    constructor(objects, document) {
         this.document = document;
         this.canvas = this.document.getElementById("canvas");
-        this.engine = new EngineController(objects, player, this.canvas);
+        this.canvas.style.cursor = 'none';
+        this.connection = new ConnectionController();
+        this.engine = new EngineController(objects, this.connection, this.canvas);
 
-        this.connection = new ConnectionController(
-            this.engine.player, 
-            this.engine.enemies, 
-            this.engine.field
-        );
+        this.connection.setObj(this.engine.player, this.engine.field, this.engine.enemies);
 
-        this.engine.connection = this.connection;
+        this.lastFrame = 0;
+        this.lastRequest = 0;
     }
 
     loop(timestamp) {
-        const deltaTime = timestamp - this.lastTime;
-        if (deltaTime >= DURATION) {
+        if (timestamp - this.lastFrame >= FRAME_DURATION) {
             this.engine.nextFrame();
+            this.lastFrame = timestamp;
+        }
+
+        if (timestamp - this.lastRequest >= REQUEST_DURATION) {
             this.connection.sendData(); 
-            this.lastTime = timestamp;
+            this.lastRequest = timestamp;
         }
 
         requestAnimationFrame((timestamp) => { this.loop(timestamp) });

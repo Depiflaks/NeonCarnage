@@ -1,4 +1,5 @@
 import WebSocket, { WebSocketServer } from 'ws';
+import crypto from 'crypto';
 
 class WebSocketController {
     constructor(server, map) {
@@ -8,26 +9,24 @@ class WebSocketController {
     }
 
     onConnection(connection, req) {
-        const ip = this.init(connection, req);
+        this.init(connection, req);
 
         connection.on('message', (message) => {this.onMessage(message, connection)});
 
-        connection.on('close', () => {this.onClose(ip)});
+        connection.on('close', () => {this.onClose(req)});
     }
 
     init(connection, req) {
         const ip = req.socket.remoteAddress;
-        connection.id = this.getUniqueID();
+        connection.id = this.getUniqueID(ip);
         console.log(`Connected ${ip}`);
         //this.sendInit(connection, this.map);
-
-        return ip;
     }
 
     onMessage(message, connection) {
         const data = JSON.parse(message);
         if (data.type === 'map') {
-            this.sendInit(connection, this.map);
+            this.doMap(connection);
         } else if (data.type === "update") {
             this.doUpdate(connection, data.body);
         }
@@ -59,13 +58,16 @@ class WebSocketController {
                     health: player.health,
                     maxHealth: player.maxHealth
                 },
+                bullets: body.bullets,
                 damage: {damage}
             }
+            this.sendResponse(client, data)
         }
         
     }
 
-    onClose(ip) {
+    onClose(req) {
+        const ip = req.socket.remoteAddress;
         console.log(`Disconnected ${ip}`);
     }
 
@@ -85,11 +87,8 @@ class WebSocketController {
         connection.send(JSON.stringify(responseData), { binary: false });
     }
 
-    getUniqueID() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-        }
-        return s4() + s4() + '-' + s4();
+    getUniqueID(ipAddress) {
+        return crypto.createHash('sha256').update(ipAddress).digest('hex');
     }
 }
 

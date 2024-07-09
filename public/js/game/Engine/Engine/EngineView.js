@@ -1,5 +1,5 @@
 import { EntityView } from "../Entity/EntityView.js";
-import { WINDOW, RAD, ENTITY, CELL } from "../../CONST.js";
+import {WINDOW, RAD, ENTITY, CELL, SHAKE} from "../../CONST.js";
 
 
 class EngineView {
@@ -9,29 +9,27 @@ class EngineView {
         canvas.height = WINDOW.h;
         this.context = canvas.getContext("2d");
         this.entityView = new EntityView(this.context);
+        this.shakeOffsetX = 0;
+        this.shakeOffsetY = 0;
     }
 
-    drawFrame(field, player, enemies) {
+    draw(field, player, enemies) {
         field.drawGround(this.context);
-        field.drawWeapons(player.getPosition(), player.getAngle(), this.context);
-        field.drawBonuses(this.context);
-        field.drawAmmunition(this.context);
-        this.entityView.draw(
-            player.getPosition(),
-            player.getWeapon(),
-            player.getAngle()
-        );
-        if (player.getTrajectory()) player.getTrajectory().draw(this.context);
-        Object.values(enemies).map(enemy => {this.entityView.draw(
-            enemy.getPosition(),
-            enemy.getWeapon(),
-            enemy.getAngle(),
-        )})
         this.drawBullets(player.getBullets(), field);
+        field.drawBonuses(this.context);
+        field.drawWeapons(player.getPosition(), player.getAngle(), player.getTrajectory(), this.context);
+        field.drawAmmunition(this.context);
+        this.entityView.draw(player);
+        if (player.getTrajectory()) player.getTrajectory().draw(this.context);
+        Object.values(enemies).map(enemy => {
+            this.entityView.draw(enemy);
+            this.drawBullets(enemy.getBullets(), field);
+        })
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());
         Object.values(enemies).map(enemy => {this.entityView.drawEnemyHealthBar(enemy.x, enemy.y, enemy.health)});
         this.drawBulletAmount(player);
+        this.entityView.drawCursor(player.getCursorPosition());
     }
 
     drawBullets(bullets, field) {
@@ -44,15 +42,34 @@ class EngineView {
     }
 
     drawBulletAmount(player) {
-        if((player.getWeapon() != null) && (player.getWeapon().getBattleType() == "distant")) {
+        if((player.getWeapon() != null) && (player.getWeapon().getBattleType() === "distant")) {
             this.context.font = "48px roboto";
             this.context.fillText(player.getWeapon().getAmount(), 10, 50);
         }
     }
 
-    updateFrame(field, player, players) {
+    update(field, player, enemies, isShaking) {
         field.clearFrame(this.context);
-        this.drawFrame(field, player, players);
+
+        if (isShaking) {
+            this.applyShake();
+        } else {
+            this.resetShake();
+        }
+        this.draw(field, player, enemies);
+    }
+
+    applyShake() {
+        this.shakeOffsetX = Math.random() * SHAKE.scale - SHAKE.relocateRange;
+        this.shakeOffsetY = Math.random() * SHAKE.scale - SHAKE.relocateRange;
+        this.context.save();
+        this.context.translate(this.shakeOffsetX, this.shakeOffsetY);
+    }
+
+    resetShake() {
+        this.context.restore();
+        this.shakeOffsetX = 0;
+        this.shakeOffsetY = 0;
     }
 
     drawLine(x1, y1, x2, y2, color, field) {

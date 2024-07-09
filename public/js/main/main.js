@@ -1,4 +1,7 @@
+
+
 document.getElementById('start').addEventListener('click', () => {
+    localStorage.setItem('responseData', {});
     fetch('/create', {
         method: 'POST',
         headers: {

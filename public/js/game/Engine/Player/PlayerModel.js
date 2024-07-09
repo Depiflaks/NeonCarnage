@@ -5,6 +5,7 @@ import { Trajectory } from "../Weapon/Trajectory.js";
 class PlayerModel extends EntityModel {
     constructor({ x, y }) {
         super({x, y});
+        this.active = true;
         this.speedX = 0;
         this.speedY = 0;
         this.isStriking = false;
@@ -16,11 +17,7 @@ class PlayerModel extends EntityModel {
             d: 0,
             e: 0,
         };
-        this.bullets = [];
-        this.health = ENTITY.health;
-        this.maxHealth = ENTITY.maxHealth;
         this.damage = {};
-        
     }
 
     updatePosition() {
@@ -71,6 +68,8 @@ class PlayerModel extends EntityModel {
     getKeyPressed() {
         return this.keyPressed;
     }
+
+
 
     move(dx, dy) {
         super.move(dx, dy);

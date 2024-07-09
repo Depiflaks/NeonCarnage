@@ -1,4 +1,4 @@
-import { ENEMY } from "../../CONST.js";
+import { CELL, ENEMY } from "../../CONST.js";
 import { EntityController } from "../Entity/EntityController.js";
 import { EnemyModel } from "./EnemyModel.js"
 
@@ -6,6 +6,13 @@ class EnemyController extends EntityController{
     constructor(player) {
         super();
         this.model = new EnemyModel(player);
+    }
+
+    checkActive(field) {
+        const {x, y} = this.getPosition();
+        const indexX = Math.floor((x - field.x) / CELL.w);
+        const indexY = Math.floor((y - field.y) / CELL.h);
+        this.model.active = field.cells[indexX][indexY].active;
     }
 
     setPosition({x, y}) {
