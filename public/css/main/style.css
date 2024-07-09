@@ -34,6 +34,28 @@ input {
     box-shadow: 0 0 10px #00ffcc;
 }
 
+select {
+    display: block;
+    margin: 0 auto 20px;
+    padding: 10px;
+    font-size: 1.2em;
+    border: 2px solid #00ffcc;
+    border-radius: 5px;
+    background-color: #1a1a1a;
+    color: #00ffcc;
+    text-align: center;
+    outline: none;
+    box-shadow: 0 0 10px #00ffcc;
+    appearance: none; /* Убираем стандартные стили браузера */
+}
+
+/* Убираем стрелку в select для WebKit браузеров (Chrome, Safari) */
+select::-webkit-inner-spin-button, 
+select::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+
 /* Стили для кнопки */
 button {
     display: block;
