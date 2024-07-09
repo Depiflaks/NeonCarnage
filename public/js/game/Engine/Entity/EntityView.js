@@ -39,6 +39,17 @@ class EntityView {
         this.context.restore();
     }
 
+    drawDead(entity) {
+        if (entity.isAlive()) return;
+        const {x, y} = entity.getPosition();
+        const angle = entity.getAngle();
+        const animation = entity.getTrajectory();
+        this.context.save();
+        this.context.translate(x, y);
+        this.context.rotate(angle + 90 * RAD);
+        this.context.restore();
+    }
+
     drawCursor(cursor) {
         this.context.drawImage(this.cursor, cursor.x - this.cursor.width / 2, cursor.y - this.cursor.height / 2);
     }

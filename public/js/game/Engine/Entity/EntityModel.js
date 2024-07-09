@@ -10,6 +10,7 @@ class EntityModel extends Moveable {
         this.health = ENTITY.health;
         this.maxHealth = ENTITY.maxHealth;
         this.bullets = [];
+        this.isAlive = true;
     }
 }
 

@@ -107,13 +107,7 @@ class PlayerController extends EntityController {
         this.getTrajectory().toLeft();
     }
 
-    dropWeapon() {
-        this.getWeapon().unsetPlayer(this.model);
-        this.getWeapon().setStatus(WEAPON_STATE.onTheGround);
-        clearInterval(this.getWeapon().getShootingInterval());
-        this.getWeapon().setShootingInterval(null);
-        this.setWeapon(null);
-    }
+    
 
     keyDown(event) {
         this.updateKey(event.code, 1);
@@ -172,7 +166,8 @@ class PlayerController extends EntityController {
     }
 
     update() {
-        if (this.getStacked()) return
+        if (!this.isAlive()) return;
+        if (this.getStacked()) return;
         this.model.updatePosition();
 
         if (this.getTrajectory()) {
@@ -181,6 +176,10 @@ class PlayerController extends EntityController {
             } else {
                 this.removeTrajectory();
             }
+        }
+
+        if (this.getHealth() == 0) {
+            this.die();
         }
     }
 
