@@ -43,20 +43,19 @@ class EntityView {
         this.context.drawImage(this.cursor, cursor.x - this.cursor.width / 2, cursor.y - this.cursor.height / 2);
     }
 
-    drawEnemyHealthBar(x, y, health) {
+    drawEnemyHealthBar(x, y, health, maxHealth) {
         const barWidth = ENTITY.w;
-        const barHeight = 20;
-        const offset = 15;
-        const maxHealth = 5;
+        const barHeight = 10;  // Более тонкий бар
+        const offset = 20;    // Отступ от врага
 
         // Background
         this.context.fillStyle = "gray";
-        this.context.fillRect(x - barWidth / 2, y - ENTITY.radius - offset - barHeight, barWidth, barHeight);
+        this.context.fillRect(x - barWidth / 2, y - ENTITY.radius - offset, barWidth, barHeight);
 
         // Health
         const healthWidth = (barWidth * health) / maxHealth;
         this.context.fillStyle = "red";
-        this.context.fillRect(x - barWidth / 2, y - ENTITY.radius - offset - barHeight, healthWidth, barHeight);
+        this.context.fillRect(x - barWidth / 2, y - ENTITY.radius - offset, healthWidth, barHeight);
     }
 
     drawHealthBar(health) {

@@ -5,7 +5,7 @@ import { Bullet } from "../Engine/Weapon/Bullet.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.sergey);
+        this.socket = new WebSocket(SERVER.denis);
         this.enemies = {};
         this.initEventListeners();
     }
@@ -20,7 +20,7 @@ class ConnectionController {
         const {x, y} = this.player.getPosition();
         const angle = this.player.getAngle();
         const weapon = this.player.getWeaponId();
-        const health = ENTITY.health;
+        const health = this.player.getHealth();
         const maxHealth = ENTITY.maxHealth;
         const damage = this.player.model.damage;
         this.player.model.damage = {};
@@ -100,16 +100,19 @@ class ConnectionController {
         const maxHealth = player.maxHealth;
         const currentHealth = this.player.getHealth();
         this.player.model.health -= body.damage.damage;
+        this.player.model.health = Math.max(this.player.model.health, 0);
 
         if (!this.enemies[id]) {
-            this.enemies[id] = new EnemyController({x: 0, y: 0, angle: 0, weaponId: null});
+            this.enemies[id] = new EnemyController({x: 0, y: 0, angle: 0, weaponId: null, health, maxHealth});
         }
+
         this.enemies[id].setPosition({
             x: x,
             y: y,
         });
         this.enemies[id].setAngle(angle);
         this.enemies[id].setWeaponId(weapon);
+        this.enemies[id].setHealth(health);
         this.enemies[id].setBullets(body.bullets.map(bullet => {
             return new Bullet({
                 x: bullet.x + this.field.x, 

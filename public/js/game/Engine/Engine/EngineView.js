@@ -25,10 +25,11 @@ class EngineView {
         Object.values(enemies).map(enemy => {
             this.entityView.draw(enemy);
             this.drawBullets(enemy.getBullets(), field);
-        })
+            //console.log(enemy.getPosition().x, enemy.getPosition().y, enemy.model.health, enemy.model.maxHealth)
+            this.entityView.drawEnemyHealthBar(enemy.getPosition().x, enemy.getPosition().y, enemy.model.health, enemy.model.maxHealth);
+        });
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());
-        Object.values(enemies).map(enemy => {this.entityView.drawEnemyHealthBar(enemy.x, enemy.y, enemy.health)});
         this.drawBulletAmount(player);
         this.entityView.drawCursor(player.getCursorPosition());
         this.drawGradientOverlay();

@@ -191,7 +191,7 @@ const WEAPON_STATE = {
 
 const TRAJECTORY = {
     handPoint: 40,
-    width: 175,
+    width: 115,
     height: 10,
     deltaAngle: Math.PI / 3,
     animationSpeed: 0.07,
