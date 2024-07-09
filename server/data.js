@@ -1,3 +1,4 @@
+import { WEAPON_MODELS } from "../public/js/game/CONST.js";
 function convertFields(cellsList) {
     const result = [];
     for (let i = 0; i < cellsList.length; i++) {
@@ -54,69 +55,34 @@ const wallList = [
 
 const weaponSet = [
     {
-        name: "wep1", 
+        id: 0,
+        type: WEAPON_MODELS.knife, 
         x: 3, 
         y: 6, 
-        battleType: "close",  //ближний или дальний бой
-        rapidity: 10,           //скорострельность (задержка в миллисек)
-        grouping: 10,           //кучность
-        deviation: 0.5,          //отклонение
-        onGround: "public/assets/Weapon/weapon5.png",       //текстура на земле
-        inHand: "public/assets/Weapon/weaponUp51.png", //текстура в руках
-        amount: 0, //количество пуль в магазине(для холодного - 0)
-        rechargeTime: 0 //время перезарядки
     },
     {
-        name: "wep2",
+        id: 1,
+        type: WEAPON_MODELS.rifle, 
         x: 10,
         y: 5,
-        battleType: "distant",
-        rapidity: 100,
-        grouping: 1,
-        deviation: 0.05,
-        onGround: "public/assets/Weapon/weapon1.png",
-        inHand: "public/assets/Weapon/weaponUp1.png",
-        amount: 80,
-        rechargeTime: 3000
     },
     {
-        name: "wep3",
+        id: 2,
+        type: WEAPON_MODELS.machineGun,
         x: 6,
         y: 2,
-        battleType: "distant",
-        rapidity: 100,
-        grouping: 1,
-        deviation: 0.05,
-        onGround: "public/assets/Weapon/weapon2.png",
-        inHand: "public/assets/Weapon/weaponUp2.png",
-        amount: 80,
-        rechargeTime: 3000
     },
     {
-        name: "wep4",
+        id: 3,
+        type: WEAPON_MODELS.pistol,
         x: 7,
         y: 9,
-        battleType: "distant",
-        rapidity: 100,
-        grouping: 1,
-        deviation: 0.05,
-        onGround: "public/assets/Weapon/weapon3.png",
-        inHand: "public/assets/Weapon/weaponUp31.png",
-        amount: 80,
-        rechargeTime: 3000
     },
     {
-        name: "wep5",
+        id: 4,
+        type: WEAPON_MODELS.glock,
         x: 8,
         y: 7,
-        battleType: "distant",
-        rapidity: 100,
-        grouping: 1,
-        deviation: 0.05,
-        onGround: "public/assets/Weapon/weapon4.png",
-        inHand: "public/assets/Weapon/weaponUp41.png",
-        amount: 80,
-        rechargeTime: 3000
     }
 ];
 

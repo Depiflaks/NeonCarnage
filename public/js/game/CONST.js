@@ -47,9 +47,10 @@ const ENTITY = {
     h: 40,
     wWithWeapon: 90,
     hWithWeapon: 100,
-    headColor: "public/assets/Player/Skin3/head.png",
-    bodyColor: "public/assets/Player/Skin3/body.png",
-    bodyWithWeapon: "public/assets/Player/Skin3/bodyWithWeapon.png",
+    headColor: "public/assets/Player/Skin6/head.png",
+    bodyColor: "public/assets/Player/Skin6/body.png",
+    bodyWithWeapon: "public/assets/Player/Skin6/bodyWithWeapon.png",
+    bodyWithPistols: "public/assets/Player/Skin6/bodyWithPistols.png",
     speed: 8,
     visualField: {
         range: 600,
@@ -84,6 +85,74 @@ const WEAPON = {
     minDistance: 40
 
 };
+
+const WEAPON_MODELS = {
+    knife: {
+        name: "knife",
+        battleType: "close",  //ближний или дальний бой
+        rapidity: 10,           //скорострельность (задержка в миллисек)
+        grouping: 10,           //кучность
+        deviation: 0.5,          //отклонение
+        onGround: "public/assets/Weapon/weapon5.png",       //текстура на земле
+        inHand: "public/assets/Weapon/weaponUp5.png", //текстура в руках
+        amount: 0, //количество пуль в магазине(для холодного - 0)
+        rechargeTime: 0, //время перезарядки
+        w: 20,
+        h: 50,
+    },
+    rifle: {
+        name: "rifle",
+        battleType: "distant",
+        rapidity: 100,
+        grouping: 1,
+        deviation: 0.05,
+        onGround: "public/assets/Weapon/weapon1.png",
+        inHand: "public/assets/Weapon/weaponUp1.png",
+        amount: 80,
+        rechargeTime: 3000,
+        w: 40,
+        h: 120,
+    },
+    machineGun: {
+        name: "machineGun",
+        battleType: "distant",
+        rapidity: 100,
+        grouping: 1,
+        deviation: 0.05,
+        onGround: "public/assets/Weapon/weapon2.png",
+        inHand: "public/assets/Weapon/weaponUp2.png",
+        amount: 80,
+        rechargeTime: 3000,
+        w: 40,
+        h: 130,
+    },
+    pistol: {
+        name: "pistol",
+        battleType: "distant",
+        rapidity: 100,
+        grouping: 1,
+        deviation: 0.05,
+        onGround: "public/assets/Weapon/weapon3.png",
+        inHand: "public/assets/Weapon/weaponUp3.png",
+        amount: 80,
+        rechargeTime: 3000,
+        w: 20,
+        h: 70,
+    },
+    glock: {
+        name: "glock",
+        battleType: "distant",
+        rapidity: 100,
+        grouping: 1,
+        deviation: 0.05,
+        onGround: "public/assets/Weapon/weapon4.png",
+        inHand: "public/assets/Weapon/weaponUp4.png",
+        amount: 80,
+        rechargeTime: 3000,
+        w: 20,
+        h: 70,
+    }
+}
 
 const AMMUNITION = {
     w: 50,
@@ -125,8 +194,8 @@ const TRAJECTORY = {
     height: 10,
     deltaAngle: Math.PI / 3,
     animationSpeed: 0.07,
-    knifeLeftImage: "public/assets/Weapon/knifeLeft1.png",
-    knifeRightImage: "public/assets/Weapon/knifeRight1.png",
+    knifeLeftImage: "public/assets/Weapon/knifeLeft.png",
+    knifeRightImage: "public/assets/Weapon/knifeRight.png",
 };
 
-export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};
+export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};
