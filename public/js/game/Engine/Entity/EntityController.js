@@ -37,6 +37,10 @@ class EntityController {
         return this.model.angle;
     }
 
+    getSkinId() {
+        return this.model.skinId;
+    }
+
     getWeapon() {
         return this.model.weapon;
     }
