@@ -174,6 +174,7 @@ const BULLET = {
     radius: 70,
     speed: 25,
     pythagoreanFactor: Math.sqrt(2) / 2,
+    color: "yellow",
     image: "public/assets/Bonuses/cartridges.png",
 };
 
