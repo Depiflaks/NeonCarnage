@@ -3,8 +3,8 @@ import { ENTITY } from "../../CONST.js";
 import { Trajectory } from "../Weapon/Trajectory.js";
 
 class PlayerModel extends EntityModel {
-    constructor({ x, y }) {
-        super({x, y});
+    constructor({ x, y, skinId }) {
+        super({x, y, skinId});
         this.active = true;
         this.speedX = 0;
         this.speedY = 0;

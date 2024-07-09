@@ -20,15 +20,27 @@ class EngineView {
         field.drawBonuses(this.context);
         field.drawWeapons(player.getPosition(), player.getAngle(), player.getTrajectory(), this.context);
         field.drawAmmunition(this.context);
-        this.entityView.draw(player);
-        if (player.getTrajectory()) player.getTrajectory().draw(this.context);
+        if (player.isAlive()) {
+            this.entityView.draw(player);
+        } else {
+            this.entityView.drawDead(player);
+        }
+
+        if (player.getTrajectory()) {
+                player.getTrajectory().draw(this.context);
+        }
         Object.values(enemies).map(enemy => {
-            this.entityView.draw(enemy);
+            if (enemy.isAlive()) {
+                this.entityView.draw(enemy);
+            } else {
+                this.entityView.drawDead(enemy);
+            }
             this.drawBullets(enemy.getBullets(), field);
-        })
+            //console.log(enemy.getPosition().x, enemy.getPosition().y, enemy.model.health, enemy.model.maxHealth)
+            this.entityView.drawEnemyHealthBar(enemy.getPosition().x, enemy.getPosition().y, enemy.model.health, enemy.model.maxHealth);
+        });
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());
-        Object.values(enemies).map(enemy => {this.entityView.drawEnemyHealthBar(enemy.x, enemy.y, enemy.health)});
         this.drawBulletAmount(player);
         this.entityView.drawCursor(player.getCursorPosition());
         this.drawGradientOverlay();

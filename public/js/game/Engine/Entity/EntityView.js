@@ -1,22 +1,22 @@
-import {ENTITY, RAD, INTERFACE, WINDOW} from "../../CONST.js";
+import {ENTITY, RAD, INTERFACE, SKINS} from "../../CONST.js";
 
 class EntityView {
     constructor(context) {
         this.context = context;
-        this.headImage = new Image();
-        this.headImage.src = ENTITY.headColor;
-        this.bodyImage = new Image();
-        this.bodyImage.src = ENTITY.bodyColor;
-        this.bodyWithWeaponImage = new Image();
-        this.bodyWithWeaponImage.src = ENTITY.bodyWithWeapon;
-        this.bodyWithPistolsImage = new Image();
-        this.bodyWithPistolsImage.src = ENTITY.bodyWithPistols;
         this.cursor = new Image();
         this.cursor.src = INTERFACE.cursor;
+        this.headImage = new Image();
+        this.bodyImage = new Image();
+        this.bodyWithWeaponImage = new Image();
+        this.bodyWithPistolsImage = new Image();
     }
 
     draw(entity) {
         if (!entity.isActive()) return;
+        this.headImage.src = SKINS[entity.getSkinId()].head;
+        this.bodyImage.src = SKINS[entity.getSkinId()].body;
+        this.bodyWithWeaponImage.src = SKINS[entity.getSkinId()].bodyWithWeapon;
+        this.bodyWithPistolsImage.src = SKINS[entity.getSkinId()].bodyWithPistols;
         const {x, y} = entity.getPosition();
         const angle = entity.getAngle();
         const weapon = entity.getWeapon();
@@ -39,24 +39,34 @@ class EntityView {
         this.context.restore();
     }
 
+    drawDead(entity) {
+        if (entity.isAlive()) return;
+        const {x, y} = entity.getPosition();
+        const angle = entity.getAngle();
+        const animation = entity.getTrajectory();
+        this.context.save();
+        this.context.translate(x, y);
+        this.context.rotate(angle + 90 * RAD);
+        this.context.restore();
+    }
+
     drawCursor(cursor) {
         this.context.drawImage(this.cursor, cursor.x - this.cursor.width / 2, cursor.y - this.cursor.height / 2);
     }
 
-    drawEnemyHealthBar(x, y, health) {
+    drawEnemyHealthBar(x, y, health, maxHealth) {
         const barWidth = ENTITY.w;
-        const barHeight = 20;
-        const offset = 15;
-        const maxHealth = 5;
+        const barHeight = 10;  // Более тонкий бар
+        const offset = 20;    // Отступ от врага
 
         // Background
         this.context.fillStyle = "gray";
-        this.context.fillRect(x - barWidth / 2, y - ENTITY.radius - offset - barHeight, barWidth, barHeight);
+        this.context.fillRect(x - barWidth / 2, y - ENTITY.radius - offset, barWidth, barHeight);
 
         // Health
         const healthWidth = (barWidth * health) / maxHealth;
         this.context.fillStyle = "red";
-        this.context.fillRect(x - barWidth / 2, y - ENTITY.radius - offset - barHeight, healthWidth, barHeight);
+        this.context.fillRect(x - barWidth / 2, y - ENTITY.radius - offset, healthWidth, barHeight);
     }
 
     drawHealthBar(health) {

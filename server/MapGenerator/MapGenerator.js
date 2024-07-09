@@ -10,6 +10,7 @@ class MapGenerator {
             "player": {
                 x: 1420,
                 y: 682,
+                skinId: 5,
             },
             "obj": {
                 cells: groundList,

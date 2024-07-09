@@ -1,4 +1,4 @@
-import { CELL } from "../../CONST.js";
+import { WEAPON_STATE } from "../../CONST.js";
 import { Trajectory } from "../Weapon/Trajectory.js";
 
 class EntityController {
@@ -16,6 +16,15 @@ class EntityController {
         return this.model.maxHealth;
     }
 
+    isAlive() {
+        return this.model.isAlive;
+    }
+
+    die() {
+        this.model.isAlive = false;
+        this.dropWeapon();
+    }
+
     setHealth(value) {
         this.model.health = value;
     }
@@ -26,6 +35,10 @@ class EntityController {
 
     getAngle() {
         return this.model.angle;
+    }
+
+    getSkinId() {
+        return this.model.skinId;
     }
 
     getWeapon() {
@@ -66,6 +79,14 @@ class EntityController {
 
     setBullets(bullets) {
         this.model.bullets = bullets;
+    }
+
+    dropWeapon() {
+        this.getWeapon().unsetPlayer(this.model);
+        this.getWeapon().setStatus(WEAPON_STATE.onTheGround);
+        clearInterval(this.getWeapon().getShootingInterval());
+        this.getWeapon().setShootingInterval(null);
+        this.setWeapon(null);
     }
 }
 
