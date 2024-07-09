@@ -57,7 +57,8 @@ class WebSocketController {
                     weapon: player.weapon,
                     health: player.health,
                     maxHealth: player.maxHealth,
-                    isAlive: player.isAlive
+                    isAlive: player.isAlive,
+                    skinId: player.skinId,
                 },
                 bullets: body.bullets,
                 damage: {damage}

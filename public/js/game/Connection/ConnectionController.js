@@ -33,7 +33,8 @@ class ConnectionController {
                 weapon: weapon,
                 health: health,
                 maxHealth: maxHealth,
-                isAlive: isAlive
+                isAlive: isAlive,
+                skinId: this.player.getSkinId()
             },
             bullets: [],
             damage: damage,
@@ -106,7 +107,7 @@ class ConnectionController {
         this.player.model.health = Math.max(this.player.model.health, 0);
 
         if (!this.enemies[id]) {
-            this.enemies[id] = new EnemyController({x: 0, y: 0, angle: 0, weaponId: null, health, maxHealth});
+            this.enemies[id] = new EnemyController({x: 0, y: 0, angle: 0, weaponId: null, health, maxHealth, skinId: player.skinId});
         }
         if (!isAlive) this.enemies[id].die();
         this.enemies[id].setPosition({
