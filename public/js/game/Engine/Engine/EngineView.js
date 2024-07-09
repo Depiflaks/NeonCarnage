@@ -82,8 +82,8 @@ class EngineView {
         const g = Math.floor(127 * (1 + Math.sin(Math.PI * (this.gradientOffset + 2 / 3))));
         const b = Math.floor(127 * (1 + Math.sin(Math.PI * (this.gradientOffset + 4 / 3))));
 
-        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.1)`);
-        gradient.addColorStop(1, `rgba(${b}, ${r}, ${g}, 0.1)`);
+        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.05)`);
+        gradient.addColorStop(1, `rgba(${b}, ${r}, ${g}, 0.05)`);
 
         this.context.fillStyle = gradient;
         this.context.fillRect(0, 0, width, height);
