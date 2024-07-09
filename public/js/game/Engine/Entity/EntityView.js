@@ -86,6 +86,12 @@ class EntityView {
         this.context.fillRect(offsetX, ENTITY.radius + offsetY - barHeight, healthWidth, barHeight);
     }
 
+    drawEnemyNickName(x, y, nickName) {
+        this.context.font = "20px serif";
+        this.context.fillStyle = "white";
+        this.context.fillText(nickName, x - ENTITY.w / 2, y - ENTITY.radius - 30);
+    }
+
 }
 
 export { EntityView };

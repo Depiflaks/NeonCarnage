@@ -38,6 +38,7 @@ class EngineView {
             this.drawBullets(enemy.getBullets(), field);
             //console.log(enemy.getPosition().x, enemy.getPosition().y, enemy.model.health, enemy.model.maxHealth)
             this.entityView.drawEnemyHealthBar(enemy.getPosition().x, enemy.getPosition().y, enemy.model.health, enemy.model.maxHealth);
+            this.entityView.drawEnemyNickName(enemy.getPosition().x, enemy.getPosition().y, enemy.getNickName());
         });
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());

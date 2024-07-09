@@ -59,6 +59,7 @@ class WebSocketController {
                     maxHealth: player.maxHealth,
                     isAlive: player.isAlive,
                     skinId: player.skinId,
+                    nickName: player.nickName
                 },
                 bullets: body.bullets,
                 damage: {damage}

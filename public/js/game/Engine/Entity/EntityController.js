@@ -22,7 +22,7 @@ class EntityController {
 
     die() {
         this.model.isAlive = false;
-        this.dropWeapon();
+        if(this.model.weapon != null) this.dropWeapon();
     }
 
     setHealth(value) {
@@ -87,6 +87,14 @@ class EntityController {
         clearInterval(this.getWeapon().getShootingInterval());
         this.getWeapon().setShootingInterval(null);
         this.setWeapon(null);
+    }
+
+    getNickName() {
+        return this.model.nickName;
+    }
+
+    setNickName(nickName) {
+        this.model.nickName = nickName;
     }
 }
 

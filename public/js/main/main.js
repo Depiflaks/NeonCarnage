@@ -1,5 +1,3 @@
-
-
 document.getElementById('start').addEventListener('click', () => {
     localStorage.setItem('responseData', {});
     fetch('/create', {
@@ -11,6 +9,7 @@ document.getElementById('start').addEventListener('click', () => {
     })
     .then(response => response.json())
     .then(data => {
+        data.player.nickName = document.getElementById('nickName').value;
 
         localStorage.setItem('responseData', JSON.stringify(data));
 
@@ -18,8 +17,3 @@ document.getElementById('start').addEventListener('click', () => {
     })
     .catch(error => console.error('Error:', error));
 });
-
-
-async function startGame() {
-    
-}

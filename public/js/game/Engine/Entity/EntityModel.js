@@ -12,6 +12,7 @@ class EntityModel extends Moveable {
         this.bullets = [];
         this.isAlive = true;
         this.skinId = skinId;
+        this.nickName = "noname";
     }
 }
 

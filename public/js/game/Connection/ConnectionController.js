@@ -5,7 +5,7 @@ import { Bullet } from "../Engine/Weapon/Bullet.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.sergey);
+        this.socket = new WebSocket(SERVER.ignat);
         this.enemies = {};
         this.initEventListeners();
     }
@@ -24,6 +24,7 @@ class ConnectionController {
         const maxHealth = ENTITY.maxHealth;
         const damage = this.player.model.damage;
         const isAlive = this.player.isAlive();
+        const nickName = this.player.getNickName();
         this.player.model.damage = {};
         const body = {
             player: {
@@ -34,7 +35,8 @@ class ConnectionController {
                 health: health,
                 maxHealth: maxHealth,
                 isAlive: isAlive,
-                skinId: this.player.getSkinId()
+                skinId: this.player.getSkinId(),
+                nickName: nickName
             },
             bullets: [],
             damage: damage,
@@ -103,6 +105,7 @@ class ConnectionController {
         const maxHealth = player.maxHealth;
         const currentHealth = this.player.getHealth();
         const isAlive = player.isAlive;
+        const nickName = player.nickName;
         this.player.model.health -= body.damage.damage;
         this.player.model.health = Math.max(this.player.model.health, 0);
 
@@ -117,6 +120,7 @@ class ConnectionController {
         this.enemies[id].setAngle(angle);
         this.enemies[id].setWeaponId(weapon);
         this.enemies[id].setHealth(health);
+        this.enemies[id].setNickName(nickName);
         this.enemies[id].setBullets(body.bullets.map(bullet => {
             return new Bullet({
                 x: bullet.x + this.field.x, 

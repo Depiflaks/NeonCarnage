@@ -11,6 +11,7 @@ class MapGenerator {
                 x: 1420,
                 y: 682,
                 skinId: 5,
+                nickName: "noname",
             },
             "obj": {
                 cells: groundList,
