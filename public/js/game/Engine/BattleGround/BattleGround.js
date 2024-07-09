@@ -37,6 +37,7 @@ class BattleGround extends Drawable {
 
         ammunitionSet.map(
             ammunition => {
+                console.log(ammunition);
                 this.ammunition.push(new Ammunition(ammunition.x, ammunition.y, ammunition.image, ammunition.amount));
             }
         );

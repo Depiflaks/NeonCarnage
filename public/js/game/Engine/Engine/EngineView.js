@@ -11,6 +11,7 @@ class EngineView {
         this.entityView = new EntityView(this.context);
         this.shakeOffsetX = 0;
         this.shakeOffsetY = 0;
+        this.gradientOffset = 0;
     }
 
     draw(field, player, enemies) {
@@ -30,6 +31,7 @@ class EngineView {
         Object.values(enemies).map(enemy => {this.entityView.drawEnemyHealthBar(enemy.x, enemy.y, enemy.health)});
         this.drawBulletAmount(player);
         this.entityView.drawCursor(player.getCursorPosition());
+        this.drawGradientOverlay();
     }
 
     drawBullets(bullets, field) {
@@ -50,7 +52,6 @@ class EngineView {
 
     update(field, player, enemies, isShaking) {
         field.clearFrame(this.context);
-
         if (isShaking) {
             this.applyShake();
         } else {
@@ -70,6 +71,29 @@ class EngineView {
         this.context.restore();
         this.shakeOffsetX = 0;
         this.shakeOffsetY = 0;
+    }
+
+
+    drawGradientOverlay() {
+        const { width, height } = this.canvas;
+        const gradient = this.context.createLinearGradient(0, 0, width, height);
+
+        // Вычисляем значения цвета на основе gradientOffset
+        const r = Math.floor(127 * (1 + Math.sin(Math.PI * this.gradientOffset)));
+        const g = Math.floor(127 * (1 + Math.sin(Math.PI * (this.gradientOffset + 2 / 3))));
+        const b = Math.floor(127 * (1 + Math.sin(Math.PI * (this.gradientOffset + 4 / 3))));
+
+        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.05)`);
+        gradient.addColorStop(1, `rgba(${b}, ${r}, ${g}, 0.05)`);
+
+        this.context.fillStyle = gradient;
+        this.context.fillRect(0, 0, width, height);
+
+        // Обновляем gradientOffset
+        this.gradientOffset += 0.01;
+        if (this.gradientOffset >= 2) {
+            this.gradientOffset = 0;
+        }
     }
 
     drawLine(x1, y1, x2, y2, color, field) {
