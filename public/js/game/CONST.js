@@ -43,9 +43,10 @@ const ENTITY = {
     h: 40,
     wWithWeapon: 90,
     hWithWeapon: 100,
-    headColor: "public/assets/Player/Skin1/head.png",
-    bodyColor: "public/assets/Player/Skin1/body.png",
-    bodyWithWeapon: "public/assets/Player/Skin1/bodyWithWeapon.png",
+    headColor: "public/assets/Player/Skin6/head.png",
+    bodyColor: "public/assets/Player/Skin6/body.png",
+    bodyWithWeapon: "public/assets/Player/Skin6/bodyWithWeapon.png",
+    bodyWithPistols: "public/assets/Player/Skin6/bodyWithPistols.png",
     speed: 8,
     visualField: {
         range: 600,
@@ -121,8 +122,8 @@ const WEAPON_MODELS = {
         inHand: "public/assets/Weapon/weaponUp3.png",
         amount: 80,
         rechargeTime: 3000,
-        w: 30,
-        h: 100,
+        w: 20,
+        h: 70,
     },
     glock: {
         name: "glock",
@@ -134,8 +135,8 @@ const WEAPON_MODELS = {
         inHand: "public/assets/Weapon/weaponUp4.png",
         amount: 80,
         rechargeTime: 3000,
-        w: 30,
-        h: 100,
+        w: 20,
+        h: 70,
     }
 }
 

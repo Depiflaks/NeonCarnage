@@ -9,6 +9,8 @@ class EntityView {
         this.bodyImage.src = ENTITY.bodyColor;
         this.bodyWithWeaponImage = new Image();
         this.bodyWithWeaponImage.src = ENTITY.bodyWithWeapon;
+        this.bodyWithPistolsImage = new Image();
+        this.bodyWithPistolsImage.src = ENTITY.bodyWithPistols;
     }
 
     draw(entity) {
@@ -20,12 +22,17 @@ class EntityView {
         this.context.save();
         this.context.translate(x, y);
         this.context.rotate(angle + 90 * RAD);
-        if (((animation === null) && (weapon === null)) || (((animation != null) && (animation.isAnimating)) && (weapon != null))) {
+        if (((animation === null) && (weapon === null)) || ((animation === null) && (weapon.model.name === "knife")) || (((animation) && (animation.isAnimating)) && (weapon))) {
             this.context.drawImage(this.bodyImage, -ENTITY.w/2, -ENTITY.h/2, ENTITY.w, ENTITY.h);
             this.context.drawImage(this.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
         } else {
-            this.context.drawImage(this.bodyWithWeaponImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
-            this.context.drawImage(this.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+            if ((weapon.model.name === "pistol") || (weapon.model.name === "glock")) {
+                this.context.drawImage(this.bodyWithPistolsImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
+                this.context.drawImage(this.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+            } else {   
+                this.context.drawImage(this.bodyWithWeaponImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
+                this.context.drawImage(this.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+            }
         }
         this.context.restore();
     }
