@@ -5,7 +5,7 @@ import { Tracing } from "../RayTracing/Tracing.js";
 
 class EngineController {
     constructor(objects, connection, canvas) {
-        console.log(objects);
+        //console.log(objects);
         this.model = new EngineModel(objects);
         this.view = new EngineView(canvas);
         
