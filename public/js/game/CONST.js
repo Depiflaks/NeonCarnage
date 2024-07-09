@@ -41,16 +41,51 @@ const WALL = {
     horizontalImage: "public/assets/BattleGround/horizontalWall.png"
 }
 
+const SKINS = [
+    {   
+        head: "public/assets/Player/Skin1/head.png",
+        body: "public/assets/Player/Skin1/body.png",
+        bodyWithWeapon: "public/assets/Player/Skin1/bodyWithWeapon.png",
+        bodyWithPistols: "public/assets/Player/Skin1/bodyWithPistols.png",
+    },
+    {   
+        head: "public/assets/Player/Skin2/head.png",
+        body: "public/assets/Player/Skin2/body.png",
+        bodyWithWeapon: "public/assets/Player/Skin2/bodyWithWeapon.png",
+        bodyWithPistols: "public/assets/Player/Skin2/bodyWithPistols.png",
+    },
+    {   
+        head: "public/assets/Player/Skin3/head.png",
+        body: "public/assets/Player/Skin3/body.png",
+        bodyWithWeapon: "public/assets/Player/Skin3/bodyWithWeapon.png",
+        bodyWithPistols: "public/assets/Player/Skin3/bodyWithPistols.png",
+    },
+    {   
+        head: "public/assets/Player/Skin4/head.png",
+        body: "public/assets/Player/Skin4/body.png",
+        bodyWithWeapon: "public/assets/Player/Skin4/bodyWithWeapon.png",
+        bodyWithPistols: "public/assets/Player/Skin4/bodyWithPistols.png",
+    },
+    {   
+        head: "public/assets/Player/Skin5/head.png",
+        body: "public/assets/Player/Skin5/body.png",
+        bodyWithWeapon: "public/assets/Player/Skin5/bodyWithWeapon.png",
+        bodyWithPistols: "public/assets/Player/Skin5/bodyWithPistols.png",
+    },
+    {   
+        head: "public/assets/Player/Skin6/head.png",
+        body: "public/assets/Player/Skin6/body.png",
+        bodyWithWeapon: "public/assets/Player/Skin6/bodyWithWeapon.png",
+        bodyWithPistols: "public/assets/Player/Skin6/bodyWithPistols.png",
+    }
+]
+
 const ENTITY = {
     radius: 30,
     w: 100,
     h: 40,
     wWithWeapon: 90,
     hWithWeapon: 100,
-    headColor: "public/assets/Player/Skin6/head.png",
-    bodyColor: "public/assets/Player/Skin6/body.png",
-    bodyWithWeapon: "public/assets/Player/Skin6/bodyWithWeapon.png",
-    bodyWithPistols: "public/assets/Player/Skin6/bodyWithPistols.png",
     speed: 8,
     visualField: {
         range: 600,
@@ -110,7 +145,7 @@ const WEAPON_MODELS = {
         inHand: "public/assets/Weapon/weaponUp1.png",
         amount: 80,
         rechargeTime: 3000,
-        w: 40,
+        w: 25,
         h: 120,
     },
     machineGun: {
@@ -199,4 +234,4 @@ const TRAJECTORY = {
     knifeRightImage: "public/assets/Weapon/knifeRight.png",
 };
 
-export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};
+export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, SKINS, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};

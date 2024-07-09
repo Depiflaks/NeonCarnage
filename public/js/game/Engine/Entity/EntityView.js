@@ -1,22 +1,22 @@
-import {ENTITY, RAD, INTERFACE, WINDOW} from "../../CONST.js";
+import {ENTITY, RAD, INTERFACE, SKINS} from "../../CONST.js";
 
 class EntityView {
     constructor(context) {
         this.context = context;
-        this.headImage = new Image();
-        this.headImage.src = ENTITY.headColor;
-        this.bodyImage = new Image();
-        this.bodyImage.src = ENTITY.bodyColor;
-        this.bodyWithWeaponImage = new Image();
-        this.bodyWithWeaponImage.src = ENTITY.bodyWithWeapon;
-        this.bodyWithPistolsImage = new Image();
-        this.bodyWithPistolsImage.src = ENTITY.bodyWithPistols;
         this.cursor = new Image();
         this.cursor.src = INTERFACE.cursor;
+        this.headImage = new Image();
+        this.bodyImage = new Image();
+        this.bodyWithWeaponImage = new Image();
+        this.bodyWithPistolsImage = new Image();
     }
 
     draw(entity) {
         if (!entity.isActive()) return;
+        this.headImage.src = SKINS[entity.getSkinId()].head;
+        this.bodyImage.src = SKINS[entity.getSkinId()].body;
+        this.bodyWithWeaponImage.src = SKINS[entity.getSkinId()].bodyWithWeapon;
+        this.bodyWithPistolsImage.src = SKINS[entity.getSkinId()].bodyWithPistols;
         const {x, y} = entity.getPosition();
         const angle = entity.getAngle();
         const weapon = entity.getWeapon();
