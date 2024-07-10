@@ -5,11 +5,7 @@ import { Bullet } from "../Engine/Weapon/Bullet.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-<<<<<<< Updated upstream
-        this.socket = new WebSocket(SERVER.sergey);
-=======
         this.socket = new WebSocket(SERVER.ignat_home);
->>>>>>> Stashed changes
         this.enemies = {};
         this.initEventListeners();
     }
