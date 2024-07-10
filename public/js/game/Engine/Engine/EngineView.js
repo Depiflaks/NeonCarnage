@@ -20,15 +20,15 @@ class EngineView {
         field.drawBonuses(this.context);
         field.drawWeapons(player.getPosition(), player.getAngle(), player.getTrajectory(), this.context);
         field.drawAmmunition(this.context);
+        if (player.getTrajectory()) {
+                player.getTrajectory().draw(this.context);
+        }
         if (player.isAlive()) {
             this.entityView.draw(player);
         } else {
             this.entityView.drawDead(player);
         }
 
-        if (player.getTrajectory()) {
-                player.getTrajectory().draw(this.context);
-        }
         Object.values(enemies).map(enemy => {
             if (enemy.isAlive()) {
                 this.entityView.draw(enemy);

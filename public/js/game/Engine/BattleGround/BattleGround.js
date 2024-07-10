@@ -37,7 +37,6 @@ class BattleGround extends Drawable {
 
         ammunitionSet.map(
             ammunition => {
-                //console.log(ammunition);
                 this.ammunition.push(new Ammunition(ammunition.x, ammunition.y, ammunition.image, ammunition.amount));
             }
         );
@@ -69,12 +68,12 @@ class BattleGround extends Drawable {
     };
 
     update() {
-        this.cells.map(row => row.map(cell => cell.update()));
+        this.cells.map(row => row.map(cell => {if (cell) {cell.update()}}));
         this.hideCells();
     }
 
     drawGround(context) {
-        this.cells.map(row => row.map(cell => cell.draw(context)));
+        this.cells.map(row => row.map(cell => { if(cell) {cell.draw(context)}}));
     }
 
     drawWalls(context) {
@@ -87,7 +86,7 @@ class BattleGround extends Drawable {
         this.weapons.map(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) / CELL.w);
             indexY = Math.floor((weapon.model.y - this.y) / CELL.h);
-            if (this.cells[indexX][indexY].active) weapon.view.draw(
+            if ((this.cells[indexX][indexY]) && (this.cells[indexX][indexY].active)) weapon.view.draw(
                 weapon.model, 
                 animation,
                 {x, y}, angle,
@@ -102,7 +101,7 @@ class BattleGround extends Drawable {
         this.ammunition.map(ammunition => {
             indexX = Math.floor((ammunition.x - this.x) / CELL.w);
             indexY = Math.floor((ammunition.y - this.y) / CELL.h);
-            if (ammunition.active && this.cells[indexX][indexY].active) {
+            if ((this.cells[indexX][indexY]) && ammunition.active && this.cells[indexX][indexY].active) {
                 ammunition.draw(context);
             }
         });
@@ -113,7 +112,7 @@ class BattleGround extends Drawable {
         this.bonuses.map(bonus => {
             indexX = Math.floor((bonus.x - this.x) / CELL.w);
             indexY = Math.floor((bonus.y - this.y) / CELL.h);
-            if (bonus.active && this.cells[indexX][indexY].active) {
+            if (this.cells[indexX][indexY] && bonus.active && this.cells[indexX][indexY].active) {
                 bonus.draw(context);
             }
         });
@@ -126,14 +125,16 @@ class BattleGround extends Drawable {
 
     hideCells() {
         this.cells.map(row => row.map(cell => {
-            cell.active = false
-            cell.activeDirection = 1;
+            if (cell) {
+                cell.active = false
+                cell.activeDirection = 1;
+            }
         }));
     }
 
     move(dx, dy) {
         super.move(dx, dy);
-        this.cells.map(row => row.map(cell => cell.move(dx, dy)));
+        this.cells.map(row => row.map(cell => {if (cell) {cell.move(dx, dy)}}));
         this.verticalWalls.map(wall => wall.move(dx, dy));
         this.horizontalWalls.map(wall => wall.move(dx, dy));
         this.weapons.map(weapon => weapon.model.move(dx, dy));

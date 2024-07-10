@@ -11,6 +11,7 @@ const SERVER = {
     ignat: 'ws://192.168.159.172:8000/',
     ignat_home: 'ws://10.250.104.176:8000/',
     liuba: 'ws://10.250.104.170:8000/',
+    liuba_home: 'ws://192.168.103.146:8000',
     denis: 'ws://10.250.104.148:8000/',
     denis_home: 'ws://192.168.129.252:8000/'
 }
@@ -87,7 +88,7 @@ const ENTITY = {
     h: 40,
     wWithWeapon: 90,
     hWithWeapon: 100,
-    speed: 8,
+    speed: 15,
     visualField: {
         range: 600,
         angleStep: 5 * RAD,
@@ -141,7 +142,7 @@ const WEAPON_MODELS = {
         battleType: "distant",
         rapidity: 100,
         grouping: 1,
-        deviation: 0.05,
+        deviation: 0.15,
         onGround: "public/assets/Weapon/weapon1.png",
         inHand: "public/assets/Weapon/weaponUp1.png",
         amount: 80,
@@ -152,8 +153,8 @@ const WEAPON_MODELS = {
     machineGun: {
         name: "machineGun",
         battleType: "distant",
-        rapidity: 100,
-        grouping: 1,
+        rapidity: 150,
+        grouping: 10,
         deviation: 0.05,
         onGround: "public/assets/Weapon/weapon2.png",
         inHand: "public/assets/Weapon/weaponUp2.png",
@@ -165,26 +166,26 @@ const WEAPON_MODELS = {
     pistol: {
         name: "pistol",
         battleType: "distant",
-        rapidity: 100,
+        rapidity: 200,
         grouping: 1,
         deviation: 0.05,
         onGround: "public/assets/Weapon/weapon3.png",
         inHand: "public/assets/Weapon/weaponUp3.png",
-        amount: 80,
-        rechargeTime: 3000,
+        amount: 40,
+        rechargeTime: 1500,
         w: 20,
         h: 70,
     },
     glock: {
         name: "glock",
         battleType: "distant",
-        rapidity: 100,
+        rapidity: 200,
         grouping: 1,
         deviation: 0.05,
         onGround: "public/assets/Weapon/weapon4.png",
         inHand: "public/assets/Weapon/weaponUp4.png",
-        amount: 80,
-        rechargeTime: 3000,
+        amount: 50,
+        rechargeTime: 2000,
         w: 20,
         h: 70,
     }
@@ -227,12 +228,12 @@ const WEAPON_STATE = {
 
 const TRAJECTORY = {
     handPoint: 40,
-    width: 115,
+    width: 150,
     height: 10,
     deltaAngle: Math.PI / 3,
     animationSpeed: 0.07,
-    knifeLeftImage: "public/assets/Weapon/knifeLeft.png",
-    knifeRightImage: "public/assets/Weapon/knifeRight.png",
+    knifeLeftImage: "public/assets/Weapon/left.png",
+    knifeRightImage: "public/assets/Weapon/right.png",
 };
 
 export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, SKINS, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};
