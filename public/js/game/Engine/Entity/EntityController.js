@@ -22,7 +22,13 @@ class EntityController {
 
     die() {
         this.model.isAlive = false;
-        this.dropWeapon();
+        if(this.model.weapon != null) this.dropWeapon();
+        setTimeout(() => {this.reborn()}, 5000);
+    }
+
+    reborn() {
+        this.model.isAlive = true;
+        this.model.health = 4;
     }
 
     setHealth(value) {
