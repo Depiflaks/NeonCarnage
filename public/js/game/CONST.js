@@ -7,7 +7,7 @@ const REQUEST_DURATION = 1000 / RPS;
 
 const SERVER = {
     sergey: 'ws://10.250.104.142:8000/',
-    sergey_home: 'ws://192.168.1.131:8000/',
+    sergey_home: 'ws://192.168.159.162:8000/',
     ignat: 'ws://192.168.159.172:8000/',
     ignat_home: 'ws://10.250.104.176:8000/',
     liuba: 'ws://10.250.104.170:8000/',
@@ -17,8 +17,8 @@ const SERVER = {
 }
 
 const WINDOW = {
-    w: 1200,
-    h: 900,
+    w: 1920,
+    h: 1080,
     c: "black",
 };
 
@@ -88,7 +88,7 @@ const ENTITY = {
     h: 40,
     wWithWeapon: 90,
     hWithWeapon: 100,
-    speed: 15,
+    speed: 9,
     visualField: {
         range: 600,
         angleStep: 5 * RAD,
@@ -153,9 +153,9 @@ const WEAPON_MODELS = {
     machineGun: {
         name: "machineGun",
         battleType: "distant",
-        rapidity: 150,
+        rapidity: 500,
         grouping: 10,
-        deviation: 0.05,
+        deviation: 0.3,
         onGround: "public/assets/Weapon/weapon2.png",
         inHand: "public/assets/Weapon/weaponUp2.png",
         amount: 80,
