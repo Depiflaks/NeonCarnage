@@ -32,6 +32,9 @@ class SessionController {
             weapon.amount = player.weapon.amount;
             weapon.x = player.x;
             weapon.y = player.y;
+            weapon.onGround = false;
+        } else {
+
         }
         this.updateHealth(body);
     }

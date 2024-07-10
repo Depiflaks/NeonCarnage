@@ -20,10 +20,10 @@ class EnemyController extends EntityController{
         this.model.factY = y;
     }
 
-    getPosition() {
-        //console.log(123);
-        return {x: this.model.factX, y: this.model.factY};
-    }
+    // getPosition() {
+    //     //console.log(123);
+    //     return {x: this.model.factX, y: this.model.factY};
+    // }
 
     update() {
         const dx = this.model.factX - this.model.x;

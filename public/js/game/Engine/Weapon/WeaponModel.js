@@ -4,6 +4,7 @@ import { Drawable } from "../Interface/Drawable.js";
 class WeaponModel extends Drawable {
     constructor({id, type, x, y}) {
         super(x * CELL.w + CELL.w * 0.5, y * CELL.h + CELL.h * 0.5, type.w, type.h)
+        this.id = id;
         this.name = type.name;
         this.battleType = type.battleType;
         this.rapidity = type.rapidity;

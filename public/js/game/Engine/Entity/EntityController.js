@@ -47,6 +47,7 @@ class EntityController {
 
     setWeapon(weapon) {
         this.model.weapon = weapon;
+        this.setWeaponId(weapon.getId());
     }
 
     getWeaponId() {
@@ -87,6 +88,7 @@ class EntityController {
         clearInterval(this.getWeapon().getShootingInterval());
         this.getWeapon().setShootingInterval(null);
         this.setWeapon(null);
+        this.setWeaponId(null);
     }
 }
 

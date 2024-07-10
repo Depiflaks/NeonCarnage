@@ -1,7 +1,7 @@
 // CONST.js
 const RAD = Math.PI / 180;
 const FPS = 90;
-const RPS = 90;
+const RPS = 2;
 const FRAME_DURATION = 1000 / FPS;
 const REQUEST_DURATION = 1000 / RPS;
 
@@ -214,7 +214,7 @@ const BULLET = {
 };
 
 const ENEMY = {
-    period: 100,
+    period: 5,
 }
 
 const KEYBOARD_E = 'KeyE';

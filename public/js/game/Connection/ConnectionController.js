@@ -19,18 +19,23 @@ class ConnectionController {
     sendData() {
         const {x, y} = this.player.getPosition();
         const angle = this.player.getAngle();
-        const weapon = this.player.getWeaponId();
+        const weaponId = this.player.getWeaponId();
+        const weaponAmount = weaponId ? this.player.getWeapon().getAmount(): null;
         const health = this.player.getHealth();
         const maxHealth = ENTITY.maxHealth;
         const damage = this.player.model.damage;
         const isAlive = this.player.isAlive();
         this.player.model.damage = {};
+        //console.log(weapon);
         const body = {
             player: {
                 x: x - this.field.x, 
                 y: y - this.field.y, 
                 angle: angle, 
-                weapon: weapon,
+                weapon: {
+                    id: weaponId,
+                    amount: weaponAmount,
+                },
                 health: health,
                 maxHealth: maxHealth,
                 isAlive: isAlive,
@@ -93,11 +98,18 @@ class ConnectionController {
     }
 
     response(body) {
+        //console.log(body.objects.weapons);
+        body.objects.weapons.forEach(weapon => {
+            //console.log(weapon);
+        });
+        for (let i = 0; i < body.objects.weapons.length; i++) {
+            this.field.weapons[i]
+        }
         for (const id in body.players) {
             const entity = body.players[id];
             if (id === this.id) continue;
             if (!this.enemies[id]) this.enemies[id] = new EnemyController({
-                x: 0, y: 0, angle: 0, weaponId: null, skinId: entity.skinId,
+                x: 0, y: 0, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth
             });
             const enemy = this.enemies[id];
             if (!entity.isAlive) {
@@ -118,17 +130,6 @@ class ConnectionController {
             //     })
             // }))
         }
-        // const player = body.player;
-        // const id = player.id;
-        // const x = player.x + this.field.x;
-        // const y = player.y + this.field.y;
-        // const health = player.health;
-        // const maxHealth = player.maxHealth;
-        // const currentHealth = this.player.getHealth();
-        // const isAlive = player.isAlive;
-        // this.player.model.health -= body.damage.damage;
-        // this.player.model.health = Math.max(this.player.model.health, 0);
-        
     }
 
     onClose(data) {
