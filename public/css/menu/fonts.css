@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Nosifer';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../../fonts/Nosifer/Nosifer-Regular.ttf');
+  }
+
+@font-face {
+  font-family: 'Russo One';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../../fonts/Russo_One/RussoOne-Regular.ttf');
+}
