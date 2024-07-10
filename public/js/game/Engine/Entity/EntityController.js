@@ -5,6 +5,13 @@ import { SkinModel } from "../Entity/SkinModel.js";
 class EntityController {
     constructor() {}
 
+    setSpawnPoint() {
+        const randomSpawnPoint = this.model.spawnPoints[Math.floor(Math.random() * this.model.spawnPoints.length)];
+
+        this.model.x = randomSpawnPoint.x;
+        this.model.y = randomSpawnPoint.y;
+    }
+
     getPosition() {
         return { x: this.model.x, y: this.model.y };
     }
@@ -30,6 +37,7 @@ class EntityController {
     reborn() {
         this.model.isAlive = true;
         this.model.health = 4;
+        this.setSpawnPoint();
     }
 
     setHealth(value) {
