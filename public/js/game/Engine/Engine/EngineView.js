@@ -51,7 +51,7 @@ class EngineView {
         bullets.map(bullet => {
             indexX = Math.floor((bullet.x + bullet.h * Math.cos(bullet.angle) - field.x) / CELL.w);
             indexY = Math.floor((bullet.y + bullet.h * Math.sin(bullet.angle) - field.y) / CELL.h);
-            if (indexX >= 0 && indexX <= field.w && indexY >= 0 && indexY <= field.h && field.cells[indexX][indexY].active) bullet.draw(this.context);
+            if (indexX >= 0 && indexX <= field.w && indexY >= 0 && indexY <= field.h && field.cells[indexX][indexY] && field.cells[indexX][indexY].active) bullet.draw(this.context);
         });
     }
 
@@ -105,8 +105,8 @@ class EngineView {
         const g = Math.floor(127 * (1 + Math.sin(Math.PI * (this.gradientOffset + 2 / 3))));
         const b = Math.floor(127 * (1 + Math.sin(Math.PI * (this.gradientOffset + 4 / 3))));
 
-        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.05)`);
-        gradient.addColorStop(1, `rgba(${b}, ${r}, ${g}, 0.05)`);
+        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.1)`);
+        gradient.addColorStop(1, `rgba(${b}, ${r}, ${g}, 0.1)`);
 
         this.context.fillStyle = gradient;
         this.context.fillRect(0, 0, width, height);

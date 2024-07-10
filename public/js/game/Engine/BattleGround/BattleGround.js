@@ -84,7 +84,7 @@ class BattleGround extends Drawable {
     drawWeapons({x, y}, angle, animation, context) {
         let indexX, indexY;
         this.weapons.map(weapon => {
-            indexX = Math.floor((weapon.model.x - this.x) / CELL.w);
+            indexX = Math.floor((weapon.model.x - this.x) /  CELL.w);
             indexY = Math.floor((weapon.model.y - this.y) / CELL.h);
             if ((this.cells[indexX][indexY]) && (this.cells[indexX][indexY].active)) weapon.view.draw(
                 weapon.model, 
@@ -94,7 +94,6 @@ class BattleGround extends Drawable {
             );
         })
     }
-
 
     drawAmmunition(context) {
         let indexX, indexY;
