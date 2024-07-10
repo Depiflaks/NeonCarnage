@@ -11,9 +11,9 @@ class GameController {
         this.engine = new EngineController(objects, this.connection, this.canvas);
 
         this.connection.setObj(this.engine.player, this.engine.field, this.engine.enemies);
-
         this.lastFrame = 0;
         this.lastRequest = 0;
+
         window.addEventListener('wheel', function(event) {
             if (event.ctrlKey) {
                 event.preventDefault();
