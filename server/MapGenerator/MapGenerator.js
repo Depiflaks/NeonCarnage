@@ -8,8 +8,8 @@ class MapGenerator {
     create() {
         return {
             "player": {
-                x: 1420,
-                y: 682,
+                x: 3525,
+                y: 2475,
                 skinId: 5,
             },
             "obj": {
