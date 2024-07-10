@@ -4,8 +4,8 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column; 
-    background: linear-gradient(to top, #ff69b4, #ff1493);
-    color: #fff;
+    background: linear-gradient(to top, #00ffcc, #2d2d2d); /* Заменил цвета градиента */
+    color: #00ffcc; /* Заменил цвет текста */
     font-family: 'Press Start 2P', cursive;
     overflow: hidden;
 }
@@ -19,8 +19,8 @@ body {
 
 .menu h1 {
     font-size: 3em;
-    color: #ff69b4;
-    text-shadow: 2px 2px #000, -2px -2px #ff0;
+    color: #00ffcc; /* Заменил цвет заголовка */
+    text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc; /* Заменил тени текста */
     position: relative;
     animation: glow 1.5s infinite alternate;
 }
@@ -37,26 +37,26 @@ body {
 
 .menu a {
     text-decoration: none;
-    color: #fff;
+    color: #1a1a1a; /* Заменил цвет текста */
     font-size: 1.5em;
     padding: 10px 20px;
-    background: #ff69b4;
-    border: 2px solid #ff0;
-    box-shadow: 3px 3px #000, -3px -3px #ff0;
+    background: #00ffcc; /* Заменил цвет фона */
+    border: 2px solid #00ffcc; /* Заменил цвет границы */
+    box-shadow: 3px 3px #1a1a1a, -3px -3px #00ffcc; /* Заменил цвет тени */
     transition: background 0.3s;
 }
 
 .menu a:hover {
-    background: #ff1493;
+    background: #2d2d2d; /* Заменил цвет фона при наведении */
 }
 
 /* Glow effect for the title */
 @keyframes glow {
     0% {
-        text-shadow: 2px 2px #000, -2px -2px #ff0;
+        text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc; /* Заменил тени текста */
     }
     100% {
-        text-shadow: 2px 2px #000, -2px -2px #fff;
+        text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc; /* Оставил тени текста такими же */
     }
 }
 
