@@ -34,7 +34,6 @@ class WeaponController {
         }
         return true;
     }
-
     isDistant() {
         return this.model.battleType === "distant";
     }

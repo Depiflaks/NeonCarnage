@@ -102,7 +102,7 @@ class BattleGround extends Drawable {
         this.ammunition.map(ammunition => {
             indexX = Math.floor((ammunition.x - this.x) / CELL.w);
             indexY = Math.floor((ammunition.y - this.y) / CELL.h);
-            if (this.cells[indexX][indexY].active) {
+            if (ammunition.active && this.cells[indexX][indexY].active) {
                 ammunition.draw(context);
             }
         });
@@ -113,7 +113,7 @@ class BattleGround extends Drawable {
         this.bonuses.map(bonus => {
             indexX = Math.floor((bonus.x - this.x) / CELL.w);
             indexY = Math.floor((bonus.y - this.y) / CELL.h);
-            if (this.cells[indexX][indexY].active) {
+            if (bonus.active && this.cells[indexX][indexY].active) {
                 bonus.draw(context);
             }
         });

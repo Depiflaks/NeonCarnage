@@ -13,9 +13,6 @@ class EngineController {
         this.player = this.model.getPlayer();
         this.tracing = new Tracing(this.player, this.field);
 
-        this.pendingAmmunition = [];
-        this.pendingBonuses = [];
-
         this.connection = connection;
 
         this.initEventListeners(canvas);
@@ -32,12 +29,6 @@ class EngineController {
         this.player.move(dx / period, dy / period);
         Object.values(this.enemies).forEach(enemy => {
             enemy.move(dx / period, dy / period);
-        });
-        this.pendingAmmunition.forEach(ammunition => {
-            ammunition.move(dx / period, dy / period);
-        });
-        this.pendingBonuses.forEach(bonus => {
-            bonus.move(dx / period, dy / period);
         });
     }
 
@@ -67,45 +58,29 @@ class EngineController {
         this.model.updateShake();
     }
 
-    respawnAmmunition(ammunition, delay = 5000) {
-        this.pendingAmmunition.push(ammunition);
-        setTimeout(() => {
-            this.pendingAmmunition = this.pendingAmmunition.filter(a => a !== ammunition);
-            this.field.ammunition.push(ammunition);
-        }, delay);
-    }
-
-    respawnBonus(bonus, delay = 5000) {
-        this.pendingBonuses.push(bonus);
-        setTimeout(() => {
-            this.pendingBonuses = this.pendingBonuses.filter(b => b !== bonus);
-            this.field.bonuses.push(bonus);
-        }, delay);
-    }
-
     takeAmmunition() {
         const playerPosition = this.player.getPosition();
-        this.field.ammunition = this.field.ammunition.filter(ammunition => {
+        this.field.ammunition.forEach(ammunition => {
             const weapon = this.player.getWeapon();
-            if (weapon && weapon.isDistant()) {
+            if (ammunition.active && weapon && weapon.isDistant()) {
                 const pickedUp = weapon.pickupAmmunition(ammunition, playerPosition);
                 if (!pickedUp) {
-                    this.respawnAmmunition(ammunition);
-                    return false;
+                    ammunition.active = false;
+                    ammunition.respawn();
                 }
             }
-            return true;
         });
     }
 
     takeBonus() {
-        this.field.bonuses = this.field.bonuses.filter(bonus => {
-            const pickedUp = this.player.pickupBonus(bonus);
-            if (!pickedUp) {
-                this.respawnBonus(bonus);
-                return false;
+        this.field.bonuses.forEach(bonus => {
+            if (bonus.active) {
+                const pickedUp = this.player.pickupBonus(bonus);
+                if (!pickedUp) {
+                    bonus.active = false;
+                    bonus.respawn();
+                }
             }
-            return true;
         });
     }
 

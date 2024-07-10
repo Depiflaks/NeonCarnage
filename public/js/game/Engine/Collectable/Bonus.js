@@ -7,6 +7,7 @@ class Bonus extends Collectable {
         this.image = new Image();
         this.image.src = image;
         this.amount = amount;
+        this.active = true;
     }
 
     draw(context) {
@@ -15,6 +16,12 @@ class Bonus extends Collectable {
         context.drawImage(this.image, bonusX, bonusY, BONUS.w, BONUS.h);
         // context.fillStyle = this.color;
         // context.fillRect(bonusX, bonusY, BONUS.w, BONUS.h);
+    }
+
+    respawn(delay = 5000) {
+        setTimeout(() => {
+            this.active = true;
+        }, delay);
     }
 }
 

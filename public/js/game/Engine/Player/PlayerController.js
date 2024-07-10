@@ -178,7 +178,7 @@ class PlayerController extends EntityController {
             }
         }
 
-        if (this.getHealth() == 0) {
+        if (this.getHealth() === 0) {
             this.die();
         }
     }
