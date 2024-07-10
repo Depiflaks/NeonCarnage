@@ -8,6 +8,8 @@ class PlayerController extends EntityController {
         super();
         this.model = new PlayerModel(player);
 
+        this.setSpawnPoint();
+
         this.cursorX = WINDOW.w / 2;
         this.cursorY = WINDOW.h / 2;
 
