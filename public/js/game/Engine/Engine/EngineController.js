@@ -5,14 +5,16 @@ import { Tracing } from "../RayTracing/Tracing.js";
 
 class EngineController {
     constructor(objects, connection, canvas) {
-        //console.log(objects);
         this.model = new EngineModel(objects);
         this.view = new EngineView(canvas);
-        
+
         this.enemies = this.model.getEnemies();
         this.field = this.model.getField();
         this.player = this.model.getPlayer();
         this.tracing = new Tracing(this.player, this.field);
+
+        this.pendingAmmunition = [];
+        this.pendingBonuses = [];
 
         this.connection = connection;
 
@@ -28,16 +30,22 @@ class EngineController {
         const period = CAMERA.period;
         this.field.move(dx / period, dy / period);
         this.player.move(dx / period, dy / period);
-        Object.values(this.enemies).map(enemy => {
+        Object.values(this.enemies).forEach(enemy => {
             enemy.move(dx / period, dy / period);
+        });
+        this.pendingAmmunition.forEach(ammunition => {
+            ammunition.move(dx / period, dy / period);
+        });
+        this.pendingBonuses.forEach(bonus => {
+            bonus.move(dx / period, dy / period);
         });
     }
 
     addWeapon() {
         const { x, y } = this.player.getPosition();
-        this.field.weapons.map(weapon => {
+        this.field.weapons.forEach(weapon => {
             const distance = Math.sqrt((weapon.model.x - x) ** 2 + (weapon.model.y - y) ** 2);
-            if ((distance <= WEAPON.minDistance) && !this.player.getWeapon()) {
+            if (distance <= WEAPON.minDistance && !this.player.getWeapon()) {
                 weapon.model.status = WEAPON_STATE.inTheHand;
                 this.player.setWeapon(weapon);
             }
@@ -47,16 +55,32 @@ class EngineController {
     update() {
         this.field.update();
         this.tracing.updateViewRange();
-        this.checkIntersections([].concat(this.field.verticalWalls, this.field.horizontalWalls));
+        this.checkIntersections([...this.field.verticalWalls, ...this.field.horizontalWalls]);
         this.takeAmmunition();
         this.takeBonus();
         this.player.update();
-        Object.values(this.enemies).map(enemy => {
+        Object.values(this.enemies).forEach(enemy => {
             enemy.checkActive(this.field);
             enemy.update();
-        })
+        });
         this.move();
         this.model.updateShake();
+    }
+
+    respawnAmmunition(ammunition, delay = 5000) {
+        this.pendingAmmunition.push(ammunition);
+        setTimeout(() => {
+            this.pendingAmmunition = this.pendingAmmunition.filter(a => a !== ammunition);
+            this.field.ammunition.push(ammunition);
+        }, delay);
+    }
+
+    respawnBonus(bonus, delay = 5000) {
+        this.pendingBonuses.push(bonus);
+        setTimeout(() => {
+            this.pendingBonuses = this.pendingBonuses.filter(b => b !== bonus);
+            this.field.bonuses.push(bonus);
+        }, delay);
     }
 
     takeAmmunition() {
@@ -64,7 +88,11 @@ class EngineController {
         this.field.ammunition = this.field.ammunition.filter(ammunition => {
             const weapon = this.player.getWeapon();
             if (weapon && weapon.isDistant()) {
-                return weapon.pickupAmmunition(ammunition, playerPosition);
+                const pickedUp = weapon.pickupAmmunition(ammunition, playerPosition);
+                if (!pickedUp) {
+                    this.respawnAmmunition(ammunition);
+                    return false;
+                }
             }
             return true;
         });
@@ -72,49 +100,46 @@ class EngineController {
 
     takeBonus() {
         this.field.bonuses = this.field.bonuses.filter(bonus => {
-            return this.player.pickupBonus(bonus);
+            const pickedUp = this.player.pickupBonus(bonus);
+            if (!pickedUp) {
+                this.respawnBonus(bonus);
+                return false;
+            }
+            return true;
         });
     }
 
     bulletsIntersectionWall(barriers) {
-        this.player.setBullets(this.player.getBullets().filter(
-            bullet => {
-                bullet.updatePosition();
-                for (const barrier of barriers) {
-                    if (bullet.isIntersectLines(barrier)) return false;
-                }
-                return true;
-            }
-        ));
+        this.player.setBullets(this.player.getBullets().filter(bullet => {
+            bullet.updatePosition();
+            return !barriers.some(barrier => bullet.isIntersectLines(barrier));
+        }));
     }
 
     bulletsIntersectionEnemy() {
-        this.player.setBullets(this.player.getBullets().filter(
-            bullet => {
-                let hit = false;
-                Object.entries(this.enemies).forEach(([id, enemy]) => {
-                    if (bullet.isIntersectEnemy(enemy.model)) {
-                        hit = true;
-                        if (this.player.model.damage[id] == undefined) {
-                            this.player.model.damage[id] = {shotDown: 1};
-                        }
-                        else {
-                            this.player.model.damage[id].shotDown += 1;
-                        }
+        this.player.setBullets(this.player.getBullets().filter(bullet => {
+            let hit = false;
+            Object.entries(this.enemies).forEach(([id, enemy]) => {
+                if (bullet.isIntersectEnemy(enemy.model)) {
+                    hit = true;
+                    if (this.player.model.damage[id] === undefined) {
+                        this.player.model.damage[id] = { shotDown: 1 };
+                    } else {
+                        this.player.model.damage[id].shotDown += 1;
                     }
-                });
-                return !hit;
-            }
-        ));
-    }    
+                }
+            });
+            return !hit;
+        }));
+    }
 
     checkIntersections(drawableArray, moveableArray) {
         this.bulletsIntersectionWall(drawableArray);
         this.bulletsIntersectionEnemy(moveableArray);
         this.intersectTrajectory(drawableArray);
-        for (const obj of drawableArray) {
+        drawableArray.forEach(obj => {
             this.player.check(obj);
-        }
+        });
     }
 
     intersectTrajectory(walls) {
@@ -132,14 +157,14 @@ class EngineController {
     }
 
     initEventListeners(canvas) {
-        addEventListener("keydown", (event) => this.keyDown(event));
-        canvas.addEventListener('contextmenu', (event) => {
+        addEventListener("keydown", event => this.keyDown(event));
+        canvas.addEventListener('contextmenu', event => {
             event.preventDefault(); // Отключаем контекстное меню при правом клике
         });
     }
 
     keyDown(event) {
-        if ((event.code === KEYBOARD_E) && (!this.player.getWeapon())) {
+        if (event.code === KEYBOARD_E && !this.player.getWeapon()) {
             this.addWeapon();
         } else if (event.code === KEYBOARD_E) {
             this.player.setStacked(false);
@@ -152,7 +177,6 @@ class EngineController {
     }
 
     nextFrame() {
-        //console.log(this.enemies);
         this.update();
         this.view.update(this.field, this.player, this.enemies, this.model.isShaking());
     }
