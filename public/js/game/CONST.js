@@ -32,7 +32,7 @@ const CELL = {
 };
 
 const WALL = {
-    h: 25,
+    h: 15,
     verticalStartImage: "public/assets/BattleGround/verticalWallStart.png",
     verticalEndImage: "public/assets/BattleGround/verticalWallEnd.png",
     verticalBetweenImage: "public/assets/BattleGround/verticalWallBetween.png",
