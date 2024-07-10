@@ -34,6 +34,11 @@ class EntityController {
         setTimeout(() => {this.reborn()}, 5000);
     }
 
+    dieEnemy() {
+        this.model.isAlive = false;
+        if(this.model.weapon != null) this.dropWeapon();
+    }
+
     reborn() {
         this.model.isAlive = true;
         this.model.health = 4;
