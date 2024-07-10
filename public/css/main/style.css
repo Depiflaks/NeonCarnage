@@ -34,8 +34,17 @@ input {
     box-shadow: 0 0 10px #00ffcc;
 }
 
+/* Стили для обертки select */
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+}
+
+/* Стили для выпадающего меню select */
 select {
     display: block;
+    width: 100%;
     margin: 0 auto 20px;
     padding: 10px;
     font-size: 1.2em;
@@ -46,7 +55,15 @@ select {
     text-align: center;
     outline: none;
     box-shadow: 0 0 10px #00ffcc;
-    appearance: none; /* Убираем стандартные стили браузера */
+    appearance: none;
+    background: url('/public/images/skin0.png') no-repeat right 10px center;
+    background-size: 30px 30px;
+}
+
+/* Обновление фона при выборе */
+select option {
+    background: #1a1a1a;
+    color: #00ffcc;
 }
 
 /* Убираем стрелку в select для WebKit браузеров (Chrome, Safari) */
