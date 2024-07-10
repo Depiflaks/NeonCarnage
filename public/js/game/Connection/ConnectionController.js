@@ -109,7 +109,7 @@ class ConnectionController {
         if (!this.enemies[id]) {
             this.enemies[id] = new EnemyController({x: 0, y: 0, angle: 0, weaponId: null, health, maxHealth, skinId: player.skinId});
         }
-        if (!isAlive) this.enemies[id].die();
+        if (!isAlive) this.enemies[id].dieEnemy();
         this.enemies[id].setPosition({
             x: x,
             y: y,
