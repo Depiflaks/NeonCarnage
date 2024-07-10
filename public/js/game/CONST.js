@@ -88,6 +88,7 @@ const ENTITY = {
     wWithWeapon: 90,
     hWithWeapon: 100,
     speed: 8,
+    speed: 15,
     visualField: {
         range: 600,
         angleStep: 5 * RAD,
