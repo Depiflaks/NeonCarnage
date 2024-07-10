@@ -5,18 +5,11 @@ class EntityView {
         this.context = context;
         this.cursor = new Image();
         this.cursor.src = INTERFACE.cursor;
-        this.headImage = new Image();
-        this.bodyImage = new Image();
-        this.bodyWithWeaponImage = new Image();
-        this.bodyWithPistolsImage = new Image();
     }
 
     draw(entity) {
         if (!entity.isActive()) return;
-        this.headImage.src = SKINS[entity.getSkinId()].head;
-        this.bodyImage.src = SKINS[entity.getSkinId()].body;
-        this.bodyWithWeaponImage.src = SKINS[entity.getSkinId()].bodyWithWeapon;
-        this.bodyWithPistolsImage.src = SKINS[entity.getSkinId()].bodyWithPistols;
+        const skin = entity.getSkin();
         const {x, y} = entity.getPosition();
         const angle = entity.getAngle();
         const weapon = entity.getWeapon();
@@ -25,15 +18,15 @@ class EntityView {
         this.context.translate(x, y);
         this.context.rotate(angle + 90 * RAD);
         if (((animation === null) && (weapon === null)) || ((animation === null) && (weapon.model.name === "knife")) || (((animation) && (animation.isAnimating)) && (weapon))) {
-            this.context.drawImage(this.bodyImage, -ENTITY.w/2, -ENTITY.h/2, ENTITY.w, ENTITY.h);
-            this.context.drawImage(this.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+            this.context.drawImage(skin.bodyImage, -ENTITY.w/2, -ENTITY.h/2, ENTITY.w, ENTITY.h);
+            this.context.drawImage(skin.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
         } else {
             if ((weapon.model.name === "pistol") || (weapon.model.name === "glock")) {
-                this.context.drawImage(this.bodyWithPistolsImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
-                this.context.drawImage(this.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+                this.context.drawImage(skin.bodyWithPistolsImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
+                this.context.drawImage(skin.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
             } else {   
-                this.context.drawImage(this.bodyWithWeaponImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
-                this.context.drawImage(this.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+                this.context.drawImage(skin.bodyWithWeaponImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
+                this.context.drawImage(skin.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
             }
         }
         this.context.restore();

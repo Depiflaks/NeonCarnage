@@ -1,5 +1,6 @@
 import { WEAPON_STATE } from "../../CONST.js";
 import { Trajectory } from "../Weapon/Trajectory.js";
+import { SkinModel } from "../Entity/SkinModel.js";
 
 class EntityController {
     constructor() {}
@@ -87,6 +88,15 @@ class EntityController {
         clearInterval(this.getWeapon().getShootingInterval());
         this.getWeapon().setShootingInterval(null);
         this.setWeapon(null);
+    }
+
+    getSkin() {
+        return this.model.skin;
+    }
+
+    setSkin(skinId) {
+        this.model.skinId = skinId;
+        this.model.skin = new SkinModel(skinId);
     }
 }
 
