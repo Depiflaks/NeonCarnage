@@ -36,7 +36,7 @@ class WebSocketController {
     }
 
     doUpdate(connection, body) {
-        this.session.udpateParameters(body, connection.id);
+        this.session.updateParameters(body, connection.id);
         const data = this.session.getData();
         //console.log(data.players);
         for (let id in this.session.model.players) {

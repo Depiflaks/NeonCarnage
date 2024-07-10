@@ -35,10 +35,10 @@ class ConnectionController {
                 skinId: this.player.getSkinId()
             },
             bullets: [],
-            damage: this.player.getDamage(),
+            change: this.player.getChange(),
         }
-        this.player.model.damage = {};
-        //console.log(body);
+        this.player.clearHeal();
+        this.player.clearDamage();
         body.bullets = this.player.getBullets().map(bullet => {
             const {x, y} = bullet.getPosition();
             return {
@@ -98,6 +98,7 @@ class ConnectionController {
         });
         for (const id in body.players) {
             const entity = body.players[id];
+            if (entity == {}) continue; 
             if (id === this.id) continue;
             if (!this.enemies[id]) this.enemies[id] = new EnemyController({
                 x: 0, y: 0, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth,
@@ -111,16 +112,18 @@ class ConnectionController {
             enemy.setAngle(entity.angle);
             enemy.setWeaponId(entity.weaponId);
             enemy.setHealth(entity.health);
-            if (!entity.isAlive) {
+            //console.log(entity);
+            if (entity && !entity.isAlive) {
                 enemy.die();
             }
-            // enemy.setBullets(body.bullets.map(bullet => {
-            //     return new Bullet({
-            //         x: bullet.x + this.field.x, 
-            //         y: bullet.y + this.field.y, 
-            //         angle: bullet.angle
-            //     })
-            // }))
+            //console.log(entity);
+            enemy.setBullets(entity.bullets.map(bullet => {
+                return new Bullet({
+                    x: bullet.x + this.field.x, 
+                    y: bullet.y + this.field.y, 
+                    angle: bullet.angle
+                })
+            }))
         }
     }
 

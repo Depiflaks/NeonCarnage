@@ -48,16 +48,11 @@ class PlayerController extends EntityController {
     pickupBonus(bonus) {
         const { x, y } = this.getPosition();
         const distance = Math.sqrt((bonus.x - x) ** 2 + (bonus.y - y) ** 2);
-
-        if (distance <= BONUS.minDistance) {
-            const currentHealth = this.getHealth();
-            const maxHealth = this.getMaxHealth();
-
-            if (currentHealth < maxHealth) {
-                const healthToAdd = Math.min(bonus.amount, maxHealth - currentHealth);
-                this.setHealth(currentHealth + healthToAdd);
-                return false;
-            }
+        const currentHealth = this.getHealth();
+        const maxHealth = this.getMaxHealth();
+        if (distance <= BONUS.minDistance && currentHealth < maxHealth) {
+            this.addHeal(bonus.amount)
+            return false;
         }
         return true;
     }
@@ -127,16 +122,7 @@ class PlayerController extends EntityController {
         if (key) {
             this.model.setKeyPressed(key, state);
             this.updateSpeed();
-            this.updateBulletAmount();
         }
-    }
-
-    updateBulletAmount() {
-        const keys = this.model.getKeyPressed();
-        // if (this.getWeapon() && (keys.r) && (!this.getWeapon().isRecharging())) {
-        //     this.getWeapon().setRecharging(true);
-        //     setTimeout(() => this.getWeapon().recharge(), this.getWeapon().getRechargeTime());
-        // }
     }
 
     updateSpeed() {
@@ -175,10 +161,6 @@ class PlayerController extends EntityController {
                 this.removeTrajectory();
             }
         }
-
-        if (this.getHealth() == 0) {
-            this.die();
-        }
     }
 
     getCursorPosition() {
@@ -211,6 +193,35 @@ class PlayerController extends EntityController {
 
     setBullets(bullets) {
         this.model.bullets = bullets;
+    }
+
+    getChange() {
+        return this.model.healthChange;
+    }
+
+    getDamage() {
+        return this.model.healthChange.damage;
+    }
+
+    addDamage(id, value) {
+        if (!this.model.healthChange.damage[id]) this.model.healthChange.damage[id] = 0;
+        this.model.healthChange.damage[id] += value;
+    }
+
+    clearDamage() {
+        this.model.healthChange.damage = {};
+    }
+
+    getHeal() {
+        return this.model.healthChange.heal;
+    }
+
+    addHeal(value) {
+        this.model.healthChange.heal += value;
+    }
+
+    clearHeal() {
+        this.model.healthChange.heal = 0;
     }
 
     setAnimating(value) {

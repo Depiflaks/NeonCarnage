@@ -17,7 +17,12 @@ class PlayerModel extends EntityModel {
             d: 0,
             e: 0,
         };
-        this.damage = {};
+        this.healthChange = {
+            heal: 0,
+            damage: {
+                
+            }
+        };
     }
 
     updatePosition() {

@@ -6,7 +6,7 @@ class SessionController {
     }
 
     addPlayer(connection) {
-        this.model.players[connection.id] = {};
+        this.model.players[connection.id] = {isAlive: true};
         this.model.playersCount += 1;
     }
 
@@ -14,21 +14,28 @@ class SessionController {
         this.model.connections[connection.id] = connection;
     }
 
-    udpateParameters(body, id) {
+    updateParameters(body, id) {
         const player = body.player;
         const entity = this.model.players[id];
-        //console.log(this.model.players, player.id);
+
         entity.x = player.x;
         entity.y = player.y;
         entity.angle = player.angle;
         entity.bullets = player.bullets;
         entity.skinId = player.skinId;
         entity.health = player.health;
+        entity.maxHealth = player.maxHealth;
         entity.isAlive = player.isAlive;
         
         this.updateWeapons(entity, player);
+
+        this.updateBullets(entity, body)
         
-        this.updateHealth(body);
+        this.updateHealth(body, entity);
+    }
+
+    updateBullets(entity, body) {
+        entity.bullets = body.bullets;
     }
 
     updateWeapons(entity, player) {
@@ -57,9 +64,16 @@ class SessionController {
         }
     }
 
-    updateHealth(body) {
-        for (const id in body.damage) {
+    updateHealth(body, entity) {
+        const damage = body.change.damage;
+        const heal = body.change.heal;
 
+        entity.health = Math.min(entity.maxHealth, entity.health + heal);
+
+        for (let id in damage) {
+            const player = this.model.players[id];
+            player.health = Math.max(0, player.health - damage[id])
+            if (player.health === 0) player.isAlive = false
         }
     }
 
@@ -68,6 +82,7 @@ class SessionController {
             players: this.model.players,
             objects: this.model.objects,
         };
+        //console.log(this.model.players);
         return response;
     }
 }

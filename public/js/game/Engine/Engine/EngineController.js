@@ -47,14 +47,18 @@ class EngineController {
     update() {
         this.field.update();
         this.tracing.updateViewRange();
+        Object.values(this.enemies).map(enemy => {
+            enemy.checkActive(this.field);
+            enemy.getBullets().map(bullet => {
+                bullet.updatePosition();
+            });
+            enemy.update();
+        })
         this.checkIntersections([].concat(this.field.verticalWalls, this.field.horizontalWalls));
         this.takeAmmunition();
         this.takeBonus();
         this.player.update();
-        Object.values(this.enemies).map(enemy => {
-            enemy.checkActive(this.field);
-            enemy.update();
-        })
+        
         this.move();
         this.model.updateShake();
     }
@@ -63,9 +67,7 @@ class EngineController {
         const playerPosition = this.player.getPosition();
         this.field.ammunition = this.field.ammunition.filter(ammunition => {
             const weapon = this.player.getWeapon();
-            if (weapon && weapon.isDistant()) {
-                return weapon.pickupAmmunition(ammunition, playerPosition);
-            }
+            if (weapon && weapon.isDistant()) return weapon.pickupAmmunition(ammunition, playerPosition);
             return true;
         });
     }
@@ -95,8 +97,7 @@ class EngineController {
                 Object.entries(this.enemies).forEach(([id, enemy]) => {
                     if (bullet.isIntersectEnemy(enemy.model)) {
                         hit = true;
-                        if (!this.player.model.damage[id]) this.player.model.damage[id] = {shotDown: 0};
-                        this.player.model.damage[id].shotDown += 1;
+                        this.player.addDamage(id, 1)
                     }
                 });
                 return !hit;
