@@ -14,6 +14,11 @@ class GameController {
 
         this.lastFrame = 0;
         this.lastRequest = 0;
+        window.addEventListener('wheel', function(event) {
+            if (event.ctrlKey) {
+                event.preventDefault();
+            }
+        }, { passive: false });
     }
 
     loop(timestamp) {
