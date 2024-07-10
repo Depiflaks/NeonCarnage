@@ -47,7 +47,8 @@ class EntityController {
 
     setWeapon(weapon) {
         this.model.weapon = weapon;
-        this.setWeaponId(weapon.getId());
+        if (weapon)
+        this.setWeaponId(weapon ? weapon.getId() : null);
     }
 
     getWeaponId() {

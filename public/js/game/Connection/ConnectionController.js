@@ -18,32 +18,27 @@ class ConnectionController {
 
     sendData() {
         const {x, y} = this.player.getPosition();
-        const angle = this.player.getAngle();
         const weaponId = this.player.getWeaponId();
         const weaponAmount = weaponId ? this.player.getWeapon().getAmount(): null;
-        const health = this.player.getHealth();
-        const maxHealth = ENTITY.maxHealth;
-        const damage = this.player.model.damage;
-        const isAlive = this.player.isAlive();
-        this.player.model.damage = {};
-        //console.log(weapon);
         const body = {
             player: {
                 x: x - this.field.x, 
                 y: y - this.field.y, 
-                angle: angle, 
+                angle: this.player.getAngle(), 
                 weapon: {
                     id: weaponId,
                     amount: weaponAmount,
                 },
-                health: health,
-                maxHealth: maxHealth,
-                isAlive: isAlive,
+                health: this.player.getHealth(),
+                maxHealth: ENTITY.maxHealth,
+                isAlive: this.player.isAlive(),
                 skinId: this.player.getSkinId()
             },
             bullets: [],
-            damage: damage,
+            damage: this.player.getDamage(),
         }
+        this.player.model.damage = {};
+        //console.log(body);
         body.bullets = this.player.getBullets().map(bullet => {
             const {x, y} = bullet.getPosition();
             return {
@@ -98,10 +93,8 @@ class ConnectionController {
     }
 
     response(body) {
-        //console.log(body.objects.weapons);
-        body.objects.weapons.forEach(weapon => {
-            //console.log(weapon);
-        });
+        console.log(body.objects.weapons);
+        console.log(body.objects.weapons.filter(weapon => {!weapon.onGround}));
         for (let i = 0; i < body.objects.weapons.length; i++) {
             this.field.weapons[i]
         }

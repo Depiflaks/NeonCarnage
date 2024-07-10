@@ -189,6 +189,10 @@ class PlayerController extends EntityController {
         return { x: this.model.x, y: this.model.y };
     }
 
+    getDamage() {
+        return this.model.damage;
+    }
+
     getHealth() {
         return this.model.health;
     }

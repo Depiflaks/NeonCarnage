@@ -23,55 +23,28 @@ class WeaponView {
         //if (animation && animation.isAnimating) return;
         for (const entity of entities) {
             if (entity.getWeaponId() !== weapon.getId()) continue;
-            switch (weapon.getName()) {
-                case "knife":
-                    this.drawKnife(weapon, entity, context);
-                    break;
-                case "pistol":
-                    this.drawPistol(weapon, entity, context);
-                    break;
-                case "glock":
-                    this.drawPistol(weapon, entity, context);
-                    break;
-                case "rifle":
-                    this.drawShotGun(weapon, entity, context);
-                    break;
-                case "machineGun":
-                    this.drawShotGun(weapon, entity, context);
-                    break;
-            }
+            const {x: px, y: py} = entity.getPosition();
+            const {weaponX, weaponY} = this.getParam(weapon);
+            
+            context.save();
+            context.translate(px, py);
+            context.rotate(entity.getAngle() + 90 * RAD);
+            context.drawImage(weapon.model.inHand, weaponX, weaponY, weapon.model.w, weapon.model.h);
+            context.restore();
         }
-        
     }
 
-    drawKnife(weapon, entity, context) {
-        const weaponX = ENTITY.h;
-        const weaponY = -model.inHand.height / 2;
-        context.save();
-        context.translate(rotateX, rotateY);
-        context.rotate(angle + 90 * RAD);
-        context.drawImage(model.inHand, weaponX, weaponY, model.w, model.h);
-        context.restore();
-    }
-
-    drawPistol(weapon, entity, context) {
-        const weaponX = -ENTITY.h / 5;
-        const weaponY = -weapon.model.inHand.height;
-        context.save();
-        context.translate(rotateX, rotateY);
-        context.rotate(angle + 90 * RAD);
-        context.drawImage(model.inHand, weaponX, weaponY, model.w, model.h);
-        context.restore();        
-    }
-
-    drawShotGun(weapon, entity, context) {
-        const weaponX = -ENTITY.h / 2;
-        const weaponY = -model.inHand.height;
-        context.save();
-        context.translate(rotateX, rotateY);
-        context.rotate(angle + 90 * RAD);
-        context.drawImage(model.inHand, weaponX, weaponY, model.w, model.h);
-        context.restore();
+    getParam(weapon) {
+        switch (weapon.getName()) {
+            case "knife":
+                return {weaponX: ENTITY.h, weaponY: -weapon.model.inHand.height / 2}
+            case "glock":
+            case "pistol":
+                return {weaponX: -ENTITY.h / 5, weaponY: -weapon.model.inHand.height};
+            case "machineGun":
+            case "rifle":
+                return {weaponX: -ENTITY.h / 2, weaponY: -weapon.model.inHand.height}
+        }
     }
 }
 
