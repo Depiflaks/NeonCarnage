@@ -5,7 +5,7 @@ import { Bullet } from "../Engine/Weapon/Bullet.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.denis_home);
+        this.socket = new WebSocket(SERVER.sergey);
         this.enemies = {};
         this.initEventListeners();
     }
