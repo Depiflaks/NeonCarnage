@@ -2,9 +2,9 @@ import WebSocket, { WebSocketServer } from 'ws';
 import crypto from 'crypto';
 
 class WebSocketController {
-    constructor(server, map) {
+    constructor(server, session) {
         this.socket = new WebSocketServer({ server });
-        this.map = map;
+        this.session = session;
         this.socket.on('connection', (connection, req) => {this.onConnection(connection, req)});
     }
 
@@ -19,53 +19,32 @@ class WebSocketController {
     init(connection, req) {
         const ip = req.socket.remoteAddress;
         connection.id = this.getUniqueID(ip);
+        if (!this.session.model.players[connection.id]) this.session.addPlayer(connection);
+        this.session.updateConnection(connection);
+        const body = {
+            id: connection.id,
+        }
+        this.sendInit(connection, body);
         console.log(`Connected ${ip}`);
-        //this.sendInit(connection, this.map);
     }
 
     onMessage(message, connection) {
         const data = JSON.parse(message);
-        if (data.type === 'map') {
-            this.doMap(connection);
-        } else if (data.type === "update") {
+        if (data.type === "update") {
             this.doUpdate(connection, data.body);
         }
     }
 
-    doMap(connection) {
-        this.sendInit(connection, this.map);
-    }
-
     doUpdate(connection, body) {
-        for (const client of this.socket.clients) {
-            const player = body.player;
-            if (client.readyState !== WebSocket.OPEN) continue;
-            if (client === connection) continue;
+        this.session.udpateParameters(body, connection.id);
+        const data = this.session.getData();
+        //console.log(data.players);
+        for (let id in this.session.model.players) {
+            //console.log(id, this.session.model.connections[id].readyState)
+            if (this.session.model.connections[id].readyState !== WebSocket.OPEN) continue;
             
-            let damage = 0;
-            for (const damageClientId in body.damage) {
-                if (client.id === damageClientId) {
-                    damage = body.damage[damageClientId].shotDown;
-                }
-            }
-            const data = {
-                player: {
-                    id: connection.id,
-                    x: player.x,
-                    y: player.y,
-                    angle: player.angle,
-                    weapon: player.weapon,
-                    health: player.health,
-                    maxHealth: player.maxHealth,
-                    isAlive: player.isAlive,
-                    skinId: player.skinId,
-                },
-                bullets: body.bullets,
-                damage: {damage}
-            }
-            this.sendResponse(client, data)
+            this.sendResponse(this.session.model.connections[id], data)
         }
-        
     }
 
     onClose(req) {

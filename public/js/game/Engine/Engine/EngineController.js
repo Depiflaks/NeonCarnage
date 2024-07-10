@@ -95,18 +95,14 @@ class EngineController {
                 Object.entries(this.enemies).forEach(([id, enemy]) => {
                     if (bullet.isIntersectEnemy(enemy.model)) {
                         hit = true;
-                        if (this.player.model.damage[id] == undefined) {
-                            this.player.model.damage[id] = {shotDown: 1};
-                        }
-                        else {
-                            this.player.model.damage[id].shotDown += 1;
-                        }
+                        if (!this.player.model.damage[id]) this.player.model.damage[id] = {shotDown: 0};
+                        this.player.model.damage[id].shotDown += 1;
                     }
                 });
                 return !hit;
             }
         ));
-    }    
+    }
 
     checkIntersections(drawableArray, moveableArray) {
         this.bulletsIntersectionWall(drawableArray);

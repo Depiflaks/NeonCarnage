@@ -5,6 +5,7 @@ import express from 'express';
 import http from 'http';
 import { MapGenerator } from '../MapGenerator/MapGenerator.js';
 import { RequestController } from '../RequestController/RequestController.js';
+import { SessionController } from '../Session/SessionController.js';
 
 class ServerController {
     constructor() {
@@ -14,11 +15,15 @@ class ServerController {
         this.generanor = new MapGenerator();
         this.request = new RequestController(this.app, this.generanor);
 
+        this.sessions = [];
+
+        this.sessions.push(new SessionController(this.getMap()))
+
         this.server.listen(this.port, () => {
             console.log('Listening on port ' + this.port);
         });
         
-        this.webSocket = new WebSocketController(this.server, this.getMap());
+        this.webSocket = new WebSocketController(this.server, this.sessions[0]);
     }
 
     getMap() {

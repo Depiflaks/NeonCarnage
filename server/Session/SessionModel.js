@@ -1,11 +1,22 @@
 class SessionModel {
-    constructor(map) {
-        this.map = map;
+    constructor(field) {
+        this.field = field;
         this.maxPlayers = 100;
         this.players = {};
         this.playersCount = 0;
-        this.objects = {}
-
+        this.connections = {};
+        this.objects = {
+            weapons: [],
+        };
+        this.objects.weapons = this.field.obj.weapons.map(weapon => {
+            return { // пока напишу небольшой костыль для координат, потом исправим
+                id: weapon.id,
+                onGround: true,
+                x: weapon.x * 150 + 75,
+                y: weapon.y * 150 + 75,
+                amount: weapon.type.amount
+            }
+        })
     }
 }
 

@@ -107,8 +107,6 @@ class PlayerController extends EntityController {
         this.getTrajectory().toLeft();
     }
 
-    
-
     keyDown(event) {
         this.updateKey(event.code, 1);
     }

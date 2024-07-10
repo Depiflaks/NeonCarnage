@@ -1,18 +1,18 @@
 // CONST.js
 const RAD = Math.PI / 180;
 const FPS = 90;
-const RPS = 40;
+const RPS = 90;
 const FRAME_DURATION = 1000 / FPS;
 const REQUEST_DURATION = 1000 / RPS;
 
 const SERVER = {
     sergey: 'ws://10.250.104.142:8000/',
-    sergey_home: 'ws://192.168.1.131:8000/',
+    sergey_home: 'ws://192.168.159.162:8000/',
     ignat: 'ws://10.250.104.176:8000/',
     liuba: 'ws://10.250.104.170:8000/',
     denis: 'ws://10.250.104.148:8000/',
     denis_home: 'ws://192.168.129.252:8000/'
-}
+};
 
 const WINDOW = {
     w: 1200,
@@ -214,7 +214,7 @@ const BULLET = {
 };
 
 const ENEMY = {
-    period: 10,
+    period: 100,
 }
 
 const KEYBOARD_E = 'KeyE';
