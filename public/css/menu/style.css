@@ -1,0 +1,95 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column; 
+    background: linear-gradient(to top, #ff69b4, #ff1493);
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    overflow: hidden;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.menu {
+    text-align: center;
+    animation: glitch 1s infinite;
+}
+
+.menu h1 {
+    font-size: 3em;
+    color: #ff69b4;
+    text-shadow: 2px 2px #000, -2px -2px #ff0;
+    position: relative;
+    animation: glow 1.5s infinite alternate;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    margin: 40px 0; /* Увеличено расстояние между элементами списка */
+    animation: moveIn 1s ease-in-out infinite alternate;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.5em;
+    padding: 10px 20px;
+    background: #ff69b4;
+    border: 2px solid #ff0;
+    box-shadow: 3px 3px #000, -3px -3px #ff0;
+    transition: background 0.3s;
+}
+
+.menu a:hover {
+    background: #ff1493;
+}
+
+/* Glow effect for the title */
+@keyframes glow {
+    0% {
+        text-shadow: 2px 2px #000, -2px -2px #ff0;
+    }
+    100% {
+        text-shadow: 2px 2px #000, -2px -2px #fff;
+    }
+}
+
+/* Glitch effect for the menu */
+@keyframes glitch {
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, -2px);
+    }
+    40% {
+        transform: translate(2px, 2px);
+    }
+    60% {
+        transform: translate(-2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+    100% {
+        transform: translate(0);
+    }
+}
+
+/* Move in effect for the menu items */
+@keyframes moveIn {
+    0% {
+        opacity: 0.7;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
