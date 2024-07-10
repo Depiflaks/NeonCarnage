@@ -1,7 +1,7 @@
 // CONST.js
 const RAD = Math.PI / 180;
 const FPS = 90;
-const RPS = 1;
+const RPS = 40;
 const FRAME_DURATION = 1000 / FPS;
 const REQUEST_DURATION = 1000 / RPS;
 

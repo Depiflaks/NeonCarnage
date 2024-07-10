@@ -19,9 +19,9 @@ class WeaponController {
         this.model.isRecharging = false;
     }
 
-    update(weapon) {
-        this.model.x = weapon.x;
-        this.model.y = weapon.y;
+    update(weapon, {dx, dy}) {
+        this.model.x = weapon.x + dx;
+        this.model.y = weapon.y + dy;
         this.status = weapon.onGround ? WEAPON_STATE.onTheGround : WEAPON_STATE.inTheHand; 
     }
 

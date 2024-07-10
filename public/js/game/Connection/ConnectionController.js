@@ -93,11 +93,10 @@ class ConnectionController {
     }
 
     response(body) {
-        console.log(body.objects.weapons);
-        console.log(body.objects.weapons.filter(weapon => {!weapon.onGround}));
-        for (let i = 0; i < body.objects.weapons.length; i++) {
-            this.field.weapons[i]
-        }
+        //console.log(body.objects.weapons);
+        body.objects.weapons.filter(weapon => {return !weapon.onGround}).map(weapon => {
+            this.field.weapons[weapon.id].update(weapon, {dx: this.field.x, dy: this.field.y});
+        });
         for (const id in body.players) {
             const entity = body.players[id];
             if (id === this.id) continue;
@@ -105,9 +104,6 @@ class ConnectionController {
                 x: 0, y: 0, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth
             });
             const enemy = this.enemies[id];
-            if (!entity.isAlive) {
-                enemy.die();
-            }
             enemy.setPosition({
                 x: entity.x + this.field.x,
                 y: entity.y + this.field.y,
@@ -115,6 +111,10 @@ class ConnectionController {
             enemy.setAngle(entity.angle);
             enemy.setWeaponId(entity.weapon);
             enemy.setHealth(entity.health);
+            //console.log(entity);
+            if (!entity.isAlive) {
+                enemy.die();
+            }
             // enemy.setBullets(body.bullets.map(bullet => {
             //     return new Bullet({
             //         x: bullet.x + this.field.x, 

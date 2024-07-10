@@ -6,9 +6,11 @@ class WeaponView {
 
     draw(weapon, entities, context) {
         if (weapon.getStatus() === WEAPON_STATE.onTheGround) {
+            //console.log(1);
             this.drawOnGround(weapon, context);  
         }
         if (weapon.getStatus() === WEAPON_STATE.inTheHand) {
+            //console.log(2);
             this.drawInHand(weapon, entities, context);
         }
     }
@@ -22,14 +24,16 @@ class WeaponView {
         // доделать траекторию, когда начнём получать её с бэкенда
         //if (animation && animation.isAnimating) return;
         for (const entity of entities) {
+            console.log(123);
             if (entity.getWeaponId() !== weapon.getId()) continue;
+            
             const {x: px, y: py} = entity.getPosition();
             const {weaponX, weaponY} = this.getParam(weapon);
             
             context.save();
             context.translate(px, py);
             context.rotate(entity.getAngle() + 90 * RAD);
-            context.drawImage(weapon.model.inHand, weaponX, weaponY, weapon.model.w, weapon.model.h);
+            context.drawImage(weapon.getInHand(), weaponX, weaponY, weapon.model.w, weapon.model.h);
             context.restore();
         }
     }
