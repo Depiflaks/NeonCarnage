@@ -7,6 +7,7 @@ class SessionModel {
         this.connections = {};
         this.objects = {
             weapons: [],
+            weaponId: null,
         };
         this.objects.weapons = this.field.obj.weapons.map(weapon => {
             return { // пока напишу небольшой костыль для координат, потом исправим

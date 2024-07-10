@@ -3,7 +3,6 @@ import { SessionModel } from "./SessionModel.js"
 class SessionController {
     constructor(field) {
         this.model = new SessionModel(field);
-
     }
 
     addPlayer(connection) {
@@ -27,8 +26,16 @@ class SessionController {
         entity.health = player.health;
         entity.isAlive = player.isAlive;
         
+        this.updateWeapons(entity, player);
+        
+        this.updateHealth(body);
+    }
+
+    updateWeapons(entity, player) {
+        this.model.objects.weaponId = null;
         if (entity.weaponId && !player.weapon.id) { // если оружие в руках было, но игрок его выбросил
             const weapon = this.model.objects.weapons[entity.weaponId];
+            this.model.objects.weaponId = entity.weaponId;
             weapon.x = player.x;
             weapon.y = player.y;
             weapon.onGround = true;
@@ -36,17 +43,18 @@ class SessionController {
         } else if (!entity.weaponId && player.weapon.id) { // если оружия в руках не было, игрок его подобрал
             entity.weaponId = player.weapon.id;
             const weapon = this.model.objects.weapons[entity.weaponId];
+            this.model.objects.weaponId = entity.weaponId;
             weapon.x = player.x;
             weapon.y = player.y;
             weapon.amount = player.weapon.amount;
             weapon.onGround = false;
         } else if (entity.weaponId && player.weapon.id) { // если оружие в руках было и оно до сих пор в руках
             const weapon = this.model.objects.weapons[entity.weaponId];
+            this.model.objects.weaponId = entity.weaponId;
             weapon.x = player.x;
             weapon.y = player.y;
             weapon.amount = player.weapon.amount;
         }
-        this.updateHealth(body);
     }
 
     updateHealth(body) {

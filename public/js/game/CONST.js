@@ -7,7 +7,7 @@ const REQUEST_DURATION = 1000 / RPS;
 
 const SERVER = {
     sergey: 'ws://10.250.104.142:8000/',
-    sergey_home: 'ws://192.168.159.162:8000/',
+    sergey_home: 'ws://192.168.228.162:8000/',
     ignat: 'ws://10.250.104.176:8000/',
     liuba: 'ws://10.250.104.170:8000/',
     denis: 'ws://10.250.104.148:8000/',

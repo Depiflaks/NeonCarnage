@@ -84,6 +84,7 @@ class BattleGround extends Drawable {
 
     drawWeapons(entities, context) {
         let indexX, indexY;
+        //console.log(this.weapons);
         this.weapons.map(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) / CELL.w);
             indexY = Math.floor((weapon.model.y - this.y) / CELL.h);

@@ -22,7 +22,8 @@ class WeaponController {
     update(weapon, {dx, dy}) {
         this.model.x = weapon.x + dx;
         this.model.y = weapon.y + dy;
-        this.status = weapon.onGround ? WEAPON_STATE.onTheGround : WEAPON_STATE.inTheHand; 
+        this.model.amount = weapon.amount;
+        this.model.status = weapon.onGround ? WEAPON_STATE.onTheGround : WEAPON_STATE.inTheHand; 
     }
 
     pickupAmmunition(ammunition, playerPosition) {

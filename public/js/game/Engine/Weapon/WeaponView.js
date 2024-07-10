@@ -24,9 +24,8 @@ class WeaponView {
         // доделать траекторию, когда начнём получать её с бэкенда
         //if (animation && animation.isAnimating) return;
         for (const entity of entities) {
-            console.log(123);
+            //console.log(entity, entity.getWeaponId(), weapon.getId());
             if (entity.getWeaponId() !== weapon.getId()) continue;
-            
             const {x: px, y: py} = entity.getPosition();
             const {weaponX, weaponY} = this.getParam(weapon);
             

@@ -19,7 +19,7 @@ class ConnectionController {
     sendData() {
         const {x, y} = this.player.getPosition();
         const weaponId = this.player.getWeaponId();
-        const weaponAmount = weaponId ? this.player.getWeapon().getAmount(): null;
+        const weaponAmount = weaponId ? this.player.getWeapon().getAmount() : null;
         const body = {
             player: {
                 x: x - this.field.x, 
@@ -93,15 +93,15 @@ class ConnectionController {
     }
 
     response(body) {
-        //console.log(body.objects.weapons);
-        body.objects.weapons.filter(weapon => {return !weapon.onGround}).map(weapon => {
+        body.objects.weapons.filter(weapon => {return weapon.id === body.objects.weaponId}).map(weapon => {
             this.field.weapons[weapon.id].update(weapon, {dx: this.field.x, dy: this.field.y});
         });
         for (const id in body.players) {
             const entity = body.players[id];
             if (id === this.id) continue;
             if (!this.enemies[id]) this.enemies[id] = new EnemyController({
-                x: 0, y: 0, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth
+                x: 0, y: 0, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth,
+                health: entity.health
             });
             const enemy = this.enemies[id];
             enemy.setPosition({
@@ -109,9 +109,8 @@ class ConnectionController {
                 y: entity.y + this.field.y,
             });
             enemy.setAngle(entity.angle);
-            enemy.setWeaponId(entity.weapon);
+            enemy.setWeaponId(entity.weaponId);
             enemy.setHealth(entity.health);
-            //console.log(entity);
             if (!entity.isAlive) {
                 enemy.die();
             }
