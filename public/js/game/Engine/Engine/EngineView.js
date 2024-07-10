@@ -43,7 +43,7 @@ class EngineView {
         this.entityView.drawHealthBar(player.getHealth());
         this.drawBulletAmount(player);
         this.entityView.drawCursor(player.getCursorPosition());
-        this.drawGradientOverlay();
+        this.drawGradientOverlay(player.getHealth(), player.getMaxHealth());
     }
 
     drawBullets(bullets, field) {
@@ -96,27 +96,36 @@ class EngineView {
     }
 
 
-    drawGradientOverlay() {
+    drawGradientOverlay(health, maxHealth) {
         const { width, height } = this.canvas;
         const gradient = this.context.createLinearGradient(0, 0, width, height);
 
-        // Вычисляем значения цвета на основе gradientOffset
-        const r = Math.floor(127 * (1 + Math.sin(Math.PI * this.gradientOffset)));
-        const g = Math.floor(127 * (1 + Math.sin(Math.PI * (this.gradientOffset + 2 / 3))));
-        const b = Math.floor(127 * (1 + Math.sin(Math.PI * (this.gradientOffset + 4 / 3))));
+        const healthRatio = health / maxHealth;
 
-        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.1)`);
-        gradient.addColorStop(1, `rgba(${b}, ${r}, ${g}, 0.1)`);
+        const minRed = 170;
+        const r = Math.min(255, Math.floor(minRed + (255 - minRed) * (1 - healthRatio)));
+
+        const g = Math.floor((127 * healthRatio) * (1 + Math.sin(Math.PI * (this.gradientOffset + 2 / 3))));
+        const b = Math.floor((127 * healthRatio) * (1 + Math.sin(Math.PI * (this.gradientOffset + 4 / 3))));
+
+        const minAlpha = 0.08;
+        const maxAlpha = 0.2;
+        const alpha = minAlpha + (maxAlpha - minAlpha) * (1 - healthRatio);
+
+        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha})`);
+        gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, ${alpha})`);
 
         this.context.fillStyle = gradient;
         this.context.fillRect(0, 0, width, height);
 
-        // Обновляем gradientOffset
         this.gradientOffset += 0.01;
         if (this.gradientOffset >= 2) {
             this.gradientOffset = 0;
         }
     }
+
+
+
 
     drawLine(x1, y1, x2, y2, color, field) {
         this.context.lineWidth = 1;

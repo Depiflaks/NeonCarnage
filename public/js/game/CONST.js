@@ -94,7 +94,7 @@ const ENTITY = {
         angleStep: 5 * RAD,
     },
     pythagoreanFactor: Math.sqrt(2) / 2,
-    health: 4,
+    health: 1,
     maxHealth: 5,
 };
 
