@@ -3,7 +3,7 @@ import { Moveable } from "../Interface/Moveable.js";
 import { SkinModel } from "./Skin/SkinModel.js";
 
 class EntityModel extends Moveable {
-    constructor({ x, y, skinId, spawnPoints }) {
+    constructor({ x, y, skinId, spawnPoints, nickName}) {
         super(x, y, ENTITY.w, ENTITY.h, ENTITY.radius);
         this.weapon = null;
         this.weaponId = 0;
@@ -15,6 +15,7 @@ class EntityModel extends Moveable {
         this.skinId = skinId;
         this.skin = new SkinModel({skinId});
         this.spawnPoints = spawnPoints;
+        this.nickname = nickName;
     }
 }
 

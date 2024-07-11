@@ -9,6 +9,7 @@ class EntityController {
         const randomSpawnPoint = this.model.spawnPoints[Math.floor(Math.random() * this.model.spawnPoints.length)];
         this.model.x = randomSpawnPoint.x;
         this.model.y = randomSpawnPoint.y;
+        console.log(this.model.x, this.model.y);
     }
 
     getPosition() {
@@ -118,6 +119,14 @@ class EntityController {
     setSkin(skinId) {
         this.model.skinId = skinId;
         this.model.skin = new SkinModel(skinId);
+    }
+
+    getNickname() {
+        return this.model.nickname;
+    }
+
+    setNickname(value) {
+        this.model.nickname = value;
     }
 }
 

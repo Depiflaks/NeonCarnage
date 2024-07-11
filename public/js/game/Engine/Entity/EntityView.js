@@ -1,4 +1,4 @@
-import {ENTITY, RAD, INTERFACE, SKINS} from "../../CONST.js";
+import { ENTITY, RAD, INTERFACE, SKINS } from "../../CONST.js";
 
 class EntityView {
     constructor(context) {
@@ -10,7 +10,7 @@ class EntityView {
     draw(entity) {
         if (!entity.isActive()) return;
         const skin = entity.getSkin();
-        const {x, y} = entity.getPosition();
+        const { x, y } = entity.getPosition();
         const angle = entity.getAngle();
         const weaponId = entity.getWeaponId();
         const weapon = entity.getWeapon();
@@ -19,21 +19,21 @@ class EntityView {
         this.context.translate(x, y);
         this.context.rotate(angle + 90 * RAD);
         if ((!animation && !weaponId) || (!animation && (weapon && weapon.model.name === "knife")) || (animation && animation.isAnimating && weaponId)) {
-            this.context.drawImage(skin.bodyImage, -ENTITY.w/2, -ENTITY.h/2, ENTITY.w, ENTITY.h);
+            this.context.drawImage(skin.bodyImage, -ENTITY.w / 2, -ENTITY.h / 2, ENTITY.w, ENTITY.h);
             this.context.drawImage(skin.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
         } else if (weapon && (weapon.model.name === "pistol" || weapon.model.name === "glock")) {
-                this.context.drawImage(skin.bodyWithPistolsImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
-                this.context.drawImage(skin.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
-        } else {   
-                this.context.drawImage(skin.bodyWithWeaponImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
-                this.context.drawImage(skin.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+            this.context.drawImage(skin.bodyWithPistolsImage, -ENTITY.wWithWeapon / 2, -ENTITY.hWithWeapon / 1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
+            this.context.drawImage(skin.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+        } else {
+            this.context.drawImage(skin.bodyWithWeaponImage, -ENTITY.wWithWeapon / 2, -ENTITY.hWithWeapon / 1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
+            this.context.drawImage(skin.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
         }
         this.context.restore();
     }
 
     drawDead(entity) {
         if (entity.isAlive()) return;
-        const {x, y} = entity.getPosition();
+        const { x, y } = entity.getPosition();
         const angle = entity.getAngle();
         this.context.save();
         this.context.translate(x, y);
@@ -47,8 +47,8 @@ class EntityView {
 
     drawEnemyHealthBar(x, y, health, maxHealth) {
         const barWidth = ENTITY.w;
-        const barHeight = 10;  // Более тонкий бар
-        const offset = 20;    // Отступ от врага
+        const barHeight = 10;  // Narrower bar
+        const offset = 20;    // Offset from the enemy
 
         // Background
         this.context.fillStyle = "gray";
@@ -86,7 +86,17 @@ class EntityView {
         }
     }
 
-
+    drawNickname(entity) {
+        const { x, y } = entity.getPosition();
+        const nickname = entity.getNickname();
+        if (nickname && entity.model.active) {
+            this.context.font = "16px Russo One";
+            this.context.fillStyle = "white";
+            this.context.textAlign = "center";
+            this.context.fillText(nickname, x, y - ENTITY.radius - 20);
+            this.context.restore();
+        }
+    }
 }
 
 export { EntityView };

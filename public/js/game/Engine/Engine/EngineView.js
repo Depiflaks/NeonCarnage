@@ -29,6 +29,8 @@ class EngineView {
             this.entityView.drawDead(player);
         }
 
+        this.entityView.drawNickname(player);
+
         Object.values(enemies).map(enemy => {
             if (enemy.isAlive()) {
                 this.entityView.draw(enemy);
@@ -38,6 +40,8 @@ class EngineView {
             this.drawBullets(enemy.getBullets(), field);
             //console.log(enemy.getPosition().x, enemy.getPosition().y, enemy.model.health, enemy.model.maxHealth)
             this.drawEnemyHealthBar(field, enemy);
+            this.entityView.drawNickname(enemy);
+
         });
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());
@@ -77,7 +81,6 @@ class EngineView {
             this.entityView.drawEnemyHealthBar(x, y, enemy.model.health, enemy.model.maxHealth);
         }
     }
-
 
     update(field, player, enemies, isShaking) {
         field.clearFrame(this.context);
