@@ -100,7 +100,7 @@ class EngineController {
             bullet => {
                 let hit = false;
                 Object.entries(this.enemies).forEach(([id, enemy]) => {
-                    if (bullet.isIntersectEnemy(enemy.model)) {
+                    if (enemy.isAlive() && bullet.isIntersectEnemy(enemy.model)) {
                         hit = true;
                         this.player.addDamage(id, 1)
                     }

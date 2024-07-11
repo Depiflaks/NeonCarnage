@@ -16,7 +16,7 @@ class EngineView {
 
     draw(field, player, enemies, list, leaderBoard) {
         field.drawGround(this.context);
-        field.drawCorpse(this.context);
+        //field.drawCorpse(this.context);
         this.drawBullets(player.getBullets(), field);
         field.drawBonuses(this.context);
         field.drawWeapons([].concat(player, Object.values(enemies)), this.context);
