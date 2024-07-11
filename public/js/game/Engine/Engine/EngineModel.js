@@ -7,6 +7,12 @@ class EngineModel {
         this.field = new BattleGround(cells, walls, weapons, ammunitions, bonuses);
         this.player = new PlayerController(player);
         this.enemies = [];
+        this.list = {
+            '123': 4,
+            'Smmm': 5,
+            'Liuba': 123,
+        };
+        this.leaderBoard = false;
     }
 
     getField() {

@@ -14,8 +14,6 @@ class Bonus extends Collectable {
         const bonusX = this.x - BONUS.w / 2;
         const bonusY = this.y - BONUS.h / 2;
         context.drawImage(this.image, bonusX, bonusY, BONUS.w, BONUS.h);
-        // context.fillStyle = this.color;
-        // context.fillRect(bonusX, bonusY, BONUS.w, BONUS.h);
     }
 
     respawn(delay = 5000) {
