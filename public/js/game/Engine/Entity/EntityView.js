@@ -61,21 +61,31 @@ class EntityView {
     }
 
     drawHealthBar(health) {
-        const barWidth = 100;
-        const barHeight = 20;
-        const offsetY = 65;
+        const squareSize = 15;
+        const squaresPerRow = 10;
+        const rows = 2;
         const offsetX = 10;
-        const maxHealth = 5;
+        const offsetY = 45;
+        const gap = 5; // Gap between squares
+        const maxHealth = 20;
 
-        // Background
-        this.context.fillStyle = "gray";
-        this.context.fillRect(offsetX, ENTITY.radius + offsetY - barHeight, barWidth, barHeight);
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < squaresPerRow; col++) {
+                const x = offsetX + col * (squareSize + gap);
+                const y = ENTITY.radius + offsetY + row * (squareSize + gap);
+                const index = row * squaresPerRow + col;
 
-        // Health
-        const healthWidth = (barWidth * health) / maxHealth;
-        this.context.fillStyle = "red";
-        this.context.fillRect(offsetX, ENTITY.radius + offsetY - barHeight, healthWidth, barHeight);
+                if (index < health) {
+                    this.context.fillStyle = "red";
+                } else {
+                    this.context.fillStyle = "gray";
+                }
+
+                this.context.fillRect(x, y, squareSize, squareSize);
+            }
+        }
     }
+
 
 }
 
