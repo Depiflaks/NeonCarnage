@@ -21,7 +21,6 @@ class ConnectionController {
         const {x, y} = this.player.getPosition();
         const weaponId = this.player.getWeaponId();
         const weaponAmount = weaponId ? this.player.getWeapon().getAmount() : null;
-        const corpse = this.field.getCorpse();
         const body = {
             player: {
                 x: x - this.field.x, 
@@ -43,23 +42,25 @@ class ConnectionController {
                 heal: this.player.getHeal(),
             },
             field: {
-                corpse: this.field.getCorpse().map(corp => {return {
-                    x: corp.x,
-                    y: corp.y,
-                    skinId: corp.skinId,
-                }}),
+                corpses: [],
             }
-
         }
         this.player.clearHeal();
         this.player.clearDamage();
+        if (this.field.getCorpses()[this.id]) body.field.corpses = this.field.getCorpses()[this.id].map(corp => {return {
+            x: corp.x - this.field.x,
+            y: corp.y - this.field.y,
+            skinId: corp.skinId,
+        }})
         body.bullets = this.player.getBullets().map(bullet => {
             const {x, y} = bullet.getPosition();
             return {
                 x: x - this.field.x, 
                 y: y - this.field.y, 
-                angle: bullet.getAngle()};
+                angle: bullet.getAngle()
+            };
         })
+        //console.log(this.field.getCorpses());
         this.send("update", body);
     }
 
@@ -111,15 +112,21 @@ class ConnectionController {
             this.field.weapons[weapon.id].update(weapon, {dx: this.field.x, dy: this.field.y});
         });
         //console.log(body);
-        this.field.corpse = body.objects.corpse.map(corp => {return new Corpse(corp.x, corp.y, corp.skinId)})
-        //console.log(this.field.corpse);
+        for (let id in body.objects.corpses) {
+            this.field.corpses[id] = body.objects.corpses[id].map(corp => {return new Corpse(
+                corp.x + this.field.x, 
+                corp.y + this.field.y, 
+                corp.skinId
+            )})
+        }
+        //console.log(this.field.corpses);
         for (const id in body.players) {
             const entity = body.players[id];
             if (id === this.id) {
                 this.player.setAlive(entity.isAlive);
                 this.player.setHealth(entity.health);
                 if (!entity.isAlive && !entity.isReborning && !this.player.isReborning()) {
-                    this.field.addCorpse(this.player);
+                    this.field.addCorpse(this.id, this.player);
                     this.player.die(this.field.getSpawnPoint());
                 }
                 continue;

@@ -6,6 +6,7 @@ class SessionModel {
         this.playersCount = 0;
         this.connections = {};
         this.objects = {
+            corpses: {},
             weapons: [],
             weaponId: null,
         };

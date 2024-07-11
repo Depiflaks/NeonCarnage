@@ -1,7 +1,7 @@
 import { Cell } from "./Cell.js";
 import { VerticalWall} from "./VerticalWall.js";
 import { HorizontalWall} from "./HorizontalWall.js";
-import { CELL, WINDOW } from "../../CONST.js";
+import { CELL, SKINS, WINDOW } from "../../CONST.js";
 import { WeaponController } from "../Weapon/WeaponController.js";
 import { Drawable } from "../Interface/Drawable.js";
 import { Bonus } from "../Collectable/Bonus.js";
@@ -28,8 +28,13 @@ class BattleGround extends Drawable {
         this.weapons = [];
         this.ammunition = [];
         this.bonuses = [];
-        this.corpse = [];
+        this.corpses = {};
 
+        this.corpseImages = []
+        for (let i = 0; i < SKINS.length; i++) {
+            this.corpseImages.push(new Image());
+            this.corpseImages[i].src = SKINS[i].corpse
+        }
         this.cells = Array.from({ length: maxX + 1 }, () => Array(maxY + 1).fill(null));
 
         weaponSet.map(
@@ -127,11 +132,11 @@ class BattleGround extends Drawable {
 
     drawCorpse(context) {
         let indexX, indexY;
-        this.corpse.map(corp => {
+        Object.values(this.corpses).map(list => list.map(corp => {
             indexX = Math.floor(corp.x / CELL.w);
             indexY = Math.floor(corp.y / CELL.h);
-            if (this.cells[indexX][indexY] && this.cells[indexX][indexY].active) corp.draw({dx: this.x, dy: this.y}, context);
-        });
+            if (this.cells[indexX][indexY] && this.cells[indexX][indexY].active) corp.draw(this.corpseImages, context);
+        }))
     }
 
     clearFrame(context) {
@@ -142,51 +147,22 @@ class BattleGround extends Drawable {
     hideCells() {
         this.cells.map(row => row.map(cell => {
             if (cell) {
-                cell.active = false
+                cell.active = false;
                 cell.activeDirection = 1;
             }
         }));
     }
 
-    getCorpse() {
-        return this.corpse;
+    getCorpses() {
+        return this.corpses;
     }
 
-    addCorpse(player) {
+    addCorpse(id, player) {
         const skinId = player.getSkinId();
         let {x, y} = player.getPosition();
-        x -= this.x;
-        y -= this.y;
-        const corpse = new Corpse(x, y, skinId);
-        const isCorpseExists = this.corpse.some(existingCorpse => 
-            existingCorpse.x === x && 
-            existingCorpse.y === y && 
-            existingCorpse.skinId === skinId
-        );
-        
-        if (!isCorpseExists) {
-            this.corpse.push(corpse);
-        }
-        
-    }
-
-    mergeCorpse(corpse) {
-        // Фильтруем элементы, исключая null и undefined
-        const validCorpses = corpse.filter(corpseItem => corpseItem !== null && corpseItem !== undefined);
-    
-        // Добавляем элементы, проверяя на дублирование
-        validCorpses.forEach(newCorpse => {
-            const isDuplicate = this.corpse.some(existingCorpse =>
-                existingCorpse.x === newCorpse.x &&
-                existingCorpse.y === newCorpse.y &&
-                existingCorpse.skinId === newCorpse.skinId
-            );
-    
-            if (!isDuplicate) {
-                this.corpse.push(newCorpse);
-                console.log(this.corpse);
-            }
-        });
+        if (!this.corpses[id]) this.corpses[id] = [];
+        this.corpses[id].push(new Corpse(x, y, skinId));
+        console.log(this.corpses[id]);
     }
 
     move(dx, dy) {
@@ -197,7 +173,7 @@ class BattleGround extends Drawable {
         this.weapons.map(weapon => weapon.model.move(dx, dy));
         this.ammunition.map(ammunition => ammunition.move(dx, dy));
         this.bonuses.map(bonus => bonus.move(dx, dy));
-        this.corpse.map(corp => corp.move(dx, dy));
+        Object.values(this.corpses).map(list => list.map(corp => corp.move(dx, dy)));
     }
 }
 
