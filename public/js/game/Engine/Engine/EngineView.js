@@ -30,6 +30,8 @@ class EngineView {
             this.entityView.drawDead(player);
         }
 
+        this.entityView.drawNickname(player);
+
         Object.values(enemies).map(enemy => {
             if (enemy.isAlive()) {
                 this.entityView.draw(enemy);
@@ -38,6 +40,8 @@ class EngineView {
                 this.entityView.drawDead(enemy);
             }
             this.drawBullets(enemy.getBullets(), field);
+            this.entityView.drawNickname(enemy);
+
         });
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());

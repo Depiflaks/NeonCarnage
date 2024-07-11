@@ -27,6 +27,7 @@ class SessionController {
         entity.angle = player.angle;
         entity.skinId = player.skinId;
         entity.isReborning = player.isReborning;
+        entity.nickname = player.nickname;
         
         this.updateWeapons(entity, player);
 

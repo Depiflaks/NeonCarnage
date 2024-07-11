@@ -104,6 +104,14 @@ class EntityController {
         this.model.skinId = skinId;
         this.model.skin = new SkinModel(skinId);
     }
+
+    getNickname() {
+        return this.model.nickname;
+    }
+
+    setNickname(value) {
+        this.model.nickname = value;
+    }
 }
 
 export {EntityController}

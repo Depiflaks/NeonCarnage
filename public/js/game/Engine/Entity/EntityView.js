@@ -10,7 +10,7 @@ class EntityView {
     draw(entity) {
         if (!entity.isActive()) return;
         const skin = entity.getSkin();
-        const {x, y} = entity.getPosition();
+        const { x, y } = entity.getPosition();
         const angle = entity.getAngle();
         const weaponId = entity.getWeaponId();
         const weapon = entity.getWeapon();
@@ -33,7 +33,7 @@ class EntityView {
 
     drawDead(entity) {
         if (entity.isAlive()) return;
-        const {x, y} = entity.getPosition();
+        const { x, y } = entity.getPosition();
         const angle = entity.getAngle();
         this.context.save();
         this.context.translate(x, y);
@@ -51,8 +51,8 @@ class EntityView {
         const health = entity.getHealth();
         const maxHealth = entity.getMaxHealth();
         const barWidth = ENTITY.w;
-        const barHeight = 10;  // Более тонкий бар
-        const offset = 20;    // Отступ от врага
+        const barHeight = 10;  // Narrower bar
+        const offset = 20;    // Offset from the enemy
 
         // Background
         this.context.fillStyle = "gray";
@@ -90,7 +90,17 @@ class EntityView {
         }
     }
 
-
+    drawNickname(entity) {
+        const { x, y } = entity.getPosition();
+        const nickname = entity.getNickname();
+        if (nickname && entity.model.active) {
+            this.context.font = "16px Russo One";
+            this.context.fillStyle = "white";
+            this.context.textAlign = "center";
+            this.context.fillText(nickname, x, y - ENTITY.radius - 20);
+            this.context.restore();
+        }
+    }
 }
 
 export { EntityView };
