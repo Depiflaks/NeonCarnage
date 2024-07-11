@@ -192,13 +192,13 @@ const wallList = [
 const weaponSet = [
     {
         id: 0,
-        type: WEAPON_MODELS.knife, 
+        type: WEAPON_MODELS.pistol, 
         x: 2, 
         y: 12, 
     },
     {
         id: 1,
-        type: WEAPON_MODELS.rifle, 
+        type: WEAPON_MODELS.glock, 
         x: 6,
         y: 2,
     },
@@ -222,15 +222,45 @@ const weaponSet = [
     },
     {
         id: 5,
-        type: WEAPON_MODELS.rifle, 
+        type: WEAPON_MODELS.pistol, 
         x: 20,
         y: 16,
     },
     {
         id: 6,
-        type: WEAPON_MODELS.knife, 
+        type: WEAPON_MODELS.glock, 
         x: 24, 
         y: 9, 
+    },
+    {
+        id: 7,
+        type: WEAPON_MODELS.rifle, 
+        x: 8, 
+        y: 7, 
+    },
+    {
+        id: 8,
+        type: WEAPON_MODELS.rifle, 
+        x: 15, 
+        y: 15, 
+    },
+    {
+        id: 9,
+        type: WEAPON_MODELS.rifle, 
+        x: 18, 
+        y: 10, 
+    },
+    {
+        id: 10,
+        type: WEAPON_MODELS.machineGun, 
+        x: 7, 
+        y: 12, 
+    },
+    {
+        id: 11,
+        type: WEAPON_MODELS.machineGun, 
+        x: 13, 
+        y: 6, 
     },
 ];
 
@@ -242,6 +272,12 @@ const ammunitionSet = [
         amount: 40
     },
     {
+        x: 3,
+        y: 20,
+        image: "public/assets/Bonuses/cartridges.png",
+        amount: 30
+    },
+    {
         x: 5,
         y: 12,
         image: "public/assets/Bonuses/cartridges.png",
@@ -249,9 +285,15 @@ const ammunitionSet = [
     },
     {
         x: 7,
-        y: 6,
+        y: 5,
         image: "public/assets/Bonuses/cartridges.png",
         amount: 45
+    },
+    {
+        x: 9,
+        y: 12,
+        image: "public/assets/Bonuses/cartridges.png",
+        amount: 30
     },
     {
         x: 9,
@@ -260,10 +302,28 @@ const ammunitionSet = [
         amount: 35
     },
     {
-        x: 12,
-        y: 6,
+        x: 11,
+        y: 9,
+        image: "public/assets/Bonuses/cartridges.png",
+        amount: 20
+    },
+    {
+        x: 13,
+        y: 4,
         image: "public/assets/Bonuses/cartridges.png",
         amount: 40
+    },
+    {
+        x: 14,
+        y: 9,
+        image: "public/assets/Bonuses/cartridges.png",
+        amount: 30
+    },
+    {
+        x: 18,
+        y: 3,
+        image: "public/assets/Bonuses/cartridges.png",
+        amount: 35
     },
     {
         x: 18,
@@ -276,6 +336,12 @@ const ammunitionSet = [
         y: 14,
         image: "public/assets/Bonuses/cartridges.png",
         amount: 40
+    },
+    {
+        x: 22,
+        y: 12,
+        image: "public/assets/Bonuses/cartridges.png",
+        amount: 35
     }
 ];
 
@@ -284,7 +350,13 @@ const bonusSet = [
         x: 1,
         y: 10,
         image: "public/assets/Bonuses/aidKit.png",
-        amount: 1,
+        amount: 2,
+    },
+    {
+        x: 3,
+        y: 2,
+        image: "public/assets/Bonuses/aidKit.png",
+        amount: 2,
     },
     {
         x: 6,
@@ -293,10 +365,28 @@ const bonusSet = [
         amount: 2,
     },
     {
+        x: 8,
+        y: 9,
+        image: "public/assets/Bonuses/aidKit.png",
+        amount: 4,
+    },
+    {
+        x: 11,
+        y: 15,
+        image: "public/assets/Bonuses/aidKit.png",
+        amount: 1,
+    },
+    {
+        x: 12,
+        y: 7,
+        image: "public/assets/Bonuses/aidKit.png",
+        amount: 2,
+    },
+    {
         x: 12,
         y: 10,
         image: "public/assets/Bonuses/aidKit.png",
-        amount: 1,
+        amount: 5,
     },
     {
         x: 17,
@@ -308,8 +398,20 @@ const bonusSet = [
         x: 18,
         y: 1,
         image: "public/assets/Bonuses/aidKit.png",
-        amount: 1,
-    }
+        amount: 3,
+    },
+    {
+        x: 19,
+        y: 6,
+        image: "public/assets/Bonuses/aidKit.png",
+        amount: 2,
+    },
+    {
+        x: 22,
+        y: 10,
+        image: "public/assets/Bonuses/aidKit.png",
+        amount: 2,
+    },
 ];
 
 
