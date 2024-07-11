@@ -26,6 +26,7 @@ class SessionController {
         entity.y = player.y;
         entity.angle = player.angle;
         entity.skinId = player.skinId;
+        entity.field = body.field;
         
         this.updateWeapons(entity, player);
 
@@ -84,7 +85,6 @@ class SessionController {
             players: this.model.players,
             objects: this.model.objects,
         };
-        //console.log(this.model.players);
         return response;
     }
 }

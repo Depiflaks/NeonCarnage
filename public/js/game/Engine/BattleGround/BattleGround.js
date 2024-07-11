@@ -170,6 +170,25 @@ class BattleGround extends Drawable {
         
     }
 
+    mergeCorpse(corpse) {
+        // Фильтруем элементы, исключая null и undefined
+        const validCorpses = corpse.filter(corpseItem => corpseItem !== null && corpseItem !== undefined);
+    
+        // Добавляем элементы, проверяя на дублирование
+        validCorpses.forEach(newCorpse => {
+            const isDuplicate = this.corpse.some(existingCorpse =>
+                existingCorpse.x === newCorpse.x &&
+                existingCorpse.y === newCorpse.y &&
+                existingCorpse.skinId === newCorpse.skinId
+            );
+    
+            if (!isDuplicate) {
+                this.corpse.push(newCorpse);
+                console.log(this.corpse);
+            }
+        });
+    }
+
     move(dx, dy) {
         super.move(dx, dy);
         this.cells.map(row => row.map(cell => {if (cell) {cell.move(dx, dy)}}));
@@ -178,7 +197,7 @@ class BattleGround extends Drawable {
         this.weapons.map(weapon => weapon.model.move(dx, dy));
         this.ammunition.map(ammunition => ammunition.move(dx, dy));
         this.bonuses.map(bonus => bonus.move(dx, dy));
-        this.corpse.map(corp => corp.move(dx, dy));
+        this.corpse.map(corp => {if (corp) {corp.move(dx, dy)}});
     }
 }
 

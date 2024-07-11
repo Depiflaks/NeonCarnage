@@ -40,9 +40,9 @@ class ConnectionController {
                 damage: this.player.getDamage(),
                 heal: this.player.getHeal(),
             },
-            // field: {
-            //     corpse: corpse,
-            // }
+            field: {
+                corpse: corpse,
+            }
 
         }
         this.player.clearHeal();
@@ -101,7 +101,6 @@ class ConnectionController {
     }
 
     response(body) {
-        //console.log(2, body);
         body.objects.weapons.filter(weapon => {return weapon.id === body.objects.weaponId}).map(weapon => {
             this.field.weapons[weapon.id].update(weapon, {dx: this.field.x, dy: this.field.y});
         });
@@ -139,7 +138,10 @@ class ConnectionController {
                     y: bullet.y + this.field.y, 
                     angle: bullet.angle
                 })
-            }))
+            }));
+
+            this.field.mergeCorpse(entity.field.corpse);
+
         }
     }
 
