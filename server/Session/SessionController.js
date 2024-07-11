@@ -27,7 +27,6 @@ class SessionController {
         entity.angle = player.angle;
         entity.skinId = player.skinId;
         entity.isReborning = player.isReborning;
-        entity.nickname = player.nickname;
         
         this.updateWeapons(entity, player);
 
@@ -79,6 +78,7 @@ class SessionController {
             player.health = Math.max(0, player.health - damage[id])
             if (player.health === 0) {
                 player.isAlive = false;
+                
             }
         }
     }

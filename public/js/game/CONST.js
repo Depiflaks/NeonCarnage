@@ -17,7 +17,7 @@ const SERVER = {
 };
 
 const WINDOW = {
-    w: 1920,
+    w: 1500,
     h: 1080,
     c: "black",
 };
