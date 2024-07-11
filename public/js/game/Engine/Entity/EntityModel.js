@@ -1,6 +1,6 @@
 import { ENTITY } from "../../CONST.js";
 import { Moveable } from "../Interface/Moveable.js";
-import { SkinModel } from "../Entity/SkinModel.js";
+import { SkinModel } from "./Skin/SkinModel.js";
 
 class EntityModel extends Moveable {
     constructor({ x, y, skinId, spawnPoints }) {

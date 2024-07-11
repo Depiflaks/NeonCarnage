@@ -1,7 +1,11 @@
-import { SKINS } from "../../CONST.js";
+import { SKINS } from "../../../CONST.js";
 
 class SkinModel {
     constructor({ skinId }) {
+        this.image = {
+            body: new Image(),
+            
+        }
         this.headImage = new Image();
         this.bodyImage = new Image();
         this.bodyWithWeaponImage = new Image();
