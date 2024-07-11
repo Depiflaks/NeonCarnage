@@ -8,8 +8,8 @@ class MapGenerator {
     create() {
         return {
             "player": {
-                x: 2000,
-                y: 900,
+                x: 0,
+                y: 0,
                 skinId: 5,
                 spawnPoints: [
                     {
@@ -21,15 +21,14 @@ class MapGenerator {
                         x: 1400,
                         y: 350,
                     },
-
                     {
                         x: 1000,
-                        y: 670,
+                        y: 1770,
                     },
 
                     {
-                        x: 2000,
-                        y: 900,
+                        x: 2100,
+                        y: 700,
                     },
                 ]
             },
