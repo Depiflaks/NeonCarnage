@@ -38,12 +38,6 @@ class EntityController {
         if(this.getWeapon()) this.dropWeapon();
     }
 
-    reborn() {
-        this.model.isAlive = true;
-        this.setHealth(this.getMaxHealth());
-        this.setSpawnPoint();
-    }
-
     setHealth(value) {
         this.model.health = value;
     }
