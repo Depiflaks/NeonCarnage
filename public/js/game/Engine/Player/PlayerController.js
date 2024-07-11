@@ -4,9 +4,9 @@ import { PlayerModel } from "./PlayerModel.js";
 import { EntityController } from "../Entity/EntityController.js";
 
 class PlayerController extends EntityController {
-    constructor(position, skinId) {
+    constructor(position, skinId, name) {
         super();
-        this.model = new PlayerModel(position, skinId);
+        this.model = new PlayerModel(position, skinId, name);
 
         this.cursorX = WINDOW.w / 2;
         this.cursorY = WINDOW.h / 2;

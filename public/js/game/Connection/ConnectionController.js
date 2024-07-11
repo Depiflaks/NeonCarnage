@@ -33,7 +33,7 @@ class ConnectionController {
                 health: this.player.getHealth(),
                 maxHealth: ENTITY.maxHealth,
                 skinId: this.player.getSkinId(),
-                nickname: this.player.getNickname(),,
+                nickname: this.player.getNickname(),
                 isReborning: this.player.isReborning(),
             },
             bullets: [],

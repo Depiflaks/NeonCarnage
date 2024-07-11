@@ -79,7 +79,6 @@ class SessionController {
             player.health = Math.max(0, player.health - damage[id])
             if (player.health === 0) {
                 player.isAlive = false;
-                
             }
         }
     }

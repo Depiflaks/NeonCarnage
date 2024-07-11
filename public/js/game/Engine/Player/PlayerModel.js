@@ -4,7 +4,7 @@ import { Trajectory } from "../Weapon/Trajectory.js";
 
 class PlayerModel extends EntityModel {
     constructor({ x, y }, skinId, nickName) {
-        super({x, y, skinId});
+        super({x, y, skinId, nickName});
         this.active = true;
         this.speedX = 0;
         this.speedY = 0;
