@@ -16,11 +16,11 @@ class EngineView {
 
     draw(field, player, enemies) {
         field.drawGround(this.context);
+        field.drawCorpse(this.context);
         this.drawBullets(player.getBullets(), field);
         field.drawBonuses(this.context);
         field.drawWeapons([].concat(player, Object.values(enemies)), this.context);
         field.drawAmmunition(this.context);
-        field.drawCorpse(this.context);
         if (player.getTrajectory()) {
                 player.getTrajectory().draw(this.context);
         }
