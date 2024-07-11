@@ -16,11 +16,11 @@ class Tracing {
         for (let wall of walls) {
             [x, y] = [ray.x / CELL.w, ray.y / CELL.h];
             if (vertical) {
-                if (x == wall.startIndX && wall.startIndY <= y && y <= wall.endIndY) {
+                if (x === wall.startIndX && wall.startIndY <= y && y <= wall.endIndY) {
                     return true;
                 }
             } else {
-                if (y == wall.startIndY && wall.startIndX <= x && x <= wall.endIndX) {
+                if (y === wall.startIndY && wall.startIndX <= x && x <= wall.endIndX) {
                     return true;
                 }
             }
@@ -60,7 +60,7 @@ class Tracing {
         const range = ENTITY.visualField.range;
         let delta;
 
-        for (let angle = 0 * RAD; angle <= 360 * RAD; angle += angleStep) {
+        for (let angle = 0; angle <= 360 * RAD; angle += angleStep) {
             const tg = Math.tan(angle);
             const sin = Math.sin(angle);
             const cos = Math.cos(angle);
