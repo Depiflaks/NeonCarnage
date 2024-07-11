@@ -57,6 +57,12 @@ class PlayerController extends EntityController {
         return true;
     }
 
+    reborn() {
+        this.model.isAlive = true;
+        this.setHealth(this.getMaxHealth());
+        this.setSpawnPoint();
+    }
+
     shot() {
         if (this.getWeapon().getAmount() > 0) {
             this.getWeapon().decAmount();

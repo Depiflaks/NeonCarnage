@@ -5,7 +5,7 @@ import { Bullet } from "../Engine/Weapon/Bullet.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.sergey);
+        this.socket = new WebSocket(SERVER.ignat);
         this.enemies = {};
         this.initEventListeners();
     }
@@ -20,6 +20,7 @@ class ConnectionController {
         const {x, y} = this.player.getPosition();
         const weaponId = this.player.getWeaponId();
         const weaponAmount = weaponId ? this.player.getWeapon().getAmount() : null;
+        const corpse = this.field.getCorpse();
         const body = {
             player: {
                 x: x - this.field.x, 
@@ -38,7 +39,11 @@ class ConnectionController {
             change: {
                 damage: this.player.getDamage(),
                 heal: this.player.getHeal(),
-            }
+            },
+            // field: {
+            //     corpse: corpse,
+            // }
+
         }
         this.player.clearHeal();
         this.player.clearDamage();
@@ -107,6 +112,7 @@ class ConnectionController {
                 this.player.setAlive(entity.isAlive);
                 this.player.setHealth(entity.health);
                 if (!entity.isAlive && !this.player.isReborning()) {
+                    this.field.addCorpse(this.player);
                     console.log(this.player)
                     console.log(entity);
                     this.player.die(this.field.getSpawnPoint());

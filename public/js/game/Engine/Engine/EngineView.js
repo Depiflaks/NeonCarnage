@@ -20,6 +20,7 @@ class EngineView {
         field.drawBonuses(this.context);
         field.drawWeapons([].concat(player, Object.values(enemies)), this.context);
         field.drawAmmunition(this.context);
+        field.drawCorpse(this.context);
         if (player.getTrajectory()) {
                 player.getTrajectory().draw(this.context);
         }

@@ -8,7 +8,7 @@ const REQUEST_DURATION = 1000 / RPS;
 const SERVER = {
     sergey: 'ws://10.250.104.142:8000/',
     sergey_home: 'ws://192.168.159.162:8000/',
-    ignat: 'ws://192.168.159.172:8000/',
+    ignat: 'ws://10.250.104.176:8000/',
     ignat_home: 'ws://10.250.104.176:8000/',
     liuba: 'ws://10.250.104.170:8000/',
     liuba_home: 'ws://192.168.103.146:8000',
@@ -55,36 +55,42 @@ const SKINS = [
         body: "public/assets/Player/Skin1/body.png",
         bodyWithWeapon: "public/assets/Player/Skin1/bodyWithWeapon.png",
         bodyWithPistols: "public/assets/Player/Skin1/bodyWithPistols.png",
+        corpse: "public/assets/Player/Skin1/died.png",
     },
     {   
         head: "public/assets/Player/Skin2/head.png",
         body: "public/assets/Player/Skin2/body.png",
         bodyWithWeapon: "public/assets/Player/Skin2/bodyWithWeapon.png",
         bodyWithPistols: "public/assets/Player/Skin2/bodyWithPistols.png",
+        corpse: "public/assets/Player/Skin2/died.png"
     },
     {   
         head: "public/assets/Player/Skin3/head.png",
         body: "public/assets/Player/Skin3/body.png",
         bodyWithWeapon: "public/assets/Player/Skin3/bodyWithWeapon.png",
         bodyWithPistols: "public/assets/Player/Skin3/bodyWithPistols.png",
+        corpse: "public/assets/Player/Skin3/died.png"
     },
     {   
         head: "public/assets/Player/Skin4/head.png",
         body: "public/assets/Player/Skin4/body.png",
         bodyWithWeapon: "public/assets/Player/Skin4/bodyWithWeapon.png",
         bodyWithPistols: "public/assets/Player/Skin4/bodyWithPistols.png",
+        corpse: "public/assets/Player/Skin4/died.png"
     },
     {   
         head: "public/assets/Player/Skin5/head.png",
         body: "public/assets/Player/Skin5/body.png",
         bodyWithWeapon: "public/assets/Player/Skin5/bodyWithWeapon.png",
         bodyWithPistols: "public/assets/Player/Skin5/bodyWithPistols.png",
+        corpse: "public/assets/Player/Skin5/died.png"
     },
     {   
         head: "public/assets/Player/Skin6/head.png",
         body: "public/assets/Player/Skin6/body.png",
         bodyWithWeapon: "public/assets/Player/Skin6/bodyWithWeapon.png",
         bodyWithPistols: "public/assets/Player/Skin6/bodyWithPistols.png",
+        corpse: "public/assets/Player/Skin6/died.png"
     }
 ]
 

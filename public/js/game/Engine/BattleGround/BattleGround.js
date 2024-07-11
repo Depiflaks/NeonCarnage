@@ -6,6 +6,7 @@ import { WeaponController } from "../Weapon/WeaponController.js";
 import { Drawable } from "../Interface/Drawable.js";
 import { Bonus } from "../Collectable/Bonus.js";
 import { Ammunition } from "../Collectable/Ammunition.js";
+import { Corpse } from "./Corpse.js";
 
 class BattleGround extends Drawable {
     constructor(groundList, wallList, weaponSet, ammunitionSet, bonusSet, spawnPoints) {
@@ -27,6 +28,7 @@ class BattleGround extends Drawable {
         this.weapons = [];
         this.ammunition = [];
         this.bonuses = [];
+        this.corpse = [];
 
         this.cells = Array.from({ length: maxX + 1 }, () => Array(maxY + 1).fill(null));
 
@@ -123,6 +125,17 @@ class BattleGround extends Drawable {
         });
     }
 
+    drawCorpse(context) {
+        let indexX, indexY;
+        this.corpse.map(corp => {
+            indexX = Math.floor((corp.x - this.x) / CELL.w);
+            indexY = Math.floor((corp.y - this.y) / CELL.h);
+            if (this.cells[indexX][indexY] && this.cells[indexX][indexY].active) {
+                corp.draw(context);
+            }
+        });
+    }
+
     clearFrame(context) {
         context.fillStyle = "black";
         context.fillRect(0, 0, WINDOW.w, WINDOW.h);
@@ -137,6 +150,26 @@ class BattleGround extends Drawable {
         }));
     }
 
+    getCorpse() {
+        return this.corpse;
+    }
+
+    addCorpse(player) {
+        const skinId = player.getSkinId();
+        const {x, y} = player.getPosition();
+        const corpse = new Corpse(x, y, skinId);
+        const isCorpseExists = this.corpse.some(existingCorpse => 
+            existingCorpse.x === x && 
+            existingCorpse.y === y && 
+            existingCorpse.skinId === skinId
+        );
+        
+        if (!isCorpseExists) {
+            this.corpse.push(corpse);
+        }
+        
+    }
+
     move(dx, dy) {
         super.move(dx, dy);
         this.cells.map(row => row.map(cell => {if (cell) {cell.move(dx, dy)}}));
@@ -145,6 +178,7 @@ class BattleGround extends Drawable {
         this.weapons.map(weapon => weapon.model.move(dx, dy));
         this.ammunition.map(ammunition => ammunition.move(dx, dy));
         this.bonuses.map(bonus => bonus.move(dx, dy));
+        this.corpse.map(corp => corp.move(dx, dy));
     }
 }
 
