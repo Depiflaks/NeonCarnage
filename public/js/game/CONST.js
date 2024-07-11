@@ -22,11 +22,11 @@ const WINDOW = {
     c: "black",
 };
 
-// const WINDOW = {
-//     w: 1000,
-//     h: 800,
-//     c: "black",
-// };
+const LEADER_BOARD = {
+    w: WINDOW.w / 2.5,
+    h: WINDOW.h / 5,
+    amount: WINDOW.w / 1.4,
+};
 
 const CELL = {
     w: 150,
@@ -233,6 +233,8 @@ const ENEMY = {
 
 const KEYBOARD_E = 'KeyE';
 
+const KEYBOARD_TAB = 'KeyF'; 
+
 const WEAPON_STATE = {
     onTheGround: 0,
     inTheHand: 1,
@@ -248,4 +250,4 @@ const TRAJECTORY = {
     knifeRightImage: "public/assets/Weapon/right.png",
 };
 
-export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, SKINS, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};
+export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, LEADER_BOARD, SKINS, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, KEYBOARD_TAB, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};

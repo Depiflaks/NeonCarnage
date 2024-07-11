@@ -1,4 +1,4 @@
-import { CAMERA, KEYBOARD_E, WEAPON, WEAPON_STATE } from "../../CONST.js";
+import { CAMERA, KEYBOARD_E, KEYBOARD_TAB, WEAPON, WEAPON_STATE } from "../../CONST.js";
 import { EngineModel } from "./EngineModel.js";
 import { EngineView } from "./EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
@@ -135,6 +135,7 @@ class EngineController {
 
     initEventListeners(canvas) {
         addEventListener("keydown", event => this.keyDown(event));
+        addEventListener("keyup", event => this.keyUp(event));
         canvas.addEventListener('contextmenu', event => {
             event.preventDefault(); // Отключаем контекстное меню при правом клике
         });
@@ -151,11 +152,20 @@ class EngineController {
                 this.player.removeTrajectory();
             }
         }
+        if (event.code === KEYBOARD_TAB) {
+            this.model.leaderBoard = true;
+        }
+    }
+
+    keyUp(event) {
+        if (event.code === KEYBOARD_TAB) {
+            this.model.leaderBoard = false;
+        }
     }
 
     nextFrame() {
         this.update();
-        this.view.update(this.field, this.player, this.enemies, this.model.isShaking());
+        this.view.update(this.field, this.player, this.enemies, this.model.list, this.model.leaderBoard, this.model.isShaking());
     }
 }
 

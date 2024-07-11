@@ -1,5 +1,5 @@
 import { EntityView } from "../Entity/EntityView.js";
-import {WINDOW, RAD, ENTITY, CELL, SHAKE} from "../../CONST.js";
+import {WINDOW, LEADER_BOARD, RAD, ENTITY, CELL, SHAKE} from "../../CONST.js";
 
 
 class EngineView {
@@ -14,7 +14,7 @@ class EngineView {
         this.gradientOffset = 0;
     }
 
-    draw(field, player, enemies) {
+    draw(field, player, enemies, list, leaderBoard) {
         field.drawGround(this.context);
         field.drawCorpse(this.context);
         this.drawBullets(player.getBullets(), field);
@@ -46,6 +46,9 @@ class EngineView {
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());
         this.drawBulletAmount(player);
+        if (leaderBoard) {
+            this.drawLeaderBoard(list);
+        }
         this.entityView.drawCursor(player.getCursorPosition());
         this.drawGradientOverlay(player.getHealth(), player.getMaxHealth());
     }
@@ -68,19 +71,44 @@ class EngineView {
 
     drawBulletAmount(player) {
         if((player.getWeapon() != null) && (player.getWeapon().getBattleType() === "distant")) {
-            this.context.font = "48px arial";
+            this.context.font = "48px Russo One";
             this.context.fillText(player.getWeapon().getAmount(), 10, 50);
         }
     }
 
-    update(field, player, enemies, isShaking) {
+    drawEnemyHealthBar(field, enemy) {
+        const { x, y } = enemy.getPosition();
+        const indexX = Math.floor((x - field.x) / CELL.w);
+        const indexY = Math.floor((y - field.y) / CELL.h);
+        if (field.cells[indexX][indexY] && field.cells[indexX][indexY].active) {
+            this.entityView.drawEnemyHealthBar(x, y, enemy.model.health, enemy.model.maxHealth);
+        }
+    }
+
+    drawLeaderBoard(list){
+        this.context.fillStyle = "rgba(0,0,0,0.5)";
+        this.context.fillRect(0, 0, WINDOW.w, WINDOW.h);
+        this.context.font = '64px Nosifer';
+        this.context.fillStyle = 'white';
+        this.context.fillText('Leader Board', LEADER_BOARD.w, LEADER_BOARD.h);
+        let counter = 1;
+        for (const player in list) {
+            this.context.font = '28px Russo One';
+            this.context.fillStyle = 'white';
+            this.context.fillText(player, LEADER_BOARD.w, LEADER_BOARD.h + counter * 75);
+            this.context.fillText(list[player], LEADER_BOARD.amount, LEADER_BOARD.h + counter * 75);
+            counter++;
+        }
+    }
+
+    update(field, player, enemies, list, leaderBoard, isShaking) {
         field.clearFrame(this.context);
         if (isShaking) {
             this.applyShake();
         } else {
             this.resetShake();
         }
-        this.draw(field, player, enemies);
+        this.draw(field, player, enemies, list, leaderBoard);
     }
 
     applyShake() {
