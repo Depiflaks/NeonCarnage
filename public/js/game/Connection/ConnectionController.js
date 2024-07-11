@@ -5,7 +5,7 @@ import { Bullet } from "../Engine/Weapon/Bullet.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.sergey_home);
+        this.socket = new WebSocket(SERVER.sergey);
         this.enemies = {};
         this.initEventListeners();
     }
@@ -35,8 +35,12 @@ class ConnectionController {
                 skinId: this.player.getSkinId()
             },
             bullets: [],
-            change: this.player.getChange(),
+            change: {
+                damage: this.player.getDamage(),
+                heal: this.player.getHeal(),
+            }
         }
+        //console.log(1, body);
         this.player.clearHeal();
         this.player.clearDamage();
         body.bullets = this.player.getBullets().map(bullet => {
@@ -93,13 +97,21 @@ class ConnectionController {
     }
 
     response(body) {
+        //console.log(2, body);
         body.objects.weapons.filter(weapon => {return weapon.id === body.objects.weaponId}).map(weapon => {
             this.field.weapons[weapon.id].update(weapon, {dx: this.field.x, dy: this.field.y});
         });
         for (const id in body.players) {
             const entity = body.players[id];
             if (entity == {}) continue; 
-            if (id === this.id) continue;
+            if (id === this.id) {
+                this.player.setHealth(entity.health);
+                if (!entity.isAlive) {
+                    this.player.die();
+                }
+                //здесь можно добавить призрака
+                continue;
+            };
             if (!this.enemies[id]) this.enemies[id] = new EnemyController({
                 x: 0, y: 0, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth,
                 health: entity.health
@@ -112,11 +124,9 @@ class ConnectionController {
             enemy.setAngle(entity.angle);
             enemy.setWeaponId(entity.weaponId);
             enemy.setHealth(entity.health);
-            //console.log(entity);
-            if (entity && !entity.isAlive) {
+            if (!entity.isAlive) {
                 enemy.die();
             }
-            //console.log(entity);
             enemy.setBullets(entity.bullets.map(bullet => {
                 return new Bullet({
                     x: bullet.x + this.field.x, 

@@ -5,8 +5,12 @@ class SessionController {
         this.model = new SessionModel(field);
     }
 
-    addPlayer(connection) {
-        this.model.players[connection.id] = {isAlive: true};
+    addPlayer(connection, {health, maxHealth}) {
+        this.model.players[connection.id] = {
+            health: health,
+            maxHealth: maxHealth,
+            isAlive: true
+        };
         this.model.playersCount += 1;
     }
 
@@ -21,10 +25,7 @@ class SessionController {
         entity.x = player.x;
         entity.y = player.y;
         entity.angle = player.angle;
-        entity.bullets = player.bullets;
         entity.skinId = player.skinId;
-        entity.health = player.health;
-        entity.maxHealth = player.maxHealth;
         entity.isAlive = player.isAlive;
         
         this.updateWeapons(entity, player);

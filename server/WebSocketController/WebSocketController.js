@@ -19,7 +19,6 @@ class WebSocketController {
     init(connection, req) {
         const ip = req.socket.remoteAddress;
         connection.id = this.getUniqueID(ip);
-        if (!this.session.model.players[connection.id]) this.session.addPlayer(connection);
         this.session.updateConnection(connection);
         const body = {
             id: connection.id,
@@ -36,13 +35,14 @@ class WebSocketController {
     }
 
     doUpdate(connection, body) {
+        if (!this.session.model.players[connection.id]) this.session.addPlayer(connection, {
+            health: body.player.health,
+            maxHealth: body.player.maxHealth,
+        });
         this.session.updateParameters(body, connection.id);
         const data = this.session.getData();
-        //console.log(data.players);
         for (let id in this.session.model.players) {
-            //console.log(id, this.session.model.connections[id].readyState)
             if (this.session.model.connections[id].readyState !== WebSocket.OPEN) continue;
-            
             this.sendResponse(this.session.model.connections[id], data)
         }
     }

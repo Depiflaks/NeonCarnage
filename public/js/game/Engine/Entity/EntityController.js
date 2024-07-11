@@ -22,7 +22,7 @@ class EntityController {
 
     die() {
         this.model.isAlive = false;
-        this.dropWeapon();
+        if (this.getWeapon()) this.dropWeapon();
     }
 
     setHealth(value) {
