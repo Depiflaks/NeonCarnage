@@ -125,7 +125,7 @@ const CAMERA = {
 const WEAPON = {
     w: 80,
     h: 120,
-    minDistance: 40
+    minDistance: 80
 
 };
 

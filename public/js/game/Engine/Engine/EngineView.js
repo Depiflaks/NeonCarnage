@@ -36,7 +36,6 @@ class EngineView {
                 this.entityView.drawDead(enemy);
             }
             this.drawBullets(enemy.getBullets(), field);
-            //console.log(enemy.getPosition().x, enemy.getPosition().y, enemy.model.health, enemy.model.maxHealth)
             this.drawEnemyHealthBar(field, enemy);
         });
         field.drawWalls(this.context);

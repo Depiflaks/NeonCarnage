@@ -1,4 +1,4 @@
-import {ENTITY, RAD, INTERFACE, SKINS} from "../../CONST.js";
+import {ENTITY, RAD, INTERFACE} from "../../CONST.js";
 
 class EntityView {
     constructor(context) {
@@ -18,15 +18,15 @@ class EntityView {
         this.context.save();
         this.context.translate(x, y);
         this.context.rotate(angle + 90 * RAD);
-        if ((!animation && !weaponId) || (!animation && (weapon && weapon.model.name === "knife")) || (animation && animation.isAnimating && weaponId)) {
-            this.context.drawImage(skin.bodyImage, -ENTITY.w/2, -ENTITY.h/2, ENTITY.w, ENTITY.h);
-            this.context.drawImage(skin.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
-        } else if (weapon && (weapon.model.name === "pistol" || weapon.model.name === "glock")) {
-                this.context.drawImage(skin.bodyWithPistolsImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
-                this.context.drawImage(skin.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+        if ((!animation && !weaponId) || (!animation && (weapon && weapon.getName() === "knife")) || (animation && animation.isAnimating && weaponId)) {
+            this.context.drawImage(skin.body.none, -ENTITY.w/2, -ENTITY.h/2, ENTITY.w, ENTITY.h);
+            this.context.drawImage(skin.head, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+        } else if (weapon && (weapon.getName() === "pistol" || weapon.getName() === "glock")) {
+                this.context.drawImage(skin.body.one, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
+                this.context.drawImage(skin.head, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
         } else {   
-                this.context.drawImage(skin.bodyWithWeaponImage, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
-                this.context.drawImage(skin.headImage, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+                this.context.drawImage(skin.body.two, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
+                this.context.drawImage(skin.head, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
         }
         this.context.restore();
     }

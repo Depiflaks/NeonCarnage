@@ -46,6 +46,14 @@ class WeaponController {
         return {x: this.model.x, y: this.model.y};
     }
 
+    getWidth(){
+        return this.model.w;
+    }
+
+    getHeight(){
+        return this.model.h;
+    }
+
     getId() {
         return this.model.id;
     }
