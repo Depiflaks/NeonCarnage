@@ -3,8 +3,9 @@ import { ENTITY } from "../../CONST.js";
 import { Trajectory } from "../Weapon/Trajectory.js";
 
 class PlayerModel extends EntityModel {
-    constructor({ x, y, skinId, spawnPoints }) {
-        super({x, y, skinId, spawnPoints});
+    constructor({ x, y }, skinId) {
+        console.log(x, y, skinId);
+        super({x, y, skinId});
         this.active = true;
         this.speedX = 0;
         this.speedY = 0;
@@ -23,6 +24,7 @@ class PlayerModel extends EntityModel {
                 
             }
         };
+        this.isReborning = false;
     }
 
     updatePosition() {

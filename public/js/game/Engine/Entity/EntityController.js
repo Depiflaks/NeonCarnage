@@ -5,12 +5,6 @@ import { SkinModel } from "./Skin/SkinModel.js";
 class EntityController {
     constructor() {}
 
-    setSpawnPoint() {
-        const randomSpawnPoint = this.model.spawnPoints[Math.floor(Math.random() * this.model.spawnPoints.length)];
-        this.model.x = randomSpawnPoint.x;
-        this.model.y = randomSpawnPoint.y;
-    }
-
     getPosition() {
         return { x: this.model.x, y: this.model.y };
     }
@@ -30,18 +24,10 @@ class EntityController {
     die() {
         this.model.isAlive = false;
         if(this.getWeapon()) this.dropWeapon();
-        //setTimeout(() => {this.reborn()}, 5000);
     }
 
-    dieEnemy() {
-        this.model.isAlive = false;
-        if(this.getWeapon()) this.dropWeapon();
-    }
-
-    reborn() {
-        this.model.isAlive = true;
-        this.setHealth(this.getMaxHealth());
-        this.setSpawnPoint();
+    setAlive(value) {
+        this.model.isAlive = value;
     }
 
     setHealth(value) {

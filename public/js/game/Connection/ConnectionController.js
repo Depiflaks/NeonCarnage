@@ -104,11 +104,11 @@ class ConnectionController {
             const entity = body.players[id];
             if (entity == {}) continue; 
             if (id === this.id) {
+                this.player.setAlive(entity.isAlive);
                 this.player.setHealth(entity.health);
-                if (!entity.isAlive) {
-                    this.player.die();
+                if (!entity.isAlive && !this.player.isReborning()) {
+                    this.player.die(this.field.getSpawnPoint());
                 }
-                //здесь можно добавить призрака
                 continue;
             };
             if (!this.enemies[id]) this.enemies[id] = new EnemyController({
@@ -120,11 +120,12 @@ class ConnectionController {
                 x: entity.x + this.field.x,
                 y: entity.y + this.field.y,
             });
+            enemy.setAlive(entity.isAlive);
             enemy.setAngle(entity.angle);
             enemy.setWeaponId(entity.weaponId);
             enemy.setHealth(entity.health);
             if (!entity.isAlive) {
-                enemy.dieEnemy();
+                enemy.die();
             }
             enemy.setBullets(entity.bullets.map(bullet => {
                 return new Bullet({

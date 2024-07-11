@@ -4,11 +4,9 @@ import { PlayerModel } from "./PlayerModel.js";
 import { EntityController } from "../Entity/EntityController.js";
 
 class PlayerController extends EntityController {
-    constructor(player) {
+    constructor(position, skinId) {
         super();
-        this.model = new PlayerModel(player);
-
-        this.setSpawnPoint();
+        this.model = new PlayerModel(position, skinId);
 
         this.cursorX = WINDOW.w / 2;
         this.cursorY = WINDOW.h / 2;
@@ -69,7 +67,6 @@ class PlayerController extends EntityController {
                 const deviation = this.getWeapon().getDeviation();
                 const angleDeviation = (Math.random() * 2 - 1) * deviation;
                 const adjustedAngle = angle + angleDeviation;
-                const rapidity = this.getWeapon().getRapidity();
                 this.model.bullets.push(new Bullet({ x, y, angle: adjustedAngle }));
             }
             this.setShaking(SHAKE.duration);
@@ -163,6 +160,24 @@ class PlayerController extends EntityController {
                 this.removeTrajectory();
             }
         }
+    }
+
+    die(position) {
+        super.die();
+        this.model.isReborning = true;
+        setTimeout(() => {this.reborn(position)}, 5000);
+    }
+
+    reborn({x, y}) {
+        this.model.isAlive = true;
+        this.model.isReborning = false;
+        this.addHeal(this.getMaxHealth());
+        this.model.x = x;
+        this.model.y = y;
+    }
+
+    isReborning() {
+        return this.model.isReborning;
     }
 
     getCursorPosition() {

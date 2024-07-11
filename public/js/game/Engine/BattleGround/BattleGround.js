@@ -8,7 +8,7 @@ import { Bonus } from "../Collectable/Bonus.js";
 import { Ammunition } from "../Collectable/Ammunition.js";
 
 class BattleGround extends Drawable {
-    constructor(groundList, wallList, weaponSet, ammunitionSet, bonusSet) {
+    constructor(groundList, wallList, weaponSet, ammunitionSet, bonusSet, spawnPoints) {
         
         let maxX = 0;
         let maxY = 0;
@@ -20,6 +20,7 @@ class BattleGround extends Drawable {
         );
 
         super(0, 0, maxX, maxY);
+        this.spawnPoints = spawnPoints;
         this.cells = [];
         this.verticalWalls = [];
         this.horizontalWalls = [];
@@ -70,6 +71,11 @@ class BattleGround extends Drawable {
     update() {
         this.cells.map(row => row.map(cell => {if (cell) {cell.update()}}));
         this.hideCells();
+    }
+
+    getSpawnPoint() {
+        const {x, y} = this.spawnPoints[Math.floor(Math.random() * this.spawnPoints.length)];
+        return {x: x + this.x, y: y + this.y};
     }
 
     drawGround(context) {

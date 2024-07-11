@@ -36,7 +36,7 @@ class EngineController {
         const { x, y } = this.player.getPosition();
         this.field.weapons.forEach(weapon => {
             const distance = Math.sqrt((weapon.model.x - x) ** 2 + (weapon.model.y - y) ** 2);
-            if (distance <= WEAPON.minDistance && !this.player.getWeapon()) {
+            if (weapon.getStatus() === WEAPON_STATE.onTheGround && distance <= WEAPON.minDistance && !this.player.getWeapon()) {
                 weapon.model.status = WEAPON_STATE.inTheHand;
                 this.player.setWeapon(weapon);
             }
