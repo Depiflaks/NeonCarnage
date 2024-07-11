@@ -26,7 +26,7 @@ class SessionController {
         entity.y = player.y;
         entity.angle = player.angle;
         entity.skinId = player.skinId;
-        entity.field = body.field;
+        this.model.objects.corpse = body.field.corpse;
         entity.isReborning = player.isReborning;
         
         this.updateWeapons(entity, player);
@@ -78,8 +78,8 @@ class SessionController {
             const player = this.model.players[id];
             player.health = Math.max(0, player.health - damage[id])
             if (player.health === 0) {
+
                 player.isAlive = false;
-                
             }
         }
     }
@@ -88,6 +88,7 @@ class SessionController {
         const response = {
             players: this.model.players,
             objects: this.model.objects,
+            
         };
         return response;
     }
