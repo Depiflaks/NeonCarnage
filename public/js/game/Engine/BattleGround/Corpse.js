@@ -3,7 +3,7 @@ import { Drawable } from "../Interface/Drawable.js";
 
 class Corpse extends Drawable {
     constructor(x, y, skinId) {
-        super(x, y, 250, 250);
+        super(x, y, 150, 150);
         this.skinId = skinId;
         this.image = new Image();
         this.image.src = SKINS[skinId].corpse;

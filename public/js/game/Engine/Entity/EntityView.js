@@ -94,6 +94,7 @@ class EntityView {
         const { x, y } = entity.getPosition();
         const nickname = entity.getNickname();
         if (nickname && entity.model.active) {
+            this.context.save();
             this.context.font = "16px Russo One";
             this.context.fillStyle = "white";
             this.context.textAlign = "center";
