@@ -107,19 +107,19 @@ class ConnectionController {
                 this.player.setAlive(entity.isAlive);
                 this.player.setHealth(entity.health);
                 if (!entity.isAlive && !this.player.isReborning()) {
+                    console.log(this.player)
+                    console.log(entity);
                     this.player.die(this.field.getSpawnPoint());
                 }
                 continue;
             };
+            const {x, y} = {x: entity.x + this.field.x, y: entity.y + this.field.y}
             if (!this.enemies[id]) this.enemies[id] = new EnemyController({
-                x: 0, y: 0, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth,
+                x: x, y: y, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth,
                 health: entity.health
             });
             const enemy = this.enemies[id];
-            enemy.setPosition({
-                x: entity.x + this.field.x,
-                y: entity.y + this.field.y,
-            });
+            enemy.setPosition({x, y});
             enemy.setAlive(entity.isAlive);
             enemy.setAngle(entity.angle);
             enemy.setWeaponId(entity.weaponId);

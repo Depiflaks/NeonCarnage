@@ -22,7 +22,6 @@ class EntityController {
     }
 
     die() {
-        this.model.isAlive = false;
         if(this.getWeapon()) this.dropWeapon();
     }
 

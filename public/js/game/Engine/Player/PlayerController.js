@@ -169,7 +169,6 @@ class PlayerController extends EntityController {
     }
 
     reborn({x, y}) {
-        this.model.isAlive = true;
         this.model.isReborning = false;
         this.addHeal(this.getMaxHealth());
         this.model.x = x;

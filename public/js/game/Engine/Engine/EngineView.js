@@ -32,11 +32,11 @@ class EngineView {
         Object.values(enemies).map(enemy => {
             if (enemy.isAlive()) {
                 this.entityView.draw(enemy);
+                this.entityView.drawEnemyHealthBar(enemy);
             } else {
                 this.entityView.drawDead(enemy);
             }
             this.drawBullets(enemy.getBullets(), field);
-            this.drawEnemyHealthBar(field, enemy);
         });
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());
@@ -67,16 +67,6 @@ class EngineView {
             this.context.fillText(player.getWeapon().getAmount(), 10, 50);
         }
     }
-
-    drawEnemyHealthBar(field, enemy) {
-        const { x, y } = enemy.getPosition();
-        const indexX = Math.floor((x - field.x) / CELL.w);
-        const indexY = Math.floor((y - field.y) / CELL.h);
-        if (field.cells[indexX][indexY] && field.cells[indexX][indexY].active) {
-            this.entityView.drawEnemyHealthBar(x, y, enemy.model.health, enemy.model.maxHealth);
-        }
-    }
-
 
     update(field, player, enemies, isShaking) {
         field.clearFrame(this.context);

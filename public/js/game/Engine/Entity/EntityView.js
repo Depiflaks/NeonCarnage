@@ -45,7 +45,11 @@ class EntityView {
         this.context.drawImage(this.cursor, cursor.x - this.cursor.width / 2, cursor.y - this.cursor.height / 2);
     }
 
-    drawEnemyHealthBar(x, y, health, maxHealth) {
+    drawEnemyHealthBar(entity) {
+        if (!entity.isActive()) return;
+        const {x, y} = entity.getPosition();
+        const health = entity.getHealth();
+        const maxHealth = entity.getMaxHealth();
         const barWidth = ENTITY.w;
         const barHeight = 10;  // Более тонкий бар
         const offset = 20;    // Отступ от врага

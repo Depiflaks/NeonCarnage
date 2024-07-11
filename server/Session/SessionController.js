@@ -26,7 +26,6 @@ class SessionController {
         entity.y = player.y;
         entity.angle = player.angle;
         entity.skinId = player.skinId;
-        entity.isAlive = player.isAlive;
         
         this.updateWeapons(entity, player);
 
@@ -70,6 +69,8 @@ class SessionController {
         const heal = body.change.heal;
 
         entity.health = Math.min(entity.maxHealth, entity.health + heal);
+        
+        if (entity.health > 0) entity.isAlive = true;
 
         for (let id in damage) {
             const player = this.model.players[id];
