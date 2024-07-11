@@ -1,4 +1,4 @@
-import {ENTITY, RAD, INTERFACE} from "../../CONST.js";
+import {ENTITY, RAD, INTERFACE, HEALTH} from "../../CONST.js";
 
 class EntityView {
     constructor(context) {
@@ -65,20 +65,20 @@ class EntityView {
         this.context.restore();
     }
 
-    drawHealthBar(health) {
-        const squareSize = 15;
-        const squaresPerRow = 10;
-        const rows = 2;
-        const offsetX = 10;
-        const offsetY = 45;
-        const gap = 5; // Gap between squares
-        const maxHealth = 20;
+    drawHealthBar(health, maxHealth) {
+        const rows = Math.ceil(maxHealth / HEALTH.squaresPerRow);  // Calculate the number of rows needed
         this.context.save();
+        let squaresDrawn = 0;  // Keep track of the number of squares drawn
+
         for (let row = 0; row < rows; row++) {
-            for (let col = 0; col < squaresPerRow; col++) {
-                const x = offsetX + col * (squareSize + gap);
-                const y = ENTITY.radius + offsetY + row * (squareSize + gap);
-                const index = row * squaresPerRow + col;
+            for (let col = 0; col < HEALTH.squaresPerRow; col++) {
+                const x = HEALTH.offsetX + col * (HEALTH.squareSize + HEALTH.gap);
+                const y = ENTITY.radius + HEALTH.offsetY + row * (HEALTH.squareSize + HEALTH.gap);
+                const index = row * HEALTH.squaresPerRow + col;
+
+                if (index >= maxHealth) {
+                    break;  // Stop drawing if the total number of squares reaches maxHealth
+                }
 
                 if (index < health) {
                     this.context.fillStyle = "red";
@@ -86,7 +86,13 @@ class EntityView {
                     this.context.fillStyle = "gray";
                 }
 
-                this.context.fillRect(x, y, squareSize, squareSize);
+                this.context.fillRect(x, y, HEALTH.squareSize, HEALTH.squareSize);
+                squaresDrawn++;
+
+                // Stop drawing if the total number of squares reaches maxHealth
+                if (squaresDrawn >= maxHealth) {
+                    break;
+                }
             }
         }
         this.context.restore();

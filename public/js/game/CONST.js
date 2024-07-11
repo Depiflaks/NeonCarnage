@@ -106,8 +106,8 @@ const ENTITY = {
         angleStep: 5 * RAD,
     },
     pythagoreanFactor: Math.sqrt(2) / 2,
-    health: 19,
-    maxHealth: 20,
+    health: 10,
+    maxHealth: 10,
 };
 
 const INTERFACE = {
@@ -203,6 +203,14 @@ const WEAPON_MODELS = {
     }
 }
 
+const HEALTH = {
+    squareSize: 15,
+    squaresPerRow: 10,
+    offsetX: 10,
+    offsetY: 45,
+    gap: 5, // Gap between squares
+}
+
 const AMMUNITION = {
     w: 50,
     h: 50,
@@ -250,4 +258,4 @@ const TRAJECTORY = {
     knifeRightImage: "public/assets/Weapon/right.png",
 };
 
-export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, LEADER_BOARD, SKINS, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, KEYBOARD_TAB, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};
+export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, LEADER_BOARD, HEALTH, SKINS, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, KEYBOARD_TAB, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};
