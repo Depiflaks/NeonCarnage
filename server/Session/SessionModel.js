@@ -10,6 +10,7 @@ class SessionModel {
             weapons: [],
             weaponId: null,
         };
+        this.leaderBoard = {};
         this.objects.weapons = this.field.obj.weapons.map(weapon => {
             return { // пока напишу небольшой костыль для координат, потом исправим
                 id: weapon.id,

@@ -6,15 +6,16 @@ import { Bullet } from "../Engine/Weapon/Bullet.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.liuba);
+        this.socket = new WebSocket(SERVER.sergey);
         this.enemies = {};
         this.initEventListeners();
     }
 
-    setObj(player, field, enemies) {
+    setObj(player, field, enemies, playerList) {
         this.player = player;
         this.field = field;
         this.enemies = enemies;
+        this.playerList = playerList;
     }
 
     sendData() {
@@ -111,6 +112,8 @@ class ConnectionController {
         body.objects.weapons.filter(weapon => {return weapon.id === body.objects.weaponId}).map(weapon => {
             this.field.weapons[weapon.id].update(weapon, {dx: this.field.x, dy: this.field.y});
         });
+        this.player.leaderBoard = body.leaderBoard;
+        //console.log(this.playerList);
         //console.log(body);
         // for (let id in body.objects.corpses) {
         //     this.field.corpses[id] = body.objects.corpses[id].map(corp => {return new Corpse(

@@ -165,7 +165,8 @@ class EngineController {
 
     nextFrame() {
         this.update();
-        this.view.update(this.field, this.player, this.enemies, this.model.list, this.model.leaderBoard, this.model.isShaking());
+        //console.log(this.player.leaderBoard);
+        this.view.update(this.field, this.player, this.enemies, this.player.leaderBoard, this.model.leaderBoard, this.model.isShaking());
     }
 }
 

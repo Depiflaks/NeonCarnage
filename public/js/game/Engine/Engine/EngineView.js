@@ -79,18 +79,19 @@ class EngineView {
         }
     }
 
-    drawLeaderBoard(list){
+    drawLeaderBoard(list) {
+        //console.log(list);
         this.context.fillStyle = "rgba(0,0,0,0.5)";
         this.context.fillRect(0, 0, WINDOW.w, WINDOW.h);
         this.context.font = '64px Nosifer';
         this.context.fillStyle = 'white';
         this.context.fillText('Leader Board', LEADER_BOARD.w, LEADER_BOARD.h);
         let counter = 1;
-        for (const player in list) {
+        for (const id in list) {
             this.context.font = '28px Russo One';
             this.context.fillStyle = 'white';
-            this.context.fillText(player, LEADER_BOARD.w, LEADER_BOARD.h + counter * 75);
-            this.context.fillText(list[player], LEADER_BOARD.amount, LEADER_BOARD.h + counter * 75);
+            this.context.fillText(list[id].name, LEADER_BOARD.w, LEADER_BOARD.h + counter * 75);
+            this.context.fillText(list[id].kills, LEADER_BOARD.amount, LEADER_BOARD.h + counter * 75);
             counter++;
         }
     }

@@ -68,11 +68,10 @@ class EntityView {
     drawHealthBar(health) {
         const squareSize = 15;
         const squaresPerRow = 10;
-        const rows = 2;
+        const rows = 1;
         const offsetX = 10;
         const offsetY = 45;
         const gap = 5; // Gap between squares
-        const maxHealth = 20;
         this.context.save();
         for (let row = 0; row < rows; row++) {
             for (let col = 0; col < squaresPerRow; col++) {
@@ -85,7 +84,6 @@ class EntityView {
                 } else {
                     this.context.fillStyle = "gray";
                 }
-
                 this.context.fillRect(x, y, squareSize, squareSize);
             }
         }

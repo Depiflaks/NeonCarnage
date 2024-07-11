@@ -7,11 +7,7 @@ class EngineModel {
         this.field = new BattleGround(cells, walls, weapons, ammunitions, bonuses, player.spawnPoints);
         this.player = new PlayerController(this.field.getSpawnPoint(), player.skinId, player.nickName);
         this.enemies = [];
-        this.list = {
-            '123': 4,
-            'Smmm': 5,
-            'Liuba': 123,
-        };
+        this.playerList = {};
         this.leaderBoard = false;
     }
 
@@ -25,6 +21,10 @@ class EngineModel {
 
     getPlayer() {
         return this.player;
+    }
+
+    getPlayerList() {
+        return this.playerList;
     }
 
     updateShake() {

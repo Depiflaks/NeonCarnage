@@ -106,8 +106,8 @@ const ENTITY = {
         angleStep: 5 * RAD,
     },
     pythagoreanFactor: Math.sqrt(2) / 2,
-    health: 19,
-    maxHealth: 20,
+    health: 10,
+    maxHealth: 10,
 };
 
 const INTERFACE = {

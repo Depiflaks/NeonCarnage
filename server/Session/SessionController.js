@@ -27,14 +27,15 @@ class SessionController {
         entity.angle = player.angle;
         entity.skinId = player.skinId;
         entity.isReborning = player.isReborning;
+        entity.nickname = player.nickname;
 
-        this.model.objects.corpses[id] = body.field.corpses;
+        //this.model.objects.corpses[id] = body.field.corpses;
         
         this.updateWeapons(entity, player);
 
         this.updateBullets(entity, body)
         
-        this.updateHealth(body, entity);
+        this.updateHealth(body, entity, id);
     }
 
     updateBullets(entity, body) {
@@ -67,7 +68,7 @@ class SessionController {
         }
     }
 
-    updateHealth(body, entity) {
+    updateHealth(body, entity, entityId) {
         const damage = body.change.damage;
         const heal = body.change.heal;
 
@@ -80,6 +81,11 @@ class SessionController {
             player.health = Math.max(0, player.health - damage[id])
             if (player.health === 0) {
                 player.isAlive = false;
+                if (!this.model.leaderBoard[entityId]) this.model.leaderBoard[entityId] = {
+                    name: entity.nickname,
+                    kills: 0
+                }
+                this.model.leaderBoard[entityId].kills += 1;
             }
         }
     }
@@ -88,6 +94,7 @@ class SessionController {
         const response = {
             players: this.model.players,
             objects: this.model.objects,
+            leaderBoard: this.model.leaderBoard,
         };
         return response;
     }
