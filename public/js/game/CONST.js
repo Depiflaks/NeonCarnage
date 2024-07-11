@@ -23,9 +23,9 @@ const WINDOW = {
 };
 
 const LEADER_BOARD = {
-    w: WINDOW.w / 2.5,
-    h: WINDOW.h / 5,
-    amount: WINDOW.w / 1.4,
+    w: 400,
+    h: 200,
+    amount: 1000,
 };
 
 const CELL = {
