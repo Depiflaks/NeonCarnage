@@ -7,7 +7,6 @@ class EntityController {
 
     setSpawnPoint() {
         const randomSpawnPoint = this.model.spawnPoints[Math.floor(Math.random() * this.model.spawnPoints.length)];
-
         this.model.x = randomSpawnPoint.x;
         this.model.y = randomSpawnPoint.y;
     }
@@ -31,7 +30,7 @@ class EntityController {
     die() {
         this.model.isAlive = false;
         if(this.getWeapon()) this.dropWeapon();
-        setTimeout(() => {this.reborn()}, 5000);
+        //setTimeout(() => {this.reborn()}, 5000);
     }
 
     dieEnemy() {

@@ -37,7 +37,7 @@ class EngineView {
             }
             this.drawBullets(enemy.getBullets(), field);
             //console.log(enemy.getPosition().x, enemy.getPosition().y, enemy.model.health, enemy.model.maxHealth)
-            this.drawEnemyHealthBarIfActive(field, enemy, player);
+            this.drawEnemyHealthBar(field, enemy);
         });
         field.drawWalls(this.context);
         this.entityView.drawHealthBar(player.getHealth());
@@ -69,11 +69,11 @@ class EngineView {
         }
     }
 
-    drawEnemyHealthBarIfActive(field, enemy, player) {
+    drawEnemyHealthBar(field, enemy) {
         const { x, y } = enemy.getPosition();
         const indexX = Math.floor((x - field.x) / CELL.w);
         const indexY = Math.floor((y - field.y) / CELL.h);
-        if (field.cells[indexX][indexY].active) {
+        if (field.cells[indexX][indexY] && field.cells[indexX][indexY].active) {
             this.entityView.drawEnemyHealthBar(x, y, enemy.model.health, enemy.model.maxHealth);
         }
     }

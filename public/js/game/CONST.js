@@ -22,6 +22,12 @@ const WINDOW = {
     c: "black",
 };
 
+// const WINDOW = {
+//     w: 1000,
+//     h: 800,
+//     c: "black",
+// };
+
 const CELL = {
     w: 150,
     h: 150,

@@ -5,7 +5,7 @@ import { Bullet } from "../Engine/Weapon/Bullet.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.ignat_home);
+        this.socket = new WebSocket(SERVER.sergey);
         this.enemies = {};
         this.initEventListeners();
     }
@@ -40,7 +40,6 @@ class ConnectionController {
                 heal: this.player.getHeal(),
             }
         }
-        //console.log(1, body);
         this.player.clearHeal();
         this.player.clearDamage();
         body.bullets = this.player.getBullets().map(bullet => {
@@ -125,7 +124,7 @@ class ConnectionController {
             enemy.setWeaponId(entity.weaponId);
             enemy.setHealth(entity.health);
             if (!entity.isAlive) {
-                enemy.die();
+                enemy.dieEnemy();
             }
             enemy.setBullets(entity.bullets.map(bullet => {
                 return new Bullet({

@@ -35,7 +35,6 @@ class EntityView {
         if (entity.isAlive()) return;
         const {x, y} = entity.getPosition();
         const angle = entity.getAngle();
-        const animation = entity.getTrajectory();
         this.context.save();
         this.context.translate(x, y);
         this.context.rotate(angle + 90 * RAD);

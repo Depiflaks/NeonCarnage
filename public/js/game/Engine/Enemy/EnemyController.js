@@ -12,7 +12,7 @@ class EnemyController extends EntityController{
         const {x, y} = this.getPosition();
         const indexX = Math.floor((x - field.x) / CELL.w);
         const indexY = Math.floor((y - field.y) / CELL.h);
-        this.model.active = field.cells[indexX][indexY].active;
+        if (field.cells[indexX][indexY]) this.model.active = field.cells[indexX][indexY].active;
     }
 
     setPosition({x, y}) {
