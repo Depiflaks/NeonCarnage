@@ -4,70 +4,50 @@ class WeaponView {
     constructor() {
     }
 
-    draw(model, animation, {x: px, y: py}, angle, context) {
-        if (model.status === WEAPON_STATE.onTheGround) {
-            this.drawOnGround(model.x, model.y, model.onGround, context);  
+    draw(weapon, entities, context) {
+        if (weapon.getStatus() === WEAPON_STATE.onTheGround) {
+            //console.log(1);
+            this.drawOnGround(weapon, context);  
         }
-        if (model.status === WEAPON_STATE.inTheHand) {
-            this.drawInHand(model, {px, py}, angle, animation, context);
+        if (weapon.getStatus() === WEAPON_STATE.inTheHand) {
+            //console.log(2);
+            this.drawInHand(weapon, entities, context);
         }
     }
 
-    drawOnGround(x, y, onGround, context) {
-        const weaponX = x - CELL.w * 0.5;
-        const weaponY = y - CELL.h * 0.25;
-        context.drawImage(onGround, weaponX, weaponY);
+    drawOnGround(weapon, context) {
+        const {x, y} = weapon.getPosition();
+        context.drawImage(weapon.getOnGround(), x, y);
     }
 
-    drawInHand(model, {px, py}, angle, animation, context) {
-        if (!((animation === null) || (animation) && (!animation.isAnimating))) return;
-        switch (model.name) {
+    drawInHand(weapon, entities, context) {
+        // доделать траекторию, когда начнём получать её с бэкенда
+        //if (animation && animation.isAnimating) return;
+        for (const entity of entities) {
+            //console.log(entity, entity.getWeaponId(), weapon.getId());
+            if (entity.getWeaponId() !== weapon.getId()) continue;
+            const {x: px, y: py} = entity.getPosition();
+            const {weaponX, weaponY} = this.getParam(weapon);
+            
+            context.save();
+            context.translate(px, py);
+            context.rotate(entity.getAngle() + 90 * RAD);
+            context.drawImage(weapon.getInHand(), weaponX, weaponY, weapon.model.w, weapon.model.h);
+            context.restore();
+        }
+    }
+
+    getParam(weapon) {
+        switch (weapon.getName()) {
             case "knife":
-                this.drawKnife(model, px, py, angle, context);
-                break;
-            case "pistol":
-                this.drawPistol(model, px, py, angle, context);
-                break;
+                return {weaponX: ENTITY.h, weaponY: -weapon.model.inHand.height / 2}
             case "glock":
-                this.drawPistol(model, px, py, angle, context);
-                break;
-            case "rifle":
-                this.drawShotGun(model, px, py, angle, context);
-                break;
+            case "pistol":
+                return {weaponX: -ENTITY.h / 5, weaponY: -weapon.model.inHand.height};
             case "machineGun":
-                this.drawShotGun(model, px, py, angle, context);
-                break;
+            case "rifle":
+                return {weaponX: -ENTITY.h / 2, weaponY: -weapon.model.inHand.height}
         }
-    }
-
-    drawKnife(model, rotateX, rotateY, angle, context) {
-        const weaponX = ENTITY.h;
-        const weaponY = -model.inHand.height / 2;
-        context.save();
-        context.translate(rotateX, rotateY);
-        context.rotate(angle + 90 * RAD);
-        context.drawImage(model.inHand, weaponX, weaponY, model.w, model.h);
-        context.restore();
-    }
-
-    drawPistol(model, rotateX, rotateY, angle, context) {
-        const weaponX = -ENTITY.h / 5;
-        const weaponY = -model.inHand.height;
-        context.save();
-        context.translate(rotateX, rotateY);
-        context.rotate(angle + 90 * RAD);
-        context.drawImage(model.inHand, weaponX, weaponY, model.w, model.h);
-        context.restore();        
-    }
-
-    drawShotGun(model, rotateX, rotateY, angle, context) {
-        const weaponX = -ENTITY.h / 2;
-        const weaponY = -model.inHand.height;
-        context.save();
-        context.translate(rotateX, rotateY);
-        context.rotate(angle + 90 * RAD);
-        context.drawImage(model.inHand, weaponX, weaponY, model.w, model.h);
-        context.restore();
     }
 }
 

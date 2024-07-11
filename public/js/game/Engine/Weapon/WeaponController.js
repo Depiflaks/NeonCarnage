@@ -1,10 +1,10 @@
 
-import { AMMUNITION } from "../../CONST.js";
+import { AMMUNITION, WEAPON_STATE } from "../../CONST.js";
 import { WeaponModel } from "./WeaponModel.js";
 import { WeaponView } from "./WeaponView.js";
 
 class WeaponController {
-    constructor (weapon) {
+    constructor(weapon) {
         this.model = new WeaponModel(weapon);
         this.view = new WeaponView();
     }
@@ -17,6 +17,13 @@ class WeaponController {
     recharge() {
         this.model.amount = this.model.maxAmount;
         this.model.isRecharging = false;
+    }
+
+    update(weapon, {dx, dy}) {
+        this.model.x = weapon.x + dx;
+        this.model.y = weapon.y + dy;
+        this.model.amount = weapon.amount;
+        this.model.status = weapon.onGround ? WEAPON_STATE.onTheGround : WEAPON_STATE.inTheHand; 
     }
 
     pickupAmmunition(ammunition, playerPosition) {
@@ -34,6 +41,15 @@ class WeaponController {
         }
         return true;
     }
+
+    getPosition() {
+        return {x: this.model.x, y: this.model.y};
+    }
+
+    getId() {
+        return this.model.id;
+    }
+
     isDistant() {
         return this.model.battleType === "distant";
     }

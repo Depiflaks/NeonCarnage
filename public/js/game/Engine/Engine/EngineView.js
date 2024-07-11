@@ -18,7 +18,7 @@ class EngineView {
         field.drawGround(this.context);
         this.drawBullets(player.getBullets(), field);
         field.drawBonuses(this.context);
-        field.drawWeapons(player.getPosition(), player.getAngle(), player.getTrajectory(), this.context);
+        field.drawWeapons([].concat(player, Object.values(enemies)), this.context);
         field.drawAmmunition(this.context);
         if (player.getTrajectory()) {
                 player.getTrajectory().draw(this.context);
@@ -51,7 +51,14 @@ class EngineView {
         bullets.map(bullet => {
             indexX = Math.floor((bullet.x + bullet.h * Math.cos(bullet.angle) - field.x) / CELL.w);
             indexY = Math.floor((bullet.y + bullet.h * Math.sin(bullet.angle) - field.y) / CELL.h);
-            if (indexX >= 0 && indexX <= field.w && indexY >= 0 && indexY <= field.h && field.cells[indexX][indexY] && field.cells[indexX][indexY].active) bullet.draw(this.context);
+            if (
+                indexX >= 0 && 
+                indexX <= field.w && 
+                indexY >= 0 && 
+                indexY <= field.h && 
+                field.cells[indexX][indexY] && 
+                field.cells[indexX][indexY].active
+            ) bullet.draw(this.context);
         });
     }
 

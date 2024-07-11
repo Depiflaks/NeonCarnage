@@ -14,7 +14,7 @@ const SERVER = {
     liuba_home: 'ws://192.168.103.146:8000',
     denis: 'ws://10.250.104.148:8000/',
     denis_home: 'ws://192.168.129.252:8000/'
-}
+};
 
 const WINDOW = {
     w: 1920,
@@ -94,8 +94,8 @@ const ENTITY = {
         angleStep: 5 * RAD,
     },
     pythagoreanFactor: Math.sqrt(2) / 2,
-    health: 4,
-    maxHealth: 5,
+    health: 19,
+    maxHealth: 20,
 };
 
 const INTERFACE = {
@@ -216,7 +216,7 @@ const BULLET = {
 };
 
 const ENEMY = {
-    period: 10,
+    period: 5,
 }
 
 const KEYBOARD_E = 'KeyE';

@@ -30,18 +30,18 @@ class EntityController {
 
     die() {
         this.model.isAlive = false;
-        if(this.model.weapon != null) this.dropWeapon();
+        if(this.getWeapon()) this.dropWeapon();
         setTimeout(() => {this.reborn()}, 5000);
     }
 
     dieEnemy() {
         this.model.isAlive = false;
-        if(this.model.weapon != null) this.dropWeapon();
+        if(this.getWeapon()) this.dropWeapon();
     }
 
     reborn() {
         this.model.isAlive = true;
-        this.model.health = 4;
+        this.setHealth(this.getMaxHealth());
         this.setSpawnPoint();
     }
 
@@ -67,6 +67,8 @@ class EntityController {
 
     setWeapon(weapon) {
         this.model.weapon = weapon;
+        if (weapon)
+        this.setWeaponId(weapon ? weapon.getId() : null);
     }
 
     getWeaponId() {
@@ -107,6 +109,7 @@ class EntityController {
         clearInterval(this.getWeapon().getShootingInterval());
         this.getWeapon().setShootingInterval(null);
         this.setWeapon(null);
+        this.setWeaponId(null);
     }
 
     getSkin() {

@@ -18,27 +18,31 @@ class ConnectionController {
 
     sendData() {
         const {x, y} = this.player.getPosition();
-        const angle = this.player.getAngle();
-        const weapon = this.player.getWeaponId();
-        const health = this.player.getHealth();
-        const maxHealth = ENTITY.maxHealth;
-        const damage = this.player.model.damage;
-        const isAlive = this.player.isAlive();
-        this.player.model.damage = {};
+        const weaponId = this.player.getWeaponId();
+        const weaponAmount = weaponId ? this.player.getWeapon().getAmount() : null;
         const body = {
             player: {
                 x: x - this.field.x, 
                 y: y - this.field.y, 
-                angle: angle, 
-                weapon: weapon,
-                health: health,
-                maxHealth: maxHealth,
-                isAlive: isAlive,
+                angle: this.player.getAngle(), 
+                weapon: {
+                    id: weaponId,
+                    amount: weaponAmount,
+                },
+                health: this.player.getHealth(),
+                maxHealth: ENTITY.maxHealth,
+                isAlive: this.player.isAlive(),
                 skinId: this.player.getSkinId()
             },
             bullets: [],
-            damage: damage,
+            change: {
+                damage: this.player.getDamage(),
+                heal: this.player.getHeal(),
+            }
         }
+        //console.log(1, body);
+        this.player.clearHeal();
+        this.player.clearDamage();
         body.bullets = this.player.getBullets().map(bullet => {
             const {x, y} = bullet.getPosition();
             return {
@@ -78,7 +82,7 @@ class ConnectionController {
         const body = data.body;
         switch (type) {
             case "init":
-                this.init()
+                this.init(body)
                 break;
             case "response":
                 this.response(body);
@@ -88,41 +92,49 @@ class ConnectionController {
         }
     }
 
-    init() {
-        console.log(body)
+    init(body) {
+        this.id = body.id;
     }
 
     response(body) {
-        const player = body.player;
-        const id = player.id;
-        const x = player.x + this.field.x;
-        const y = player.y + this.field.y;
-        const angle = player.angle;
-        const weapon = player.weapon;
-        const health = player.health;
-        const maxHealth = player.maxHealth;
-        const currentHealth = this.player.getHealth();
-        const isAlive = player.isAlive;
-        this.player.model.health -= body.damage.damage;
-        this.player.model.health = Math.max(this.player.model.health, 0);
-
-        if (!this.enemies[id]) {
-            this.enemies[id] = new EnemyController({x: 0, y: 0, angle: 0, weaponId: null, health, maxHealth, skinId: player.skinId});
-        }
-        if (!isAlive) this.enemies[id].dieEnemy();
-        this.enemies[id].setPosition({
-            x: x,
-            y: y,
+        //console.log(2, body);
+        body.objects.weapons.filter(weapon => {return weapon.id === body.objects.weaponId}).map(weapon => {
+            this.field.weapons[weapon.id].update(weapon, {dx: this.field.x, dy: this.field.y});
         });
-        this.enemies[id].setAngle(angle);
-        this.enemies[id].setWeaponId(weapon);
-        this.enemies[id].setHealth(health);
-        this.enemies[id].setBullets(body.bullets.map(bullet => {
-            return new Bullet({
-                x: bullet.x + this.field.x, 
-                y: bullet.y + this.field.y, 
-                angle: bullet.angle})
-        }))
+        for (const id in body.players) {
+            const entity = body.players[id];
+            if (entity == {}) continue; 
+            if (id === this.id) {
+                this.player.setHealth(entity.health);
+                if (!entity.isAlive) {
+                    this.player.die();
+                }
+                //здесь можно добавить призрака
+                continue;
+            };
+            if (!this.enemies[id]) this.enemies[id] = new EnemyController({
+                x: 0, y: 0, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth,
+                health: entity.health
+            });
+            const enemy = this.enemies[id];
+            enemy.setPosition({
+                x: entity.x + this.field.x,
+                y: entity.y + this.field.y,
+            });
+            enemy.setAngle(entity.angle);
+            enemy.setWeaponId(entity.weaponId);
+            enemy.setHealth(entity.health);
+            if (!entity.isAlive) {
+                enemy.die();
+            }
+            enemy.setBullets(entity.bullets.map(bullet => {
+                return new Bullet({
+                    x: bullet.x + this.field.x, 
+                    y: bullet.y + this.field.y, 
+                    angle: bullet.angle
+                })
+            }))
+        }
     }
 
     onClose(data) {

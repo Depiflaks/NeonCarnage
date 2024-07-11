@@ -46,14 +46,18 @@ class EngineController {
     update() {
         this.field.update();
         this.tracing.updateViewRange();
+        Object.values(this.enemies).map(enemy => {
+            enemy.checkActive(this.field);
+            enemy.getBullets().map(bullet => {
+                bullet.updatePosition();
+            });
+            enemy.update();
+        })
         this.checkIntersections([...this.field.verticalWalls, ...this.field.horizontalWalls]);
         this.takeAmmunition();
         this.takeBonus();
         this.player.update();
-        Object.values(this.enemies).forEach(enemy => {
-            enemy.checkActive(this.field);
-            enemy.update();
-        });
+        
         this.move();
         this.model.updateShake();
     }
@@ -92,20 +96,18 @@ class EngineController {
     }
 
     bulletsIntersectionEnemy() {
-        this.player.setBullets(this.player.getBullets().filter(bullet => {
-            let hit = false;
-            Object.entries(this.enemies).forEach(([id, enemy]) => {
-                if (bullet.isIntersectEnemy(enemy.model)) {
-                    hit = true;
-                    if (this.player.model.damage[id] === undefined) {
-                        this.player.model.damage[id] = { shotDown: 1 };
-                    } else {
-                        this.player.model.damage[id].shotDown += 1;
+        this.player.setBullets(this.player.getBullets().filter(
+            bullet => {
+                let hit = false;
+                Object.entries(this.enemies).forEach(([id, enemy]) => {
+                    if (bullet.isIntersectEnemy(enemy.model)) {
+                        hit = true;
+                        this.player.addDamage(id, 1)
                     }
-                }
-            });
-            return !hit;
-        }));
+                });
+                return !hit;
+            }
+        ));
     }
 
     checkIntersections(drawableArray, moveableArray) {

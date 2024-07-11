@@ -18,7 +18,12 @@ class PlayerModel extends EntityModel {
             e: 0,
         };
         this.spawnPoints = spawnPoints;
-        this.damage = {};
+        this.healthChange = {
+            heal: 0,
+            damage: {
+                
+            }
+        };
     }
 
     updatePosition() {
