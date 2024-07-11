@@ -71,17 +71,11 @@ class EngineView {
 
     drawBulletAmount(player) {
         if((player.getWeapon() != null) && (player.getWeapon().getBattleType() === "distant")) {
+            this.context.save();
             this.context.font = "48px Russo One";
+            this.context.fillStyle = 'grey';
             this.context.fillText(player.getWeapon().getAmount(), 10, 50);
-        }
-    }
-
-    drawEnemyHealthBar(field, enemy) {
-        const { x, y } = enemy.getPosition();
-        const indexX = Math.floor((x - field.x) / CELL.w);
-        const indexY = Math.floor((y - field.y) / CELL.h);
-        if (field.cells[indexX][indexY] && field.cells[indexX][indexY].active) {
-            this.entityView.drawEnemyHealthBar(x, y, enemy.model.health, enemy.model.maxHealth);
+            this.context.restore();
         }
     }
 

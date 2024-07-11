@@ -53,7 +53,7 @@ class EntityView {
         const barWidth = ENTITY.w;
         const barHeight = 10;  // Narrower bar
         const offset = 20;    // Offset from the enemy
-
+        this.context.save();
         // Background
         this.context.fillStyle = "gray";
         this.context.fillRect(x - barWidth / 2, y - ENTITY.radius - offset, barWidth, barHeight);
@@ -62,6 +62,7 @@ class EntityView {
         const healthWidth = (barWidth * health) / maxHealth;
         this.context.fillStyle = "red";
         this.context.fillRect(x - barWidth / 2, y - ENTITY.radius - offset, healthWidth, barHeight);
+        this.context.restore();
     }
 
     drawHealthBar(health) {
@@ -72,7 +73,7 @@ class EntityView {
         const offsetY = 45;
         const gap = 5; // Gap between squares
         const maxHealth = 20;
-
+        this.context.save();
         for (let row = 0; row < rows; row++) {
             for (let col = 0; col < squaresPerRow; col++) {
                 const x = offsetX + col * (squareSize + gap);
@@ -88,6 +89,7 @@ class EntityView {
                 this.context.fillRect(x, y, squareSize, squareSize);
             }
         }
+        this.context.restore();
     }
 
     drawNickname(entity) {

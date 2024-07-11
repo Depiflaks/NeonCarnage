@@ -8,7 +8,6 @@ class Collectable extends Drawable {
     }
 
     draw(context) {
-        context.fillStyle = this.color;
         context.fillRect(this.x, this.y, this.w, this.h);
     }
 }
