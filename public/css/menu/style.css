@@ -6,11 +6,9 @@ body {
     flex-direction: column; 
     background: linear-gradient(to top, #00ffcc, #2d2d2d); /* Заменил цвета градиента */
     color: #00ffcc; /* Заменил цвет текста */
-    font-family: 'Press Start 2P', cursive;
+    font-family: 'Nosifer';
     overflow: hidden;
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 .menu {
     text-align: center;
@@ -18,6 +16,7 @@ body {
 }
 
 .menu h1 {
+    font-family: "Nosifer";
     font-size: 3em;
     color: #00ffcc; /* Заменил цвет заголовка */
     text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc; /* Заменил тени текста */
@@ -38,6 +37,7 @@ body {
 .menu a {
     text-decoration: none;
     color: #1a1a1a; /* Заменил цвет текста */
+    font-family: "Russo One";
     font-size: 1.5em;
     padding: 10px 20px;
     background: #00ffcc; /* Заменил цвет фона */

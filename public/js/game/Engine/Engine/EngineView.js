@@ -64,7 +64,7 @@ class EngineView {
 
     drawBulletAmount(player) {
         if((player.getWeapon() != null) && (player.getWeapon().getBattleType() === "distant")) {
-            this.context.font = "48px roboto";
+            this.context.font = "48px arial";
             this.context.fillText(player.getWeapon().getAmount(), 10, 50);
         }
     }
@@ -107,7 +107,6 @@ class EngineView {
         const { width, height } = this.canvas;
         const gradient = this.context.createLinearGradient(0, 0, width, height);
 
-        // Вычисляем значения цвета на основе gradientOffset
         const r = Math.floor(127 * (1 + Math.sin(Math.PI * this.gradientOffset)));
         const g = Math.floor(127 * (1 + Math.sin(Math.PI * (this.gradientOffset + 2 / 3))));
         const b = Math.floor(127 * (1 + Math.sin(Math.PI * (this.gradientOffset + 4 / 3))));
