@@ -1,6 +1,6 @@
 import { CAMERA, KEYBOARD_E, WEAPON, WEAPON_STATE } from "../../CONST.js";
 import { EngineModel } from "./EngineModel.js";
-import { EngineView } from "./EngineView.js";
+import { EngineView } from "../Entity/EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
 
 class EngineController {
