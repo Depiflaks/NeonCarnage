@@ -128,11 +128,9 @@ class BattleGround extends Drawable {
     drawCorpse(context) {
         let indexX, indexY;
         this.corpse.map(corp => {
-            indexX = Math.floor((corp.x - this.x) / CELL.w);
-            indexY = Math.floor((corp.y - this.y) / CELL.h);
-            if (this.cells[indexX][indexY] && this.cells[indexX][indexY].active) {
-                corp.draw(context);
-            }
+            indexX = Math.floor(corp.x / CELL.w);
+            indexY = Math.floor(corp.y / CELL.h);
+            if (this.cells[indexX][indexY] && this.cells[indexX][indexY].active) corp.draw({dx: this.x, dy: this.y}, context);
         });
     }
 
@@ -156,7 +154,9 @@ class BattleGround extends Drawable {
 
     addCorpse(player) {
         const skinId = player.getSkinId();
-        const {x, y} = player.getPosition();
+        let {x, y} = player.getPosition();
+        x -= this.x;
+        y -= this.y;
         const corpse = new Corpse(x, y, skinId);
         const isCorpseExists = this.corpse.some(existingCorpse => 
             existingCorpse.x === x && 
@@ -197,7 +197,7 @@ class BattleGround extends Drawable {
         this.weapons.map(weapon => weapon.model.move(dx, dy));
         this.ammunition.map(ammunition => ammunition.move(dx, dy));
         this.bonuses.map(bonus => bonus.move(dx, dy));
-        this.corpse.map(corp => {if (corp) {corp.move(dx, dy)}});
+        this.corpse.map(corp => corp.move(dx, dy));
     }
 }
 

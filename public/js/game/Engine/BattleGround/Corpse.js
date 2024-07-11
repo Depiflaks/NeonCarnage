@@ -9,10 +9,10 @@ class Corpse extends Drawable {
         this.image.src = SKINS[skinId].corpse;
     }
 
-    draw(context) {
-        const bonusX = this.x - this.w / 2;
-        const bonusY = this.y - this.h / 2;
-        context.drawImage(this.image, bonusX, bonusY, this.w, this.h);
+    draw({dx, dy}, context) {
+        const x = this.x - this.w / 2 + dx;
+        const y = this.y - this.h / 2 + dy;
+        context.drawImage(this.image, x, y, this.w, this.h);
     }
 }
 

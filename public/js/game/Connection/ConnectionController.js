@@ -1,4 +1,5 @@
 import { SERVER, ENTITY } from "../CONST.js";
+import { Corpse } from "../Engine/BattleGround/Corpse.js";
 import { EnemyController } from "../Engine/Enemy/EnemyController.js";
 import { Bullet } from "../Engine/Weapon/Bullet.js";
 
@@ -42,7 +43,11 @@ class ConnectionController {
                 heal: this.player.getHeal(),
             },
             field: {
-                corpse: corpse,
+                corpse: this.field.getCorpse().map(corp => {return {
+                    x: corp.x,
+                    y: corp.y,
+                    skinId: corp.skinId,
+                }}),
             }
 
         }
@@ -105,6 +110,9 @@ class ConnectionController {
         body.objects.weapons.filter(weapon => {return weapon.id === body.objects.weaponId}).map(weapon => {
             this.field.weapons[weapon.id].update(weapon, {dx: this.field.x, dy: this.field.y});
         });
+        //console.log(body);
+        this.field.corpse = body.objects.corpse.map(corp => {return new Corpse(corp.x, corp.y, corp.skinId)})
+        //console.log(this.field.corpse);
         for (const id in body.players) {
             const entity = body.players[id];
             if (id === this.id) {
@@ -138,9 +146,6 @@ class ConnectionController {
                     angle: bullet.angle
                 })
             }));
-
-            this.field.mergeCorpse(entity.field.corpse);
-
         }
     }
 
