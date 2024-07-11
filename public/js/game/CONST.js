@@ -23,9 +23,9 @@ const WINDOW = {
 };
 
 const LEADER_BOARD = {
-    w: 400,
+    w: 600,
     h: 200,
-    amount: 1000,
+    amount: 1200,
 };
 
 const CELL = {
@@ -196,7 +196,7 @@ const WEAPON_MODELS = {
         deviation: 0.05,
         onGround: "public/assets/Weapon/weapon4.png",
         inHand: "public/assets/Weapon/weaponUp4.png",
-        amount: 50,
+        amount: 15,
         rechargeTime: 2000,
         w: 20,
         h: 70,

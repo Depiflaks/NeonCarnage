@@ -148,9 +148,6 @@ class EngineView {
         }
     }
 
-
-
-
     drawLine(x1, y1, x2, y2, color, field) {
         this.context.lineWidth = 1;
         this.context.strokeStyle = color;

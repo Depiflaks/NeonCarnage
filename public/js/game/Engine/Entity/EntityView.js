@@ -13,6 +13,7 @@ class EntityView {
         const { x, y } = entity.getPosition();
         const angle = entity.getAngle();
         const weaponId = entity.getWeaponId();
+        //console.log(weaponId, entity.getWeapon());
         const weapon = entity.getWeapon();
         const animation = entity.getTrajectory();
         this.context.save();
@@ -21,10 +22,10 @@ class EntityView {
         if ((!animation && !weaponId) || (!animation && (weapon && weapon.getName() === "knife")) || (animation && animation.isAnimating && weaponId)) {
             this.context.drawImage(skin.body.none, -ENTITY.w/2, -ENTITY.h/2, ENTITY.w, ENTITY.h);
             this.context.drawImage(skin.head, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
-        } else if (weapon && (weapon.getName() === "pistol" || weapon.getName() === "glock")) {
+        } else if (weaponId in [0, 1, 3, 4, 5, 6]) {
                 this.context.drawImage(skin.body.one, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
                 this.context.drawImage(skin.head, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
-        } else {   
+        } else {
                 this.context.drawImage(skin.body.two, -ENTITY.wWithWeapon/2, -ENTITY.hWithWeapon/1.5, ENTITY.wWithWeapon, ENTITY.hWithWeapon);
                 this.context.drawImage(skin.head, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
         }
