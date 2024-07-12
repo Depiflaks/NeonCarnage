@@ -66,9 +66,9 @@ class EntityView {
     }
 
     drawHealthBar(health, maxHealth) {
-        const rows = Math.ceil(maxHealth / HEALTH.squaresPerRow);  // Calculate the number of rows needed
+        const rows = Math.ceil(maxHealth / HEALTH.squaresPerRow);
         this.context.save();
-        let squaresDrawn = 0;  // Keep track of the number of squares drawn
+        let squaresDrawn = 0;
 
         for (let row = 0; row < rows; row++) {
             for (let col = 0; col < HEALTH.squaresPerRow; col++) {
@@ -77,7 +77,7 @@ class EntityView {
                 const index = row * HEALTH.squaresPerRow + col;
 
                 if (index >= maxHealth) {
-                    break;  // Stop drawing if the total number of squares reaches maxHealth
+                    break;
                 }
 
                 if (index < health) {
