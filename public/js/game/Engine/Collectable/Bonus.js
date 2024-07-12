@@ -21,6 +21,8 @@ class Bonus extends Collectable {
             this.active = true;
         }, delay);
     }
+
+    update() {}
 }
 
 export { Bonus };

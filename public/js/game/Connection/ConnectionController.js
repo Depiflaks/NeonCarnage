@@ -97,7 +97,7 @@ class ConnectionController {
                 this.init(body)
                 break;
             case "response":
-                this.response(body);
+                this.onResponse(body);
                 break
             default:
                 break;
@@ -108,8 +108,17 @@ class ConnectionController {
         this.id = body.id;
     }
 
-    response(body) {
-        body.objects.weapons.filter(weapon => {return weapon.id === body.objects.weaponId}).map(weapon => {
+    onResponse(body) {
+        // for (const weapon of body.objects.weapons) {
+        //     if (weapon.id !== body.objects.weaponId) {
+        //         let weapon = this.field.weapons[weapon.id];
+        //         weapon.update(weapon, { d })
+        //     }
+        // }
+
+        body.objects.weapons
+        .filter(weapon => weapon.id === body.objects.weaponId)
+        .forEach(weapon => {
             this.field.weapons[weapon.id].update(weapon, {dx: this.field.x, dy: this.field.y});
         });
         this.player.leaderBoard = body.leaderBoard;
