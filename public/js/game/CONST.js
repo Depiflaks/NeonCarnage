@@ -106,7 +106,7 @@ const ENTITY = {
         angleStep: 5 * RAD,
     },
     pythagoreanFactor: Math.sqrt(2) / 2,
-    health: 10,
+    health: 7,
     maxHealth: 10,
 };
 
@@ -235,6 +235,11 @@ const BULLET = {
     image: "public/assets/Bonuses/cartridges.png",
 };
 
+const DRAW_BULLETS_AMOUNT = {
+    OffsetX: 10,
+    OffsetY: 30,
+}
+
 const ENEMY = {
     period: 5,
 }
@@ -258,4 +263,4 @@ const TRAJECTORY = {
     knifeRightImage: "public/assets/Weapon/right.png",
 };
 
-export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, LEADER_BOARD, HEALTH, SKINS, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, KEYBOARD_TAB, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};
+export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, LEADER_BOARD, HEALTH, SKINS, DRAW_BULLETS_AMOUNT, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, KEYBOARD_TAB, WEAPON_STATE, RAD, FPS, TRAJECTORY, SERVER, ENEMY};
