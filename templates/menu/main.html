@@ -76,7 +76,7 @@
         input {
             display: block;
             font-family: 'Russo One';
-            margin: 0 auto 20px;
+            margin: 0 auto 10px;
             padding: 10px;
             font-size: 1.2em;
             border: 2px solid #00ffcc;
@@ -178,6 +178,22 @@
 
         .lobby-form {
             margin-bottom: 40px;
+            padding: 20px;
+            border: 2px solid #00ffcc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00ffcc;
+            background-color: #2d2d2d;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            color: #00ffcc;
         }
 
         .room-list {
@@ -204,13 +220,22 @@
     <div class="lobby">
         <h1>Game Lobby</h1>
         <div class="lobby-form">
-            <input type="text" id="roomName" placeholder="Room Name">
-            <input type="text" id="creatorName" placeholder="Creator Name">
-            <div class="custom-select-wrapper">
-                <select id="gameMode">
-                    <option value="deathmatch">Deathmatch</option>
-                    <option value="captureTheFlag">Capture the Flag</option>
-                </select>
+            <div class="form-group">
+                <label for="roomName">Room Name</label>
+                <input type="text" id="roomName" placeholder="Room Name">
+            </div>
+            <div class="form-group">
+                <label for="creatorName">Creator Name</label>
+                <input type="text" id="creatorName" placeholder="Creator Name">
+            </div>
+            <div class="form-group">
+                <label for="gameMode">Game Mode</label>
+                <div class="custom-select-wrapper">
+                    <select id="gameMode">
+                        <option value="deathmatch">Deathmatch</option>
+                        <option value="captureTheFlag">Capture the Flag</option>
+                    </select>
+                </div>
             </div>
             <button onclick="createRoom()">Create Room</button>
         </div>
@@ -221,6 +246,7 @@
                     <th>Creator</th>
                     <th>Players</th>
                     <th>Game Mode</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id="roomsContainer">
@@ -251,6 +277,16 @@
             }
         }
 
+        function joinRoom(roomName) {
+            const room = rooms.find(r => r.roomName === roomName);
+            if (room && room.players < 4) {
+                room.players += 1;
+                updateRoomList();
+            } else {
+                alert('Room is full or does not exist.');
+            }
+        }
+
         function updateRoomList() {
             const roomsContainer = document.getElementById('roomsContainer');
             roomsContainer.innerHTML = '';
@@ -262,6 +298,7 @@
                     <td>${room.creatorName}</td>
                     <td>${room.players} / 4</td>
                     <td>${room.gameMode}</td>
+                    <td><button onclick="joinRoom('${room.roomName}')">Join Room</button></td>
                 `;
                 roomsContainer.appendChild(roomRow);
             });
