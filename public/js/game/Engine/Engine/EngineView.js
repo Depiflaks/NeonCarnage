@@ -44,7 +44,7 @@ class EngineView {
 
         });
         field.drawWalls(this.context);
-        this.entityView.drawHealthBar(player.getHealth(), player.getMaxHealth(), player.getPosition());
+        this.entityView.drawHealthBar(player);
         this.drawBulletAmount(player);
         if (leaderBoard) {
             this.drawLeaderBoard(list);
