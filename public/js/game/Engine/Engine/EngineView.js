@@ -1,5 +1,5 @@
 import { EntityView } from "../Entity/EntityView.js";
-import {WINDOW, LEADER_BOARD, RAD, ENTITY, CELL, SHAKE} from "../../CONST.js";
+import {WINDOW, LEADER_BOARD, RAD, ENTITY, CELL, SHAKE, DRAW_BULLETS_AMOUNT} from "../../CONST.js";
 
 
 class EngineView {
@@ -44,7 +44,7 @@ class EngineView {
 
         });
         field.drawWalls(this.context);
-        this.entityView.drawHealthBar(player.getHealth());
+        this.entityView.drawHealthBar(player);
         this.drawBulletAmount(player);
         if (leaderBoard) {
             this.drawLeaderBoard(list);
@@ -70,11 +70,18 @@ class EngineView {
     }
 
     drawBulletAmount(player) {
-        if((player.getWeapon() != null) && (player.getWeapon().getBattleType() === "distant")) {
+        const weapon = player.getWeapon();
+        if (weapon != null && weapon.getBattleType() === "distant") {
+            const cursorPos = player.getCursorPosition();
             this.context.save();
-            this.context.font = "48px Russo One";
-            this.context.fillStyle = 'grey';
-            this.context.fillText(player.getWeapon().getAmount(), 10, 50);
+            this.context.font = "22px Russo One";
+            this.context.fillStyle = 'white';
+
+            const text = weapon.getAmount();
+            const x = cursorPos.x + DRAW_BULLETS_AMOUNT.OffsetX;
+            const y = cursorPos.y + DRAW_BULLETS_AMOUNT.OffsetY;
+
+            this.context.fillText(text, x, y);
             this.context.restore();
         }
     }

@@ -1,4 +1,4 @@
-import {ENTITY, RAD, INTERFACE} from "../../CONST.js";
+import {ENTITY, RAD, INTERFACE, HEALTH} from "../../CONST.js";
 
 class EntityView {
     constructor(context) {
@@ -66,26 +66,33 @@ class EntityView {
         this.context.restore();
     }
 
-    drawHealthBar(health) {
-        const squareSize = 15;
-        const squaresPerRow = 10;
-        const rows = 1;
-        const offsetX = 10;
-        const offsetY = 45;
-        const gap = 5; // Gap between squares
-        this.context.save();
-        for (let row = 0; row < rows; row++) {
-            for (let col = 0; col < squaresPerRow; col++) {
-                const x = offsetX + col * (squareSize + gap);
-                const y = ENTITY.radius + offsetY + row * (squareSize + gap);
-                const index = row * squaresPerRow + col;
+    drawHealthBar(player) {
+        const health = player.getHealth();
+        const maxHealth = player.getMaxHealth();
+        const rows = Math.ceil(maxHealth / HEALTH.squaresPerRow);
+        const { x, y } = player.getPosition();
+        const playerHeight = ENTITY.radius * 2;
 
-                if (index < health) {
-                    this.context.fillStyle = "red";
-                } else {
-                    this.context.fillStyle = "gray";
+        this.context.save();
+        let squaresDrawn = 0;
+
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < HEALTH.squaresPerRow; col++) {
+                const squareX = x - (HEALTH.squaresPerRow * (HEALTH.squareSize + HEALTH.gap)) / 2 + col * (HEALTH.squareSize + HEALTH.gap);
+                const squareY = y + playerHeight / 2 + HEALTH.offsetY + row * (HEALTH.squareSize + HEALTH.gap);
+                const index = row * HEALTH.squaresPerRow + col;
+
+                if (index >= maxHealth) {
+                    break;
                 }
-                this.context.fillRect(x, y, squareSize, squareSize);
+
+                this.context.fillStyle = index < health ? "red" : "gray";
+                this.context.fillRect(squareX, squareY, HEALTH.squareSize, HEALTH.squareSize);
+                squaresDrawn++;
+
+                if (squaresDrawn >= maxHealth) {
+                    break;
+                }
             }
         }
         this.context.restore();
