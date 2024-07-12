@@ -12,7 +12,7 @@ const SERVER = {
     ignat_home: 'ws://10.250.104.176:8000/',
     liuba: 'ws://10.250.104.51:8000/',
     liuba_home: 'ws://192.168.103.146:8000',
-    denis: 'ws://10.250.104.148:8000/',
+    denis: 'ws://10.250.104.156:8000/',
     denis_home: 'ws://192.168.129.252:8000/'
 };
 
@@ -106,8 +106,8 @@ const ENTITY = {
         angleStep: 5 * RAD,
     },
     pythagoreanFactor: Math.sqrt(2) / 2,
-    health: 7,
-    maxHealth: 10,
+    health: 5,
+    maxHealth: 5,
 };
 
 const INTERFACE = {
@@ -170,7 +170,7 @@ const WEAPON_MODELS = {
         deviation: 0.4,
         onGround: "public/assets/Weapon/weapon2.png",
         inHand: "public/assets/Weapon/weaponUp2.png",
-        amount: 20,
+        amount: 8,
         rechargeTime: 3000,
         w: 40,
         h: 130,
@@ -205,10 +205,10 @@ const WEAPON_MODELS = {
 
 const HEALTH = {
     squareSize: 15,
-    squaresPerRow: 10,
+    squaresPerRow: 5,
     offsetX: 10,
     offsetY: 45,
-    gap: 5, // Gap between squares
+    gap: 0, // Gap between squares
 }
 
 const AMMUNITION = {
