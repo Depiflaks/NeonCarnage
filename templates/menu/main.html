@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Lobby</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Your provided CSS here */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(to top, #00ffcc, #2d2d2d);
+            color: #00ffcc;
+            font-family: 'Russo One';
+            overflow: hidden;
+        }
+
+        * {
+            user-select: none; /* Prevent text selection for all elements */
+        }
+
+        /* Стили для заголовка */
+        h1 {
+            font-family: 'Nosifer', sans-serif;
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 0 0 #00ffcc, 0 0 10px #00ffcc, 0 0 30px #00ffcc;
+            animation: glow 1.5s infinite alternate, neonFlow 3s infinite;
+        }
+
+        /* Стили для меню */
+        .menu {
+            text-align: center;
+        }
+
+        .menu h1 {
+            font-family: "Nosifer";
+            font-size: 3em;
+            color: #00ffcc;
+            text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
+            position: relative;
+        }
+
+        .menu ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .menu li {
+            margin: 40px 0;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-family: "Russo One";
+            font-size: 1.5em;
+            padding: 10px 20px;
+            background: #00ffcc;
+            border: 2px solid #00ffcc;
+            box-shadow: 3px 3px #1a1a1a, -3px -3px #00ffcc;
+            transition: background 0.3s;
+        }
+
+        .menu a:hover {
+            background: #2d2d2d;
+        }
+
+        /* Стили для поля ввода */
+        input {
+            display: block;
+            font-family: 'Russo One';
+            margin: 0 auto 20px;
+            padding: 10px;
+            font-size: 1.2em;
+            border: 2px solid #00ffcc;
+            border-radius: 5px;
+            background-color: #1a1a1a;
+            color: #00ffcc;
+            text-align: center;
+            outline: none;
+            box-shadow: 0 0 10px #00ffcc;
+        }
+
+        /* Стили для обертки select */
+        .custom-select-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 200px;
+        }
+
+        /* Стили для выпадающего меню select */
+        select {
+            display: block;
+            width: 100%;
+            margin: 0 auto 20px;
+            padding: 10px;
+            font-family: 'Russo One';
+            font-size: 1.2em;
+            border: 2px solid #00ffcc;
+            border-radius: 5px;
+            background-color: #1a1a1a;
+            color: #00ffcc;
+            text-align: center;
+            outline: none;
+            box-shadow: 0 0 10px #00ffcc;
+            appearance: none;
+            background: url('/public/images/skin0.png') no-repeat right 10px center;
+            background-size: 30px 30px;
+        }
+
+        select option {
+            background: #1a1a1a;
+            color: #00ffcc;
+        }
+
+        select::-webkit-inner-spin-button, 
+        select::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+
+        /* Стили для кнопки */
+        button {
+            display: block;
+            margin: 0 auto;
+            padding: 10px 20px;
+            font-family: 'Russo One';
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            background-color: #00ffcc;
+            color: #1a1a1a;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+        }
+
+        button:hover {
+            background-color: #1a1a1a;
+            color: #00ffcc;
+        }
+
+        /* Glow effect for the title */
+        @keyframes glow {
+            0% {
+                text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
+            }
+            100% {
+                text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
+            }
+        }
+
+        /* Neon color flow effect */
+        @keyframes neonFlow {
+            0% {
+                color: #1a1a1a;
+            }
+            50% {
+                color: #00ffcc;
+            }
+            100% {
+                color: #1a1a1a;
+            }
+        }
+
+        /* Additional styles for the lobby page */
+        .lobby {
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .lobby-form {
+            margin-bottom: 40px;
+        }
+
+        .room-list {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .room-list th, .room-list td {
+            border: 2px solid #00ffcc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .room-list th {
+            background-color: #1a1a1a;
+        }
+
+        .room-list td {
+            background-color: #2d2d2d;
+        }
+    </style>
+</head>
+<body>
+    <div class="lobby">
+        <h1>Game Lobby</h1>
+        <div class="lobby-form">
+            <input type="text" id="roomName" placeholder="Room Name">
+            <input type="text" id="creatorName" placeholder="Creator Name">
+            <div class="custom-select-wrapper">
+                <select id="gameMode">
+                    <option value="deathmatch">Deathmatch</option>
+                    <option value="captureTheFlag">Capture the Flag</option>
+                </select>
+            </div>
+            <button onclick="createRoom()">Create Room</button>
+        </div>
+        <table class="room-list">
+            <thead>
+                <tr>
+                    <th>Room Name</th>
+                    <th>Creator</th>
+                    <th>Players</th>
+                    <th>Game Mode</th>
+                </tr>
+            </thead>
+            <tbody id="roomsContainer">
+                <!-- Dynamic room entries will be added here -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        const rooms = [];
+
+        function createRoom() {
+            const roomName = document.getElementById('roomName').value;
+            const creatorName = document.getElementById('creatorName').value;
+            const gameMode = document.getElementById('gameMode').value;
+
+            if (roomName && creatorName) {
+                const newRoom = {
+                    roomName,
+                    creatorName,
+                    players: 1,
+                    gameMode
+                };
+
+                rooms.push(newRoom);
+                updateRoomList();
+            } else {
+                alert('Please enter both room name and creator name.');
+            }
+        }
+
+        function updateRoomList() {
+            const roomsContainer = document.getElementById('roomsContainer');
+            roomsContainer.innerHTML = '';
+
+            rooms.forEach(room => {
+                const roomRow = document.createElement('tr');
+                roomRow.innerHTML = `
+                    <td>${room.roomName}</td>
+                    <td>${room.creatorName}</td>
+                    <td>${room.players} / 4</td>
+                    <td>${room.gameMode}</td>
+                `;
+                roomsContainer.appendChild(roomRow);
+            });
+        }
+    </script>
+</body>
+</html>
