@@ -6,7 +6,7 @@ const FRAME_DURATION = 1000 / FPS;
 const REQUEST_DURATION = 1000 / RPS;
 
 const SERVER = {
-    sergey: 'ws://10.250.104.209:8000/',
+    sergey: 'ws://10.250.104.142:8000/',
     sergey_home: 'ws://192.168.252.162:8000/',
     ignat: 'ws://10.250.104.176:8000/',
     ignat_home: 'ws://10.250.104.176:8000/',
