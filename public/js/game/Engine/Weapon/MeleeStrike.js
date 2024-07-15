@@ -100,6 +100,20 @@ class MeleeStrike extends Drawable {
 
         return (ua >= 0 && ua <= 1) && (ub >= 0 && ub <= 1);
     }
+
+    isIntersectEnemy(enemy) {
+        const { currentEndX, currentEndY } = this.calculateEndCoordinates();
+        const meleeStrikeLine = { x1: this.x, y1: this.y, x2: currentEndX, y2: currentEndY };
+
+        const enemyBoundary = [
+            { x1: enemy.x, y1: enemy.y, x2: enemy.x + enemy.w, y2: enemy.y }, // top
+            { x1: enemy.x + enemy.w, y1: enemy.y, x2: enemy.x + enemy.w, y2: enemy.y + enemy.h }, // right
+            { x1: enemy.x + enemy.w, y1: enemy.y + enemy.h, x2: enemy.x, y2: enemy.y + enemy.h }, // bottom
+            { x1: enemy.x, y1: enemy.y + enemy.h, x2: enemy.x, y2: enemy.y } // left
+        ];
+
+        return enemyBoundary.some(enemyLine => this.checkLineIntersection(meleeStrikeLine, enemyLine));
+    }
 }
 
 export { MeleeStrike };

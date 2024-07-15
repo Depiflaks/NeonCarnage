@@ -110,9 +110,22 @@ class EngineController {
         ));
     }
 
+    meleeStrikeIntersectionEnemy() {
+        const meleeStrike = this.player.getMeleeStrike();
+        if (!meleeStrike) return;
+        let hit = false;
+
+        Object.entries(this.enemies).forEach(([id, enemy]) => {
+            if (enemy.isAlive() && meleeStrike.isIntersectEnemy(enemy.model)) {
+                this.player.addDamage(id, 1);
+            }
+        });
+    }
+
     checkIntersections(drawableArray, moveableArray) {
         this.bulletsIntersectionWall(drawableArray);
         this.bulletsIntersectionEnemy(moveableArray);
+        this.meleeStrikeIntersectionEnemy(moveableArray)
         this.intersectMeleeStrike(drawableArray);
         drawableArray.forEach(obj => {
             this.player.check(obj);
