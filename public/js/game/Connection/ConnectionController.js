@@ -7,6 +7,7 @@ class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
         this.socket = new WebSocket(SERVER.sergey);
+        this.socket = new WebSocket(SERVER.liuba);
         this.enemies = {};
         this.initEventListeners();
     }
@@ -115,8 +116,7 @@ class ConnectionController {
         //         weapon.update(weapon, { d })
         //     }
         // }
-
-        body.objects.weapons
+        Object.values(body.objects.weapons)
         .filter(weapon => weapon.id === body.objects.weaponId)
         .forEach(weapon => {
             this.field.weapons[weapon.id].update(weapon, {dx: this.field.x, dy: this.field.y});
@@ -155,6 +155,7 @@ class ConnectionController {
             enemy.setAlive(entity.isAlive);
             enemy.setAngle(entity.angle);
             enemy.setWeaponId(entity.weaponId);
+            enemy.setWeapon(this.field.weapons[entity.weaponId]);
             enemy.setHealth(entity.health);
             enemy.setNickname(entity.nickname);
             if (!entity.isAlive) {

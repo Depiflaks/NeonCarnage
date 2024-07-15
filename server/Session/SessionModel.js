@@ -11,15 +11,16 @@ class SessionModel {
             weaponId: null,
         };
         this.leaderBoard = {};
-        this.objects.weapons = this.field.obj.weapons.map(weapon => {
-            return { // пока напишу небольшой костыль для координат, потом исправим
+        this.objects.weapons = {};
+        this.field.obj.weapons.forEach(weapon => {
+            this.objects.weapons[weapon.id] = {
                 id: weapon.id,
                 onGround: true,
                 x: weapon.x * 150 + 75,
                 y: weapon.y * 150 + 75,
                 amount: weapon.type.amount
             }
-        })
+        });
     }
 }
 

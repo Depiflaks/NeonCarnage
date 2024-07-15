@@ -34,10 +34,10 @@ class EngineController {
 
     addWeapon() {
         const { x, y } = this.player.getPosition();
-        this.field.weapons.forEach(weapon => {
+        Object.values(this.field.weapons).map(weapon => {
             const distance = Math.sqrt((weapon.model.x - x) ** 2 + (weapon.model.y - y) ** 2);
             if (weapon.getStatus() === WEAPON_STATE.onTheGround && distance <= WEAPON.minDistance && !this.player.getWeapon()) {
-                weapon.model.status = WEAPON_STATE.inTheHand;
+                weapon.setStatus(WEAPON_STATE.inTheHand);
                 this.player.setWeapon(weapon);
             }
         });
@@ -165,7 +165,6 @@ class EngineController {
 
     nextFrame() {
         this.update();
-        //console.log(this.player.leaderBoard);
         this.view.update(this.field, this.player, this.enemies, this.player.leaderBoard, this.model.leaderBoard, this.model.isShaking());
     }
 }

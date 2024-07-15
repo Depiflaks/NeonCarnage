@@ -191,12 +191,6 @@ const wallList = [
 
 const weaponSet = [
     {
-        id: 0,
-        type: WEAPON_MODELS.pistol, 
-        x: 2, 
-        y: 12, 
-    },
-    {
         id: 1,
         type: WEAPON_MODELS.glock, 
         x: 6,
@@ -252,7 +246,7 @@ const weaponSet = [
     },
     {
         id: 10,
-        type: WEAPON_MODELS.machineGun, 
+        type: WEAPON_MODELS.knife, 
         x: 7, 
         y: 12, 
     },
