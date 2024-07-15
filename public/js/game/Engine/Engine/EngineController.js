@@ -142,7 +142,7 @@ class EngineController {
     }
 
     keyDown(event) {
-        if (event.code === KEYBOARD_E && !this.player.getWeapon()) {
+        if (event.code === KEYBOARD_E && this.player.isAlive() && !this.player.getWeapon()) {
             this.addWeapon();
         } else if (event.code === KEYBOARD_E) {
             this.player.setStacked(false);
