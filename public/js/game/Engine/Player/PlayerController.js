@@ -276,6 +276,21 @@ class PlayerController extends EntityController {
     getStacked() {
         return this.model.stacked;
     }
+
+    getDirection() {
+        if (this.getMeleeStrike()) {
+            //console.log(this.getMeleeStrike())
+            return this.getMeleeStrike().direction;
+        }
+    }
+
+    getIsAnimating() {
+        if (this.getMeleeStrike()) return this.getMeleeStrike().isAnimating;
+    }
+
+    getCurrentAngle() {
+        if (this.getMeleeStrike()) return this.getMeleeStrike().currentAngle;
+    }
 }
 
 export { PlayerController };

@@ -51,6 +51,9 @@ class EngineController {
             enemy.getBullets().map(bullet => {
                 bullet.updatePosition();
             });
+            if (enemy.getMeleeStrike()) {
+                this.updateEnemyMeleeStrike(enemy);
+            }
             enemy.update();
         })
         this.checkIntersections([...this.field.verticalWalls, ...this.field.horizontalWalls]);
@@ -60,6 +63,13 @@ class EngineController {
         
         this.move();
         this.model.updateShake();
+    }
+
+    updateEnemyMeleeStrike(enemy) {
+        enemy.getMeleeStrike().x = enemy.model.x;
+        enemy.getMeleeStrike().y = enemy.model.y;
+        enemy.getMeleeStrike().angle = enemy.getAngle();
+
     }
 
     takeAmmunition() {

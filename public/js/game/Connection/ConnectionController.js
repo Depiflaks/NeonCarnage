@@ -6,7 +6,7 @@ import { Bullet } from "../Engine/Weapon/Bullet.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.sergey);
+        this.socket = new WebSocket(SERVER.denis_home);
         this.enemies = {};
         this.initEventListeners();
     }
@@ -36,6 +36,11 @@ class ConnectionController {
                 skinId: this.player.getSkinId(),
                 nickname: this.player.getNickname(),
                 isReborning: this.player.isReborning(),
+                meleeStrike: {
+                    isAnimating: this.player.getIsAnimating(),
+                    direction: this.player.getDirection(),
+                    angle: this.player.getCurrentAngle() + this.player.getAngle(),
+                }
             },
             bullets: [],
             change: {
@@ -155,6 +160,18 @@ class ConnectionController {
             enemy.setWeaponId(entity.weaponId);
             enemy.setHealth(entity.health);
             enemy.setNickname(entity.nickname);
+
+            //console.log(enemy.getMeleeStrike());
+            if (entity.meleeStrike.isAnimating === true) {
+                if (!enemy.getMeleeStrike()) {
+                    enemy.createMeleeStrike();
+                }
+                //enemy.setMeleeStrike(entity.meleeStrike);
+                console.log(enemy.getMeleeStrike())
+            } else {
+                enemy.removeMeleeStrike();
+            }
+
             if (!entity.isAlive) {
                 enemy.die();
             }

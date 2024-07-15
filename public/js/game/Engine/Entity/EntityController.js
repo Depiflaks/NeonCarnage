@@ -75,6 +75,10 @@ class EntityController {
         return this.model.meleeStrike;
     }
 
+    setMeleeStrike(value) {
+        this.model.meleeStrike = value;
+    }
+
     isActive() {
         return this.model.active
     }
@@ -111,6 +115,10 @@ class EntityController {
 
     setNickname(value) {
         this.model.nickname = value;
+    }
+
+    setDirection(value) {
+        this.model.meleeStrike.direction = value;
     }
 }
 

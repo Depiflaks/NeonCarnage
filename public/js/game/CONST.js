@@ -13,7 +13,7 @@ const SERVER = {
     liuba: 'ws://10.250.104.51:8000/',
     liuba_home: 'ws://192.168.103.146:8000',
     denis: 'ws://10.250.104.156:8000/',
-    denis_home: 'ws://192.168.129.252:8000/'
+    denis_home: 'ws://192.168.139.252:8000/'
 };
 
 const WINDOW = {
