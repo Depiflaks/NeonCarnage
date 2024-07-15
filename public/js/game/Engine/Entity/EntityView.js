@@ -46,32 +46,11 @@ class EntityView {
         this.context.drawImage(this.cursor, cursor.x - this.cursor.width / 2, cursor.y - this.cursor.height / 2);
     }
 
-    drawEnemyHealthBar(entity) {
-        if (!entity.isActive()) return;
-        const {x, y} = entity.getPosition();
+    drawHealthBar(entity, entityHeight) {
         const health = entity.getHealth();
         const maxHealth = entity.getMaxHealth();
-        const barWidth = ENTITY.w;
-        const barHeight = 10;  // Narrower bar
-        const offset = 20;    // Offset from the enemy
-        this.context.save();
-        // Background
-        this.context.fillStyle = "gray";
-        this.context.fillRect(x - barWidth / 2, y - ENTITY.radius - offset, barWidth, barHeight);
-
-        // Health
-        const healthWidth = (barWidth * health) / maxHealth;
-        this.context.fillStyle = "red";
-        this.context.fillRect(x - barWidth / 2, y - ENTITY.radius - offset, healthWidth, barHeight);
-        this.context.restore();
-    }
-
-    drawHealthBar(player) {
-        const health = player.getHealth();
-        const maxHealth = player.getMaxHealth();
         const rows = Math.ceil(maxHealth / HEALTH.squaresPerRow);
-        const { x, y } = player.getPosition();
-        const playerHeight = ENTITY.radius * 2;
+        const { x, y } = entity.getPosition();
 
         this.context.save();
         let squaresDrawn = 0;
@@ -79,7 +58,7 @@ class EntityView {
         for (let row = 0; row < rows; row++) {
             for (let col = 0; col < HEALTH.squaresPerRow; col++) {
                 const squareX = x - (HEALTH.squaresPerRow * (HEALTH.squareSize + HEALTH.gap)) / 2 + col * (HEALTH.squareSize + HEALTH.gap);
-                const squareY = y + playerHeight / 2 + HEALTH.offsetY + row * (HEALTH.squareSize + HEALTH.gap);
+                const squareY = y + entityHeight / 2 + HEALTH.offsetY + row * (HEALTH.squareSize + HEALTH.gap);
                 const index = row * HEALTH.squaresPerRow + col;
 
                 if (index >= maxHealth) {
@@ -97,6 +76,15 @@ class EntityView {
         }
         this.context.restore();
     }
+
+    drawEnemyHealthBar(enemy) {
+        if (enemy.model.active) this.drawHealthBar(enemy, ENTITY.radius * 2);
+    }
+
+    drawPlayerHealthBar(player) {
+        this.drawHealthBar(player, ENTITY.radius * 2);
+    }
+
 
     drawNickname(entity) {
         const { x, y } = entity.getPosition();
