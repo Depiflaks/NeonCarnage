@@ -25,7 +25,7 @@ class BattleGround extends Drawable {
         this.cells = [];
         this.verticalWalls = [];
         this.horizontalWalls = [];
-        this.weapons = [];
+        this.weapons = {};
         this.ammunition = [];
         this.bonuses = [];
         this.corpses = {};
@@ -39,7 +39,7 @@ class BattleGround extends Drawable {
 
         weaponSet.map(
             weapon => {
-                this.weapons.push(new WeaponController(weapon));
+                this.weapons[weapon.id] = new WeaponController(weapon);
             }
         );
 
@@ -96,8 +96,7 @@ class BattleGround extends Drawable {
 
     drawWeapons(entities, context) {
         let indexX, indexY;
-        //console.log(this.weapons);
-        this.weapons.map(weapon => {
+        Object.values(this.weapons).map(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) /  CELL.w);
             indexY = Math.floor((weapon.model.y - this.y) / CELL.h);
             if (this.cells[indexX][indexY] && this.cells[indexX][indexY].active) weapon.view.draw(
@@ -135,7 +134,7 @@ class BattleGround extends Drawable {
         Object.values(this.corpses).map(list => list.map(corp => {
             // indexX = Math.floor(corp.x / CELL.w);
             // indexY = Math.floor(corp.y / CELL.h);
-            console.log(corp.x, corp.y);
+            // console.log(corp.x, corp.y);
             corp.draw(this.corpseImages, context);
             //if (this.cells[indexX][indexY] && this.cells[indexX][indexY].active) ;
         }))
@@ -164,7 +163,6 @@ class BattleGround extends Drawable {
         let {x, y} = player.getPosition();
         if (!this.corpses[id]) this.corpses[id] = [];
         this.corpses[id].push(new Corpse(x, y, skinId));
-        console.log(this.corpses[id]);
     }
 
     move(dx, dy) {
@@ -172,7 +170,7 @@ class BattleGround extends Drawable {
         this.cells.map(row => row.map(cell => {if (cell) {cell.move(dx, dy)}}));
         this.verticalWalls.map(wall => wall.move(dx, dy));
         this.horizontalWalls.map(wall => wall.move(dx, dy));
-        this.weapons.map(weapon => weapon.model.move(dx, dy));
+        Object.values(this.weapons).map(weapon => weapon.model.move(dx, dy))
         this.ammunition.map(ammunition => ammunition.move(dx, dy));
         this.bonuses.map(bonus => bonus.move(dx, dy));
         //Object.values(this.corpses).map(list => list.map(corp => corp.move(dx, dy)));

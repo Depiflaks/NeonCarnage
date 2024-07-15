@@ -6,7 +6,7 @@ class EntityModel extends Moveable {
     constructor({ x, y, skinId, nickName}) {
         super(x, y, ENTITY.w, ENTITY.h, ENTITY.radius);
         this.weapon = null;
-        this.weaponId = 0;
+        this.weaponId = null;
         this.trajectory = null;
         this.health = ENTITY.health;
         this.maxHealth = ENTITY.maxHealth;
