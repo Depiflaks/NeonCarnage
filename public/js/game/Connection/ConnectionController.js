@@ -124,13 +124,14 @@ class ConnectionController {
         this.player.leaderBoard = body.leaderBoard;
         //console.log(this.playerList);
         //console.log(body);
-        // for (let id in body.objects.corpses) {
-        //     this.field.corpses[id] = body.objects.corpses[id].map(corp => {return new Corpse(
-        //         corp.x + this.field.x, 
-        //         corp.y + this.field.y, 
-        //         corp.skinId
-        //     )})
-        // }
+        for (let id in body.objects.corpses) {
+            if (id === this.id) continue;
+            this.field.corpses[id] = body.objects.corpses[id].map(corp => {return new Corpse(
+                corp.x + this.field.x, 
+                corp.y + this.field.y, 
+                corp.skinId
+            )})
+        }
         //console.log(this.field.corpses);
         for (const id in body.players) {
             const entity = body.players[id];
@@ -138,7 +139,8 @@ class ConnectionController {
                 this.player.setAlive(entity.isAlive);
                 this.player.setHealth(entity.health);
                 if (!entity.isAlive && !entity.isReborning && !this.player.isReborning()) {
-                    //this.field.addCorpse(this.id, this.player);
+                    this.field.addCorpse(this.id, this.player);
+                    //console.log(this.field.getCorpses());
                     this.player.die(this.field.getSpawnPoint());
                 }
                 continue;

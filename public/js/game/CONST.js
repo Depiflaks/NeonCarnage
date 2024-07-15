@@ -152,7 +152,7 @@ const WEAPON_MODELS = {
     rifle: {
         name: "rifle",
         battleType: "distant",
-        rapidity: 100,
+        rapidity: 70,
         grouping: 1,
         deviation: 0.1,
         onGround: "public/assets/Weapon/weapon1.png",

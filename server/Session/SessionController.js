@@ -29,11 +29,10 @@ class SessionController {
         entity.isReborning = player.isReborning;
         entity.nickname = player.nickname;
 
-        //this.model.objects.corpses[id] = body.field.corpses;
-        
+        this.model.objects.corpses[id] = body.field.corpses;
         this.updateWeapons(entity, player);
 
-        this.updateBullets(entity, body)
+        this.updateBullets(entity, body);
         
         this.updateHealth(body, entity, id);
     }

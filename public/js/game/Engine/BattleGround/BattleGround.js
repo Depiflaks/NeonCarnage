@@ -96,7 +96,6 @@ class BattleGround extends Drawable {
 
     drawWeapons(entities, context) {
         let indexX, indexY;
-        //console.log(this.weapons);
         this.weapons.map(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) /  CELL.w);
             indexY = Math.floor((weapon.model.y - this.y) / CELL.h);
@@ -133,11 +132,9 @@ class BattleGround extends Drawable {
     drawCorpse(context) {
         let indexX, indexY;
         Object.values(this.corpses).map(list => list.map(corp => {
-            // indexX = Math.floor(corp.x / CELL.w);
-            // indexY = Math.floor(corp.y / CELL.h);
-            console.log(corp.x, corp.y);
-            corp.draw(this.corpseImages, context);
-            //if (this.cells[indexX][indexY] && this.cells[indexX][indexY].active) ;
+            indexX = Math.floor((corp.x - this.x) / CELL.w);
+            indexY = Math.floor((corp.y - this.y) / CELL.h);
+            if (this.cells[indexX][indexY] && this.cells[indexX][indexY].active) corp.draw(this.corpseImages, context);
         }))
     }
 
@@ -164,7 +161,7 @@ class BattleGround extends Drawable {
         let {x, y} = player.getPosition();
         if (!this.corpses[id]) this.corpses[id] = [];
         this.corpses[id].push(new Corpse(x, y, skinId));
-        console.log(this.corpses[id]);
+        //console.log(this.corpses[id]);
     }
 
     move(dx, dy) {
@@ -175,7 +172,7 @@ class BattleGround extends Drawable {
         this.weapons.map(weapon => weapon.model.move(dx, dy));
         this.ammunition.map(ammunition => ammunition.move(dx, dy));
         this.bonuses.map(bonus => bonus.move(dx, dy));
-        //Object.values(this.corpses).map(list => list.map(corp => corp.move(dx, dy)));
+        Object.values(this.corpses).map(list => list.map(corp => corp.move(dx, dy)));
     }
 }
 
