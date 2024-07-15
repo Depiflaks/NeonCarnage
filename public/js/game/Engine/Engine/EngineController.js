@@ -113,18 +113,18 @@ class EngineController {
     checkIntersections(drawableArray, moveableArray) {
         this.bulletsIntersectionWall(drawableArray);
         this.bulletsIntersectionEnemy(moveableArray);
-        this.intersectTrajectory(drawableArray);
+        this.intersectMeleeStrike(drawableArray);
         drawableArray.forEach(obj => {
             this.player.check(obj);
         });
     }
 
-    intersectTrajectory(walls) {
-        if (!this.player.getTrajectory()) return;
+    intersectMeleeStrike(walls) {
+        if (!this.player.getMeleeStrike()) return;
         for (const wall of walls) {
-            if (this.player.getTrajectory().isIntersect(wall)) {
+            if (this.player.getMeleeStrike().isIntersect(wall)) {
                 if (!this.player.getIsStriking()) {
-                    this.player.removeTrajectory();
+                    this.player.removeMeleeStrike();
                 } else {
                     this.player.setStacked(true);
                 }
@@ -147,9 +147,9 @@ class EngineController {
         } else if (event.code === KEYBOARD_E) {
             this.player.setStacked(false);
             this.player.dropWeapon();
-            if (this.player.getTrajectory()) {
+            if (this.player.getMeleeStrike()) {
                 this.player.setAnimating(false);
-                this.player.removeTrajectory();
+                this.player.removeMeleeStrike();
             }
         }
         if (event.code === KEYBOARD_TAB) {

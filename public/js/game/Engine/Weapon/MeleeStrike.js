@@ -1,20 +1,20 @@
-import { ENTITY, TRAJECTORY, RAD } from "../../CONST.js";
+import { ENTITY, MELEE_STRIKE, RAD } from "../../CONST.js";
 import { Drawable } from "../Interface/Drawable.js";
 
-class Trajectory extends Drawable {
+class MeleeStrike extends Drawable {
     constructor(x, y, angle) {
-        super(x, y, TRAJECTORY.width, TRAJECTORY.height);
-        this.deltaAngle = TRAJECTORY.deltaAngle;
-        this.animationSpeed = TRAJECTORY.animationSpeed;
-        this.handPoint = TRAJECTORY.handPoint;
+        super(x, y, MELEE_STRIKE.width, MELEE_STRIKE.height);
+        this.deltaAngle = MELEE_STRIKE.deltaAngle;
+        this.animationSpeed = MELEE_STRIKE.animationSpeed;
+        this.handPoint = MELEE_STRIKE.handPoint;
         this.currentAngle = 0;
         this.isAnimating = false;
         this.direction = 0;
         this.angle = angle;
         this.weaponLeft = new Image();
-        this.weaponLeft.src = TRAJECTORY.knifeLeftImage;
+        this.weaponLeft.src = MELEE_STRIKE.knifeLeftImage;
         this.weaponRight = new Image();
-        this.weaponRight.src = TRAJECTORY.knifeRightImage;
+        this.weaponRight.src = MELEE_STRIKE.knifeRightImage;
 
     }
 
@@ -24,9 +24,9 @@ class Trajectory extends Drawable {
         context.translate(this.x + this.h, this.y + this.w);
         context.rotate(this.angle + this.currentAngle + 90 * RAD);
         if (this.direction === 1) {
-            context.drawImage(this.weaponLeft, this.x - currentEndX - ENTITY.h * 1.5, currentEndY - this.y - this.w / 1.15);
+            context.drawImage(this.weaponLeft, this.x - currentEndX - ENTITY.h * 1.6, currentEndY - this.y - this.w / 1);
         } else {
-            context.drawImage(this.weaponRight, this.x - currentEndX - ENTITY.h * 1.5, currentEndY - this.y - this.w / 1.15);
+            context.drawImage(this.weaponRight, this.x - currentEndX - ENTITY.h * 1.6, currentEndY - this.y - this.w / 1);
         }
         context.restore();
     }
@@ -76,7 +76,7 @@ class Trajectory extends Drawable {
     isIntersect(wall) {
         const { currentEndX, currentEndY } = this.calculateEndCoordinates();
 
-        const trajectoryLine = { x1: this.x, y1: this.y, x2: currentEndX, y2: currentEndY };
+        const meleeStrikeLine = { x1: this.x, y1: this.y, x2: currentEndX, y2: currentEndY };
         const wallLines = [
             { x1: wall.x, y1: wall.y, x2: wall.x + wall.w, y2: wall.y }, // верхняя грань
             { x1: wall.x + wall.w, y1: wall.y, x2: wall.x + wall.w, y2: wall.y + wall.h }, // правая грань
@@ -84,7 +84,7 @@ class Trajectory extends Drawable {
             { x1: wall.x, y1: wall.y + wall.h, x2: wall.x, y2: wall.y } // левая грань
         ];
 
-        return wallLines.some(wallLine => this.checkLineIntersection(trajectoryLine, wallLine));
+        return wallLines.some(wallLine => this.checkLineIntersection(meleeStrikeLine, wallLine));
     }
 
     // Метод для проверки пересечения двух линий
@@ -102,4 +102,4 @@ class Trajectory extends Drawable {
     }
 }
 
-export { Trajectory };
+export { MeleeStrike };

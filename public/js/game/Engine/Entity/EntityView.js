@@ -15,7 +15,7 @@ class EntityView {
         const weaponId = entity.getWeaponId();
         //console.log(weaponId, entity.getWeapon());
         const weapon = entity.getWeapon();
-        const animation = entity.getTrajectory();
+        const animation = entity.getMeleeStrike();
         this.context.save();
         this.context.translate(x, y);
         this.context.rotate(angle + 90 * RAD);
