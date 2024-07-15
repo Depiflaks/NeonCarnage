@@ -16,7 +16,7 @@ document.getElementById('start').addEventListener('click', () => {
 
         localStorage.setItem('responseData', JSON.stringify(data));
 
-        window.location.href = '/game';
+        window.location.href = `/lobby`;
     })
     .catch(error => console.error('Error:', error));
 });

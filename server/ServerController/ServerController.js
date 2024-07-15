@@ -12,6 +12,7 @@ class ServerController {
         this.port = PORT;
         this.app = express();
         this.server = http.createServer(this.app);
+
         this.generanor = new MapGenerator();
         this.request = new RequestController(this.app, this.generanor);
 
@@ -23,7 +24,7 @@ class ServerController {
             console.log('Listening on port ' + this.port);
         });
         
-        this.webSocket = new WebSocketController(this.server, this.sessions[0]);
+        // this.webSocket = new WebSocketController(this.server, this.sessions[0]);
     }
 
     getMap() {
