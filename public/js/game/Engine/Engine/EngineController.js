@@ -127,9 +127,9 @@ class EngineController {
 
         Object.entries(this.enemies).forEach(([id, enemy]) => {
             if (enemy.isAlive() && meleeStrike.isIntersectEnemy(enemy.model) && !this.intersectMeleeStrike(drawableArray)) {
+                this.player.addDamage(id, 1);
                 this.player.getMeleeStrike().weaponLeft.src = MELEE_STRIKE.knifeLeftBloodyImage;
                 this.player.getMeleeStrike().weaponRight.src = MELEE_STRIKE.knifeRightBloodyImage;
-                this.player.addDamage(id, 1);
             }
         });
     }
