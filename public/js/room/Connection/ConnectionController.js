@@ -1,11 +1,9 @@
-
+import { SERVER } from "../../game/CONST.js";
 
 class ConnectionController {
-    constructor() {
+    constructor(url) {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.ignat);
-        
-        this.enemies = {};
+        this.socket = new WebSocket(url);
         this.initEventListeners();
     }
 

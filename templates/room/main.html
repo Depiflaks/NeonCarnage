@@ -41,8 +41,22 @@
             <textarea rows="10" placeholder="Type your message here..."></textarea>
             <input type="text" placeholder="Your message...">
         </div>
+        <!-- Player Settings Section -->
+        <div class="lobby-section player-settings">
+            <div class="section-header">Player Settings</div>
+            <div class="form-group">
+                <label for="player-skin">Select Skin</label>
+                <select id="player-skin">
+                    <option value="skin1">Skin 1</option>
+                    <option value="skin2">Skin 2</option>
+                    <option value="skin3">Skin 3</option>
+                </select>
+            </div>
+            <button id="ready-button">Ready</button>
+        </div>
+        
         <!-- Game Settings Section -->
-        <div class="lobby-section game-settings">
+        <!-- <div class="lobby-section game-settings">
             <div class="section-header">Game Settings</div>
             <div class="form-group">
                 <label for="game-mode">Game Mode</label>
@@ -57,7 +71,7 @@
                 <input type="number" id="max-players" value="4">
             </div>
             <button>Start Game</button>
-        </div>
+        </div> -->
     </div>
     <script type="module" src="/public/js/room/main.js"></script>
 </body>

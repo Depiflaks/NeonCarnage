@@ -162,7 +162,7 @@ button:hover {
 }
 
 .lobby-section {
-    flex: 1 1 30%;
+    flex: 1 1 23%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -181,7 +181,7 @@ button:hover {
     color: #00ffcc;
 }
 
-.players-list, .chat-box, .game-settings {
+.players-list, .chat-box, .game-settings, .player-settings {
     flex: 1;
 }
 
@@ -225,14 +225,15 @@ button:hover {
 
 .chat-box input {
     margin-top: 10px;
+    width: 90%;
 }
 
-.game-settings {
+.game-settings, .player-settings {
     display: flex;
     flex-direction: column;
 }
 
-.game-settings .form-group {
+.game-settings .form-group, .player-settings .form-group {
     margin-bottom: 20px;
 }
 

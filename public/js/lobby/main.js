@@ -29,12 +29,5 @@ document.getElementById('updateButton').addEventListener('click', () => {
 document.getElementById('createButton').addEventListener('click', () => {
     const data = JSON.parse(localStorage.getItem("responseData"));
     console.log(data.player.nickName);
-    fetch('/createRoom', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ nickName: data.player.nickName })
-    })
-    .catch(error => console.error('Error:', error));
+    window.location.href = `/createRoom`;
 });

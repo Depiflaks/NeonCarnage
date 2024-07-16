@@ -22,7 +22,19 @@ class DatabaseController {
 
     getRoomId() {
         return new Promise((resolve, reject) => {
-            this.connection.query("INSERT INTO lobby (owner_name, owner_id, fullness, player_name, game_mode, time_creation) VALUES ('', 0, 0, '', '', '2002-01-00 00:00:00')", function(err, data) {
+            this.connection.query("INSERT INTO lobby (owner_name, owner_id, fullness, player_name, game_mode, time_creation) VALUES ('', 0, 0, '', '', '2023-10-28 19:30:35')", function(err, data) {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+
+    setRoom(ownerName, ownerId, fullness, playerName, gameMode, timeCreation) {
+        return new Promise((resolve, reject) => {
+            this.connection.query("INSERT INTO lobby (owner_name, owner_id, fullness, player_name, game_mode, time_creation) VALUES (?, ?, ?, ?, ?, ?)", [ownerName, ownerId, fullness, playerName, gameMode, timeCreation], function(err, data) {
                 if(err) {
                     reject(err);
                 } else {

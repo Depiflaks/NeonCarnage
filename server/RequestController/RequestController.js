@@ -45,27 +45,26 @@ class RequestController {
             res.json(responseData);
         });
 
-        this.app.post('/createRoom', async (req, res) => {
+        this.app.get('/createRoom', async (req, res) => {
             try {
-                console.log(req.body);
-                // const responseData = await this.connection.getRoomId();
-                // const lastInserId = responseData.insertId;
-                // console.log(lastInserId);
-                // // res.json(responseData);
+                const ownerName = "ignat";
+                const ownerId = 1;
+                const fullness = 1;
+                const playerName = "playerName";
+                const gameMode = "gameMode";
+                const timeCreation = "2023-10-28 19:30:35"
+                const responseData = await this.connection.setRoom(ownerName, ownerId, fullness, playerName, gameMode, timeCreation)
+                const lastInsertId = responseData.insertId;
+                console.log(lastInsertId);
+                res.redirect(`/room?lastInsertId=${lastInsertId}`);
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');
             }
         });
 
-        this.app.post('/room', async (req, res) => {
-            try {
-                const responseData = await this.connection.getAllFromLobby();
-                res.json(responseData);
-            } catch (error) {
-                console.error('Ошибка:', error);
-                res.status(500).send('Ошибка сервера');
-            }
+        this.app.get('/room', (req, res) => {
+            res.sendFile(path.join(__dirname, '../../templates/room/main.html'));
         });
     }
 }
