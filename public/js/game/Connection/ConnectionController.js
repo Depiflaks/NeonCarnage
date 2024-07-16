@@ -1,4 +1,4 @@
-import { SERVER, ENTITY } from "../CONST.js";
+import {SERVER, ENTITY, RAD} from "../CONST.js";
 import { Corpse } from "../Engine/BattleGround/Corpse.js";
 import { EnemyController } from "../Engine/Enemy/EnemyController.js";
 import { Bullet } from "../Engine/Weapon/Bullet.js";
@@ -39,7 +39,7 @@ class ConnectionController {
                 meleeStrike: {
                     isAnimating: this.player.getIsAnimating(),
                     direction: this.player.getDirection(),
-                    angle: this.player.getCurrentAngle() + this.player.getAngle(),
+                    angle: this.player.getCurrentAngle(),
                 }
             },
             bullets: [],
@@ -160,14 +160,12 @@ class ConnectionController {
             enemy.setWeaponId(entity.weaponId);
             enemy.setHealth(entity.health);
             enemy.setNickname(entity.nickname);
-
-            //console.log(enemy.getMeleeStrike());
             if (entity.meleeStrike.isAnimating === true) {
                 if (!enemy.getMeleeStrike()) {
                     enemy.createMeleeStrike();
+                } else {
+                    enemy.model.meleeStrike.currentAngle = entity.meleeStrike.angle;
                 }
-                //enemy.setMeleeStrike(entity.meleeStrike);
-                console.log(enemy.getMeleeStrike())
             } else {
                 enemy.removeMeleeStrike();
             }

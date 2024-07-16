@@ -34,11 +34,11 @@ class EngineView {
 
         Object.values(enemies).map(enemy => {
             if (enemy.isAlive()) {
-                this.entityView.draw(enemy);
-                //console.log(enemy.getMeleeStrike())
-                if (enemy.getMeleeStrike()) {
+                if (enemy.getMeleeStrike() && enemy.model.active === true) {
                     enemy.getMeleeStrike().draw(this.context);
                 }
+                this.entityView.draw(enemy);
+
                 this.entityView.drawEnemyHealthBar(enemy);
             } else {
                 this.entityView.drawDead(enemy);
