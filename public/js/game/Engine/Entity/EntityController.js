@@ -98,6 +98,7 @@ class EntityController {
         this.getWeapon().setShootingInterval(null);
         this.setWeapon(null);
         this.setWeaponId(null);
+        this.removeMeleeStrike();
     }
 
     getSkin() {

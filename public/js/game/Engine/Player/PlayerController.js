@@ -91,8 +91,8 @@ class PlayerController extends EntityController {
         }
         if (this.getWeapon() && (this.getWeapon().getBattleType() === "close")) {
             if (this.getStacked() === true) {
-                this.setStacked(false)
                 this.removeMeleeStrike();
+                this.setStacked(false);
             }
             this.setIsStriking(false);
         }

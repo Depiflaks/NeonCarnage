@@ -120,13 +120,13 @@ class EngineController {
         ));
     }
 
-    meleeStrikeIntersectionEnemy() {
+    meleeStrikeIntersectionEnemy(drawableArray) {
         const meleeStrike = this.player.getMeleeStrike();
         if (!meleeStrike) return;
         let hit = false;
 
         Object.entries(this.enemies).forEach(([id, enemy]) => {
-            if (enemy.isAlive() && meleeStrike.isIntersectEnemy(enemy.model)) {
+            if (enemy.isAlive() && meleeStrike.isIntersectEnemy(enemy.model) && !this.intersectMeleeStrike(drawableArray)) {
                 this.player.addDamage(id, 1);
             }
         });
@@ -135,7 +135,7 @@ class EngineController {
     checkIntersections(drawableArray, moveableArray) {
         this.bulletsIntersectionWall(drawableArray);
         this.bulletsIntersectionEnemy(moveableArray);
-        this.meleeStrikeIntersectionEnemy(moveableArray)
+        this.meleeStrikeIntersectionEnemy(drawableArray)
         this.intersectMeleeStrike(drawableArray);
         drawableArray.forEach(obj => {
             this.player.check(obj);
@@ -148,12 +148,14 @@ class EngineController {
             if (this.player.getMeleeStrike().isIntersect(wall)) {
                 if (!this.player.getIsStriking()) {
                     this.player.removeMeleeStrike();
+                    return true;
                 } else {
                     this.player.setStacked(true);
+                    return true;
                 }
-                break;
             }
         }
+        return false;
     }
 
     initEventListeners(canvas) {
