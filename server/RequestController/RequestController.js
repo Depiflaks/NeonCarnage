@@ -68,9 +68,21 @@ class RequestController {
                 res.status(500).send('Ошибка сервера');
             }
         });
+        
 
         this.app.get('/room', (req, res) => {
             res.sendFile(path.join(__dirname, '../../templates/room/main.html'));
+        });
+
+        this.app.get('/getPlayers', async (req, res) => {
+            const roomId = req.query.roomId;
+            try {
+                const players = await this.connection.getPlayers(roomId);
+                res.json(players);
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
         });
     }
 }
