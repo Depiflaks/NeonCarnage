@@ -1,4 +1,4 @@
-import { CAMERA, KEYBOARD_E, KEYBOARD_TAB, WEAPON, WEAPON_STATE } from "../../CONST.js";
+import {CAMERA, KEYBOARD_E, KEYBOARD_TAB, MELEE_STRIKE, WEAPON, WEAPON_STATE} from "../../CONST.js";
 import { EngineModel } from "./EngineModel.js";
 import { EngineView } from "./EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
@@ -127,6 +127,8 @@ class EngineController {
 
         Object.entries(this.enemies).forEach(([id, enemy]) => {
             if (enemy.isAlive() && meleeStrike.isIntersectEnemy(enemy.model) && !this.intersectMeleeStrike(drawableArray)) {
+                this.player.getMeleeStrike().weaponLeft.src = MELEE_STRIKE.knifeLeftBloodyImage;
+                this.player.getMeleeStrike().weaponRight.src = MELEE_STRIKE.knifeRightBloodyImage;
                 this.player.addDamage(id, 1);
             }
         });

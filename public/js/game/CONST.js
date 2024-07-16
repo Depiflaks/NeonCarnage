@@ -261,6 +261,9 @@ const MELEE_STRIKE = {
     animationSpeed: 0.07,
     knifeLeftImage: "public/assets/Weapon/left.png",
     knifeRightImage: "public/assets/Weapon/right.png",
+    knifeLeftBloodyImage: "public/assets/Weapon/leftBloody.png",
+    knifeRightBloodyImage: "public/assets/Weapon/rightBloody.png",
+
 };
 
 export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, LEADER_BOARD, HEALTH, SKINS, DRAW_BULLETS_AMOUNT, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, KEYBOARD_TAB, WEAPON_STATE, RAD, FPS, MELEE_STRIKE, SERVER, ENEMY};
