@@ -22,7 +22,7 @@ class DatabaseController {
 
     getRoomId() {
         return new Promise((resolve, reject) => {
-            this.connection.query("INSERT INTO lobby (owner_name, owner_id, fullness, player_name, game_mode, time_creation) VALUES ('', 0, 0, '', '', '2023-10-28 19:30:35')", function(err, data) {
+            this.connection.query("INSERT INTO lobby (owner_id, game_mode, time_creation) VALUES (0, '', '2023-10-28 19:30:35')", function(err, data) {
                 if(err) {
                     reject(err);
                 } else {
@@ -32,9 +32,9 @@ class DatabaseController {
         });
     }
 
-    setRoom(ownerName, ownerId, fullness, playerName, gameMode, timeCreation) {
+    setRoom(ownerId, gameMode, timeCreation) {
         return new Promise((resolve, reject) => {
-            this.connection.query("INSERT INTO lobby (owner_name, owner_id, fullness, player_name, game_mode, time_creation) VALUES (?, ?, ?, ?, ?, ?)", [ownerName, ownerId, fullness, playerName, gameMode, timeCreation], function(err, data) {
+            this.connection.query("INSERT INTO lobby (owner_id, game_mode, time_creation) VALUES (?, ?, ?)", [ownerId, gameMode, timeCreation], function(err, data) {
                 if(err) {
                     reject(err);
                 } else {
@@ -55,6 +55,31 @@ class DatabaseController {
             });
         });
     }
+
+    getPlayers(lobbyId) {
+        return new Promise((resolve, reject) => {
+            this.connection.query("SELECT * FROM player WHERE lobby_id=?", [lobbyId], function(err, data) {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+
+    getPlayer(playerId) {
+        return new Promise((resolve, reject) => {
+            this.connection.query("SELECT * FROM player WHERE player_id=?", [playerId], function(err, data) {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+
 
     closeConnection() {
         this.connection.end(function(err) {

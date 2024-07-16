@@ -24,7 +24,7 @@ class ServerController {
             console.log('Listening on port ' + this.port);
         });
         
-        // this.webSocket = new WebSocketController(this.server, this.sessions[0]);
+        this.webSocket = new WebSocketController(this.server, this.sessions[0]);
     }
 
     getMap() {

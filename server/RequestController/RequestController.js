@@ -24,13 +24,22 @@ class RequestController {
 
         this.app.post('/updateLobby', async (req, res) => {
             try {
-                const responseData = await this.connection.getAllFromLobby();
-                res.json(responseData);
+                const lobbies = await this.connection.getAllFromLobby();
+                const result = await Promise.all(lobbies.map(async (lobby) => {
+                    const playersData = await this.connection.getPlayers(lobby.lobby_id);
+                    const ownerData = await this.connection.getPlayer(lobby.owner_id);
+                    return {
+                        ownerName: ownerData[0].player_name,
+                        fullness: playersData.length,
+                        gameMode: lobby.game_mode
+                    };
+                }));
+                res.json(result);
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');
             }
-        });
+        });        
 
         this.app.get('/game', (req, res) => {
             connection.closeConnection();
@@ -47,13 +56,10 @@ class RequestController {
 
         this.app.get('/createRoom', async (req, res) => {
             try {
-                const ownerName = "ignat";
                 const ownerId = 1;
-                const fullness = 1;
-                const playerName = "playerName";
                 const gameMode = "gameMode";
-                const timeCreation = "2023-10-28 19:30:35"
-                const responseData = await this.connection.setRoom(ownerName, ownerId, fullness, playerName, gameMode, timeCreation)
+                const timeCreation = new Date().toISOString().slice(0, 19).replace('T', ' ');
+                const responseData = await this.connection.setRoom(ownerId, gameMode, timeCreation)
                 const lastInsertId = responseData.insertId;
                 console.log(lastInsertId);
                 res.redirect(`/room?lastInsertId=${lastInsertId}`);

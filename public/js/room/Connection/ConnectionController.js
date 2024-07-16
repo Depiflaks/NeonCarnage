@@ -1,9 +1,9 @@
 import { SERVER } from "../../game/CONST.js";
 
 class ConnectionController {
-    constructor(url) {
+    constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(url);
+        this.socket = new WebSocket(SERVER.ignat);
         this.initEventListeners();
     }
 

@@ -11,13 +11,12 @@ document.getElementById('updateButton').addEventListener('click', () => {
     .then(data => {
         const roomsContainer = document.getElementById('roomsContainer');
         roomsContainer.innerHTML = '';
-
         data.forEach(room => {
             const roomRow = document.createElement('tr');
             roomRow.innerHTML = `
-                <td>${room.owner_name}</td>
+                <td>${room.ownerName}</td>
                 <td>${room.fullness} / 4</td>
-                <td>${room.game_mode}</td>
+                <td>${room.gameMode}</td>
                 <td><button onclick="">Join Room</button></td>
             `;
             roomsContainer.appendChild(roomRow);
