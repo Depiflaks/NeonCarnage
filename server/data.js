@@ -1,4 +1,4 @@
-import { WEAPON_MODELS } from "../public/js/game/CONST.js";
+import { AMMUNITION, BONUS, WEAPON_MODELS } from "../public/js/game/CONST.js";
 function convertFields(cellsList) {
     const result = [];
     for (let i = 0; i < cellsList.length; i++) {
@@ -262,79 +262,79 @@ const ammunitionSet = [
     {
         x: 3,
         y: 7,
-        image: "public/assets/Bonuses/cartridges.png",
+        image: AMMUNITION.image,
         amount: 40
     },
     {
         x: 3,
         y: 20,
-        image: "public/assets/Bonuses/cartridges.png",
+        image: AMMUNITION.image,
         amount: 30
     },
     {
         x: 5,
         y: 12,
-        image: "public/assets/Bonuses/cartridges.png",
+        image: AMMUNITION.image,
         amount: 35
     },
     {
         x: 7,
         y: 5,
-        image: "public/assets/Bonuses/cartridges.png",
+        image: AMMUNITION.image,
         amount: 45
     },
     {
         x: 9,
         y: 12,
-        image: "public/assets/Bonuses/cartridges.png",
+        image: AMMUNITION.image,
         amount: 30
     },
     {
         x: 9,
         y: 17,
-        image: "public/assets/Bonuses/cartridges.png",
+        image: AMMUNITION.image,
         amount: 35
     },
     {
         x: 11,
         y: 9,
-        image: "public/assets/Bonuses/cartridges.png",
+        image: AMMUNITION.image,
         amount: 20
     },
     {
         x: 13,
         y: 4,
-        image: "public/assets/Bonuses/cartridges.png",
+        image: AMMUNITION.image,
         amount: 40
     },
     {
         x: 14,
         y: 9,
-        image: "public/assets/Bonuses/cartridges.png",
+        image: AMMUNITION.image,
         amount: 30
     },
     {
         x: 18,
         y: 3,
-        image: "public/assets/Bonuses/cartridges.png",
+        image: AMMUNITION.image,
         amount: 35
     },
     {
         x: 18,
         y: 9,
-        image: "public/assets/Bonuses/cartridges.png",
+        image: AMMUNITION.image,
         amount: 55
     },
     {
         x: 18,
         y: 14,
-        image: "public/assets/Bonuses/cartridges.png",
+        image: AMMUNITION.image,
         amount: 40
     },
     {
         x: 22,
         y: 12,
-        image: "public/assets/Bonuses/cartridges.png",
+        image: AMMUNITION.image,
         amount: 35
     }
 ];
@@ -343,67 +343,67 @@ const bonusSet = [
     {
         x: 1,
         y: 10,
-        image: "public/assets/Bonuses/aidKit.png",
+        image: BONUS.image,
         amount: 5,
     },
     {
         x: 3,
         y: 2,
-        image: "public/assets/Bonuses/aidKit.png",
+        image: BONUS.image,
         amount: 5,
     },
     {
         x: 6,
         y: 18,
-        image: "public/assets/Bonuses/aidKit.png",
+        image: BONUS.image,
         amount: 5,
     },
     {
         x: 8,
         y: 9,
-        image: "public/assets/Bonuses/aidKit.png",
+        image: BONUS.image,
         amount: 5,
     },
     {
         x: 11,
         y: 15,
-        image: "public/assets/Bonuses/aidKit.png",
+        image: BONUS.image,
         amount: 5,
     },
     {
         x: 12,
         y: 7,
-        image: "public/assets/Bonuses/aidKit.png",
+        image: BONUS.image,
         amount: 5,
     },
     {
         x: 12,
         y: 10,
-        image: "public/assets/Bonuses/aidKit.png",
+        image: BONUS.image,
         amount: 5,
     },
     {
         x: 17,
         y: 17,
-        image: "public/assets/Bonuses/aidKit.png",
+        image: BONUS.image,
         amount: 5,
     },
     {
         x: 18,
         y: 1,
-        image: "public/assets/Bonuses/aidKit.png",
+        image: BONUS.image,
         amount: 5,
     },
     {
         x: 19,
         y: 6,
-        image: "public/assets/Bonuses/aidKit.png",
+        image: BONUS.image,
         amount: 5,
     },
     {
         x: 22,
         y: 10,
-        image: "public/assets/Bonuses/aidKit.png",
+        image: BONUS.image,
         amount: 5,
     },
 ];
