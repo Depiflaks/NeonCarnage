@@ -29,6 +29,7 @@ class RequestController {
                     const playersData = await this.connection.getPlayers(lobby.lobby_id);
                     const ownerData = await this.connection.getPlayer(lobby.owner_id);
                     return {
+                        id: lobby.lobby_id,
                         ownerName: ownerData[0].player_name,
                         fullness: playersData.length,
                         gameMode: lobby.game_mode
@@ -42,7 +43,7 @@ class RequestController {
         });        
 
         this.app.get('/game', (req, res) => {
-            connection.closeConnection();
+            // this.connection.closeConnection();
             res.sendFile(path.join(__dirname, '../../templates/game/game.html'));
         });
 
@@ -62,7 +63,7 @@ class RequestController {
                 const responseData = await this.connection.setRoom(ownerId, gameMode, timeCreation)
                 const lastInsertId = responseData.insertId;
                 console.log(lastInsertId);
-                res.redirect(`/room?lastInsertId=${lastInsertId}`);
+                res.redirect(`/room?id=${lastInsertId}`);
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');
