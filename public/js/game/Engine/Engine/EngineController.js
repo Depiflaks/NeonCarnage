@@ -34,7 +34,7 @@ class EngineController {
 
     addWeapon() {
         const { x, y } = this.player.getPosition();
-        Object.values(this.field.weapons).map(weapon => {
+        Object.values(this.field.weapons).forEach(weapon => {
             const distance = Math.sqrt((weapon.model.x - x) ** 2 + (weapon.model.y - y) ** 2);
             if (weapon.getStatus() === WEAPON_STATE.onTheGround && distance <= WEAPON.minDistance && !this.player.getWeapon()) {
                 weapon.setStatus(WEAPON_STATE.inTheHand);
@@ -46,9 +46,9 @@ class EngineController {
     update() {
         this.field.update();
         this.tracing.updateViewRange();
-        Object.values(this.enemies).map(enemy => {
+        Object.values(this.enemies).forEach(enemy => {
             enemy.checkActive(this.field);
-            enemy.getBullets().map(bullet => {
+            enemy.getBullets().forEach(bullet => {
                 bullet.updatePosition();
             });
             enemy.update();
@@ -78,12 +78,9 @@ class EngineController {
 
     takeBonus() {
         this.field.bonuses.forEach(bonus => {
-            if (bonus.active) {
-                const pickedUp = this.player.pickupBonus(bonus);
-                if (!pickedUp) {
-                    bonus.active = false;
-                    bonus.respawn();
-                }
+            if (bonus.active && !this.player.pickupBonus(bonus)) {
+                bonus.active = false;
+                bonus.respawn();
             }
         });
     }
@@ -113,12 +110,8 @@ class EngineController {
     meleeStrikeIntersectionEnemy() {
         const meleeStrike = this.player.getMeleeStrike();
         if (!meleeStrike) return;
-        let hit = false;
-
         Object.entries(this.enemies).forEach(([id, enemy]) => {
-            if (enemy.isAlive() && meleeStrike.isIntersectEnemy(enemy.model)) {
-                this.player.addDamage(id, 1);
-            }
+            if (enemy.isAlive() && meleeStrike.isIntersectEnemy(enemy.model)) this.player.addDamage(id, 1);
         });
     }
 
@@ -135,14 +128,13 @@ class EngineController {
     intersectMeleeStrike(walls) {
         if (!this.player.getMeleeStrike()) return;
         for (const wall of walls) {
-            if (this.player.getMeleeStrike().isIntersect(wall)) {
-                if (!this.player.getIsStriking()) {
-                    this.player.removeMeleeStrike();
-                } else {
-                    this.player.setStacked(true);
-                }
-                break;
+            if (!this.player.getMeleeStrike().isIntersect(wall)) continue;
+            if (!this.player.getIsStriking()) {
+                this.player.removeMeleeStrike();
+            } else {
+                this.player.setStacked(true);
             }
+            break;
         }
     }
 

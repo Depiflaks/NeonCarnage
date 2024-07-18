@@ -34,13 +34,12 @@ class PlayerController extends EntityController {
     }
 
     mouseDown(event) {
-        if ((this.getWeapon()) && (this.getWeapon().getBattleType() === "distant")) {
-            if (!this.getWeapon().getShootingInterval()) {
-                this.shot();
-                this.getWeapon().setShootingInterval(setInterval(() => this.shot(), this.getWeapon().getRapidity()));
-            }
+        if (!this.getWeapon()) return;
+        if (this.getWeapon().getBattleType() === "distant" && !this.getWeapon().getShootingInterval()) {
+            this.shot();
+            this.getWeapon().setShootingInterval(setInterval(() => this.shot(), this.getWeapon().getRapidity()));
         }
-        if ((this.getWeapon()) && (this.getWeapon().getBattleType() === "close")) {
+        if (this.getWeapon().getBattleType() === "close") {
             this.strike();
         }
     }
@@ -64,19 +63,18 @@ class PlayerController extends EntityController {
     }
 
     shot() {
-        if (this.getWeapon().getAmount() > 0) {
-            this.getWeapon().decAmount();
-            for (let i = 0; i < this.getWeapon().getGrouping(); i++) {
-                const angle = this.getAngle();
-                const x = this.getPosition().x + WEAPON.h/4.1 * Math.cos(angle);
-                const y = this.getPosition().y + WEAPON.h/4.1 * Math.sin(angle);
-                const deviation = this.getWeapon().getDeviation();
-                const angleDeviation = (Math.random() * 2 - 1) * deviation;
-                const adjustedAngle = angle + angleDeviation;
-                this.model.bullets.push(new Bullet({ x, y, angle: adjustedAngle }));
-            }
-            this.setShaking(SHAKE.duration);
+        if (this.getWeapon().getAmount() <= 0) return;
+        this.getWeapon().decAmount();
+        for (let i = 0; i < this.getWeapon().getGrouping(); i++) {
+            const angle = this.getAngle();
+            const x = this.getPosition().x + WEAPON.h/4.1 * Math.cos(angle);
+            const y = this.getPosition().y + WEAPON.h/4.1 * Math.sin(angle);
+            const deviation = this.getWeapon().getDeviation();
+            const angleDeviation = (Math.random() * 2 - 1) * deviation;
+            const adjustedAngle = angle + angleDeviation;
+            this.model.bullets.push(new Bullet({ x, y, angle: adjustedAngle }));
         }
+        this.setShaking(SHAKE.duration);
     }
 
     setShaking(duration) {
@@ -85,12 +83,13 @@ class PlayerController extends EntityController {
     }
 
     mouseUp(event) {
-        if (this.getWeapon() && (this.getWeapon().getBattleType() === "distant")) {
+        if (!this.getWeapon()) return;
+        if (this.getWeapon().getBattleType() === "distant") {
             clearInterval(this.getWeapon().getShootingInterval());
             this.getWeapon().setShootingInterval(null);
         }
-        if (this.getWeapon() && (this.getWeapon().getBattleType() === "close")) {
-            if (this.getStacked() === true) {
+        if (this.getWeapon().getBattleType() === "close") {
+            if (this.getStacked()) {
                 this.setStacked(false)
                 this.removeMeleeStrike();
             }
@@ -159,12 +158,11 @@ class PlayerController extends EntityController {
         if (this.getStacked()) return;
         this.model.updatePosition();
 
-        if (this.getMeleeStrike()) {
-            if (this.getMeleeStrike().isAnimating) {
-                this.getMeleeStrike().update(this.getPosition(), this.getAngle(), this.getIsStriking());
-            } else {
-                this.removeMeleeStrike();
-            }
+        if (!this.getMeleeStrike()) return;
+        if (this.getMeleeStrike().isAnimating) {
+            this.getMeleeStrike().update(this.getPosition(), this.getAngle(), this.getIsStriking());
+        } else {
+            this.removeMeleeStrike();
         }
     }
 

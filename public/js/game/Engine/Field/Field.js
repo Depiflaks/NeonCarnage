@@ -22,12 +22,17 @@ class Field extends Drawable {
 
         super(0, 0, maxX, maxY);
         this.spawnPoints = spawnPoints;
-        this.cells = [];
+        this.cells = Array.from({ length: maxX + 1 }, () => Array(maxY + 1).fill(null));
         this.verticalWalls = [];
         this.horizontalWalls = [];
         this.weapons = {};
-        this.ammunition = [];
-        this.bonuses = [];
+        this.ammunition = ammunitionSet.map(
+            ammunition => new Ammunition(ammunition.x, ammunition.y, ammunition.image, ammunition.amount)
+        );
+        this.bonuses = bonusSet.map(
+            bonus => new Bonus(bonus.x, bonus.y, bonus.image, bonus.amount)
+        );
+
         this.corpses = {};
 
         this.corpseImages = []
@@ -35,48 +40,29 @@ class Field extends Drawable {
             this.corpseImages.push(new Image());
             this.corpseImages[i].src = SKINS[i].corpse
         }
-        this.cells = Array.from({ length: maxX + 1 }, () => Array(maxY + 1).fill(null));
+        
+        for (const weapon of weaponSet) {
+            this.weapons[weapon.id] = new WeaponController(weapon);
+        }
 
-        weaponSet.map(
-            weapon => {
-                this.weapons[weapon.id] = new WeaponController(weapon);
-            }
-        );
+        for (const cell of groundList) {
+            const [x, y] = cell;
+            this.cells[x][y] = new Cell(...cell); 
+        }
 
-        ammunitionSet.map(
-            ammunition => {
-                this.ammunition.push(new Ammunition(ammunition.x, ammunition.y, ammunition.image, ammunition.amount));
-            }
-        );
-
-        bonusSet.map(
-            bonus => {
-                this.bonuses.push(new Bonus(bonus.x, bonus.y, bonus.image, bonus.amount));
-            }
-        );
-
-
-        groundList.map(
-            cell => {
-                const [x, y] = cell;
-                this.cells[x][y] = new Cell(x, y); 
-            }
-        );
-
-        wallList.map(
-            wall => {
-                const [startX, startY, endX, endY] = wall;
-                if (startX === endX) {
-                    this.verticalWalls.push(new VerticalWall(startX, startY, endX, endY));
-                } else if (startY === endY) {
-                    this.horizontalWalls.push(new HorizontalWall(startX, startY, endX, endY));
-                }
+        for (const wall of wallList) {
+            const [startX, startY, endX, endY] = wall;
+            if (startX === endX) {
+                this.verticalWalls.push(new VerticalWall(startX, startY, endX, endY));
             } 
-        );
+            if (startY === endY) {
+                this.horizontalWalls.push(new HorizontalWall(startX, startY, endX, endY));
+            }
+        }
     };
 
     update() {
-        this.cells.map(row => row.map(cell => {if (cell) {cell.update()}}));
+        this.cells.forEach(row => row.forEach(cell => {if (cell) cell.update()}));
         this.hideCells();
     }
 
@@ -86,17 +72,17 @@ class Field extends Drawable {
     }
 
     drawGround(context) {
-        this.cells.map(row => row.map(cell => { if(cell) {cell.draw(context)}}));
+        this.cells.forEach(row => row.forEach(cell => { if(cell) {cell.draw(context)}}));
     }
 
     drawWalls(context) {
-        this.horizontalWalls.map(wall => wall.draw(context));
-        this.verticalWalls.map(wall => wall.draw(context));
+        this.horizontalWalls.forEach(wall => wall.draw(context));
+        this.verticalWalls.forEach(wall => wall.draw(context));
     }
 
     drawWeapons(entities, context) {
         let indexX, indexY;
-        Object.values(this.weapons).map(weapon => {
+        Object.values(this.weapons).forEach(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) /  CELL.w);
             indexY = Math.floor((weapon.model.y - this.y) / CELL.h);
             if (this.cells[indexX][indexY] && this.cells[indexX][indexY].active) weapon.view.draw(
@@ -109,7 +95,7 @@ class Field extends Drawable {
 
     drawAmmunition(context) {
         let indexX, indexY;
-        this.ammunition.map(ammunition => {
+        this.ammunition.forEach(ammunition => {
             indexX = Math.floor((ammunition.x - this.x) / CELL.w);
             indexY = Math.floor((ammunition.y - this.y) / CELL.h);
             if ((this.cells[indexX][indexY]) && ammunition.active && this.cells[indexX][indexY].active) {
@@ -120,7 +106,7 @@ class Field extends Drawable {
 
     drawBonuses(context) {
         let indexX, indexY;
-        this.bonuses.map(bonus => {
+        this.bonuses.forEach(bonus => {
             indexX = Math.floor((bonus.x - this.x) / CELL.w);
             indexY = Math.floor((bonus.y - this.y) / CELL.h);
             if (this.cells[indexX][indexY] && bonus.active && this.cells[indexX][indexY].active) {
@@ -131,7 +117,7 @@ class Field extends Drawable {
 
     drawCorpse(context) {
         let indexX, indexY;
-        Object.values(this.corpses).map(list => list.map(corp => {
+        Object.values(this.corpses).forEach(list => list.forEach(corp => {
             indexX = Math.floor((corp.x - this.x) / CELL.w);
             indexY = Math.floor((corp.y - this.y) / CELL.h);
             if (this.cells[indexX][indexY] && this.cells[indexX][indexY].active) corp.draw(this.corpseImages, context);
@@ -144,7 +130,7 @@ class Field extends Drawable {
     }
 
     hideCells() {
-        this.cells.map(row => row.map(cell => {
+        this.cells.forEach(row => row.forEach(cell => {
             if (cell) {
                 cell.active = false;
                 cell.activeDirection = 1;
@@ -165,13 +151,13 @@ class Field extends Drawable {
 
     move(dx, dy) {
         super.move(dx, dy);
-        this.cells.map(row => row.map(cell => {if (cell) {cell.move(dx, dy)}}));
-        this.verticalWalls.map(wall => wall.move(dx, dy));
-        this.horizontalWalls.map(wall => wall.move(dx, dy));
-        Object.values(this.weapons).map(weapon => weapon.model.move(dx, dy))
-        this.ammunition.map(ammunition => ammunition.move(dx, dy));
-        this.bonuses.map(bonus => bonus.move(dx, dy));
-        Object.values(this.corpses).map(list => list.map(corp => corp.move(dx, dy)));
+        this.cells.forEach(row => row.forEach(cell => {if (cell) {cell.move(dx, dy)}}));
+        this.verticalWalls.forEach(wall => wall.move(dx, dy));
+        this.horizontalWalls.forEach(wall => wall.move(dx, dy));
+        Object.values(this.weapons).forEach(weapon => weapon.model.move(dx, dy))
+        this.ammunition.forEach(ammunition => ammunition.move(dx, dy));
+        this.bonuses.forEach(bonus => bonus.move(dx, dy));
+        Object.values(this.corpses).forEach(list => list.forEach(corp => corp.move(dx, dy)));
     }
 }
 
