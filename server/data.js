@@ -1,4 +1,7 @@
-import { AMMUNITION, BONUS, WEAPON_MODELS } from "../public/js/game/CONST.js";
+import { AMMUNITION } from "./CONST/GAME/FIELD/AMMUNITION.js";
+import { BONUS } from "./CONST/GAME/FIELD/BONUS.js";
+import { WEAPON_MODELS } from "./CONST/GAME/WEAPON/WEAPON_MODELS.js";
+
 function convertFields(cellsList) {
     const result = [];
     for (let i = 0; i < cellsList.length; i++) {
@@ -407,7 +410,6 @@ const bonusSet = [
         amount: 5,
     },
 ];
-
 
 const groundList = convertFields(cellsList);
 

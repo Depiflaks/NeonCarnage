@@ -3,11 +3,11 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 
 class RequestController {
-    constructor(app, generator) {
+    constructor(app, creature) {
         const __filename = fileURLToPath(import.meta.url);
         const __dirname = path.dirname(__filename);
         this.app = app;
-        this.generator = generator;
+        this.creature = creature;
 
         this.app.use('/public', express.static(path.join(__dirname, '../../public')));
 
@@ -22,7 +22,7 @@ class RequestController {
         app.post('/create', (req, res) => {
             console.log('Create new Session');
 
-            const responseData = this.generator.create();
+            const responseData = this.creature.create();
             
             res.json(responseData);
         });

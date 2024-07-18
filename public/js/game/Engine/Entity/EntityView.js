@@ -1,4 +1,4 @@
-import {ENTITY, RAD, INTERFACE, HEALTH} from "../../CONST.js";
+import {ENTITY, RAD, INTERFACE, HEALTH_BAR} from "../../CONST.js";
 
 class EntityView {
     constructor(context) {
@@ -42,24 +42,24 @@ class EntityView {
     drawHealthBar(entity, entityHeight) {
         const health = entity.getHealth();
         const maxHealth = entity.getMaxHealth();
-        const rows = Math.ceil(maxHealth / HEALTH.squaresPerRow);
+        const rows = Math.ceil(maxHealth / HEALTH_BAR.squaresPerRow);
         const { x, y } = entity.getPosition();
 
         this.context.save();
         let squaresDrawn = 0;
 
         for (let row = 0; row < rows; row++) {
-            for (let col = 0; col < HEALTH.squaresPerRow; col++) {
-                const squareX = x - (HEALTH.squaresPerRow * (HEALTH.squareSize + HEALTH.gap)) / 2 + col * (HEALTH.squareSize + HEALTH.gap);
-                const squareY = y + entityHeight / 2 + HEALTH.offsetY + row * (HEALTH.squareSize + HEALTH.gap);
-                const index = row * HEALTH.squaresPerRow + col;
+            for (let col = 0; col < HEALTH_BAR.squaresPerRow; col++) {
+                const squareX = x - (HEALTH_BAR.squaresPerRow * (HEALTH_BAR.squareSize + HEALTH_BAR.gap)) / 2 + col * (HEALTH_BAR.squareSize + HEALTH_BAR.gap);
+                const squareY = y + entityHeight / 2 + HEALTH_BAR.offsetY + row * (HEALTH_BAR.squareSize + HEALTH_BAR.gap);
+                const index = row * HEALTH_BAR.squaresPerRow + col;
 
                 if (index >= maxHealth) {
                     break;
                 }
 
                 this.context.fillStyle = index < health ? "red" : "gray";
-                this.context.fillRect(squareX, squareY, HEALTH.squareSize, HEALTH.squareSize);
+                this.context.fillRect(squareX, squareY, HEALTH_BAR.squareSize, HEALTH_BAR.squareSize);
                 squaresDrawn++;
 
                 if (squaresDrawn >= maxHealth) {

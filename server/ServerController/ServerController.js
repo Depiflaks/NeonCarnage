@@ -3,7 +3,7 @@ import { WebSocketController } from '../WebSocketController/WebSocketController.
 
 import express from 'express';
 import http from 'http';
-import { MapGenerator } from '../MapGenerator/MapGenerator.js';
+import { Map } from '../Map/Map.js';
 import { RequestController } from '../RequestController/RequestController.js';
 import { SessionController } from '../Session/SessionController.js';
 
@@ -12,8 +12,8 @@ class ServerController {
         this.port = PORT;
         this.app = express();
         this.server = http.createServer(this.app);
-        this.generanor = new MapGenerator();
-        this.request = new RequestController(this.app, this.generanor);
+        this.creature = new Map();
+        this.request = new RequestController(this.app, this.creature);
 
         this.sessions = [];
 
@@ -27,7 +27,7 @@ class ServerController {
     }
 
     getMap() {
-        return this.generanor.create();
+        return this.creature.create();
     }
 }
 
