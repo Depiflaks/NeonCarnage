@@ -1,5 +1,5 @@
-import { CELL } from "../../CONST.js";
-import { Drawable } from "../Interface/Drawable.js";
+import { CELL } from "../../../CONST.js";
+import { Drawable } from "../../Interface/Drawable.js";
 
 class Cell extends Drawable {
     constructor(x, y) {

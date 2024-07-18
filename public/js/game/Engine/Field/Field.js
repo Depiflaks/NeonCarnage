@@ -1,4 +1,4 @@
-import { Cell } from "./Cell.js";
+import { Cell } from "./Components/Cell.js";
 import { VerticalWall} from "./VerticalWall.js";
 import { HorizontalWall} from "./HorizontalWall.js";
 import { CELL, SKINS, WINDOW } from "../../CONST.js";
@@ -6,9 +6,9 @@ import { WeaponController } from "../Weapon/WeaponController.js";
 import { Drawable } from "../Interface/Drawable.js";
 import { Bonus } from "../Collectable/Bonus.js";
 import { Ammunition } from "../Collectable/Ammunition.js";
-import { Corpse } from "./Corpse.js";
+import { Corpse } from "./Components/Corpse.js";
 
-class BattleGround extends Drawable {
+class Field extends Drawable {
     constructor(groundList, wallList, weaponSet, ammunitionSet, bonusSet, spawnPoints) {
         
         let maxX = 0;
@@ -175,4 +175,4 @@ class BattleGround extends Drawable {
     }
 }
 
-export { BattleGround } 
+export { Field } 

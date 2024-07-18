@@ -1,10 +1,10 @@
-import { BattleGround } from "../BattleGround/BattleGround.js";
+import { Field } from "../Field/Field.js";
 import { PlayerController } from "../Player/PlayerController.js";
 
 
 class EngineModel {
     constructor({obj: {cells, walls, weapons, ammunitions, bonuses}, player: player}) {
-        this.field = new BattleGround(cells, walls, weapons, ammunitions, bonuses, player.spawnPoints);
+        this.field = new Field(cells, walls, weapons, ammunitions, bonuses, player.spawnPoints);
         this.player = new PlayerController(this.field.getSpawnPoint(), player.skinId, player.nickName);
         this.enemies = [];
         this.playerList = {};

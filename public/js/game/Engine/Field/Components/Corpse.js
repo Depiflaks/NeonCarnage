@@ -1,5 +1,5 @@
-import { ENTITY, SKINS } from "../../CONST.js";
-import { Drawable } from "../Interface/Drawable.js";
+import { ENTITY, SKINS } from "../../../CONST.js";
+import { Drawable } from "../../Interface/Drawable.js";
 
 class Corpse extends Drawable {
     constructor(x, y, skinId) {

@@ -1,5 +1,5 @@
 import { SERVER, ENTITY } from "../CONST.js";
-import { Corpse } from "../Engine/BattleGround/Corpse.js";
+import { Corpse } from "../Engine/Field/Corpse.js";
 import { EnemyController } from "../Engine/Enemy/EnemyController.js";
 import { Bullet } from "../Engine/Weapon/Bullet.js";
 
@@ -7,7 +7,7 @@ class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
         this.socket = new WebSocket(SERVER.sergey);
-        this.socket = new WebSocket(SERVER.liuba);
+        //this.socket = new WebSocket(SERVER.liuba);
         this.enemies = {};
         this.initEventListeners();
     }

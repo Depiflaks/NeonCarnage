@@ -1,5 +1,5 @@
-import { BULLET } from "../../CONST.js";
-import { Moveable } from "../Interface/Moveable.js";
+import { BULLET } from "../../../CONST.js";
+import { Moveable } from "../../Interface/Moveable.js";
 
 class Bullet extends Moveable {
     constructor({x, y, angle}) {
