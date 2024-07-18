@@ -37,7 +37,7 @@ class PlayerController extends EntityController {
         if (!this.getWeapon()) return;
         if (this.getWeapon().getBattleType() === "distant" && !this.getWeapon().getShootingInterval()) {
             this.shot();
-            this.getWeapon().setShootingInterval(setInterval(() => this.shot(), this.getWeapon().getRapidity()));
+            //this.getWeapon().setShootingInterval(setInterval(() => this.shot(), this.getWeapon().getRapidity()));
         }
         if (this.getWeapon().getBattleType() === "close") {
             this.strike();
@@ -65,6 +65,7 @@ class PlayerController extends EntityController {
     shot() {
         if (this.getWeapon().getAmount() <= 0) return;
         this.getWeapon().decAmount();
+        this.addAmount(this.getWeapon().getGrouping());
         for (let i = 0; i < this.getWeapon().getGrouping(); i++) {
             const angle = this.getAngle();
             const x = this.getPosition().x + WEAPON.h/4.1 * Math.cos(angle);
@@ -216,32 +217,44 @@ class PlayerController extends EntityController {
     }
 
     getChange() {
-        return this.model.healthChange;
+        return this.model.change;
     }
 
     getDamage() {
-        return this.model.healthChange.damage;
+        return this.model.change.damage;
     }
 
     addDamage(id, value) {
-        if (!this.model.healthChange.damage[id]) this.model.healthChange.damage[id] = 0;
-        this.model.healthChange.damage[id] += value;
+        if (!this.model.change.damage[id]) this.model.change.damage[id] = 0;
+        this.model.change.damage[id] += value;
     }
 
     clearDamage() {
-        this.model.healthChange.damage = {};
+        this.model.change.damage = {};
+    }
+
+    getAmount() {
+        return this.model.change.amount;
+    }
+
+    addAmount(value) {
+        this.model.change.amount += value;
+    }
+
+    clearAmount() {
+        this.model.change.amount = {};
     }
 
     getHeal() {
-        return this.model.healthChange.heal;
+        return this.model.change.heal;
     }
 
     addHeal(value) {
-        this.model.healthChange.heal += value;
+        this.model.change.heal += value;
     }
 
     clearHeal() {
-        this.model.healthChange.heal = 0;
+        this.model.change.heal = 0;
     }
 
     setAnimating(value) {

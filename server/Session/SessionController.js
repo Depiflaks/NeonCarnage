@@ -32,8 +32,8 @@ class SessionController {
         //console.log(entity.meleeStrike);
 
         this.model.objects.corpses[id] = body.field.corpses;
-        this.updateWeapons(entity, player);
-        
+        this.updateWeapons(body, entity, player);
+
         //this.updateMeleeStrike(entity, player);
 
         this.updateBullets(entity, body);
@@ -45,11 +45,9 @@ class SessionController {
         entity.bullets = body.bullets;
     }
 
-    updateWeapons(entity, player) {
-        this.model.objects.weaponId = null;
+    updateWeapons(body, entity, player) {
         if (entity.weaponId && !player.weapon.id) { // если оружие в руках было, но игрок его выбросил
             const weapon = this.model.objects.weapons[entity.weaponId];
-            this.model.objects.weaponId = entity.weaponId;
             weapon.x = player.x;
             weapon.y = player.y;
             weapon.onGround = true;
@@ -57,17 +55,15 @@ class SessionController {
         } else if (!entity.weaponId && player.weapon.id) { // если оружия в руках не было, игрок его подобрал
             entity.weaponId = player.weapon.id;
             const weapon = this.model.objects.weapons[entity.weaponId];
-            this.model.objects.weaponId = entity.weaponId;
             weapon.x = player.x;
             weapon.y = player.y;
-            weapon.amount = player.weapon.amount;
+            weapon.amount -= body.change.amount;
             weapon.onGround = false;
         } else if (entity.weaponId && player.weapon.id) { // если оружие в руках было и оно до сих пор в руках
             const weapon = this.model.objects.weapons[entity.weaponId];
-            this.model.objects.weaponId = entity.weaponId;
             weapon.x = player.x;
             weapon.y = player.y;
-            weapon.amount = player.weapon.amount;
+            weapon.amount -= body.change.amount;
         }
     }
 
@@ -105,10 +101,13 @@ class SessionController {
         }
     }
 
-    getData() {
+    getData(id) {
         const response = {
             players: this.model.players,
-            objects: this.model.objects,
+            objects: {
+                corpses: this.model.objects.corpses,
+                weapon: this.model.objects.weapons[this.model.players[id].weaponId]
+            },
             leaderBoard: this.model.leaderBoard,
         };
         return response;

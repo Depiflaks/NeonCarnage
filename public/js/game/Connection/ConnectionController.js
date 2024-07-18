@@ -46,6 +46,7 @@ class ConnectionController {
             change: {
                 damage: this.player.getDamage(),
                 heal: this.player.getHeal(),
+                amount: this.player.getAmount(),
             },
             field: {
                 corpses: [],
@@ -53,6 +54,7 @@ class ConnectionController {
         }
         this.player.clearHeal();
         this.player.clearDamage();
+        this.player.clearAmount();
         if (this.field.getCorpses()[this.id]) body.field.corpses = this.field.getCorpses()[this.id].map(corp => {return {
             x: corp.x - this.field.x,
             y: corp.y - this.field.y,
@@ -114,11 +116,7 @@ class ConnectionController {
     }
 
     onResponse(body) {
-        Object.values(body.objects.weapons)
-        .filter(weapon => weapon.id === body.objects.weaponId)
-        .forEach(weapon => {
-            this.field.weapons[weapon.id].update(weapon, {dx: this.field.x, dy: this.field.y});
-        });
+        if (body.objects.weapon) this.field.weapons[body.objects.weapon.id].update(body.objects.weapon, {dx: this.field.x, dy: this.field.y});
         this.player.leaderBoard = body.leaderBoard;
         for (let id in body.objects.corpses) {
             if (id === this.id) continue;
