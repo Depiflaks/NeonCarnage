@@ -1,5 +1,5 @@
 import { WEAPON_STATE } from "../../CONST.js";
-import { Trajectory } from "../Weapon/Trajectory/Trajectory.js";
+import { MeleeStrike } from "../Weapon/MeleeStrike.js";
 import { SkinModel } from "./Skin/SkinModel.js";
 
 class EntityController {
@@ -63,16 +63,16 @@ class EntityController {
         this.model.weaponId = id;
     }
 
-    createTrajectory() {
-        this.model.trajectory = new Trajectory(this.model.x, this.model.y, this.model.angle);
+    createMeleeStrike() {
+        this.model.meleeStrike = new MeleeStrike(this.model.x, this.model.y, this.model.angle);
     }
 
-    removeTrajectory() {
-        this.model.trajectory = null;
+    removeMeleeStrike() {
+        this.model.meleeStrike = null;
     }
 
-    getTrajectory() {
-        return this.model.trajectory;
+    getMeleeStrike() {
+        return this.model.meleeStrike;
     }
 
     isActive() {

@@ -21,7 +21,7 @@ class EngineView {
         field.drawBonuses(this.context);
         field.drawWeapons([].concat(player, Object.values(enemies)), this.context);
         field.drawAmmunition(this.context);
-        if (player.getTrajectory()) player.getTrajectory().draw(this.context);
+        if (player.getMeleeStrike()) player.getMeleeStrike().draw(this.context);
         if (player.isAlive()) this.entityView.draw(player);
 
         this.entityView.drawNickname(player);

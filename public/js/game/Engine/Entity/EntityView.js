@@ -13,7 +13,7 @@ class EntityView {
         const { x, y } = entity.getPosition();
         const angle = entity.getAngle();
         const weapon = entity.getWeapon();
-        const animation = entity.getTrajectory();
+        const animation = entity.getMeleeStrike();
         this.context.save();
         this.context.translate(x, y);
         this.context.rotate(angle + 90 * RAD);

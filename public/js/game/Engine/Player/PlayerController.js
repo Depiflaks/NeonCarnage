@@ -92,19 +92,19 @@ class PlayerController extends EntityController {
         if (this.getWeapon() && (this.getWeapon().getBattleType() === "close")) {
             if (this.getStacked() === true) {
                 this.setStacked(false)
-                this.removeTrajectory();
+                this.removeMeleeStrike();
             }
             this.setIsStriking(false);
         }
     }
 
     strike() {
-        if (this.getIsStriking() || (!this.getIsStriking() && this.getTrajectory()) || this.getStacked() === true) return;
+        if (this.getIsStriking() || (!this.getIsStriking() && this.getMeleeStrike()) || this.getStacked() === true) return;
 
         this.setIsStriking(true);
 
-        this.createTrajectory();
-        this.getTrajectory().toLeft();
+        this.createMeleeStrike();
+        this.getMeleeStrike().toLeft();
     }
 
     keyDown(event) {
@@ -159,11 +159,11 @@ class PlayerController extends EntityController {
         if (this.getStacked()) return;
         this.model.updatePosition();
 
-        if (this.getTrajectory()) {
-            if (this.getTrajectory().isAnimating) {
-                this.getTrajectory().update(this.getPosition(), this.getAngle(), this.getIsStriking());
+        if (this.getMeleeStrike()) {
+            if (this.getMeleeStrike().isAnimating) {
+                this.getMeleeStrike().update(this.getPosition(), this.getAngle(), this.getIsStriking());
             } else {
-                this.removeTrajectory();
+                this.removeMeleeStrike();
             }
         }
     }
@@ -247,17 +247,17 @@ class PlayerController extends EntityController {
     }
 
     setAnimating(value) {
-        this.model.trajectory.isAnimating = value;
+        this.model.meleeStrike.isAnimating = value;
     }
 
     getAnimating() {
-        return this.model.trajectory.isAnimating;
+        return this.model.meleeStrike.isAnimating;
     }
 
     move(dx, dy) {
         this.model.move(dx, dy);
-        if (this.getTrajectory()){
-            this.getTrajectory().move(dx, dy);
+        if (this.getMeleeStrike()){
+            this.getMeleeStrike().move(dx, dy);
         }
     }
 
