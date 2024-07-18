@@ -38,6 +38,14 @@ class EnemyController extends EntityController{
         this.model.factX += dx;
         this.model.factY += dy;
     }
+
+    setLastHitTime(time) {
+        this.model.lastHitTime = time;
+    }
+
+    getLastHitTime() {
+        return this.model.lastHitTime;
+    }
 }
 
 export {EnemyController}

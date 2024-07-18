@@ -9,6 +9,7 @@ class EnemyModel extends EntityModel {
         this.angle = angle;
         this.health = health;
         this.maxHealth = maxHealth;
+        this.lastHitTime = 0;
     }
 }
 

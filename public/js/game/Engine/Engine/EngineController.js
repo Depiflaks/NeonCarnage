@@ -60,7 +60,7 @@ class EngineController {
         this.takeAmmunition();
         this.takeBonus();
         this.player.update();
-        
+
         this.move();
         this.model.updateShake();
     }
@@ -120,11 +120,15 @@ class EngineController {
     meleeStrikeIntersectionEnemy(drawableArray) {
         const meleeStrike = this.player.getMeleeStrike();
         if (!meleeStrike) return;
+        const currentTime = Date.now();
         Object.entries(this.enemies).forEach(([id, enemy]) => {
             if (enemy.isAlive() && meleeStrike.isIntersectEnemy(enemy.model) && !this.intersectMeleeStrike(drawableArray)) {
-                this.player.addDamage(id, 1);
-                this.player.getMeleeStrike().weaponLeft.src = MELEE_STRIKE.knifeLeftBloodyImage;
-                this.player.getMeleeStrike().weaponRight.src = MELEE_STRIKE.knifeRightBloodyImage;
+                if (currentTime - enemy.getLastHitTime() >= 1000) { // Проверка на интервал 1 секунда
+                    this.player.addDamage(id, 3);
+                    enemy.setLastHitTime(currentTime); // Обновляем время последнего удара
+                    //this.player.getMeleeStrike().weaponLeft.src = MELEE_STRIKE.knifeLeftBloodyImage;
+                    //this.player.getMeleeStrike().weaponRight.src = MELEE_STRIKE.knifeRightBloodyImage;
+                }
             }
         });
     }
