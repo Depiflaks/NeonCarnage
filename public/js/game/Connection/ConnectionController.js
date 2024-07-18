@@ -37,6 +37,11 @@ class ConnectionController {
                 skinId: this.player.getSkinId(),
                 nickname: this.player.getNickname(),
                 isReborning: this.player.isReborning(),
+                meleeStrike: {
+                    isAnimating: this.player.getIsAnimating(),
+                    direction: this.player.getDirection(),
+                    angle: this.player.getCurrentAngle(),
+                }
             },
             bullets: [],
             change: {
@@ -149,6 +154,16 @@ class ConnectionController {
             enemy.setWeapon(this.field.weapons[entity.weaponId]);
             enemy.setHealth(entity.health);
             enemy.setNickname(entity.nickname);
+            if (entity.meleeStrike.isAnimating === true) {
+                if (!enemy.getMeleeStrike()) {
+                    enemy.createMeleeStrike();
+                } else {
+                    enemy.model.meleeStrike.currentAngle = entity.meleeStrike.angle;
+                }
+            } else {
+                enemy.removeMeleeStrike();
+            }
+
             if (!entity.isAlive) {
                 enemy.die();
             }

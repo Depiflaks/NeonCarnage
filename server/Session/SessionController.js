@@ -28,9 +28,14 @@ class SessionController {
         entity.skinId = player.skinId;
         entity.isReborning = player.isReborning;
         entity.nickname = player.nickname;
+        entity.meleeStrike = player.meleeStrike;
+        //console.log(entity.meleeStrike);
 
         this.model.objects.corpses[id] = body.field.corpses;
         this.updateWeapons(entity, player);
+
+
+        //this.updateMeleeStrike(entity, player);
 
         this.updateBullets(entity, body);
         
@@ -66,6 +71,18 @@ class SessionController {
             weapon.amount = player.weapon.amount;
         }
     }
+
+    /*updateMeleeStrike(entity, player) {
+        const meleeStrike = player.meleeStrike;
+        if (meleeStrike && entity.weaponId && player.weapon.id) {
+            console.log(meleeStrike)
+            console.log(this.model.objects.weapons[entity.weaponId])
+
+            if (meleeStrike.isStriking === true) {
+                entity
+            }
+        }
+    }*/
 
     updateHealth(body, entity, entityId) {
         const damage = body.change.damage;

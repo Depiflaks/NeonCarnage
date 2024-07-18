@@ -1,4 +1,4 @@
-import { CAMERA, KEYBOARD_E, KEYBOARD_TAB, WEAPON, WEAPON_STATE } from "../../CONST.js";
+import {CAMERA, KEYBOARD_E, KEYBOARD_TAB, MELEE_STRIKE, WEAPON, WEAPON_STATE} from "../../CONST.js";
 import { EngineModel } from "./EngineModel.js";
 import { EngineView } from "./EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
@@ -51,6 +51,9 @@ class EngineController {
             enemy.getBullets().forEach(bullet => {
                 bullet.updatePosition();
             });
+            if (enemy.getMeleeStrike()) {
+                this.updateEnemyMeleeStrike(enemy);
+            }
             enemy.update();
         })
         this.checkIntersections([...this.field.verticalWalls, ...this.field.horizontalWalls]);
@@ -60,6 +63,13 @@ class EngineController {
         
         this.move();
         this.model.updateShake();
+    }
+
+    updateEnemyMeleeStrike(enemy) {
+        enemy.getMeleeStrike().x = enemy.model.x;
+        enemy.getMeleeStrike().y = enemy.model.y;
+        enemy.getMeleeStrike().angle = enemy.getAngle();
+
     }
 
     takeAmmunition() {
@@ -107,18 +117,22 @@ class EngineController {
         ));
     }
 
-    meleeStrikeIntersectionEnemy() {
+    meleeStrikeIntersectionEnemy(drawableArray) {
         const meleeStrike = this.player.getMeleeStrike();
         if (!meleeStrike) return;
         Object.entries(this.enemies).forEach(([id, enemy]) => {
-            if (enemy.isAlive() && meleeStrike.isIntersectEnemy(enemy.model)) this.player.addDamage(id, 1);
+            if (enemy.isAlive() && meleeStrike.isIntersectEnemy(enemy.model) && !this.intersectMeleeStrike(drawableArray)) {
+                this.player.addDamage(id, 1);
+                this.player.getMeleeStrike().weaponLeft.src = MELEE_STRIKE.knifeLeftBloodyImage;
+                this.player.getMeleeStrike().weaponRight.src = MELEE_STRIKE.knifeRightBloodyImage;
+            }
         });
     }
 
     checkIntersections(drawableArray, moveableArray) {
         this.bulletsIntersectionWall(drawableArray);
         this.bulletsIntersectionEnemy(moveableArray);
-        this.meleeStrikeIntersectionEnemy(moveableArray)
+        this.meleeStrikeIntersectionEnemy(drawableArray)
         this.intersectMeleeStrike(drawableArray);
         drawableArray.forEach(obj => {
             this.player.check(obj);
@@ -126,16 +140,18 @@ class EngineController {
     }
 
     intersectMeleeStrike(walls) {
-        if (!this.player.getMeleeStrike()) return;
+        if (!this.player.getMeleeStrike()) return false;
         for (const wall of walls) {
-            if (!this.player.getMeleeStrike().isIntersect(wall)) continue;
-            if (!this.player.getIsStriking()) {
-                this.player.removeMeleeStrike();
-            } else {
-                this.player.setStacked(true);
+            if (this.player.getMeleeStrike().isIntersect(wall)) {
+                if (!this.player.getIsStriking()) {
+                    this.player.removeMeleeStrike();
+                } else {
+                    this.player.setStacked(true);
+                }
+                return true;
             }
-            break;
         }
+        return false;
     }
 
     initEventListeners(canvas) {

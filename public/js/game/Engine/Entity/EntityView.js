@@ -101,6 +101,8 @@ class EntityView {
             this.context.restore();
         }
     }
+
+
 }
 
 export { EntityView };

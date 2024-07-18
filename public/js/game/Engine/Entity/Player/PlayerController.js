@@ -90,8 +90,8 @@ class PlayerController extends EntityController {
         }
         if (this.getWeapon().getBattleType() === "close") {
             if (this.getStacked()) {
-                this.setStacked(false)
                 this.removeMeleeStrike();
+                this.setStacked(false);
             }
             this.setIsStriking(false);
         }
@@ -273,6 +273,21 @@ class PlayerController extends EntityController {
 
     getStacked() {
         return this.model.stacked;
+    }
+
+    getDirection() {
+        if (this.getMeleeStrike()) {
+            //console.log(this.getMeleeStrike())
+            return this.getMeleeStrike().direction;
+        }
+    }
+
+    getIsAnimating() {
+        if (this.getMeleeStrike()) return this.getMeleeStrike().isAnimating;
+    }
+
+    getCurrentAngle() {
+        if (this.getMeleeStrike()) return this.getMeleeStrike().currentAngle;
     }
 }
 
