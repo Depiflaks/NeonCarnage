@@ -20,7 +20,9 @@ class WeaponView {
 
     drawInHand(weapon, entities, context) {
         for (const entity of entities) {
-            if (entity.getMeleeStrike() && entity.getIsAnimating()) return;
+            if (entity) {
+                if (entity.getMeleeStrike()) return;
+            }
             if (entity.getWeaponId() !== weapon.getId()) continue;
             const {x: px, y: py} = entity.getPosition();
 
