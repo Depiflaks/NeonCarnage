@@ -33,8 +33,7 @@ class SessionController {
 
         this.model.objects.corpses[id] = body.field.corpses;
         this.updateWeapons(entity, player);
-
-
+        
         //this.updateMeleeStrike(entity, player);
 
         this.updateBullets(entity, body);
