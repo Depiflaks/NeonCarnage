@@ -44,6 +44,18 @@ class DatabaseController {
         });
     }
 
+    setPlayer(roomId, nickname) {
+        return new Promise((resolve, reject) => {
+            this.connection.query("INSERT INTO player (lobby_id, player_name) VALUES (?, ?)", [roomId, nickname], function(err, data) {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+
     getAllFromLobby() {
         return new Promise((resolve, reject) => {
             this.connection.query("SELECT * FROM lobby", function(err, data) {
@@ -79,6 +91,8 @@ class DatabaseController {
             });
         });
     }
+
+
 
 
     closeConnection() {

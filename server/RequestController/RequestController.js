@@ -3,7 +3,6 @@ import { fileURLToPath } from 'url';
 import express from 'express';
 import { DatabaseController } from '../DatabaseController/DatabaseController.js';
 
-
 class RequestController {
     constructor(app, generator) {
         const __filename = fileURLToPath(import.meta.url);
@@ -40,18 +39,15 @@ class RequestController {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');
             }
-        });        
+        });
 
         this.app.get('/game', (req, res) => {
-            // this.connection.closeConnection();
+            
             res.sendFile(path.join(__dirname, '../../templates/game/game.html'));
         });
 
         this.app.post('/create', (req, res) => {
-            console.log('Create new Session');
-
             const responseData = this.generator.create();
-            
             res.json(responseData);
         });
 
@@ -60,16 +56,14 @@ class RequestController {
                 const ownerId = 1;
                 const gameMode = "gameMode";
                 const timeCreation = new Date().toISOString().slice(0, 19).replace('T', ' ');
-                const responseData = await this.connection.setRoom(ownerId, gameMode, timeCreation)
+                const responseData = await this.connection.setRoom(ownerId, gameMode, timeCreation);
                 const lastInsertId = responseData.insertId;
-                console.log(lastInsertId);
                 res.redirect(`/room?id=${lastInsertId}`);
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');
             }
         });
-        
 
         this.app.get('/room', (req, res) => {
             res.sendFile(path.join(__dirname, '../../templates/room/main.html'));
@@ -85,7 +79,20 @@ class RequestController {
                 res.status(500).send('Ошибка сервера');
             }
         });
+
+        this.app.get('/setPlayer', async (req, res) => {
+            const roomId = req.query.roomId;
+            const nickname = req.query.nickname;
+            try {
+                const player = await this.connection.setPlayer(roomId, nickname);
+                const playerId = player.insertId;
+                res.json(playerId);
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
     }
 }
 
-export {RequestController}
+export { RequestController };

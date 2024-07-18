@@ -1,5 +1,5 @@
 import { PORT } from '../SERV_CONST.js';
-import { WebSocketController } from '../WebSocketController/WebSocketController.js';
+import { WebSocketRoom } from '../WebSocket/WebSocketRoom.js';
 
 import express from 'express';
 import http from 'http';
@@ -23,8 +23,8 @@ class ServerController {
         this.server.listen(this.port, () => {
             console.log('Listening on port ' + this.port);
         });
-        
-        this.webSocket = new WebSocketController(this.server, this.sessions[0]);
+
+        this.webSocket = new WebSocketRoom(this.server);
     }
 
     getMap() {
