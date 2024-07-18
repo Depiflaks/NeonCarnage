@@ -94,6 +94,21 @@ const SKINS = [
     }
 ]
 
+const BOT_SKINS = [
+    {
+        alive: "public/assets/Bot/Skin1/alive.png",
+        died: "public/assets/Bot/Skin1/died.png"
+    },
+    {
+        alive: "public/assets/Bot/Skin2/alive.png",
+        died: "public/assets/Bot/Skin2/died.png"
+    },
+    {
+        alive: "public/assets/Bot/Skin3/alive.png",
+        died: "public/assets/Bot/Skin3/died.png"
+    }
+]
+
 const ENTITY = {
     radius: 30,
     w: 100,
@@ -266,4 +281,4 @@ const MELEE_STRIKE = {
 
 };
 
-export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, LEADER_BOARD, HEALTH, SKINS, DRAW_BULLETS_AMOUNT, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, KEYBOARD_TAB, WEAPON_STATE, RAD, FPS, MELEE_STRIKE, SERVER, ENEMY};
+export {RPS, REQUEST_DURATION, FRAME_DURATION, WINDOW, LEADER_BOARD, HEALTH, SKINS, BOT_SKINS, DRAW_BULLETS_AMOUNT, AMMUNITION, CELL, WALL, INTERFACE, ENTITY, SHAKE, BONUS, BULLET, WEAPON, WEAPON_MODELS, CAMERA, KEYBOARD_E, KEYBOARD_TAB, WEAPON_STATE, RAD, FPS, MELEE_STRIKE, SERVER, ENEMY};
