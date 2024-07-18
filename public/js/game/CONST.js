@@ -146,8 +146,8 @@ const WEAPON_MODELS = {
         inHand: "public/assets/Weapon/weaponUp5.png", //текстура в руках
         amount: 0, //количество пуль в магазине(для холодного - 0)
         rechargeTime: 0, //время перезарядки
-        w: 20,
-        h: 50,
+        w: 40,
+        h: 100,
     },
     rifle: {
         name: "rifle",

@@ -19,13 +19,13 @@ class WeaponView {
     }
 
     drawInHand(weapon, entities, context) {
-        // доделать траекторию, когда начнём получать её с бэкенда
-        //if (animation && animation.isAnimating) return;
         for (const entity of entities) {
+            if (entity.getMeleeStrike() && entity.getIsAnimating()) return;
             if (entity.getWeaponId() !== weapon.getId()) continue;
             const {x: px, y: py} = entity.getPosition();
+
             const {weaponX, weaponY} = this.getParam(weapon);
-            
+
             context.save();
             context.translate(px, py);
             context.rotate(entity.getAngle() + 90 * RAD);

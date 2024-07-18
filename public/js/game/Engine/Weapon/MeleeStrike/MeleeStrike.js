@@ -24,9 +24,9 @@ class MeleeStrike extends Drawable {
         context.translate(this.x + this.h, this.y + this.w);
         context.rotate(this.angle + this.currentAngle + 90 * RAD);
         if (this.direction === 1) {
-            context.drawImage(this.weaponLeft, this.x - currentEndX - ENTITY.h * 1.6, currentEndY - this.y - this.w / 1);
+            context.drawImage(this.weaponLeft, this.x - currentEndX - ENTITY.h * 1.6, currentEndY - this.y - this.w / 0.95);
         } else {
-            context.drawImage(this.weaponRight, this.x - currentEndX - ENTITY.h * 1.6, currentEndY - this.y - this.w / 1);
+            context.drawImage(this.weaponRight, this.x - currentEndX - ENTITY.h * 1.6, currentEndY - this.y - this.w / 0.95);
         }
         context.restore();
     }
