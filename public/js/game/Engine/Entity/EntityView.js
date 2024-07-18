@@ -17,7 +17,6 @@ class EntityView {
         this.context.save();
         this.context.translate(x, y);
         this.context.rotate(angle + 90 * RAD);
-        console.log("animation: ", animation, "weapon: ", weapon)
         if ((!animation && !weapon) || (!animation && (weapon && weapon.getName() === "knife")) || (animation && animation.isAnimating && weapon)) {
             this.context.drawImage(skin.body.none, -ENTITY.w/2, -ENTITY.h/2, ENTITY.w, ENTITY.h);
             this.context.drawImage(skin.head, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
