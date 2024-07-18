@@ -1,5 +1,5 @@
 import { WEAPON_STATE } from "../../CONST.js";
-import { Trajectory } from "../Weapon/Trajectory.js";
+import { Trajectory } from "../Weapon/Trajectory/Trajectory.js";
 import { SkinModel } from "./Skin/SkinModel.js";
 
 class EntityController {

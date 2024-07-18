@@ -1,5 +1,5 @@
 import { Wall } from "./Wall.js";
-import { WALL, CELL } from "../../CONST.js";
+import { WALL, CELL } from "../../../../CONST.js";
 
 class VerticalWall extends Wall {
     constructor(startX, startY, endX, endY){

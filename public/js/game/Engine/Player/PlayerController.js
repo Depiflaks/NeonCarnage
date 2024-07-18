@@ -1,5 +1,5 @@
 import {WINDOW, BONUS, ENTITY, WEAPON, WEAPON_STATE, SHAKE} from "../../CONST.js";
-import { Bullet } from "../Weapon/Bullet.js";
+import { Bullet } from "../Weapon/Bullet/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { EntityController } from "../Entity/EntityController.js";
 

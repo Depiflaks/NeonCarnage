@@ -1,5 +1,5 @@
-import { ENTITY, TRAJECTORY, RAD } from "../../CONST.js";
-import { Drawable } from "../Interface/Drawable.js";
+import { ENTITY, TRAJECTORY, RAD } from "../../../CONST.js";
+import { Drawable } from "../../Interface/Drawable.js";
 
 class Trajectory extends Drawable {
     constructor(x, y, angle) {

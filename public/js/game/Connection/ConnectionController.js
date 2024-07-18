@@ -1,7 +1,7 @@
 import { SERVER, ENTITY } from "../CONST.js";
-import { Corpse } from "../Engine/Field/Corpse.js";
+import { Corpse } from "../Engine/Field/Components/Corpse.js";
 import { EnemyController } from "../Engine/Enemy/EnemyController.js";
-import { Bullet } from "../Engine/Weapon/Bullet.js";
+import { Bullet } from "../Engine/Weapon/Bullet/Bullet.js";
 
 class ConnectionController {
     constructor() {

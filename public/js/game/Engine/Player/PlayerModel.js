@@ -1,6 +1,4 @@
 import { EntityModel } from "../Entity/EntityModel.js";
-import { ENTITY } from "../../CONST.js";
-import { Trajectory } from "../Weapon/Trajectory.js";
 
 class PlayerModel extends EntityModel {
     constructor({ x, y }, skinId, nickName) {

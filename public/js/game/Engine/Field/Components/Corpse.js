@@ -1,4 +1,3 @@
-import { ENTITY, SKINS } from "../../../CONST.js";
 import { Drawable } from "../../Interface/Drawable.js";
 
 class Corpse extends Drawable {

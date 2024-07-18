@@ -1,6 +1,5 @@
-import { Drawable } from "../Interface/Drawable.js";
-import { WALL } from "../../CONST.js";
-import {CELL} from "../../CONST.js";
+import { Drawable } from "../../../Interface/Drawable.js";
+import { WALL, CELL } from "../../../../CONST.js";
 
 class Wall extends Drawable {
     constructor(startX, startY, endX, endY) {

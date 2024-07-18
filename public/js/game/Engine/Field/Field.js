@@ -1,6 +1,6 @@
 import { Cell } from "./Components/Cell.js";
-import { VerticalWall} from "./VerticalWall.js";
-import { HorizontalWall} from "./HorizontalWall.js";
+import { VerticalWall} from "./Components/Wall/VerticalWall.js";
+import { HorizontalWall} from "./Components/Wall/HorizontalWall.js";
 import { CELL, SKINS, WINDOW } from "../../CONST.js";
 import { WeaponController } from "../Weapon/WeaponController.js";
 import { Drawable } from "../Interface/Drawable.js";
