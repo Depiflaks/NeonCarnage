@@ -75,8 +75,10 @@ class EntityController {
         return this.model.meleeStrike;
     }
 
-    setMeleeStrike(value) {
-        this.model.meleeStrike = value;
+    setMeleeStrike(currentAngle, isAnimating, direction) {
+        this.model.meleeStrike.currentAngle = currentAngle;
+        this.model.meleeStrike.isAnimating = isAnimating;
+        this.model.meleeStrike.direction = direction;
     }
 
     isActive() {

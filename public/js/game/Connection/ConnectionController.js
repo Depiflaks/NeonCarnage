@@ -6,7 +6,7 @@ import { Bullet } from "../Engine/Weapon/Bullet/Bullet.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.sergey);
+        this.socket = new WebSocket(SERVER.denis_home);
         this.enemies = {};
         this.initEventListeners();
     }
@@ -157,7 +157,7 @@ class ConnectionController {
                 if (!enemy.getMeleeStrike()) {
                     enemy.createMeleeStrike();
                 } else {
-                    enemy.model.meleeStrike.currentAngle = entity.meleeStrike.angle;
+                    enemy.setMeleeStrike(entity.meleeStrike.angle, entity.meleeStrike.isAnimating, entity.meleeStrike.direction);
                 }
             } else {
                 enemy.removeMeleeStrike();
