@@ -252,7 +252,7 @@ const weaponSet = [
     },
     {
         id: 11,
-        type: WEAPON_MODELS.machineGun, 
+        type: WEAPON_MODELS.knife,
         x: 13, 
         y: 6, 
     },
