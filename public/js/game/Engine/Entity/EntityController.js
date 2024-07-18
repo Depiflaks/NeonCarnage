@@ -1,5 +1,5 @@
 import { WEAPON_STATE } from "../../CONST.js";
-import { MeleeStrike } from "../Weapon/MeleeStrike.js";
+import { MeleeStrike } from "../Weapon/MeleeStrike/MeleeStrike.js";
 import { SkinModel } from "./Skin/SkinModel.js";
 
 class EntityController {

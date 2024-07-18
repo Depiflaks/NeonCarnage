@@ -1,5 +1,5 @@
-import { ENTITY, MELEE_STRIKE, RAD } from "../../CONST.js";
-import { Drawable } from "../Interface/Drawable.js";
+import { ENTITY, MELEE_STRIKE, RAD } from "../../../CONST.js";
+import { Drawable } from "../../Interface/Drawable.js";
 
 class MeleeStrike extends Drawable {
     constructor(x, y, angle) {
