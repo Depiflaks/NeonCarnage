@@ -7,7 +7,6 @@ class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
         this.socket = new WebSocket(SERVER.sergey);
-        //this.socket = new WebSocket(SERVER.liuba);
         this.enemies = {};
         this.initEventListeners();
     }

@@ -34,8 +34,6 @@ class EngineView {
                 this.entityView.draw(enemy);
 
                 this.entityView.drawEnemyHealthBar(enemy);
-            } else {
-                this.entityView.drawDead(enemy);
             }
             this.drawBullets(enemy.getBullets(), field);
             this.entityView.drawNickname(enemy);
