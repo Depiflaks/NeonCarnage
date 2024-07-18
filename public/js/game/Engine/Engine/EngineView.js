@@ -45,7 +45,8 @@ class EngineView {
             this.drawLeaderBoard(list);
         }
         this.entityView.drawCursor(player.getCursorPosition());
-        this.drawGradientOverlay(player.getHealth(), player.getMaxHealth());
+        this.drawGradientOverlay();
+        this.drawHealthOverlay(player.getHealth(), player.getMaxHealth());
     }
 
     drawBullets(bullets, field) {
@@ -123,32 +124,44 @@ class EngineView {
     }
 
 
-    drawGradientOverlay(health, maxHealth) {
+    drawGradientOverlay() {
         const { width, height } = this.canvas;
         const gradient = this.context.createLinearGradient(0, 0, width, height);
 
+        // Вычисляем значения цвета на основе gradientOffset
+        const r = Math.floor(127 * (1 + Math.sin(Math.PI * this.gradientOffset)));
+        const g = Math.floor(127 * (1 + Math.sin(Math.PI * (this.gradientOffset + 2 / 3))));
+        const b = Math.floor(127 * (1 + Math.sin(Math.PI * (this.gradientOffset + 4 / 3))));
+
+        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.17)`);
+        gradient.addColorStop(1, `rgba(${b}, ${r}, ${g}, 0.17)`);
+
+        this.context.fillStyle = gradient;
+        this.context.fillRect(0, 0, width, height);
+
+        // Обновляем gradientOffset
+        this.gradientOffset += 0.01;
+        if (this.gradientOffset >= 2) {
+            this.gradientOffset = 0;
+        }
+    }
+
+    drawHealthOverlay(health, maxHealth) {
+        const { width, height } = this.canvas;
         const healthRatio = health / maxHealth;
 
         const minRed = 170;
         const r = Math.min(255, Math.floor(minRed + (255 - minRed) * (1 - healthRatio)));
 
-        const g = Math.floor((127 * healthRatio) * (1 + Math.sin(Math.PI * (this.gradientOffset + 2 / 3))));
-        const b = Math.floor((127 * healthRatio) * (1 + Math.sin(Math.PI * (this.gradientOffset + 4 / 3))));
+        const g = 0; // Выключаем зеленый цвет для большей красноты
+        const b = 0; // Выключаем синий цвет для большей красноты
 
         const minAlpha = 0.08;
-        const maxAlpha = 0.2;
+        const maxAlpha = 0.35;
         const alpha = minAlpha + (maxAlpha - minAlpha) * (1 - healthRatio);
 
-        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha})`);
-        gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, ${alpha})`);
-
-        this.context.fillStyle = gradient;
+        this.context.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`;
         this.context.fillRect(0, 0, width, height);
-
-        this.gradientOffset += 0.01;
-        if (this.gradientOffset >= 2) {
-            this.gradientOffset = 0;
-        }
     }
 
     drawLine(x1, y1, x2, y2, color, field) {
