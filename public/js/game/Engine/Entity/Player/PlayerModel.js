@@ -1,4 +1,4 @@
-import { EntityModel } from "../Entity/EntityModel.js";
+import { EntityModel } from "../EntityModel.js";
 
 class PlayerModel extends EntityModel {
     constructor({ x, y }, skinId, nickName) {

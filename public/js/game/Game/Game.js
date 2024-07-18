@@ -2,7 +2,7 @@ import {ConnectionController} from "../Connection/ConnectionController.js";
 import { FRAME_DURATION, REQUEST_DURATION } from "../CONST.js";
 import { EngineController } from "../Engine/Engine/EngineController.js";
 
-class GameController {
+class Game {
     constructor(objects, document) {
         this.document = document;
         this.canvas = this.document.getElementById("canvas");
@@ -37,4 +37,4 @@ class GameController {
     
 }
 
-export { GameController };
+export { Game };

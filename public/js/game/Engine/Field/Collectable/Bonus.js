@@ -1,20 +1,19 @@
-import {AMMUNITION} from '../../CONST.js'
+import {BONUS} from "../../../CONST.js";
 import {Collectable} from "./Collectable.js";
-class Ammunition extends Collectable {
+
+class Bonus extends Collectable {
     constructor(x, y, image, amount) {
         super(x, y);
         this.image = new Image();
-        //console.log(image)
         this.image.src = image;
         this.amount = amount;
         this.active = true;
     }
 
     draw(context) {
-        const ammoX = this.x - AMMUNITION.w / 2;
-        const ammoY = this.y - AMMUNITION.h / 2;
-        //console.log(this.image.src);
-        context.drawImage(this.image, ammoX, ammoY, AMMUNITION.w, AMMUNITION.h);
+        const bonusX = this.x - BONUS.w / 2;
+        const bonusY = this.y - BONUS.h / 2;
+        context.drawImage(this.image, bonusX, bonusY, BONUS.w, BONUS.h);
     }
 
     respawn(delay = 5000) {
@@ -22,6 +21,8 @@ class Ammunition extends Collectable {
             this.active = true;
         }, delay);
     }
+
+    update() {}
 }
 
-export { Ammunition };
+export { Bonus };

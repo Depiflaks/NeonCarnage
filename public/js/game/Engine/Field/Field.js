@@ -4,8 +4,8 @@ import { HorizontalWall} from "./Components/Wall/HorizontalWall.js";
 import { CELL, SKINS, WINDOW } from "../../CONST.js";
 import { WeaponController } from "../Weapon/WeaponController.js";
 import { Drawable } from "../Interface/Drawable.js";
-import { Bonus } from "../Collectable/Bonus.js";
-import { Ammunition } from "../Collectable/Ammunition.js";
+import { Bonus } from "./Collectable/Bonus.js";
+import { Ammunition } from "./Collectable/Ammunition.js";
 import { Corpse } from "./Components/Corpse.js";
 
 class Field extends Drawable {

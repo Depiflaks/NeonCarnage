@@ -1,6 +1,6 @@
 import { SERVER, ENTITY } from "../CONST.js";
 import { Corpse } from "../Engine/Field/Components/Corpse.js";
-import { EnemyController } from "../Engine/Enemy/EnemyController.js";
+import { EnemyController } from "../Engine/Entity/Enemy/EnemyController.js";
 import { Bullet } from "../Engine/Weapon/Bullet/Bullet.js";
 
 class ConnectionController {
@@ -110,20 +110,12 @@ class ConnectionController {
     }
 
     onResponse(body) {
-        // for (const weapon of body.objects.weapons) {
-        //     if (weapon.id !== body.objects.weaponId) {
-        //         let weapon = this.field.weapons[weapon.id];
-        //         weapon.update(weapon, { d })
-        //     }
-        // }
         Object.values(body.objects.weapons)
         .filter(weapon => weapon.id === body.objects.weaponId)
         .forEach(weapon => {
             this.field.weapons[weapon.id].update(weapon, {dx: this.field.x, dy: this.field.y});
         });
         this.player.leaderBoard = body.leaderBoard;
-        //console.log(this.playerList);
-        //console.log(body);
         for (let id in body.objects.corpses) {
             if (id === this.id) continue;
             this.field.corpses[id] = body.objects.corpses[id].map(corp => {return new Corpse(
@@ -132,7 +124,6 @@ class ConnectionController {
                 corp.skinId
             )})
         }
-        //console.log(this.field.corpses);
         for (const id in body.players) {
             const entity = body.players[id];
             if (id === this.id) {

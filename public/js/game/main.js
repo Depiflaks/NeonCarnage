@@ -1,9 +1,9 @@
-import { GameController } from "./Game/GameController.js";
+import { Game } from "./Game/Game.js";
 
 const data = JSON.parse(localStorage.getItem("responseData"))
-const gameController = new GameController(
+const game = new Game(
     data,
     document
 );
 
-gameController.loop();
+game.loop();

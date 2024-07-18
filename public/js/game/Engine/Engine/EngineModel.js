@@ -1,5 +1,5 @@
 import { Field } from "../Field/Field.js";
-import { PlayerController } from "../Player/PlayerController.js";
+import { PlayerController } from "../Entity/Player/PlayerController.js";
 
 
 class EngineModel {

@@ -1,5 +1,5 @@
-import { ENTITY } from "../../CONST.js";
-import { EntityModel } from "../Entity/EntityModel.js";
+import { ENTITY } from "../../../CONST.js";
+import { EntityModel } from "../EntityModel.js";
 
 class EnemyModel extends EntityModel {
     constructor({ x, y, angle, health, maxHealth, skinId }) {

@@ -1,6 +1,6 @@
 // Collectable.js
-import { Drawable } from "../Interface/Drawable.js";
-import {CELL} from "../../CONST.js";
+import { Drawable } from "../../Interface/Drawable.js";
+import {CELL} from "../../../CONST.js";
 
 class Collectable extends Drawable {
     constructor(x, y) {

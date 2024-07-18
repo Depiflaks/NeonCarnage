@@ -1,5 +1,5 @@
-import { CELL, ENEMY } from "../../CONST.js";
-import { EntityController } from "../Entity/EntityController.js";
+import { CELL, ENEMY } from "../../../CONST.js";
+import { EntityController } from "../EntityController.js";
 import { EnemyModel } from "./EnemyModel.js"
 
 class EnemyController extends EntityController{

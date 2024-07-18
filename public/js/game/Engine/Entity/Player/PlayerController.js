@@ -1,7 +1,7 @@
-import {WINDOW, BONUS, ENTITY, WEAPON, WEAPON_STATE, SHAKE} from "../../CONST.js";
-import { Bullet } from "../Weapon/Bullet/Bullet.js";
+import {WINDOW, BONUS, ENTITY, WEAPON, WEAPON_STATE, SHAKE} from "../../../CONST.js";
+import { Bullet } from "../../Weapon/Bullet/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
-import { EntityController } from "../Entity/EntityController.js";
+import { EntityController } from "../EntityController.js";
 
 class PlayerController extends EntityController {
     constructor(position, skinId, name) {

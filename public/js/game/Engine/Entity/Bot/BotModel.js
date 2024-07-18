@@ -1,4 +1,3 @@
-import { ENTITY } from "../../CONST.js";
 import { EnemyModel } from "../Enemy/EnemyModel.js";
 
 class BotModel extends EnemyModel {
