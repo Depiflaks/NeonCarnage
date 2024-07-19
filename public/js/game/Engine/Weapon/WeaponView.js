@@ -20,7 +20,7 @@ class WeaponView {
 
     drawInHand(weapon, entities, context) {
         for (const entity of entities) {
-            if (entity) {
+            if (entity && weapon.getName() === "knife") {
                 if (entity.getMeleeStrike()) return;
             }
             if (entity.getWeaponId() !== weapon.getId()) continue;
