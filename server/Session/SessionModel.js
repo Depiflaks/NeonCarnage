@@ -47,12 +47,20 @@ class SessionModel {
                 skinId: 1,
                 state: STATES.wanders
             }
-        ]
+        ];
+        this.walls = this.convertWallList(this.field.walls);
     }
 
 
+
+    convertWallList(wallList) {
+        return wallList.map(wall => ({
+            start: { x: wall[0] * 15, y: wall[1] * 15 },
+            end: { x: wall[2] * 15, y: wall[3] * 15 }
+        }));
+    }
+
     updateBots() {
-        console.log(this.field.walls);
         this.bots.forEach(bot => {
             let closestPlayer = null;
             let minDistance = Infinity;
@@ -80,7 +88,7 @@ class SessionModel {
     }
 
     isVisible(bot, player) {
-        for (const wall of this.field.walls) {
+        for (const wall of this.walls) {
             if (this.linesIntersect(bot.current, { x: player.x, y: player.y }, wall.start, wall.end)) {
                 return false;
             }
