@@ -1,10 +1,11 @@
 import { SERVER } from "../../game/CONST.js";
 
 class ConnectionController {
-    constructor() {
+    constructor(updatePlayersListCallback) {
         this.socket = new WebSocket(SERVER.ignat);
         this.initEventListeners();
         this.playerReady = [];
+        this.updatePlayersListCallback = updatePlayersListCallback;
     }
 
     setObj(player, field, enemies, playerList) {
@@ -40,7 +41,6 @@ class ConnectionController {
 
     onMessage() {
         const data = this.data;
-        console.log(1, data);
         const type = data.type;
         const body = data.body;
         switch (type) {
@@ -63,7 +63,6 @@ class ConnectionController {
     }
 
     response(body) {
-        console.log(body);
         body.forEach(playerStatus => {
             const { playerId, ready } = playerStatus;
 
@@ -80,6 +79,7 @@ class ConnectionController {
         const allReady = body.every(playerStatus => playerStatus.ready === true);
 
         if(allReady) {
+            this.close();
             window.location.href = `/game`;
         }
 
@@ -102,7 +102,7 @@ class ConnectionController {
     }
 
     updatePlayerList() {
-
+        this.updatePlayersListCallback();
     }
 
     onClose(data) {

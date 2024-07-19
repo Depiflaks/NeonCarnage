@@ -12,6 +12,7 @@ class ServerController {
         this.port = PORT;
         this.app = express();
         this.server = http.createServer(this.app);
+        this.app.use(express.json());
 
         this.generanor = new MapGenerator();
         this.request = new RequestController(this.app, this.generanor);

@@ -42,7 +42,7 @@ class RequestController {
         });
 
         this.app.get('/game', (req, res) => {
-            
+
             res.sendFile(path.join(__dirname, '../../templates/game/game.html'));
         });
 
@@ -54,7 +54,7 @@ class RequestController {
         this.app.get('/createRoom', async (req, res) => {
             try {
                 const ownerId = 1;
-                const gameMode = "gameMode";
+                const gameMode = "game";
                 const timeCreation = new Date().toISOString().slice(0, 19).replace('T', ' ');
                 const responseData = await this.connection.setRoom(ownerId, gameMode, timeCreation);
                 const lastInsertId = responseData.insertId;
@@ -68,6 +68,19 @@ class RequestController {
         this.app.get('/room', (req, res) => {
             res.sendFile(path.join(__dirname, '../../templates/room/main.html'));
         });
+
+        this.app.post('/getRoom', async (req, res) => {
+            try {
+                const { id } = req.body;
+                
+                const responseData = await this.connection.getRoom(id);
+                res.json(responseData);
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
+
 
         this.app.get('/getPlayers', async (req, res) => {
             const roomId = req.query.roomId;
@@ -87,6 +100,19 @@ class RequestController {
                 const player = await this.connection.setPlayer(roomId, nickname);
                 const playerId = player.insertId;
                 res.json(playerId);
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
+
+        this.app.get('/setRoomOwner', async (req, res) => {
+            const ownerId = req.query.ownerId;
+            const roomId = req.query.roomId;
+            try {
+                const response = await this.connection.setRoomOwner(roomId, ownerId);
+                const responseId = response.insertId;
+                res.json(responseId);
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');

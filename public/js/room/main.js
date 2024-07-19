@@ -1,6 +1,6 @@
 import { ConnectionController } from "./Connection/ConnectionController.js";
 
-const connection = new ConnectionController();
+const connection = new ConnectionController(updatePlayersList);
 
 document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -23,6 +23,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const playerResponse = await fetch(`/setPlayer?roomId=${roomId}&nickname=${playerNickname}`);
         const playerId = await playerResponse.json();
+
+        const response = await fetch('/getRoom', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: roomId })
+        });
+
+        const responseData = await response.json();
+        if(responseData[0].owner_id == 1) {
+            const ownerId = playerId;
+            const ownerResponse = await fetch(`/setRoomOwner?roomId=${roomId}&ownerId=${ownerId}`);
+            await updatePlayersList();
+        }
+        console.log(responseData);
+
         connection.send("updateRoom", {id: connection.id, playerId: playerId});
 
         // Сохраняем playerId в локальное хранилище
@@ -65,8 +82,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Изначальная загрузка списка игроков
         await updatePlayersList();
 
+        // setInterval(async () => {
+        //     await updatePlayersList();
+        //     connection.send("getRoomStatus", {});
+        // }, 500);
+
     } catch (error) {
         console.error('Ошибка загрузки списка игроков:', error);
     }
 });
 
+document.addEventListener('beforeunload', function(event) {
+    connection.close();
+});

@@ -7,7 +7,7 @@ document.getElementById('start').addEventListener('click', () => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: {}
+        body: JSON.stringify({})
     })
     .then(response => response.json())
     .then(data => {

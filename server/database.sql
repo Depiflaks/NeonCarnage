@@ -29,7 +29,7 @@ SELECT * FROM lobby;
 
 INSERT INTO lobby (owner_id, game_mode, time_creation)
 VALUES 
-    (3, 'pizdelovo', '2023-10-28 19:30:35')
+    (1, 'pizdelovo', '2023-10-28 19:30:35')
 ;
 
 INSERT INTO player (lobby_id, player_name)

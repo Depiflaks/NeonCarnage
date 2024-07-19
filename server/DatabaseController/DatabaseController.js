@@ -32,6 +32,18 @@ class DatabaseController {
         });
     }
 
+    getRoom(id) {
+        return new Promise((resolve, reject) => {
+            this.connection.query("SELECT * FROM lobby WHERE lobby_id=?", [id], function(err, data) {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+
     setRoom(ownerId, gameMode, timeCreation) {
         return new Promise((resolve, reject) => {
             this.connection.query("INSERT INTO lobby (owner_id, game_mode, time_creation) VALUES (?, ?, ?)", [ownerId, gameMode, timeCreation], function(err, data) {
@@ -56,6 +68,18 @@ class DatabaseController {
         });
     }
 
+    setRoomOwner(roomId, ownerId) {
+        return new Promise((resolve, reject) => {
+            this.connection.query("UPDATE lobby SET owner_id=? WHERE lobby_id=?", [ownerId, roomId], function(err, data) {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
+    }
+    
     getAllFromLobby() {
         return new Promise((resolve, reject) => {
             this.connection.query("SELECT * FROM lobby", function(err, data) {

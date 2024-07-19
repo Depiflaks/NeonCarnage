@@ -13,7 +13,7 @@ class WebSocketRoom {
         this.init(connection, req);
         
         connection.on('message', (message) => {
-            this.onMessage(message)
+            this.onMessage(message, connection)
         });
 
         connection.on('close', () => {this.onClose(req)});
@@ -29,17 +29,21 @@ class WebSocketRoom {
         this.sendInit(this.connections[connection.id], body);
         console.log(`Connected ${ip}`);
 
-        // for (let id in this.connections) {
-        //     this.send(this.connections[id], "update", {})
-        // }
+        for (let id in this.connections) {
+            this.send(this.connections[id], "update", {})
+        }
     }
 
-    onMessage(message) {
+    onMessage(message, connection) {
         
         const data = JSON.parse(message);
         console.log(data);
         if (data.type === "updateRoom") {
             this.updateRoom(data.body);
+        }
+
+        if (data.type === "getRoomStatus") {
+            this.getRoomStatus(connection);
         }
     }
 
@@ -60,6 +64,10 @@ class WebSocketRoom {
         }
     }   
 
+    getRoomStatus(connection) {
+        this.sendResponse(connection, this.players);
+    }
+
     updateConnection(connection) {
         this.connections[connection.id] = connection;
     }
@@ -67,6 +75,7 @@ class WebSocketRoom {
     onClose(req) {
         const ip = req.socket.remoteAddress;
         console.log(`Disconnected ${ip}`);
+        this.players = [];
     }
 
     sendInit(connection, data) {
