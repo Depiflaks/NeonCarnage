@@ -1,4 +1,4 @@
-import { SERVER, ENTITY } from "../CONST.js";
+import { SERVER, ENTITY, WEAPON_STATE } from "../CONST.js";
 import { Corpse } from "../Engine/Field/Components/Corpse.js";
 import { EnemyController } from "../Engine/Entity/Enemy/EnemyController.js";
 import { Bullet } from "../Engine/Weapon/Bullet/Bullet.js";
@@ -21,13 +21,11 @@ class ConnectionController {
 
     sendData() {
         const {x, y} = this.player.getPosition();
-        const weaponId = this.player.getWeaponId();
         const body = {
             player: {
-                x: x - this.field.x,
-                y: y - this.field.y,
-                angle: this.player.getAngle(),
-                weaponId: weaponId,
+                x: x - this.field.x, 
+                y: y - this.field.y, 
+                angle: this.player.getAngle(), 
                 health: this.player.getHealth(),
                 maxHealth: ENTITY.maxHealth,
                 skinId: this.player.getSkinId(),
@@ -44,6 +42,10 @@ class ConnectionController {
                 damage: this.player.getDamage(),
                 heal: this.player.getHeal(),
                 amount: this.player.getAmount(),
+                weapon: {
+                    id: this.player.getChangeWeapon().id,
+                    state: this.player.getChangeWeapon().state
+                },
             },
             field: {
                 corpses: [],
@@ -57,6 +59,7 @@ class ConnectionController {
         this.player.clearHeal();
         this.player.clearDamage();
         this.player.clearAmount();
+        this.player.clearChangeWeapon();
         if (this.field.getCorpses()[this.id]) body.field.corpses = this.field.getCorpses()[this.id].map(corp => {return {
             x: corp.x - this.field.x,
             y: corp.y - this.field.y,
@@ -70,7 +73,7 @@ class ConnectionController {
                 angle: bullet.getAngle()
             };
         })
-        //console.log(this.field.getCorpses());
+        //console.log(body.change.weapon);
         this.send("update", body);
     }
 
@@ -118,7 +121,9 @@ class ConnectionController {
     }
 
     onResponse(body) {
-        if (body.objects.weapon) this.field.weapons[body.objects.weapon.id].update(body.objects.weapon, {dx: this.field.x, dy: this.field.y});
+        for (let id in body.objects.weapons) {
+            this.field.weapons[id].update(body.objects.weapons[id], {dx: this.field.x, dy: this.field.y})
+        }
         this.player.leaderBoard = body.leaderBoard;
         for (let id in body.objects.corpses) {
             if (id === this.id) continue;
@@ -138,6 +143,8 @@ class ConnectionController {
                     //console.log(this.field.getCorpses());
                     this.player.die(this.field.getSpawnPoint());
                 }
+                this.player.setWeaponId(entity.weaponId);
+                this.player.setWeapon(this.field.weapons[entity.weaponId]);
                 continue;
             };
             const {x, y} = {x: entity.x + this.field.x, y: entity.y + this.field.y}
@@ -149,11 +156,10 @@ class ConnectionController {
             enemy.setPosition({x, y});
             enemy.setAlive(entity.isAlive);
             enemy.setAngle(entity.angle);
-            enemy.setWeaponId(entity.weaponId);
-            enemy.setWeapon(this.field.weapons[entity.weaponId]);
+            
             enemy.setHealth(entity.health);
             enemy.setNickname(entity.nickname);
-            if (entity.meleeStrike.isAnimating === true) {
+            if (entity.meleeStrike.isAnimating) {
                 if (!enemy.getMeleeStrike()) {
                     enemy.createMeleeStrike();
                 } else {
@@ -166,6 +172,10 @@ class ConnectionController {
             if (!entity.isAlive) {
                 enemy.die();
             }
+            enemy.setWeaponId(entity.weaponId);
+            enemy.setWeapon(this.field.weapons[entity.weaponId]);
+            //console.log(this.field.weapons);
+            //console.log(enemy.model);
             enemy.setBullets(entity.bullets.map(bullet => {
                 return new Bullet({
                     x: bullet.x + this.field.x,

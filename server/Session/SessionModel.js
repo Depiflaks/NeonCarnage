@@ -1,5 +1,7 @@
 import {STATES} from "../CONST/GAME/ENTITY/BOT.js";
 
+import { WEAPON_STATE } from "../CONST/GAME/WEAPON/WEAPON.js";
+
 class SessionModel {
     constructor(field) {
         this.field = field;
@@ -16,7 +18,7 @@ class SessionModel {
         this.field.map.weapons.forEach(weapon => {
             this.objects.weapons[weapon.id] = {
                 id: weapon.id,
-                onGround: true,
+                state: WEAPON_STATE.onTheGround,
                 x: weapon.x * 150 + 75,
                 y: weapon.y * 150 + 75,
                 amount: weapon.type.amount

@@ -40,13 +40,14 @@ class EngineController {
         });
     }
 
-    addWeapon() {
+    pickUpWeapon() {
         const { x, y } = this.player.getPosition();
         Object.values(this.field.weapons).forEach(weapon => {
             const distance = Math.sqrt((weapon.model.x - x) ** 2 + (weapon.model.y - y) ** 2);
             if (weapon.getStatus() === WEAPON_STATE.onTheGround && distance <= WEAPON.minDistance && !this.player.getWeapon()) {
-                weapon.setStatus(WEAPON_STATE.inTheHand);
-                this.player.setWeapon(weapon);
+                this.player.pickUpWeapon(weapon);
+                // weapon.setStatus(WEAPON_STATE.inTheHand);
+                // this.player.setWeapon(weapon);
             }
         });
     }
@@ -206,10 +207,10 @@ class EngineController {
      */
     keyDown(event) {
         if (event.code === KEYBOARD_E && this.player.isAlive() && !this.player.getWeapon()) {
-            this.addWeapon();
+            this.pickUpWeapon();
         } else if (event.code === KEYBOARD_E) {
             this.player.setStacked(false);
-            this.player.dropWeapon();
+            this.player.throwWeapon();
             if (this.player.getMeleeStrike()) {
                 this.player.setAnimating(false);
                 this.player.removeMeleeStrike();

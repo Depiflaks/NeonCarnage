@@ -22,7 +22,10 @@ class EntityController {
     }
 
     die() {
-        if(this.getWeapon()) this.dropWeapon();
+        if(!this.getWeapon()) return;
+        clearInterval(this.getWeapon().getShootingInterval());
+        this.getWeapon().setShootingInterval(null);
+        this.removeMeleeStrike();
     }
 
     setAlive(value) {
@@ -91,16 +94,6 @@ class EntityController {
 
     setBullets(bullets) {
         this.model.bullets = bullets;
-    }
-
-    dropWeapon() {
-        this.getWeapon().unsetPlayer(this.model);
-        this.getWeapon().setStatus(WEAPON_STATE.onTheGround);
-        clearInterval(this.getWeapon().getShootingInterval());
-        this.getWeapon().setShootingInterval(null);
-        this.setWeapon(null);
-        this.setWeaponId(null);
-        this.removeMeleeStrike();
     }
 
     getSkin() {

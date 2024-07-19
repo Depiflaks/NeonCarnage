@@ -1,4 +1,5 @@
 import { SessionModel } from "./SessionModel.js"
+import { WEAPON_STATE } from "./../CONST/GAME/WEAPON/WEAPON.js"
 
 class SessionController {
     constructor(field) {
@@ -28,7 +29,7 @@ class SessionController {
     updateParameters(body, id) {
         const player = body.player;
         const entity = this.model.players[id];
-        //console.log(body);
+
         entity.x = player.x;
         entity.y = player.y;
         entity.angle = player.angle;
@@ -38,10 +39,11 @@ class SessionController {
         entity.meleeStrike = player.meleeStrike;
 
         //console.log(entity.meleeStrike);
-
         this.model.objects.corpses[id] = body.field.corpses;
-        this.updateWeapons(body, entity, player);
-        this.updateAmount(body, entity)
+        this.updateWeaponState(body, entity);
+        this.updateWeapon(entity);
+        //console.log(this.model.objects.weapons);
+        this.updateAmount(body, entity);
         //this.updateMeleeStrike(entity, player);
 
         this.updateBullets(body, entity);
@@ -53,24 +55,23 @@ class SessionController {
         entity.bullets = body.bullets;
     }
 
-    updateWeapons(body, entity, player) {
-        if (entity.weaponId && !player.weaponId) { // если оружие в руках было, но игрок его выбросил
-            const weapon = this.model.objects.weapons[entity.weaponId];
-            weapon.x = player.x;
-            weapon.y = player.y;
-            weapon.onGround = true;
-            entity.weaponId = null;
-        } else if (!entity.weaponId && player.weaponId) { // если оружия в руках не было, игрок его подобрал
-            entity.weaponId = player.weaponId;
-            const weapon = this.model.objects.weapons[entity.weaponId];
-            weapon.x = player.x;
-            weapon.y = player.y;
-            weapon.onGround = false;
-        } else if (entity.weaponId && player.weaponId) { // если оружие в руках было и оно до сих пор в руках
-            const weapon = this.model.objects.weapons[entity.weaponId];
-            weapon.x = player.x;
-            weapon.y = player.y;
+    updateWeaponState(body, entity) {
+        const weapon = body.change.weapon;
+        if (weapon.state === WEAPON_STATE.onTheGround) {
+            this.model.objects.weapons[entity.weaponId].state = weapon.state;
+            entity.weaponId = weapon.id;
+        } else if (weapon.state === WEAPON_STATE.inTheHand) {
+            this.model.objects.weapons[weapon.id].state = weapon.state;
+            entity.weaponId = weapon.id;
         }
+    }
+
+    updateWeapon(entity) {
+        if (!entity.weaponId) return;
+        //console.log(this.model.objects.weapons);
+        //console.log(this.model.objects.weapons[entity.weaponId]);
+        this.model.objects.weapons[entity.weaponId].x = entity.x;
+        this.model.objects.weapons[entity.weaponId].y = entity.y;
     }
 
     updateAmount(body, entity) {
@@ -78,18 +79,6 @@ class SessionController {
         const weapon = this.model.objects.weapons[entity.weaponId];
         weapon.amount += body.change.amount;
     }
-
-    /*updateMeleeStrike(entity, player) {
-        const meleeStrike = player.meleeStrike;
-        if (meleeStrike && entity.weaponId && player.weaponId) {
-            console.log(meleeStrike)
-            console.log(this.model.objects.weapons[entity.weaponId])
-
-            if (meleeStrike.isStriking === true) {
-                entity
-            }
-        }
-    }*/
 
     updateHealth(body, entity, entityId) {
         const damage = body.change.damage;
@@ -104,6 +93,10 @@ class SessionController {
             player.health = Math.max(0, player.health - damage[id])
             if (player.health === 0) {
                 player.isAlive = false;
+                if (player.weaponId) {
+                    this.model.objects.weapons[player.weaponId].state = WEAPON_STATE.onTheGround;
+                    player.weaponId = null;
+                }
                 if (!this.model.leaderBoard[entityId]) this.model.leaderBoard[entityId] = {
                     name: entity.nickname,
                     kills: 0
@@ -113,12 +106,12 @@ class SessionController {
         }
     }
 
-    getData(id) {
+    getData() {
         const response = {
             players: this.model.players,
             objects: {
                 corpses: this.model.objects.corpses,
-                weapon: this.model.objects.weapons[this.model.players[id].weaponId]
+                weapons: this.model.objects.weapons,
             },
             leaderBoard: this.model.leaderBoard,
         };
