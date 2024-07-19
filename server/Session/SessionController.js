@@ -3,6 +3,13 @@ import { SessionModel } from "./SessionModel.js"
 class SessionController {
     constructor(field) {
         this.model = new SessionModel(field);
+        this.startBotUpdates();
+    }
+
+    startBotUpdates() {
+        setInterval(() => {
+            this.model.updateBots();
+        }, 1000);
     }
 
     addPlayer(connection, {health, maxHealth}) {

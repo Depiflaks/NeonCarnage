@@ -12,3 +12,13 @@ export const BOT_SKINS = [
         died: "public/assets/Bot/Skin3/died.png"
     }
 ]
+
+export const STATES = {
+    wanders: {
+        speed: 50
+    },
+    aimed: {
+        speed: 100
+    }
+}
+
