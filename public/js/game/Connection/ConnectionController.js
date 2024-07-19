@@ -169,8 +169,6 @@ class ConnectionController {
             }
             enemy.setWeaponId(entity.weaponId);
             enemy.setWeapon(this.field.weapons[entity.weaponId]);
-            //console.log(this.field.weapons);
-            //console.log(enemy.model);
             enemy.setBullets(entity.bullets.map(bullet => {
                 return new Bullet({
                     x: bullet.x + this.field.x, 

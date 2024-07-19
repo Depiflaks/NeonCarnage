@@ -16,7 +16,6 @@ class PlayerModel extends EntityModel {
             e: 0,
         };
         this.change = {
-            heal: 0,
             damage: {
                 
             },
@@ -24,7 +23,9 @@ class PlayerModel extends EntityModel {
             weapon: {
                 id: null,
                 state: null,
-            }
+            },
+            ammunitions: [],
+            aidKits: [],
         };
         this.isReborning = false;
     }

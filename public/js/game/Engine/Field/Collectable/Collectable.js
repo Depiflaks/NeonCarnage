@@ -10,8 +10,6 @@ class Collectable extends Drawable {
     draw(context) {
         context.fillRect(this.x, this.y, this.w, this.h);
     }
-
-    // abstract pickUp()
 }
 
 export { Collectable };

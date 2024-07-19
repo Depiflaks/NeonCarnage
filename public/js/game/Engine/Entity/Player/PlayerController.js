@@ -220,7 +220,7 @@ class PlayerController extends EntityController {
     getChange() {
         return this.model.change;
     }
-
+// Damage
     getDamage() {
         return this.model.change.damage;
     }
@@ -233,7 +233,7 @@ class PlayerController extends EntityController {
     clearDamage() {
         this.model.change.damage = {};
     }
-
+// Weapon
     getChangeWeapon() {
         return this.model.change.weapon;
     }
@@ -253,7 +253,7 @@ class PlayerController extends EntityController {
         this.model.change.weapon.id = null;
         this.model.change.weapon.state = null;
     }
-
+// Amount
     getAmount() {
         return this.model.change.amount;
     }
@@ -265,19 +265,31 @@ class PlayerController extends EntityController {
     clearAmount() {
         this.model.change.amount = 0;
     }
-
-    getHeal() {
-        return this.model.change.heal;
+//  Ammunition
+    getAmmunition() {
+        return this.model.change.ammunitions;
     }
 
-    addHeal(value) {
-        this.model.change.heal += value;
+    addAmmunition(id) {
+        this.model.change.ammunitions.push(id);
     }
 
-    clearHeal() {
-        this.model.change.heal = 0;
+    clearAmmunition() {
+        this.model.change.ammunitions = [];
+    }
+//  AidKit
+    getAidKit() {
+        return this.model.change.aidKits;
     }
 
+    addAidKit(id) {
+        this.model.change.aidKits.push(id);
+    }
+
+    clearAidKit() {
+        this.model.change.aidKits = [];
+    }
+// Other
     setAnimating(value) {
         this.model.meleeStrike.isAnimating = value;
     }

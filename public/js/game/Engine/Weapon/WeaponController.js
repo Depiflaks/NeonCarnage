@@ -26,20 +26,18 @@ class WeaponController {
         this.model.status = weapon.state; 
     }
 
-    pickupAmmunition(ammunition, player) {
+    pickupAmmunition(id, ammunition, player) {
         const { x, y } = player.getPosition();
         const distance = Math.sqrt((ammunition.x - x) ** 2 + (ammunition.y - y) ** 2);
 
         if (distance <= AMMUNITION.minDistance) {
             const currentAmount = this.getAmount();
             const maxAmount = this.getMaxAmount();
-
             if (currentAmount < maxAmount) {
                 player.addAmount(Math.min(currentAmount + AMMUNITION.amount, maxAmount) - this.getAmount());
-                return false;
+                player.addAmmunition(id);
             }
         }
-        return true;
     }
 
     getPosition() {

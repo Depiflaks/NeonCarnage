@@ -87,18 +87,18 @@ class EngineController {
 
     takeAmmunition() {
         const weapon = this.player.getWeapon();
-        this.field.ammunition.forEach(ammunition => {
-            if (ammunition.active && weapon && weapon.isDistant()) {
-                const pickedUp = weapon.pickupAmmunition(ammunition, this.player);
-                if (!pickedUp) {
-                    ammunition.active = false;
-                    ammunition.respawn();
-                }
-            }
-        });
+        for (const [index, ammunition] of this.field.ammunition.entries()) {
+            if (ammunition.active && weapon && weapon.isDistant()) 
+                weapon.pickupAmmunition(index, ammunition, this.player);
+        }
     }
 
     takeAidKit() {
+        const weapon = this.player.getWeapon();
+        for (const [index, element] of this.field.ammunition.entries()) {
+            if (ammunition.active && weapon && weapon.isDistant()) 
+                weapon.pickupAmmunition(index, ammunition, this.player);
+        }
         this.field.aidKits.forEach(aidKit => {
             if (aidKit.active && !this.player.pickupAidKit(aidKit)) {
                 aidKit.active = false;
