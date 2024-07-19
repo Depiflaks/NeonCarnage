@@ -65,8 +65,9 @@ class PlayerController extends EntityController {
     shot() {
         if (this.getWeapon().getAmount() <= 0) return;
         this.getWeapon().decAmount();
+        this.addAmount(-1);
         for (let i = 0; i < this.getWeapon().getGrouping(); i++) {
-            this.addAmount(-1);
+            
             const angle = this.getAngle();
             const x = this.getPosition().x + WEAPON.h/4.1 * Math.cos(angle);
             const y = this.getPosition().y + WEAPON.h/4.1 * Math.sin(angle);

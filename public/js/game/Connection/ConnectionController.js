@@ -6,7 +6,7 @@ import { Bullet } from "../Engine/Weapon/Bullet/Bullet.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.denis_home);
+        this.socket = new WebSocket(SERVER.sergey);
         this.enemies = {};
         this.initEventListeners();
     }
@@ -21,7 +21,6 @@ class ConnectionController {
     sendData() {
         const {x, y} = this.player.getPosition();
         const weaponId = this.player.getWeaponId();
-        const weaponAmount = weaponId ? this.player.getWeapon().getAmount() : null;
         const body = {
             player: {
                 x: x - this.field.x, 
@@ -49,6 +48,33 @@ class ConnectionController {
                 corpses: [],
             }
         }
+
+        this.bots = [
+            {
+                current: {
+                    x: 0,
+                    y: 0,
+                },
+                purpose: {
+                    x: 1,
+                    y: 1
+                },
+                skinId: 1,
+                state: false,
+            },
+            {
+                current: {
+                    x: 0,
+                    y: 0,
+                },
+                purpose: {
+                    x: 1,
+                    y: 1
+                },
+                skinId: 1,
+                state: false,
+            }
+        ]
         this.player.clearHeal();
         this.player.clearDamage();
         this.player.clearAmount();
