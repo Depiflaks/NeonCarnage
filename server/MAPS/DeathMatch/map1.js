@@ -22,11 +22,11 @@ const spawnPoints = [
     },
     {
         x: 2325,
-        y: 1725
+        y: 1675
     },
     {
         x: 75,
-        y: 1725
+        y: 1675
     }
 ]
 
@@ -188,5 +188,6 @@ const aidKitSet = [
 ];
 
 const groundList = convertFields(cellsList);
+const map1 = {wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints};
 
-export {wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints}
+export {wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints, map1}
