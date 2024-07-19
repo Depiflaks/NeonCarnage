@@ -35,8 +35,8 @@ class WeaponController {
             const maxAmount = this.getMaxAmount();
 
             if (currentAmount < maxAmount) {
-                player.addAmount(Math.min(currentAmount + ammunition.amount, maxAmount) - this.getAmount());
-                //this.setAmount(Math.min(currentAmount + ammunition.amount, maxAmount));
+                player.addAmount(Math.min(currentAmount + AMMUNITION.amount, maxAmount) - this.getAmount());
+                //this.setAmount(Math.min(currentAmount + AMMUNITION.amount, maxAmount));
                 return false;
             }
         }

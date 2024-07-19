@@ -1,15 +1,15 @@
 import { Cell } from "./Components/Cell.js";
 import { VerticalWall} from "./Components/Wall/VerticalWall.js";
 import { HorizontalWall} from "./Components/Wall/HorizontalWall.js";
-import { CELL, SKINS, WINDOW } from "../../CONST.js";
+import { AMMUNITION, AIDKIT, CELL, SKINS, WINDOW } from "../../CONST.js";
 import { WeaponController } from "../Weapon/WeaponController.js";
 import { Drawable } from "../Interface/Drawable.js";
-import { Bonus } from "./Collectable/Bonus.js";
+import { AidKit } from "./Collectable/AidKit.js";
 import { Ammunition } from "./Collectable/Ammunition.js";
 import { Corpse } from "./Components/Corpse.js";
 
 class Field extends Drawable {
-    constructor(groundList, wallList, weaponSet, ammunitionSet, bonusSet, spawnPoints) {
+    constructor(groundList, wallList, weaponSet, ammunitionSet, aidKitSet, spawnPoints) {
         
         let maxX = 0;
         let maxY = 0;
@@ -27,10 +27,10 @@ class Field extends Drawable {
         this.horizontalWalls = [];
         this.weapons = {};
         this.ammunition = ammunitionSet.map(
-            ammunition => new Ammunition(ammunition.x, ammunition.y, ammunition.image, ammunition.amount)
+            ammunition => new Ammunition(ammunition.x, ammunition.y, AMMUNITION.image, AMMUNITION.amount)
         );
-        this.bonuses = bonusSet.map(
-            bonus => new Bonus(bonus.x, bonus.y, bonus.image, bonus.amount)
+        this.aidKits = aidKitSet.map(
+            aidKit => new AidKit(aidKit.x, aidKit.y, AIDKIT.image, AIDKIT.amount)
         );
 
         this.corpses = {};
@@ -104,13 +104,13 @@ class Field extends Drawable {
         });
     }
 
-    drawBonuses(context) {
+    drawAidKits(context) {
         let indexX, indexY;
-        this.bonuses.forEach(bonus => {
-            indexX = Math.floor((bonus.x - this.x) / CELL.w);
-            indexY = Math.floor((bonus.y - this.y) / CELL.h);
-            if (this.cells[indexX][indexY] && bonus.active && this.cells[indexX][indexY].active) {
-                bonus.draw(context);
+        this.aidKits.forEach(aidKit => {
+            indexX = Math.floor((aidKit.x - this.x) / CELL.w);
+            indexY = Math.floor((aidKit.y - this.y) / CELL.h);
+            if (this.cells[indexX][indexY] && aidKit.active && this.cells[indexX][indexY].active) {
+                aidKit.draw(context);
             }
         });
     }
@@ -156,7 +156,7 @@ class Field extends Drawable {
         this.horizontalWalls.forEach(wall => wall.move(dx, dy));
         Object.values(this.weapons).forEach(weapon => weapon.model.move(dx, dy))
         this.ammunition.forEach(ammunition => ammunition.move(dx, dy));
-        this.bonuses.forEach(bonus => bonus.move(dx, dy));
+        this.aidKits.forEach(aidKit => aidKit.move(dx, dy));
         Object.values(this.corpses).forEach(list => list.forEach(corp => corp.move(dx, dy)));
     }
 }

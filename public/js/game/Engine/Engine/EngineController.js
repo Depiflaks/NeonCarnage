@@ -66,7 +66,7 @@ class EngineController {
         })
         this.checkIntersections([...this.field.verticalWalls, ...this.field.horizontalWalls]);
         this.takeAmmunition();
-        this.takeBonus();
+        this.takeAidKit();
         this.player.update();
         
         this.move();
@@ -97,11 +97,11 @@ class EngineController {
         });
     }
 
-    takeBonus() {
-        this.field.bonuses.forEach(bonus => {
-            if (bonus.active && !this.player.pickupBonus(bonus)) {
-                bonus.active = false;
-                bonus.respawn();
+    takeAidKit() {
+        this.field.aidKits.forEach(aidKit => {
+            if (aidKit.active && !this.player.pickupAidKit(aidKit)) {
+                aidKit.active = false;
+                aidKit.respawn();
             }
         });
     }

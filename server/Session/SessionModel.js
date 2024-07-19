@@ -11,7 +11,7 @@ class SessionModel {
         };
         this.leaderBoard = {};
         this.objects.weapons = {};
-        this.field.obj.weapons.forEach(weapon => {
+        this.field.map.weapons.forEach(weapon => {
             this.objects.weapons[weapon.id] = {
                 id: weapon.id,
                 onGround: true,

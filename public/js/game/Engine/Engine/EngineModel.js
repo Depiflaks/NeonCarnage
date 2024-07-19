@@ -3,8 +3,8 @@ import { PlayerController } from "../Entity/Player/PlayerController.js";
 
 
 class EngineModel {
-    constructor({obj: {cells, walls, weapons, ammunitions, bonuses}, player: player}) {
-        this.field = new Field(cells, walls, weapons, ammunitions, bonuses, player.spawnPoints);
+    constructor({map: {cells, walls, weapons, ammunitions, aidKits, spawnPoints}, player: player}) {
+        this.field = new Field(cells, walls, weapons, ammunitions, aidKits, spawnPoints);
         this.player = new PlayerController(this.field.getSpawnPoint(), player.skinId, player.nickName);
         this.enemies = [];
         this.playerList = {};
