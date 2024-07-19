@@ -59,9 +59,7 @@ class EngineController {
             enemy.getBullets().forEach(bullet => {
                 bullet.updatePosition();
             });
-            if (enemy.getMeleeStrike()) {
-                this.updateEnemyMeleeStrike(enemy);
-            }
+            this.updateEnemyMeleeStrike(enemy);
             enemy.update();
         })
         this.checkIntersections([...this.field.verticalWalls, ...this.field.horizontalWalls]);
@@ -78,10 +76,10 @@ class EngineController {
      * @param {EntityController} enemy 
      */
     updateEnemyMeleeStrike(enemy) {
-        enemy.getMeleeStrike().x = enemy.model.x;
-        enemy.getMeleeStrike().y = enemy.model.y;
-        enemy.getMeleeStrike().angle = enemy.getAngle();
-
+        if (enemy.getMeleeStrike()) {
+            enemy.setMeleeStrikePosition(enemy.getPosition());
+            enemy.setMeleeStrikeAngle(enemy.getAngle());
+        }
     }
 
     takeAmmunition() {
