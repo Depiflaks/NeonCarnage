@@ -18,7 +18,7 @@ class EngineView {
         field.drawGround(this.context);
         field.drawCorpse(this.context);
         this.drawBullets(player.getBullets(), field);
-        field.drawBonuses(this.context);
+        field.drawAidKits(this.context);
         field.drawWeapons([].concat(player, Object.values(enemies)), this.context);
         field.drawAmmunition(this.context);
         if (player.getMeleeStrike()) player.getMeleeStrike().draw(this.context);

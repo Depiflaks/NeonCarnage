@@ -1,5 +1,3 @@
-import { AMMUNITION } from "./CONST/GAME/FIELD/AMMUNITION.js";
-import { BONUS } from "./CONST/GAME/FIELD/BONUS.js";
 import { WEAPON_MODELS } from "./CONST/GAME/WEAPON/WEAPON_MODELS.js";
 
 function convertFields(cellsList) {
@@ -265,152 +263,123 @@ const ammunitionSet = [
     {
         x: 3,
         y: 7,
-        image: AMMUNITION.image,
-        amount: 40
     },
     {
         x: 3,
         y: 20,
-        image: AMMUNITION.image,
-        amount: 30
     },
     {
         x: 5,
         y: 12,
-        image: AMMUNITION.image,
-        amount: 35
     },
     {
         x: 7,
         y: 5,
-        image: AMMUNITION.image,
-        amount: 45
     },
     {
         x: 9,
         y: 12,
-        image: AMMUNITION.image,
-        amount: 30
     },
     {
         x: 9,
         y: 17,
-        image: AMMUNITION.image,
-        amount: 35
     },
     {
         x: 11,
         y: 9,
-        image: AMMUNITION.image,
-        amount: 20
     },
     {
         x: 13,
         y: 4,
-        image: AMMUNITION.image,
-        amount: 40
     },
     {
         x: 14,
         y: 9,
-        image: AMMUNITION.image,
-        amount: 30
     },
     {
         x: 18,
         y: 3,
-        image: AMMUNITION.image,
-        amount: 35
     },
     {
         x: 18,
         y: 9,
-        image: AMMUNITION.image,
-        amount: 55
     },
     {
         x: 18,
         y: 14,
-        image: AMMUNITION.image,
-        amount: 40
     },
     {
         x: 22,
         y: 12,
-        image: AMMUNITION.image,
-        amount: 35
     }
 ];
 
-const bonusSet = [
+const aidKitSet = [
     {
         x: 1,
         y: 10,
-        image: BONUS.image,
-        amount: 5,
     },
     {
         x: 3,
         y: 2,
-        image: BONUS.image,
-        amount: 5,
     },
     {
         x: 6,
         y: 18,
-        image: BONUS.image,
-        amount: 5,
     },
     {
         x: 8,
         y: 9,
-        image: BONUS.image,
-        amount: 5,
     },
     {
         x: 11,
         y: 15,
-        image: BONUS.image,
-        amount: 5,
     },
     {
         x: 12,
         y: 7,
-        image: BONUS.image,
-        amount: 5,
     },
     {
         x: 12,
         y: 10,
-        image: BONUS.image,
-        amount: 5,
     },
     {
         x: 17,
         y: 17,
-        image: BONUS.image,
-        amount: 5,
     },
     {
         x: 18,
         y: 1,
-        image: BONUS.image,
-        amount: 5,
     },
     {
         x: 19,
         y: 6,
-        image: BONUS.image,
-        amount: 5,
     },
     {
         x: 22,
         y: 10,
-        image: BONUS.image,
-        amount: 5,
     },
 ];
 
+const spawnPoints = [
+    {
+        x: 450,
+        y: 300
+    },
+    {
+        x: 2325,
+        y: 75
+    },
+    {
+        x: 2325,
+        y: 1725
+    },
+    {
+        x: 450,
+        y: 1725
+    }
+]
+
 const groundList = convertFields(cellsList);
 
-export {wallList, weaponSet, groundList, bonusSet, ammunitionSet}
+export {wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints}

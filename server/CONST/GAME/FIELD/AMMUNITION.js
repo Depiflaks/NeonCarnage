@@ -3,5 +3,5 @@ export const AMMUNITION = {
     h: 50,
     image: "public/assets/Bonuses/cartridges.png",
     minDistance: 40,
-    add: 30,
+    amount: 30,
 }

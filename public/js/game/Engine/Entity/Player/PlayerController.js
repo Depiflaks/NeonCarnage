@@ -1,4 +1,4 @@
-import {WINDOW, BONUS, ENTITY, WEAPON, WEAPON_STATE, SHAKE} from "../../../CONST.js";
+import {WINDOW, AIDKIT, ENTITY, WEAPON, WEAPON_STATE, SHAKE} from "../../../CONST.js";
 import { Bullet } from "../../Weapon/Bullet/Bullet.js";
 import { PlayerModel } from "./PlayerModel.js";
 import { EntityController } from "../EntityController.js";
@@ -44,13 +44,13 @@ class PlayerController extends EntityController {
         }
     }
 
-    pickupBonus(bonus) {
+    pickupAidKit(aidKit) {
         const { x, y } = this.getPosition();
-        const distance = Math.sqrt((bonus.x - x) ** 2 + (bonus.y - y) ** 2);
+        const distance = Math.sqrt((aidKit.x - x) ** 2 + (aidKit.y - y) ** 2);
         const currentHealth = this.getHealth();
         const maxHealth = this.getMaxHealth();
-        if (distance <= BONUS.minDistance && currentHealth < maxHealth) {
-            this.addHeal(bonus.amount)
+        if (distance <= AIDKIT.minDistance && currentHealth < maxHealth) {
+            this.addHeal(AIDKIT.amount)
             return false;
         }
         return true;

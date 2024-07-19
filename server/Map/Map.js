@@ -1,10 +1,11 @@
-import { wallList, weaponSet, groundList, bonusSet, ammunitionSet } from "../data.js";
+// import { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints } from "../data.js";
+import { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints } from "../MAPS/DeathMatch/map1.js";
 import {RAD, FPS, RPS, FRAME_DURATION, REQUEST_DURATION, WINDOW, LEADER_BOARD, INTERFACE, SHAKE, CAMERA, KEYBOARD_E, KEYBOARD_F} from "../CONST/GAME/GAME.js";
 import { ENTITY, HEALTH_BAR, ENEMY } from "../CONST/GAME/ENTITY/ENTITY.js";
 import { SKINS } from "../CONST/GAME/ENTITY/SKINS.js";
 import { BOT_SKINS } from "../CONST/GAME/ENTITY/BOT.js";
 import { AMMUNITION } from "../CONST/GAME/FIELD/AMMUNITION.js";
-import { BONUS } from "../CONST/GAME/FIELD/BONUS.js"; 
+import { AIDKIT } from "../CONST/GAME/FIELD/AIDKIT.js"; 
 import { CELL, WALL } from "../CONST/GAME/FIELD/FIELD.js";
 import { BULLET, DRAW_BULLETS_AMOUNT } from "../CONST/GAME/WEAPON/BULLET.js";
 import { WEAPON_MODELS } from "../CONST/GAME/WEAPON/WEAPON_MODELS.js";
@@ -18,65 +19,15 @@ class Map {
 
     create() {
         return {
-            "player": {
-                skinId: 5,
-                spawnPoints: [
-                    {
-                        x: 447,
-                        y: 267,
-                    },
-
-                    // {
-                    //     x: 1366,
-                    //     y: 291,
-                    // },
-                    // {
-                    //     x: 2236,
-                    //     y: 149,
-                    // },
-
-                    // {
-                    //     x: 2849,
-                    //     y: 588,
-                    // },
-
-                    // {
-                    //     x: 3761,
-                    //     y: 1196,
-                    // },
-
-                    // {
-                    //     x: 3604,
-                    //     y: 2544,
-                    // },
-
-                    // {
-                    //     x: 2861,
-                    //     y: 2242,
-                    // },
-
-                    // {
-                    //     x: 1667,
-                    //     y: 3149,
-                    // },
-
-                    // {
-                    //     x: 608,
-                    //     y: 3146,
-                    // },
-
-                    // {
-                    //     x: 146,
-                    //     y: 2110,
-                    // },
-                ]
-            },
-            "obj": {
+            "map": {
                 cells: groundList,
                 walls: wallList,
                 weapons: weaponSet,
-                bonuses: bonusSet,
+                aidKits: aidKitSet,
                 ammunitions: ammunitionSet,
+                spawnPoints: spawnPoints,
+            },
+            "player": {
             },
             "const": {
                 rad: RAD,
@@ -98,7 +49,7 @@ class Map {
                 playerSkins: SKINS,
                 botSkins: BOT_SKINS,
                 ammunition: AMMUNITION,
-                aidKit: BONUS,
+                aidKit: AIDKIT,
                 cellView: CELL,
                 wallView: WALL,
                 bulletView: BULLET,
@@ -110,6 +61,12 @@ class Map {
             }
         }
     }
+}
+
+const GAME_MODE = {
+    BR: 0,
+    DM: 1,
+    SR: 2
 }
 
 export {Map}
