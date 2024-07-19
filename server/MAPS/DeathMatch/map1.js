@@ -153,26 +153,18 @@ const ammunitionSet = [
     {
         x: 0,
         y: 7,
-        image: AMMUNITION.image,
-        amount: 20
     },
     {
         x: 11,
         y: 0,
-        image: AMMUNITION.image,
-        amount: 15
     },
     {
         x: 10,
         y: 10,
-        image: AMMUNITION.image,
-        amount: 25
     },
     {
         x: 15,
         y: 4,
-        image: AMMUNITION.image,
-        amount: 20
     }
 ];
 
@@ -180,26 +172,18 @@ const bonusSet = [
     {
         x: 2,
         y: 6,
-        image: BONUS.image,
-        amount: 2,
     },
     {
         x: 7,
         y: 2,
-        image: BONUS.image,
-        amount: 1,
     },
     {
         x: 6,
         y: 11,
-        image: BONUS.image,
-        amount: 3,
     },
     {
         x: 14,
         y: 7,
-        image: BONUS.image,
-        amount: 2,
     }
 ];
 
