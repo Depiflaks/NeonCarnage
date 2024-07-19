@@ -78,10 +78,11 @@ class EntityController {
         return this.model.meleeStrike;
     }
 
-    setMeleeStrike(currentAngle, isAnimating, direction) {
+    setMeleeStrike(currentAngle, isAnimating, direction, isStriking) {
         this.model.meleeStrike.currentAngle = currentAngle;
         this.model.meleeStrike.isAnimating = isAnimating;
         this.model.meleeStrike.direction = direction;
+        this.model.meleeStrike.isStriking = isStriking
     }
 
     isActive() {
@@ -119,6 +120,10 @@ class EntityController {
 
     getIsAnimating() {
         return this.model.meleeStrike.isAnimating;
+    }
+
+    getIsStriking() {
+        return this.model.meleeStrike.isStriking;
     }
 }
 

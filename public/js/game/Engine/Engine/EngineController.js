@@ -82,7 +82,7 @@ class EngineController {
         enemy.getMeleeStrike().x = enemy.model.x;
         enemy.getMeleeStrike().y = enemy.model.y;
         enemy.getMeleeStrike().angle = enemy.getAngle();
-        enemy.getMeleeStrike().update(enemy.getPosition(), enemy.getAngle(), enemy.getIsAnimating());
+        enemy.getMeleeStrike().update(enemy.getPosition(), enemy.getAngle(), enemy.getIsStriking());
     }
 
     takeAmmunition() {
@@ -134,9 +134,9 @@ class EngineController {
     }
 
     /**
-     * 
-     * @param {Array} drawableArray 
-     * @returns 
+     *
+     * @param {Array} drawableArray
+     * @returns
      */
     meleeStrikeIntersectionEnemy(drawableArray) {
         const meleeStrike = this.player.getMeleeStrike();
