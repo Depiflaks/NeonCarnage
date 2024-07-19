@@ -7,8 +7,7 @@ class SessionModel {
         this.connections = {};
         this.objects = {
             corpses: {},
-            weapons: [],
-            weaponId: null,
+            weapons: {},
         };
         this.leaderBoard = {};
         this.objects.weapons = {};
