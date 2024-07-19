@@ -27,10 +27,7 @@ class ConnectionController {
                 x: x - this.field.x, 
                 y: y - this.field.y, 
                 angle: this.player.getAngle(), 
-                weapon: {
-                    id: weaponId,
-                    amount: weaponAmount,
-                },
+                weaponId: weaponId,
                 health: this.player.getHealth(),
                 maxHealth: ENTITY.maxHealth,
                 skinId: this.player.getSkinId(),

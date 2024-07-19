@@ -37,7 +37,7 @@ class PlayerController extends EntityController {
         if (!this.getWeapon()) return;
         if (this.getWeapon().getBattleType() === "distant" && !this.getWeapon().getShootingInterval()) {
             this.shot();
-            //this.getWeapon().setShootingInterval(setInterval(() => this.shot(), this.getWeapon().getRapidity()));
+            this.getWeapon().setShootingInterval(setInterval(() => this.shot(), this.getWeapon().getRapidity()));
         }
         if (this.getWeapon().getBattleType() === "close") {
             this.strike();
@@ -65,8 +65,8 @@ class PlayerController extends EntityController {
     shot() {
         if (this.getWeapon().getAmount() <= 0) return;
         this.getWeapon().decAmount();
-        this.addAmount(this.getWeapon().getGrouping());
         for (let i = 0; i < this.getWeapon().getGrouping(); i++) {
+            this.addAmount(-1);
             const angle = this.getAngle();
             const x = this.getPosition().x + WEAPON.h/4.1 * Math.cos(angle);
             const y = this.getPosition().y + WEAPON.h/4.1 * Math.sin(angle);
@@ -242,7 +242,7 @@ class PlayerController extends EntityController {
     }
 
     clearAmount() {
-        this.model.change.amount = {};
+        this.model.change.amount = 0;
     }
 
     getHeal() {

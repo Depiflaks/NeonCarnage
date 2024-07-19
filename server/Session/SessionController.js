@@ -33,43 +33,47 @@ class SessionController {
 
         this.model.objects.corpses[id] = body.field.corpses;
         this.updateWeapons(body, entity, player);
-
+        this.updateAmount(body, entity)
         //this.updateMeleeStrike(entity, player);
 
-        this.updateBullets(entity, body);
+        this.updateBullets(body, entity);
         
         this.updateHealth(body, entity, id);
     }
 
-    updateBullets(entity, body) {
+    updateBullets(body, entity) {
         entity.bullets = body.bullets;
     }
 
     updateWeapons(body, entity, player) {
-        if (entity.weaponId && !player.weapon.id) { // если оружие в руках было, но игрок его выбросил
+        if (entity.weaponId && !player.weaponId) { // если оружие в руках было, но игрок его выбросил
             const weapon = this.model.objects.weapons[entity.weaponId];
             weapon.x = player.x;
             weapon.y = player.y;
             weapon.onGround = true;
             entity.weaponId = null;
-        } else if (!entity.weaponId && player.weapon.id) { // если оружия в руках не было, игрок его подобрал
-            entity.weaponId = player.weapon.id;
+        } else if (!entity.weaponId && player.weaponId) { // если оружия в руках не было, игрок его подобрал
+            entity.weaponId = player.weaponId;
             const weapon = this.model.objects.weapons[entity.weaponId];
             weapon.x = player.x;
             weapon.y = player.y;
-            weapon.amount -= body.change.amount;
             weapon.onGround = false;
-        } else if (entity.weaponId && player.weapon.id) { // если оружие в руках было и оно до сих пор в руках
+        } else if (entity.weaponId && player.weaponId) { // если оружие в руках было и оно до сих пор в руках
             const weapon = this.model.objects.weapons[entity.weaponId];
             weapon.x = player.x;
             weapon.y = player.y;
-            weapon.amount -= body.change.amount;
         }
+    }
+
+    updateAmount(body, entity) {
+        if (!entity.weaponId) return;
+        const weapon = this.model.objects.weapons[entity.weaponId];
+        weapon.amount += body.change.amount;
     }
 
     /*updateMeleeStrike(entity, player) {
         const meleeStrike = player.meleeStrike;
-        if (meleeStrike && entity.weaponId && player.weapon.id) {
+        if (meleeStrike && entity.weaponId && player.weaponId) {
             console.log(meleeStrike)
             console.log(this.model.objects.weapons[entity.weaponId])
 

@@ -85,11 +85,10 @@ class EngineController {
     }
 
     takeAmmunition() {
-        const playerPosition = this.player.getPosition();
+        const weapon = this.player.getWeapon();
         this.field.ammunition.forEach(ammunition => {
-            const weapon = this.player.getWeapon();
             if (ammunition.active && weapon && weapon.isDistant()) {
-                const pickedUp = weapon.pickupAmmunition(ammunition, playerPosition);
+                const pickedUp = weapon.pickupAmmunition(ammunition, this.player);
                 if (!pickedUp) {
                     ammunition.active = false;
                     ammunition.respawn();
