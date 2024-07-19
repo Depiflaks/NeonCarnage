@@ -15,6 +15,7 @@ CREATE TABLE player (
 	player_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     lobby_id INT UNSIGNED NOT NULL,
     player_name VARCHAR(40) NOT NULL,
+    ready CHAR(1) NOT NULL,
     FOREIGN KEY (lobby_id) REFERENCES lobby (lobby_id)
 );
 
@@ -32,7 +33,7 @@ VALUES
     (1, 'pizdelovo', '2023-10-28 19:30:35')
 ;
 
-INSERT INTO player (lobby_id, player_name)
+INSERT INTO player (lobby_id, player_name, ready)
 VALUES 
-    (2, 'ignat2')
+    (1, 'ignat2', 'N')
 ;

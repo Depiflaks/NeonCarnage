@@ -58,7 +58,7 @@ class DatabaseController {
 
     setPlayer(roomId, nickname) {
         return new Promise((resolve, reject) => {
-            this.connection.query("INSERT INTO player (lobby_id, player_name) VALUES (?, ?)", [roomId, nickname], function(err, data) {
+            this.connection.query("INSERT INTO player (lobby_id, player_name, ready) VALUES (?, ?, 'N')", [roomId, nickname], function(err, data) {
                 if(err) {
                     reject(err);
                 } else {
@@ -114,9 +114,19 @@ class DatabaseController {
                 }
             });
         });
+    } 
+
+    updatePlayerState(playerId, state) {
+        return new Promise((resolve, reject) => {
+            this.connection.query("UPDATE player SET ready=? WHERE player_id=?", [state, playerId], function(err, data) {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(data);
+                }
+            });
+        });
     }
-
-
 
 
     closeConnection() {

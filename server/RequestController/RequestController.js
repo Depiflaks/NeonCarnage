@@ -106,6 +106,31 @@ class RequestController {
             }
         });
 
+        this.app.get('/getPlayer', async (req, res) => {
+            const playerId = req.query.playerId;
+            try {
+                const player = await this.connection.getPlayer(playerId);
+                res.json(player);
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
+
+        this.app.get('/setPlayerState', async (req, res) => {
+            const playerId = req.query.playerId;
+            const ready = req.query.ready;
+            try {
+
+                const response = await this.connection.updatePlayerState(playerId, ready);
+                const responseId = response.insertId;
+                res.json(responseId);
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
+
         this.app.get('/setRoomOwner', async (req, res) => {
             const ownerId = req.query.ownerId;
             const roomId = req.query.roomId;

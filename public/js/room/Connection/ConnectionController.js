@@ -1,11 +1,10 @@
 import { SERVER } from "../../game/CONST.js";
 
 class ConnectionController {
-    constructor(updatePlayersListCallback) {
+    constructor() {
         this.socket = new WebSocket(SERVER.ignat);
         this.initEventListeners();
         this.playerReady = [];
-        this.updatePlayersListCallback = updatePlayersListCallback;
     }
 
     setObj(player, field, enemies, playerList) {
@@ -51,7 +50,7 @@ class ConnectionController {
                 this.response(body);
                 break;
             case "update":
-                this.updatePlayerList();
+                
                 break;
             default:
                 break;
@@ -99,10 +98,6 @@ class ConnectionController {
                 break;
             }
         }
-    }
-
-    updatePlayerList() {
-        this.updatePlayersListCallback();
     }
 
     onClose(data) {
