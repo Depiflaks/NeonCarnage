@@ -36,6 +36,7 @@ class SessionController {
         entity.isReborning = player.isReborning;
         entity.nickname = player.nickname;
         entity.meleeStrike = player.meleeStrike;
+
         //console.log(entity.meleeStrike);
 
         this.model.objects.corpses[id] = body.field.corpses;

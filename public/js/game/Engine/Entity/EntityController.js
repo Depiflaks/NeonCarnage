@@ -123,6 +123,10 @@ class EntityController {
     setDirection(value) {
         this.model.meleeStrike.direction = value;
     }
+
+    getIsAnimating() {
+        return this.model.meleeStrike.isAnimating;
+    }
 }
 
 export {EntityController}

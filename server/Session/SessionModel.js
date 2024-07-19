@@ -48,7 +48,7 @@ class SessionModel {
                 state: STATES.wanders
             }
         ];
-        this.walls = this.convertWallList(this.field.walls);
+        this.walls = this.convertWallList(field.map.walls);
     }
 
 

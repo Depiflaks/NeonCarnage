@@ -30,6 +30,13 @@ class EnemyController extends EntityController{
         const dx = this.model.factX - this.model.x;
         const dy = this.model.factY - this.model.y;
         //console.log(dx / ENEMY.period, dy / ENEMY.period);
+
+        if (!this.getMeleeStrike()) return;
+        if (this.getMeleeStrike().isAnimating) {
+            this.getMeleeStrike().update(this.getPosition(), this.getAngle(), this.getIsStriking());
+        } else {
+            this.removeMeleeStrike();
+        }
         this.model.move(dx / ENEMY.period, dy / ENEMY.period);
     }
 
