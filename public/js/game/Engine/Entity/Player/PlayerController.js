@@ -234,6 +234,26 @@ class PlayerController extends EntityController {
         this.model.change.damage = {};
     }
 
+    getChangeWeapon() {
+        return this.model.change.weapon;
+    }
+
+    pickUpWeapon(weapon) {
+        this.model.change.weapon.id = weapon.getId();
+        //WEAPON_STATE.onTheGround : WEAPON_STATE.inTheHand
+        this.model.change.weapon.state = WEAPON_STATE.inTheHand;
+    }
+
+    throwWeapon() {
+        this.model.change.weapon.id = null;
+        this.model.change.weapon.state = WEAPON_STATE.onTheGround;
+    }
+
+    clearChangeWeapon() {
+        this.model.change.weapon.id = null;
+        this.model.change.weapon.state = null;
+    }
+
     getAmount() {
         return this.model.change.amount;
     }

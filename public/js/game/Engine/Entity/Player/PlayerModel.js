@@ -20,7 +20,11 @@ class PlayerModel extends EntityModel {
             damage: {
                 
             },
-            amount: 0
+            amount: 0,
+            weapon: {
+                id: null,
+                state: null,
+            }
         };
         this.isReborning = false;
     }
@@ -28,7 +32,7 @@ class PlayerModel extends EntityModel {
     updatePosition() {
         this.x += this.speedX;
         this.y += this.speedY;
-        if (this.weapon !== null) {
+        if (this.weapon) {
             this.weapon.model.x = this.x;
             this.weapon.model.y = this.y;
         }
