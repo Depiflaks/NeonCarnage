@@ -21,7 +21,6 @@ class SessionController {
     updateParameters(body, id) {
         const player = body.player;
         const entity = this.model.players[id];
-        //console.log(body);
         entity.x = player.x;
         entity.y = player.y;
         entity.angle = player.angle;
@@ -29,7 +28,6 @@ class SessionController {
         entity.isReborning = player.isReborning;
         entity.nickname = player.nickname;
         entity.meleeStrike = player.meleeStrike;
-        //console.log(entity.meleeStrike);
 
         this.model.objects.corpses[id] = body.field.corpses;
         this.updateWeapons(body, entity, player);

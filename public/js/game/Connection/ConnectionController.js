@@ -6,7 +6,6 @@ import { Bullet } from "../Engine/Weapon/Bullet/Bullet.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.sergey);
         this.socket = new WebSocket(SERVER.liuba);
         this.enemies = {};
         this.initEventListeners();
@@ -66,7 +65,6 @@ class ConnectionController {
                 angle: bullet.getAngle()
             };
         })
-        //console.log(this.field.getCorpses());
         this.send("update", body);
     }
 
@@ -131,7 +129,6 @@ class ConnectionController {
                 this.player.setHealth(entity.health);
                 if (!entity.isAlive && !entity.isReborning && !this.player.isReborning()) {
                     this.field.addCorpse(this.id, this.player);
-                    //console.log(this.field.getCorpses());
                     this.player.die(this.field.getSpawnPoint());
                 }
                 continue;
