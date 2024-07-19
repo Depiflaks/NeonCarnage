@@ -2,8 +2,16 @@ import {CAMERA, KEYBOARD_E, KEYBOARD_F, MELEE_STRIKE, WEAPON, WEAPON_STATE} from
 import { EngineModel } from "./EngineModel.js";
 import { EngineView } from "./EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
+import { ConnectionController } from "../../Connection/ConnectionController.js";
+import { EntityController } from "../Entity/EntityController.js";
 
 class EngineController {
+    /**
+     * 
+     * @param {Array} objects 
+     * @param {ConnectionController} connection 
+     * @param {canvas} canvas 
+     */
     constructor(objects, connection, canvas) {
         this.model = new EngineModel(objects);
         this.view = new EngineView(canvas);
@@ -65,6 +73,10 @@ class EngineController {
         this.model.updateShake();
     }
 
+    /**
+     * 
+     * @param {EntityController} enemy 
+     */
     updateEnemyMeleeStrike(enemy) {
         enemy.getMeleeStrike().x = enemy.model.x;
         enemy.getMeleeStrike().y = enemy.model.y;
@@ -73,11 +85,10 @@ class EngineController {
     }
 
     takeAmmunition() {
-        const playerPosition = this.player.getPosition();
+        const weapon = this.player.getWeapon();
         this.field.ammunition.forEach(ammunition => {
-            const weapon = this.player.getWeapon();
             if (ammunition.active && weapon && weapon.isDistant()) {
-                const pickedUp = weapon.pickupAmmunition(ammunition, playerPosition);
+                const pickedUp = weapon.pickupAmmunition(ammunition, this.player);
                 if (!pickedUp) {
                     ammunition.active = false;
                     ammunition.respawn();
@@ -95,6 +106,10 @@ class EngineController {
         });
     }
 
+    /**
+     * 
+     * @param {Array} barriers 
+     */
     bulletsIntersectionWall(barriers) {
         this.player.setBullets(this.player.getBullets().filter(bullet => {
             bullet.updatePosition();
@@ -117,6 +132,11 @@ class EngineController {
         ));
     }
 
+    /**
+     * 
+     * @param {Array} drawableArray 
+     * @returns 
+     */
     meleeStrikeIntersectionEnemy(drawableArray) {
         const meleeStrike = this.player.getMeleeStrike();
         if (!meleeStrike) return;
@@ -129,6 +149,11 @@ class EngineController {
         });
     }
 
+    /**
+     * 
+     * @param {Array} drawableArray 
+     * @param {Array} moveableArray 
+     */
     checkIntersections(drawableArray, moveableArray) {
         this.bulletsIntersectionWall(drawableArray);
         this.bulletsIntersectionEnemy(moveableArray);
@@ -139,6 +164,11 @@ class EngineController {
         });
     }
 
+    /**
+     * 
+     * @param {Array} walls 
+     * @returns {boolean}
+     */
     intersectMeleeStrike(walls) {
         if (!this.player.getMeleeStrike()) return false;
         for (const wall of walls) {
@@ -154,6 +184,10 @@ class EngineController {
         return false;
     }
 
+    /**
+     * 
+     * @param {canvas} canvas 
+     */
     initEventListeners(canvas) {
         addEventListener("keydown", event => this.keyDown(event));
         addEventListener("keyup", event => this.keyUp(event));
@@ -162,6 +196,10 @@ class EngineController {
         });
     }
 
+    /**
+     * 
+     * @param {Object} event 
+     */
     keyDown(event) {
         if (event.code === KEYBOARD_E && this.player.isAlive() && !this.player.getWeapon()) {
             this.addWeapon();
@@ -178,6 +216,10 @@ class EngineController {
         }
     }
 
+    /**
+     * 
+     * @param {Object} event 
+     */
     keyUp(event) {
         if (event.code === KEYBOARD_F) {
             this.model.leaderBoard = false;

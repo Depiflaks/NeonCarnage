@@ -15,11 +15,12 @@ class PlayerModel extends EntityModel {
             d: 0,
             e: 0,
         };
-        this.healthChange = {
+        this.change = {
             heal: 0,
             damage: {
                 
-            }
+            },
+            amount: 0
         };
         this.isReborning = false;
     }

@@ -40,7 +40,7 @@ class WebSocketController {
             maxHealth: body.player.maxHealth,
         });
         this.session.updateParameters(body, connection.id);
-        const data = this.session.getData();
+        const data = this.session.getData(connection.id);
         for (let id in this.session.model.players) {
             if (this.session.model.connections[id].readyState !== WebSocket.OPEN) continue;
             this.sendResponse(this.session.model.connections[id], data)
