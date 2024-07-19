@@ -4,9 +4,9 @@ class DatabaseController {
     constructor() {
         this.connection = mysql.createConnection({
             host: "localhost",
-            user: "root",
+            user: "smmm",
             database: "NeonCarnage",
-            password: "1111"
+            password: "3030"
         });
 
         this.connection.connect(function(err){
@@ -17,7 +17,6 @@ class DatabaseController {
             console.log("Подключение к серверу MySQL успешно установлено");
             }
         });
-
     }
 
     getRoomId() {
