@@ -44,4 +44,4 @@ document.getElementById('createButton').addEventListener('click', () => {
 
 setInterval(() => {
     updateLobby();
-}, 500);
+}, 1000);

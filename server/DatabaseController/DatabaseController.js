@@ -1,140 +1,98 @@
 import mysql from 'mysql2';
+import { DATA_BASE } from '../CONST/SERVER/SERVER.js';
 
 class DatabaseController {
     constructor() {
-        this.connection = mysql.createConnection({
-            host: "localhost",
-            user: "smmm",
-            database: "NeonCarnage",
-            password: "3030"
-        });
+        this.connection = mysql.createConnection(DATA_BASE.sergey);
 
-        this.connection.connect(function(err){
-            if (err) {
-            return console.error("Ошибка: " + err.message);
-            }
-            else{
+        this.connection.connect((err) => {
+            if (err) return console.error("Ошибка: " + err.message);
             console.log("Подключение к серверу MySQL успешно установлено");
-            }
+        });
+    }
+
+    makeQuery(query, parameters=[]) {
+        return new Promise((resolve, reject) => {
+            this.connection.query(
+                query, 
+                parameters,
+                (err, data) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(data);
+                    }
+                }
+            );
         });
     }
 
     getRoomId() {
-        return new Promise((resolve, reject) => {
-            this.connection.query("INSERT INTO lobby (owner_id, game_mode, time_creation) VALUES (0, '', '2023-10-28 19:30:35')", function(err, data) {
-                if(err) {
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
-            });
-        });
+        return this.makeQuery(
+            "INSERT INTO lobby (owner_id, game_mode, time_creation) VALUES (0, '', '2023-10-28 19:30:35')"
+        );
     }
 
     getRoom(id) {
-        return new Promise((resolve, reject) => {
-            this.connection.query("SELECT * FROM lobby WHERE lobby_id=?", [id], function(err, data) {
-                if(err) {
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
-            });
-        });
+        return this.makeQuery(
+            "SELECT * FROM lobby WHERE lobby_id=?", 
+            [id]
+        );
     }
 
     setRoom(ownerId, gameMode, timeCreation) {
-        return new Promise((resolve, reject) => {
-            this.connection.query("INSERT INTO lobby (owner_id, game_mode, time_creation) VALUES (?, ?, ?)", [ownerId, gameMode, timeCreation], function(err, data) {
-                if(err) {
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
-            });
-        });
+        return this.makeQuery(
+            "INSERT INTO lobby (owner_id, game_mode, time_creation) VALUES (?, ?, ?)", 
+            [ownerId, gameMode, timeCreation]
+        )
     }
 
     setPlayer(roomId, nickname) {
-        return new Promise((resolve, reject) => {
-            this.connection.query("INSERT INTO player (lobby_id, player_name, ready) VALUES (?, ?, 'N')", [roomId, nickname], function(err, data) {
-                if(err) {
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
-            });
-        });
+        return this.makeQuery(
+            "INSERT INTO player (lobby_id, player_name, ready) VALUES (?, ?, 'N')", 
+            [roomId, nickname]
+        )
     }
 
     setRoomOwner(roomId, ownerId) {
-        return new Promise((resolve, reject) => {
-            this.connection.query("UPDATE lobby SET owner_id=? WHERE lobby_id=?", [ownerId, roomId], function(err, data) {
-                if(err) {
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
-            });
-        });
+        return this.makeQuery(
+            "UPDATE lobby SET owner_id=? WHERE lobby_id=?", 
+            [roomId, roomId]
+        )
     }
     
     getAllFromLobby() {
-        return new Promise((resolve, reject) => {
-            this.connection.query("SELECT * FROM lobby", function(err, data) {
-                if(err) {
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
-            });
-        });
+        return this.makeQuery(
+            "SELECT * FROM lobby", 
+        )
     }
 
     getPlayers(lobbyId) {
-        return new Promise((resolve, reject) => {
-            this.connection.query("SELECT * FROM player WHERE lobby_id=?", [lobbyId], function(err, data) {
-                if(err) {
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
-            });
-        });
+        return this.makeQuery(
+            "SELECT * FROM player WHERE lobby_id=?", 
+            [lobbyId]
+        )
     }
 
     getPlayer(playerId) {
-        return new Promise((resolve, reject) => {
-            this.connection.query("SELECT * FROM player WHERE player_id=?", [playerId], function(err, data) {
-                if(err) {
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
-            });
-        });
+        return this.makeQuery(
+            "SELECT * FROM player WHERE player_id=?", 
+            [playerId]
+        )
     } 
 
     updatePlayerState(playerId, state) {
-        return new Promise((resolve, reject) => {
-            this.connection.query("UPDATE player SET ready=? WHERE player_id=?", [state, playerId], function(err, data) {
-                if(err) {
-                    reject(err);
-                } else {
-                    resolve(data);
-                }
-            });
-        });
+        return this.makeQuery(
+            "UPDATE player SET ready=? WHERE player_id=?", 
+            [state, playerId]
+        )
     }
-
 
     closeConnection() {
         this.connection.end(function(err) {
-            if (err) {
-                return console.log("Ошибка: " + err.message);
-            }
+            if (err) return console.log("Ошибка: " + err.message);
             console.log("Подключение закрыто");
-            });
+        });
     }
 }
 

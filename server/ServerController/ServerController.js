@@ -17,9 +17,9 @@ class ServerController {
         this.creature = new Map();
         this.request = new RequestController(this.app, this.creature);
 
-        this.sessions = [];
+        //this.sessions = [];
 
-        this.sessions.push(new SessionController(this.getMap()))
+        //this.sessions.push(new SessionController(this.getMap()))
 
         this.server.listen(this.port, () => {
             console.log('Listening on port ' + this.port);

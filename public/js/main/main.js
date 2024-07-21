@@ -19,7 +19,3 @@ document.getElementById('start').addEventListener('click', () => {
     })
     .catch(error => console.error('Error:', error));
 });
-
-(async () => {
-
-})();
