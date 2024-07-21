@@ -23,6 +23,7 @@ export class Responder {
         this.player.leaderBoard = body.leaderBoard;
         this.updateCorpses(body);
         this.updatePlayers(body);
+        //this.updateBots(body.bots);
     }
 
     updateWeapons(body) {
@@ -105,6 +106,43 @@ export class Responder {
     updateWeapon(player, entity) {
         player.setWeaponId(entity.weaponId);
         player.setWeapon(this.field.weapons[entity.weaponId]);
+    }
+
+    updateBots(bots) {
+        if (!Array.isArray(bots)) {
+            console.error('Bots data is not an array:', bots);
+            return;
+        }
+
+        // Очистка старых данных о ботах
+        this.bots = {};
+
+        // Обработка новых данных о ботах
+        for (const botData of bots) {
+            const botId = botData.id;
+            const {x, y} = {x: botData.current.x + this.field.x, y: botData.current.y + this.field.y};
+
+            // Обновляем информацию о боте
+            if (!this.bots[botId]) {
+                this.bots[botId] = {
+                    current: { x, y },
+                    skinId: botData.skinId
+                };
+            } else {
+                this.bots[botId].current = { x, y };
+                this.bots[botId].skinId = botData.skinId;
+            }
+
+            // Добавляем видимого бота в модель игрока
+            this.player.addVisibleBot(botId);
+        }
+
+        // Очистка списка видимых ботов игрока, если необходимо
+        this.player.getVisibleBots().forEach(botId => {
+            if (!this.bots[botId]) {
+                this.player.clearVisibleBots();
+            }
+        });
     }
 
     newEnemy(entity) {
