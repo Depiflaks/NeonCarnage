@@ -39,22 +39,24 @@ class ConnectionController {
             bullets: [],
             change: {
                 damage: this.player.getDamage(),
-                heal: this.player.getHeal(),
                 amount: this.player.getAmount(),
                 weapon: {
                     id: this.player.getChangeWeapon().id,
                     state: this.player.getChangeWeapon().state
                 },
+                ammunitions: this.player.getAmmunition(),
+                aidKits: this.player.getAidKit(),
             },
             field: {
                 corpses: [],
             }
         }
         //console.log(this.player.getChangeWeapon());
-        this.player.clearHeal();
         this.player.clearDamage();
         this.player.clearAmount();
         this.player.clearChangeWeapon();
+        this.player.clearAmmunition();
+        this.player.clearAidKit();
         if (this.field.getCorpses()[this.id]) body.field.corpses = this.field.getCorpses()[this.id].map(corp => {return {
             x: corp.x - this.field.x,
             y: corp.y - this.field.y,
@@ -118,6 +120,12 @@ class ConnectionController {
     onResponse(body) {
         for (let id in body.objects.weapons) {
             this.field.weapons[id].update(body.objects.weapons[id], {dx: this.field.x, dy: this.field.y})
+        }
+        for (const [id, aidKit] of body.objects.aidKits.entries()) {
+            this.field.aidKits[id].active = aidKit;
+        }
+        for (const [id, ammunition] of body.objects.ammunitions.entries()) {
+            this.field.ammunition[id].active = ammunition;
         }
         this.player.leaderBoard = body.leaderBoard;
         for (let id in body.objects.corpses) {

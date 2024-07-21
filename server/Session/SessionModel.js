@@ -7,10 +7,14 @@ class SessionModel {
         this.players = {};
         this.playersCount = 0;
         this.connections = {};
+        //console.log(field);
         this.objects = {
             corpses: {},
             weapons: {},
+            aidKits: Array(this.field.map.aidKits.length).fill(true),
+            ammunitions: Array(this.field.map.ammunitions.length).fill(true),
         };
+        //console.log(this.objects.aidKits);
         this.leaderBoard = {};
         this.objects.weapons = {};
         this.field.map.weapons.forEach(weapon => {

@@ -1,5 +1,7 @@
 import { SessionModel } from "./SessionModel.js"
 import { WEAPON_STATE } from "./../CONST/GAME/WEAPON/WEAPON.js"
+import { AIDKIT } from "../CONST/GAME/FIELD/AIDKIT.js";
+import { AMMUNITION } from "../CONST/GAME/FIELD/AMMUNITION.js";
 
 class SessionController {
     constructor(field) {
@@ -22,7 +24,7 @@ class SessionController {
     updateParameters(body, id) {
         const player = body.player;
         const entity = this.model.players[id];
-
+        //console.log(body);
         entity.x = player.x;
         entity.y = player.y;
         entity.angle = player.angle;
@@ -34,13 +36,14 @@ class SessionController {
         this.model.objects.corpses[id] = body.field.corpses;
         this.updateWeaponState(body, entity);
         this.updateWeapon(entity);
-        //console.log(this.model.objects.weapons);
+
         this.updateAmount(body, entity);
-        //this.updateMeleeStrike(entity, player);
 
         this.updateBullets(body, entity);
         
-        this.updateHealth(body, entity, id);
+        this.updateAidKits(body, entity);
+        this.updateAmmunitions(body);
+        this.updateDamage(body, entity, id);
     }
 
     updateBullets(body, entity) {
@@ -72,13 +75,31 @@ class SessionController {
         weapon.amount += body.change.amount;
     }
 
-    updateHealth(body, entity, entityId) {
-        const damage = body.change.damage;
-        const heal = body.change.heal;
-
-        if (!entity.isReborning) entity.health = Math.min(entity.maxHealth, entity.health + heal);
-        
+    updateAidKits(body, entity) {
+        const aidKits = body.change.aidKits;
+        for (let id of new Set(aidKits)) {
+            if (!entity.isReborning) entity.health = Math.min(entity.maxHealth, entity.health + AIDKIT.amount);
+            
+            this.model.objects.aidKits[id] = false;
+            setTimeout(() => {
+                this.model.objects.aidKits[id] = true;
+            }, AIDKIT.delay);
+        }
         if (entity.health > 0) entity.isAlive = true;
+    }
+
+    updateAmmunitions(body) {
+        const ammunitions = body.change.ammunitions;
+        for (let id of new Set(ammunitions)) {
+            this.model.objects.ammunitions[id] = false;
+            setTimeout(() => {
+                this.model.objects.ammunitions[id] = true;
+            }, AMMUNITION.delay);
+        }
+    }
+
+    updateDamage(body, entity, entityId) {
+        const damage = body.change.damage;
 
         for (let id in damage) {
             const player = this.model.players[id];
@@ -104,6 +125,8 @@ class SessionController {
             objects: {
                 corpses: this.model.objects.corpses,
                 weapons: this.model.objects.weapons,
+                aidKits: this.model.objects.aidKits,
+                ammunitions: this.model.objects.ammunitions,
             },
             leaderBoard: this.model.leaderBoard,
         };

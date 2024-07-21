@@ -14,12 +14,6 @@ class Ammunition extends Collectable {
         const ammoY = this.y - AMMUNITION.h / 2;
         context.drawImage(this.image, ammoX, ammoY, AMMUNITION.w, AMMUNITION.h);
     }
-
-    respawn(delay = 5000) {
-        setTimeout(() => {
-            this.active = true;
-        }, delay);
-    }
 }
 
 export { Ammunition };

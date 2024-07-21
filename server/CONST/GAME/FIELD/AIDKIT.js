@@ -4,4 +4,5 @@ export const AIDKIT = {
     image: "public/assets/Bonuses/aidKit.png",
     minDistance: 40,
     amount: 3,
+    delay: 5000,
 }

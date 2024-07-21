@@ -44,16 +44,14 @@ class PlayerController extends EntityController {
         }
     }
 
-    pickupAidKit(aidKit) {
+    pickupAidKit(id, aidKit) {
         const { x, y } = this.getPosition();
         const distance = Math.sqrt((aidKit.x - x) ** 2 + (aidKit.y - y) ** 2);
         const currentHealth = this.getHealth();
         const maxHealth = this.getMaxHealth();
         if (distance <= AIDKIT.minDistance && currentHealth < maxHealth) {
-            this.addHeal(AIDKIT.amount)
-            return false;
+            this.addAidKit(id);
         }
-        return true;
     }
 
     reborn() {

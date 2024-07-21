@@ -94,17 +94,10 @@ class EngineController {
     }
 
     takeAidKit() {
-        const weapon = this.player.getWeapon();
-        for (const [index, element] of this.field.ammunition.entries()) {
-            if (ammunition.active && weapon && weapon.isDistant()) 
-                weapon.pickupAmmunition(index, ammunition, this.player);
+        for (const [index, aidKit] of this.field.aidKits.entries()) {
+            if (aidKit.active) 
+                this.player.pickupAidKit(index, aidKit)
         }
-        this.field.aidKits.forEach(aidKit => {
-            if (aidKit.active && !this.player.pickupAidKit(aidKit)) {
-                aidKit.active = false;
-                aidKit.respawn();
-            }
-        });
     }
 
     /**

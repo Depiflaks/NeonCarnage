@@ -16,12 +16,6 @@ class AidKit extends Collectable {
         context.drawImage(this.image, aidKitX, aidKitY, AIDKIT.w, AIDKIT.h);
     }
 
-    respawn(delay = 5000) {
-        setTimeout(() => {
-            this.active = true;
-        }, delay);
-    }
-
     update() {}
 }
 

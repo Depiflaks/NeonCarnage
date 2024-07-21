@@ -27,6 +27,7 @@ class WeaponController {
     }
 
     pickupAmmunition(id, ammunition, player) {
+        if (player.getAmmunition().indexOf(id) !== -1) return;
         const { x, y } = player.getPosition();
         const distance = Math.sqrt((ammunition.x - x) ** 2 + (ammunition.y - y) ** 2);
 
