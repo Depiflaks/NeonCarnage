@@ -7,16 +7,15 @@ document.getElementById('start').addEventListener('click', () => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: {}
+        body: JSON.stringify({})
     })
     .then(response => response.json())
     .then(data => {
         data.player.nickName = document.getElementById('nickName').value;
-        data.player.skinId = document.getElementById('skinId').value;
 
         localStorage.setItem('responseData', JSON.stringify(data));
 
-        window.location.href = '/game';
+        window.location.href = `/lobby`;
     })
     .catch(error => console.error('Error:', error));
 });

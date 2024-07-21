@@ -1,5 +1,5 @@
 import { PORT } from '../CONST/SERVER/SERVER.js';
-import { WebSocketController } from '../WebSocketController/WebSocketController.js';
+import { WebSocketRoom } from '../WebSocket/WebSocketRoom.js';
 
 import express from 'express';
 import http from 'http';
@@ -12,6 +12,8 @@ class ServerController {
         this.port = PORT;
         this.app = express();
         this.server = http.createServer(this.app);
+        this.app.use(express.json());
+
         this.creature = new Map();
         this.request = new RequestController(this.app, this.creature);
 
@@ -22,8 +24,8 @@ class ServerController {
         this.server.listen(this.port, () => {
             console.log('Listening on port ' + this.port);
         });
-        
-        this.webSocket = new WebSocketController(this.server, this.sessions[0]);
+
+        this.webSocket = new WebSocketRoom(this.server);
     }
 
     getMap() {

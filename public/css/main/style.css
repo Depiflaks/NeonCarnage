@@ -1,14 +1,19 @@
 /* Основные стили для body */
 body {
-    background-color: #2d2d2d;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to top, #00ffcc, #2d2d2d);
     color: #00ffcc;
     font-family: 'Russo One';
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    overflow: hidden;
+}
+
+* {
+    user-select: none; /* Prevent text selection for all elements */
 }
 
 /* Стили для заголовка */
@@ -18,6 +23,45 @@ h1 {
     text-align: center;
     margin-bottom: 20px;
     text-shadow: 0 0 0 #00ffcc, 0 0 10px #00ffcc, 0 0 30px #00ffcc;
+    animation: glow 1.5s infinite alternate, neonFlow 3s infinite;
+}
+
+/* Стили для меню */
+.menu {
+    text-align: center;
+}
+
+.menu h1 {
+    font-family: "Nosifer";
+    font-size: 3em;
+    color: #00ffcc;
+    text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
+    position: relative;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    margin: 40px 0;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #1a1a1a;
+    font-family: "Russo One";
+    font-size: 1.5em;
+    padding: 10px 20px;
+    background: #00ffcc;
+    border: 2px solid #00ffcc;
+    box-shadow: 3px 3px #1a1a1a, -3px -3px #00ffcc;
+    transition: background 0.3s;
+}
+
+.menu a:hover {
+    background: #2d2d2d;
 }
 
 /* Стили для поля ввода */
@@ -63,13 +107,11 @@ select {
     background-size: 30px 30px;
 }
 
-/* Обновление фона при выборе */
 select option {
     background: #1a1a1a;
     color: #00ffcc;
 }
 
-/* Убираем стрелку в select для WebKit браузеров (Chrome, Safari) */
 select::-webkit-inner-spin-button, 
 select::-webkit-outer-spin-button { 
     -webkit-appearance: none; 
@@ -95,4 +137,28 @@ button {
 button:hover {
     background-color: #1a1a1a;
     color: #00ffcc;
+}
+
+/* Glow effect for the title */
+@keyframes glow {
+    0% {
+        text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
+    }
+    100% {
+        text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
+    }
+}
+
+/* Neon color flow effect */
+@keyframes neonFlow {
+
+    0% {
+        color: #1a1a1a;
+    }
+    50% {
+        color: #00ffcc;
+    }
+    100% {
+        color: #1a1a1a;
+    }
 }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Lobby</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nosifer&family=Russo+One&display=swap" rel="stylesheet">
+    <link href="../../public/css/room/style.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <h1>Game Room</h1>
+    <div class="lobby">
+        <!-- Players List Section -->
+        <div class="lobby-section players-list">
+            <div class="section-header">Players</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="playersList">
+                    <!-- Players will be dynamically loaded here -->
+                </tbody>
+            </table>
+        </div>
+        <!-- Chat Section -->
+        <div class="lobby-section chat-box">
+            <div class="section-header">Chat</div>
+            <textarea rows="10" placeholder="Type your message here..."></textarea>
+            <input type="text" placeholder="Your message...">
+        </div>
+        <!-- Player Settings Section -->
+        <div class="lobby-section player-settings">
+            <div class="section-header">Player Settings</div>
+            <div class="form-group">
+                <label for="player-skin">Select Skin</label>
+                <select id="player-skin">
+                    <option value="0" data-icon="/public/assets/Player/Skin1/head.png">Skin 1</option>
+                    <option value="1" data-icon="/public/assets/Player/Skin2/head.png">Skin 2</option>
+                    <option value="2" data-icon="/public/assets/Player/Skin3/head.png">Skin 3</option>
+                    <option value="3" data-icon="/public/assets/Player/Skin4/head.png">Skin 4</option>
+                    <option value="4" data-icon="/public/assets/Player/Skin5/head.png">Skin 5</option>
+                    <option value="5" data-icon="/public/assets/Player/Skin6/head.png">Skin 6</option>
+                </select>
+            </div>
+            <button id="ready-button">Ready</button>
+        </div>
+        
+        <!-- Game Settings Section -->
+        <!-- <div class="lobby-section game-settings">
+            <div class="section-header">Game Settings</div>
+            <div class="form-group">
+                <label for="game-mode">Game Mode</label>
+                <select id="game-mode">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="max-players">Max Players</label>
+                <input type="number" id="max-players" value="4">
+            </div>
+            <button>Start Game</button>
+        </div> -->
+    </div>
+    <script type="module" src="/public/js/room/main.js"></script>
+</body>
+</html>

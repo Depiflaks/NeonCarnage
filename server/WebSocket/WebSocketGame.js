@@ -1,7 +1,7 @@
 import WebSocket, { WebSocketServer } from 'ws';
 import crypto from 'crypto';
 
-class WebSocketController {
+class WebSocketGame {
     constructor(server, session) {
         this.socket = new WebSocketServer({ server });
         this.session = session;
@@ -73,4 +73,4 @@ class WebSocketController {
     }
 }
 
-export {WebSocketController};
+export {WebSocketGame};
