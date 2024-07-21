@@ -1,98 +1,28 @@
-import { SERVER, ENTITY, WEAPON_STATE } from "../CONST.js";
-import { Corpse } from "../Engine/Field/Components/Corpse.js";
-import { EnemyController } from "../Engine/Entity/Enemy/EnemyController.js";
-import { Bullet } from "../Engine/Weapon/Bullet/Bullet.js";
+import { SERVER } from "../CONST.js";
+import { Responder } from "./Responder/Responder.js";
+import { Sender } from "./Sender/Sender.js";
 
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.denis);
+        this.socket = new WebSocket(SERVER.sergey_home);
         this.enemies = {};
-        this.bots = {}; // Хранение данных о ботах
+        
+        this.sender = new Sender(this.socket);
         this.initEventListeners();
     }
 
-    setObj(player, field, enemies, playerList) {
-        this.player = player;
-        this.field = field;
-        this.enemies = enemies;
-        this.playerList = playerList;
+    initResponder(engine) {
+        this.responder = new Responder(engine, this.socket);
     }
 
-    sendData() {
-        const {x, y} = this.player.getPosition();
-        const body = {
-            player: {
-                x: x - this.field.x, 
-                y: y - this.field.y, 
-                angle: this.player.getAngle(), 
-                health: this.player.getHealth(),
-                maxHealth: ENTITY.maxHealth,
-                skinId: this.player.getSkinId(),
-                nickname: this.player.getNickname(),
-                isReborning: this.player.isReborning(),
-                meleeStrike: {
-                    isAnimating: this.player.getIsAnimating(),
-                    direction: this.player.getDirection(),
-                    angle: this.player.getCurrentAngle(),
-                }
-            },
-            bullets: [],
-            change: {
-                damage: this.player.getDamage(),
-                amount: this.player.getAmount(),
-                weapon: {
-                    id: this.player.getChangeWeapon().id,
-                    state: this.player.getChangeWeapon().state
-                },
-                ammunitions: this.player.getAmmunition(),
-                aidKits: this.player.getAidKit(),
-            },
-            field: {
-                corpses: [],
-                bots: Object.keys(this.bots).map(botId => ({
-                    id: botId,
-                    current: this.bots[botId].current,
-                    skinId: this.bots[botId].skinId
-                }))
-            }
-        }
-        //console.log(this.player.getChangeWeapon());
-        this.player.clearDamage();
-        this.player.clearAmount();
-        this.player.clearChangeWeapon();
-        this.player.clearAmmunition();
-        this.player.clearAidKit();
-        if (this.field.getCorpses()[this.id]) body.field.corpses = this.field.getCorpses()[this.id].map(corp => {return {
-            x: corp.x - this.field.x,
-            y: corp.y - this.field.y,
-            skinId: corp.skinId,
-        }})
-        body.bullets = this.player.getBullets().map(bullet => {
-            const {x, y} = bullet.getPosition();
-            return {
-                x: x - this.field.x,
-                y: y - this.field.y,
-                angle: bullet.getAngle()
-            };
-        })
-        //console.log(body.change.weapon);
-        this.send("update", body);
-    }
-
-    send(type, body) {
-        if (this.socket.readyState === WebSocket.OPEN) {
-            const data = {
-                type: type,
-                body: body
-            };
-            this.socket.send(JSON.stringify(data));
-        }
+    send(player, field) {
+        this.sender.sendData(player, field);
     }
 
     initEventListeners() {
-        this.socket.addEventListener('open', ({ data }) => {this.onOpen(data)});
-
+        this.socket.addEventListener('open', ({ data }) => {this.onOpen()});
+    
         this.socket.addEventListener('message', ({ data }) => {this.onMessage(JSON.parse(data))});
 
         this.socket.addEventListener('close', ({ data }) => {this.onClose(data)});
@@ -100,7 +30,7 @@ class ConnectionController {
         this.socket.addEventListener('error', (error) => {this.onError(error)});
     }
 
-    onOpen(data) {
+    onOpen() {
         console.log('Соединение установлено');
     }
 
@@ -109,10 +39,10 @@ class ConnectionController {
         const body = data.body;
         switch (type) {
             case "init":
-                this.init(body)
+                this.responder.onInit(body)
                 break;
             case "response":
-                this.onResponse(body);
+                this.responder.onResponse(body);
                 break
             default:
                 break;

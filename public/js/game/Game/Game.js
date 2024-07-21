@@ -9,7 +9,8 @@ class Game {
         this.canvas.style.cursor = 'none';
         this.connection = new ConnectionController();
         this.engine = new EngineController(objects, this.connection, this.canvas);
-        this.connection.setObj(this.engine.player, this.engine.field, this.engine.enemies, this.engine.model.playerList);
+        this.connection.initResponder(this.engine);
+
         this.lastFrame = 0;
         this.lastRequest = 0;
 
@@ -27,7 +28,7 @@ class Game {
         }
 
         if (timestamp - this.lastRequest >= REQUEST_DURATION) {
-            this.connection.sendData(); 
+            this.connection.send(this.engine.player, this.engine.field); 
             this.lastRequest = timestamp;
         }
 

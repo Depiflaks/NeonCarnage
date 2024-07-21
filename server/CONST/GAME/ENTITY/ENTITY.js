@@ -22,6 +22,7 @@ const ENTITY = {
     pythagoreanFactor: Math.sqrt(2) / 2,
     health: 5,
     maxHealth: 5,
+    rebornDelay: 3000,
 };
 
 const ENEMY = {
