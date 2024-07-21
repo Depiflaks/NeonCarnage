@@ -122,8 +122,13 @@ class EntityController {
         return this.model.meleeStrike.isAnimating;
     }
 
-    getIsStriking() {
-        return this.model.meleeStrike.isStriking;
+    setMeleeStrikePosition({x, y}) {
+        this.model.meleeStrike.x = x;
+        this.model.meleeStrike.y = y;
+    }
+
+    setMeleeStrikeAngle(value) {
+        this.model.meleeStrike.angle = value;
     }
 }
 
