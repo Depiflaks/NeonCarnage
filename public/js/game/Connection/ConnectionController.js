@@ -6,8 +6,9 @@ import { Bullet } from "../Engine/Weapon/Bullet/Bullet.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.sergey);
+        this.socket = new WebSocket(SERVER.denis);
         this.enemies = {};
+        this.bots = {}; // Хранение данных о ботах
         this.initEventListeners();
     }
 
@@ -49,6 +50,11 @@ class ConnectionController {
             },
             field: {
                 corpses: [],
+                bots: Object.keys(this.bots).map(botId => ({
+                    id: botId,
+                    current: this.bots[botId].current,
+                    skinId: this.bots[botId].skinId
+                }))
             }
         }
         //console.log(this.player.getChangeWeapon());
@@ -65,8 +71,8 @@ class ConnectionController {
         body.bullets = this.player.getBullets().map(bullet => {
             const {x, y} = bullet.getPosition();
             return {
-                x: x - this.field.x, 
-                y: y - this.field.y, 
+                x: x - this.field.x,
+                y: y - this.field.y,
                 angle: bullet.getAngle()
             };
         })
@@ -86,11 +92,11 @@ class ConnectionController {
 
     initEventListeners() {
         this.socket.addEventListener('open', ({ data }) => {this.onOpen(data)});
-    
+
         this.socket.addEventListener('message', ({ data }) => {this.onMessage(JSON.parse(data))});
-    
+
         this.socket.addEventListener('close', ({ data }) => {this.onClose(data)});
-    
+
         this.socket.addEventListener('error', (error) => {this.onError(error)});
     }
 
@@ -131,8 +137,8 @@ class ConnectionController {
         for (let id in body.objects.corpses) {
             if (id === this.id) continue;
             this.field.corpses[id] = body.objects.corpses[id].map(corp => {return new Corpse(
-                corp.x + this.field.x, 
-                corp.y + this.field.y, 
+                corp.x + this.field.x,
+                corp.y + this.field.y,
                 corp.skinId
             )})
         }
@@ -179,14 +185,52 @@ class ConnectionController {
             enemy.setWeapon(this.field.weapons[entity.weaponId]);
             enemy.setBullets(entity.bullets.map(bullet => {
                 return new Bullet({
-                    x: bullet.x + this.field.x, 
-                    y: bullet.y + this.field.y, 
+                    x: bullet.x + this.field.x,
+                    y: bullet.y + this.field.y,
                     angle: bullet.angle
                 })
             }));
         }
+
+        this.updateBots(body.bots);
     }
 
+    updateBots(bots) {
+        if (!Array.isArray(bots)) {
+            console.error('Bots data is not an array:', bots);
+            return;
+        }
+
+        // Очистка старых данных о ботах
+        this.bots = {};
+
+        // Обработка новых данных о ботах
+        for (const botData of bots) {
+            const botId = botData.id;
+            const {x, y} = {x: botData.current.x + this.field.x, y: botData.current.y + this.field.y};
+
+            // Обновляем информацию о боте
+            if (!this.bots[botId]) {
+                this.bots[botId] = {
+                    current: { x, y },
+                    skinId: botData.skinId
+                };
+            } else {
+                this.bots[botId].current = { x, y };
+                this.bots[botId].skinId = botData.skinId;
+            }
+
+            // Добавляем видимого бота в модель игрока
+            this.player.addVisibleBot(botId);
+        }
+
+        // Очистка списка видимых ботов игрока, если необходимо
+        this.player.getVisibleBots().forEach(botId => {
+            if (!this.bots[botId]) {
+                this.player.clearVisibleBots();
+            }
+        });
+    }
     onClose(data) {
         console.log('Соединение закрыто');
     }

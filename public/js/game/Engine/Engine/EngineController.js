@@ -82,7 +82,7 @@ class EngineController {
         enemy.getMeleeStrike().x = enemy.model.x;
         enemy.getMeleeStrike().y = enemy.model.y;
         enemy.getMeleeStrike().angle = enemy.getAngle();
-
+        enemy.getMeleeStrike().update(enemy.getPosition(), enemy.getAngle(), enemy.getIsStriking());
     }
 
     takeAmmunition() {
@@ -127,9 +127,9 @@ class EngineController {
     }
 
     /**
-     * 
-     * @param {Array} drawableArray 
-     * @returns 
+     *
+     * @param {Array} drawableArray
+     * @returns
      */
     meleeStrikeIntersectionEnemy(drawableArray) {
         const meleeStrike = this.player.getMeleeStrike();
@@ -138,7 +138,7 @@ class EngineController {
         Object.entries(this.enemies).forEach(([id, enemy]) => {
             if (enemy.isAlive() && meleeStrike.isIntersectEnemy(enemy.model) && !this.intersectMeleeStrike(drawableArray)) {
                 if (currentTime - enemy.getLastHitTime() >= 1000) { // Проверка на интервал 1 секунда
-                    this.player.addDamage(id, 3);
+                    this.player.addDamage(id, 5);
                     enemy.setLastHitTime(currentTime); // Обновляем время последнего удара
                     //this.player.getMeleeStrike().weaponLeft.src = MELEE_STRIKE.knifeLeftBloodyImage;
                     //this.player.getMeleeStrike().weaponRight.src = MELEE_STRIKE.knifeRightBloodyImage;
