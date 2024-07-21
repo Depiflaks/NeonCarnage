@@ -166,15 +166,8 @@ class PlayerController extends EntityController {
         }
     }
 
-    die(position) {
-        super.die();
-        this.model.isReborning = true;
-        setTimeout(() => {this.reborn(position)}, 5000);
-    }
-
     reborn({x, y}) {
-        this.model.isReborning = false;
-        this.addHeal(this.getMaxHealth());
+        //console.log(x, y);
         this.model.x = x;
         this.model.y = y;
     }
@@ -216,7 +209,24 @@ class PlayerController extends EntityController {
     }
 
     getChange() {
-        return this.model.change;
+        return {
+            damage: this.getDamage(),
+            amount: this.getAmount(),
+            weapon: {
+                id: this.getChangeWeapon().id,
+                state: this.getChangeWeapon().state
+            },
+            ammunitions: this.getAmmunition(),
+            aidKits: this.getAidKit(),
+        };
+    }
+
+    clearChange() {
+        this.clearDamage();
+        this.clearAmount();
+        this.clearChangeWeapon();
+        this.clearAmmunition();
+        this.clearAidKit();
     }
 // Damage
     getDamage() {

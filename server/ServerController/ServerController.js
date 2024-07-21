@@ -1,4 +1,4 @@
-import { PORT } from '../SERV_CONST.js';
+import { PORT } from '../CONST/SERVER/SERVER.js';
 import { WebSocketController } from '../WebSocketController/WebSocketController.js';
 
 import express from 'express';

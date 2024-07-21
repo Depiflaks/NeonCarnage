@@ -2,6 +2,7 @@ import { SessionModel } from "./SessionModel.js"
 import { WEAPON_STATE } from "./../CONST/GAME/WEAPON/WEAPON.js"
 import { AIDKIT } from "../CONST/GAME/FIELD/AIDKIT.js";
 import { AMMUNITION } from "../CONST/GAME/FIELD/AMMUNITION.js";
+import { ENTITY } from "../CONST/GAME/ENTITY/ENTITY.js";
 
 class SessionController {
     constructor(field) {
@@ -63,8 +64,6 @@ class SessionController {
 
     updateWeapon(entity) {
         if (!entity.weaponId) return;
-        //console.log(this.model.objects.weapons);
-        //console.log(this.model.objects.weapons[entity.weaponId]);
         this.model.objects.weapons[entity.weaponId].x = entity.x;
         this.model.objects.weapons[entity.weaponId].y = entity.y;
     }
@@ -106,6 +105,10 @@ class SessionController {
             player.health = Math.max(0, player.health - damage[id])
             if (player.health === 0) {
                 player.isAlive = false;
+                setTimeout(() => {
+                    player.isAlive = true;
+                    player.health = player.maxHealth;
+                }, ENTITY.rebornDelay);
                 if (player.weaponId) {
                     this.model.objects.weapons[player.weaponId].state = WEAPON_STATE.onTheGround;
                     player.weaponId = null;
