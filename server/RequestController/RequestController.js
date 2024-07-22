@@ -92,7 +92,10 @@ class RequestController {
         this.app.post('/updatePlayer', async (req, res) => {
             try {
                 const { playerId, skinId, ready } = req.body;
-                const parameters = { skin_id: skinId, ready: ready };
+                const parameters = {
+                    skin_id: skinId, 
+                    ready: ready,
+                };
                 await this.connection.updatePlayer(playerId, parameters);
                 res.send('Player updated successfully');
             } catch (error) {

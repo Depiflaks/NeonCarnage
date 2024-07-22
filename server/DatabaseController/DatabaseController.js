@@ -19,7 +19,7 @@ class DatabaseController {
 
     // Добавление игрока c ready="N" и возвращение его id
     async addPlayer(playerName) {
-        const result = await this.player.addPlayer(playerName, "N");
+        const result = await this.player.addPlayer(playerName);
         return result.insertId;
     }
 
@@ -32,6 +32,7 @@ class DatabaseController {
         
         const result = await this.lobby.addLobby(ownerId, gameMode, mapNumber, address, timeCreation);
         await this.player.updatePlayerParameter(ownerId, "lobby_id", result.insertId);
+        await this.player.updatePlayerParameter(ownerId, "is_owner", 1);
         return result.insertId;
     }
 
@@ -39,16 +40,16 @@ class DatabaseController {
     async removePlayerFromLobby(playerId) {
         const player = await this.player.getPlayerById(playerId);
         if (!player) return;
-        //console.log(player[0].player_id);
         const lobbyId = player[0].lobby_id;
         await this.player.updatePlayerParameter(playerId, "lobby_id", null);
+        await this.player.updatePlayerParameter(playerId, "is_owner", 0);
         const playersInLobby = await this.player.getPlayersByRoomId(lobbyId);
         if (playersInLobby.length === 0) {
             await this.lobby.deleteLobby(lobbyId);
         } else {
             const newOwnerId = playersInLobby[0].player_id || null;
-            console.log("new", newOwnerId);
             await this.lobby.updateLobbyParameter(lobbyId, "owner_id", newOwnerId);
+            await this.player.updatePlayerParameter(newOwnerId, "is_owner", 1);
         }
     }
 

@@ -43,7 +43,6 @@ export class Room {
     async updatePlayersList() {
         const response = await fetch(`/getPlayers?roomId=${this.roomId}`);
         const players = await response.json();
-        //console.log(players);
         this.list.update(players);
     }
 
@@ -56,16 +55,22 @@ export class Room {
     }
 
     async onReadyButtonClick() {
-        this.data.player.skinId = document.getElementById('player-skin').value;
-
-        const playerResponse = await fetch(`/getPlayer?playerId=${this.roomId}`);
-        const player = await playerResponse.json();
-        if(player[0].ready == 'N') {
-            player[0].ready = 'Y';
+        const skin = document.getElementById('player-skin').value;
+        
+        const response = await fetch(`/getPlayer?playerId=${this.playerId}`);
+        const player = await response.json();
+        player.ready ^= 1;
+        if (player.ready) {
+            this.readyButton.innerHTML = "Ready"
         } else {
-            player[0].ready = 'N';
+            this.readyButton.innerHTML = "Not ready";
         }
-        const readyResponse = await fetch(`/setPlayerState?playerId=${playerId}&ready=${player[0].ready}`);
+        await fetch('/updatePlayer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ skinId: skin, playerId: this.playerId, ready: player.ready })
+        });
+        await this.updatePlayersList();
     }
 
     updateLocalStorage() {

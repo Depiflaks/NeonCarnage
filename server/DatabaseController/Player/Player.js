@@ -19,10 +19,10 @@ export class Player {
         });
     }
 
-    addPlayer(playerName, ready) {
+    addPlayer(playerName) {
         return this.makeQuery(
-            "INSERT INTO player (player_name, ready) VALUES (?, ?)",
-            [playerName, ready]
+            "INSERT INTO player (player_name) VALUES (?)",
+            [playerName]
         );
     }
 
