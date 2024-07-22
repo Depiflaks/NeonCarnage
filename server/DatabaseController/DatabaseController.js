@@ -2,6 +2,7 @@ import mysql from 'mysql2';
 import { DATA_BASE } from '../CONST/SERVER/SERVER.js';
 import { GAME_MODE } from '../CONST/GAME/GAME.js'
 import { Player } from './Player/Player.js';
+import { Lobby } from './Lobby/Lobby.js';
 
 class DatabaseController {
     constructor() {
@@ -28,8 +29,9 @@ class DatabaseController {
         const mapNumber = 1;
         const address = "8000";
         const timeCreation = new Date().toISOString().slice(0, 19).replace('T', ' '); // Текущее время
-
+        
         const result = await this.lobby.addLobby(ownerId, gameMode, mapNumber, address, timeCreation);
+        await this.player.updatePlayerParameter(ownerId, "lobby_id", result.insertId);
         return result.insertId;
     }
 
@@ -37,15 +39,15 @@ class DatabaseController {
     async removePlayerFromLobby(playerId) {
         const player = await this.player.getPlayerById(playerId);
         if (!player) return;
-
-        const lobbyId = player.lobby_id;
+        //console.log(player[0].player_id);
+        const lobbyId = player[0].lobby_id;
         await this.player.updatePlayerParameter(playerId, "lobby_id", null);
-
         const playersInLobby = await this.player.getPlayersByRoomId(lobbyId);
         if (playersInLobby.length === 0) {
             await this.lobby.deleteLobby(lobbyId);
-        } else if (playerId === playersInLobby[0].player_id) {
-            const newOwnerId = playersInLobby[1]?.player_id || null;
+        } else {
+            const newOwnerId = playersInLobby[0].player_id || null;
+            console.log("new", newOwnerId);
             await this.lobby.updateLobbyParameter(lobbyId, "owner_id", newOwnerId);
         }
     }
@@ -87,6 +89,18 @@ class DatabaseController {
         if (!lobby) throw new Error('Lobby not found');
 
         return lobby.owner_id === playerId;
+    }
+
+    async getPlayersByLobbyId(lobbyId) {
+        return await this.player.getPlayersByRoomId(lobbyId)
+    }
+
+    async getAllPlayers() {
+        return await this.player.getAllPlayers();
+    }
+
+    async getAllLobbies() {
+        return await this.lobby.getAllLobbies();
     }
 }
 

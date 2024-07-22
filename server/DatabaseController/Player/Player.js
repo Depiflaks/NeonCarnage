@@ -21,8 +21,8 @@ export class Player {
 
     addPlayer(playerName, ready) {
         return this.makeQuery(
-            "INSERT INTO player (lobby_id, player_name, socket_id, skin_id, ready) VALUES (?, ?, ?, ?, ?)",
-            [lobbyId, playerName, socketId, skinId, ready]
+            "INSERT INTO player (player_name, ready) VALUES (?, ?)",
+            [playerName, ready]
         );
     }
 
@@ -49,6 +49,12 @@ export class Player {
         return this.makeQuery(
             "SELECT * FROM player WHERE lobby_id = ?",
             [lobbyId]
+        );
+    }
+
+    getAllPlayers() {
+        return this.makeQuery(
+            "SELECT * FROM player"
         );
     }
     

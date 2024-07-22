@@ -59,7 +59,29 @@ class RequestController {
             try {
                 const { ownerId } = req.body;
                 const lobbyId = await this.connection.createLobby(ownerId);
-                res.redirect(`/room?id=${lobbyId}`);
+                res.json({ lobbyId });
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
+
+        // новый игрок
+        this.app.post('/createPlayer', async (req, res) => {
+            try {
+                const { playerName } = req.body;
+                const players = await this.connection.getAllPlayers();
+                let playerId = -1;
+                for (let player of players) {
+                    if (player.player_name === playerName) {
+                        playerId = player.player_id;
+                        break;
+                    }
+                }
+                if (playerId === -1) {
+                    playerId = await this.connection.addPlayer(playerName);
+                }
+                res.json({ playerId });
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');
@@ -157,6 +179,46 @@ class RequestController {
                     res.redirect(`/game?id=${lobbyId}`);
                 } else {
                     res.status(400).send('Not all players are ready');
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
+
+        this.app.post('/getAllPlayers', async (req, res) => {
+            try {
+                const players = await this.connection.getAllPlayers();
+                res.json(players);
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
+
+        // 11. Получение списка всех лобби
+        this.app.post('/getAllLobbies', async (req, res) => {
+            try {
+                const lobbies = await this.connection.getAllLobbies();
+                res.json(lobbies);
+                //console.log(lobbies);
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
+
+        this.app.post('/joinLobby', async (req, res) => {
+            try {
+                const { playerId, lobbyId } = req.body;
+        
+                const players = await this.connection.getPlayersByLobbyId(lobbyId);
+        
+                if (players.length < 4) {
+                    await this.connection.updatePlayer(playerId, { "lobby_id": lobbyId });
+                    res.json(lobbyId);
+                } else {
+                    res.status(400).send('Комната заполнена');
                 }
             } catch (error) {
                 console.error('Ошибка:', error);
