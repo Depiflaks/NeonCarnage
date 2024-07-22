@@ -143,8 +143,6 @@ class SessionController {
         };
         return response;
     }
-
-    
 }
 
 export {SessionController}

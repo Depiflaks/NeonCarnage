@@ -4,7 +4,7 @@ import { Sender } from "./Sender/Sender.js";
 
 export class ConnectionController {
     constructor(chat) {
-        this.socket = new WebSocket(SERVER.sergey_home);
+        this.socket = new WebSocket(SERVER.sergey);
         this.sender = new Sender(this.socket);
         this.responder = new Responder(this.socket, chat);
         this.initEventListeners();
