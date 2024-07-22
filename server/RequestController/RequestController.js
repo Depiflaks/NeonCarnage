@@ -113,6 +113,17 @@ class RequestController {
             }
         });
 
+        this.app.get('/getPlayer', async (req, res) => {
+            const playerId = req.query.playerId;
+            try {
+                const player = await this.connection.player.getPlayerById(playerId);
+                res.json(player[0]);
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
+
         // Получение параметров комнаты по id
         this.app.get('/getRoom', async (req, res) => {
             try {

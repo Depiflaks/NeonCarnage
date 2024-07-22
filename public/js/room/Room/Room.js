@@ -6,12 +6,12 @@ import { PlayerList } from "./PlayerList/PlayerList.js";
 export class Room {
     constructor() {
         const urlParams = new URLSearchParams(window.location.search);
-        this.id = urlParams.get('id');
-
+        this.roomId = urlParams.get('id');
+        this.playerId = localStorage.getItem('playerId');
         this.chat = new Chat();
         this.skin = new Skin();
         this.readyButton = document.getElementById('ready-button');
-        this.nickName = this.data.player.nickName;
+
         this.list = new PlayerList();
 
         this.connection = new ConnectionController(this.chat);
@@ -37,30 +37,13 @@ export class Room {
 
     async onPageLoad() {
         await this.updatePlayersList();
-
-        const playerResponse = await fetch(`/setPlayer?roomId=${this.id}&nickname=${this.nickName}`);
-        
-        const playerId = await playerResponse.json();
-
-        const response = await fetch('/getRoom', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id: this.id })
-        });
-        const responseData = await response.json();
-        if(responseData[0].owner_id === 1) {
-            const ownerId = playerId;
-            const ownerResponse = await fetch(`/setRoomOwner?roomId=${this.id}&ownerId=${ownerId}`);
-            await this.updatePlayersList();
-        }
+        this.nickName = (await (await fetch(`/getPlayer?playerId=${this.playerId}`)).json()).player_name;
     }
 
     async updatePlayersList() {
-        const response = await fetch(`/getPlayers?roomId=${this.id}`);
+        const response = await fetch(`/getPlayers?roomId=${this.roomId}`);
         const players = await response.json();
-    
+        //console.log(players);
         this.list.update(players);
     }
 
@@ -75,7 +58,7 @@ export class Room {
     async onReadyButtonClick() {
         this.data.player.skinId = document.getElementById('player-skin').value;
 
-        const playerResponse = await fetch(`/getPlayer?playerId=${this.id}`);
+        const playerResponse = await fetch(`/getPlayer?playerId=${this.roomId}`);
         const player = await playerResponse.json();
         if(player[0].ready == 'N') {
             player[0].ready = 'Y';

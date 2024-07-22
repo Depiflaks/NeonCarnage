@@ -168,6 +168,10 @@ button:hover {
     color: #00ffcc;
 }
 
+.players-list {
+    justify-content: flex-start;
+}
+
 .players-list, .chat-box, .game-settings, .player-settings {
     flex: 1;
 }
