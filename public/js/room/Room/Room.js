@@ -24,15 +24,12 @@ export class Room {
         addEventListener("keydown", (event) => {
             this.onKeyDown(event)
         });
-
         addEventListener('DOMContentLoaded', async () => {
             await this.onPageLoad()
         });
-
         this.readyButton.addEventListener('click', async () => {
             await this.onReadyButtonClick()
         });
-
         setInterval(async () => {
             await this.updatePlayersList();
         }, 1000);

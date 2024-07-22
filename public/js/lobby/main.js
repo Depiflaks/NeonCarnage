@@ -2,6 +2,8 @@ updateLobby();
 
 document.getElementById('updateButton').addEventListener('click', updateLobby);
 
+
+
 function updateLobby() {
     fetch('/updateLobby', {
         method: 'POST',

@@ -21,29 +21,12 @@ class RequestController {
             res.sendFile(path.join(__dirname, '../../templates/lobby/main.html'));
         });
 
-        this.app.post('/updateLobby', async (req, res) => {
-            try {
-                const lobbies = await this.connection.getAllFromLobby();
-                const result = await Promise.all(lobbies.map(async (lobby) => {
-                    const playersData = await this.connection.getPlayers(lobby.lobby_id);
-                    const ownerData = await this.connection.getPlayer(lobby.owner_id);
-                    return {
-                        id: lobby.lobby_id,
-                        ownerName: ownerData[0].player_name,
-                        fullness: playersData.length,
-                        gameMode: lobby.game_mode
-                    };
-                }));
-                res.json(result);
-            } catch (error) {
-                console.error('Ошибка:', error);
-                res.status(500).send('Ошибка сервера');
-            }
+        this.app.get('/game', (req, res) => {
+            res.sendFile(path.join(__dirname, '../../templates/game/game.html'));
         });
 
-        this.app.get('/game', (req, res) => {
-
-            res.sendFile(path.join(__dirname, '../../templates/game/game.html'));
+        this.app.get('/room', (req, res) => {
+            res.sendFile(path.join(__dirname, '../../templates/room/main.html'));
         });
 
         app.post('/create', (req, res) => {
@@ -54,41 +37,53 @@ class RequestController {
             res.json(responseData);
         });
 
-        this.app.get('/createRoom', async (req, res) => {
+        this.app.post('/enterLobby', async (req, res) => {
             try {
-                const ownerId = 1;
-                const gameMode = "game";
-                const timeCreation = new Date().toISOString().slice(0, 19).replace('T', ' ');
-                const responseData = await this.connection.setRoom(ownerId, gameMode, timeCreation);
-                const lastInsertId = responseData.insertId;
-                res.redirect(`/room?id=${lastInsertId}`);
+                const { lobbyId, playerName, socketId, skinId } = req.body;
+                const existingPlayer = await this.connection.getPlayerByName(playerName);
+
+                if (existingPlayer) {
+                    res.json({ playerId: existingPlayer.player_id });
+                } else {
+                    const playerId = await this.connection.addPlayer(lobbyId, playerName, socketId, skinId);
+                    res.json({ playerId });
+                }
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');
             }
         });
 
-        this.app.get('/room', (req, res) => {
-            res.sendFile(path.join(__dirname, '../../templates/room/main.html'));
-        });
-
-        this.app.post('/getRoom', async (req, res) => {
+        // Создание лобби
+        this.app.post('/createLobby', async (req, res) => {
             try {
-                const { id } = req.body;
-                
-                const responseData = await this.connection.getRoom(id);
-                res.json(responseData);
+                const { ownerId } = req.body;
+                const lobbyId = await this.connection.createLobby(ownerId);
+                res.redirect(`/room?id=${lobbyId}`);
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');
             }
         });
 
+        // Обновление параметров игрока
+        this.app.post('/updatePlayer', async (req, res) => {
+            try {
+                const { playerId, skinId, ready } = req.body;
+                const parameters = { skin_id: skinId, ready: ready };
+                await this.connection.updatePlayer(playerId, parameters);
+                res.send('Player updated successfully');
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
 
+        // Получение списка всех игроков в комнате
         this.app.get('/getPlayers', async (req, res) => {
             const roomId = req.query.roomId;
             try {
-                const players = await this.connection.getPlayers(roomId);
+                const players = await this.connection.getPlayersByLobbyId(roomId);
                 res.json(players);
             } catch (error) {
                 console.error('Ошибка:', error);
@@ -96,51 +91,73 @@ class RequestController {
             }
         });
 
-        this.app.get('/setPlayer', async (req, res) => {
-            const roomId = req.query.roomId;
-            const nickname = req.query.nickname;
+        // Получение параметров комнаты по id
+        this.app.get('/getRoom', async (req, res) => {
             try {
-                const player = await this.connection.setPlayer(roomId, nickname);
-                const playerId = player.insertId;
-                res.json(playerId);
+                const { id } = req.query;
+                const responseData = await this.connection.getById('lobby', id);
+                res.json(responseData);
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');
             }
         });
 
-        this.app.get('/getPlayer', async (req, res) => {
-            const playerId = req.query.playerId;
+        // Обновление параметров комнаты
+        this.app.post('/updateLobby', async (req, res) => {
             try {
-                const player = await this.connection.getPlayer(playerId);
-                res.json(player);
+                const { playerId, lobbyId, parameters } = req.body;
+                const isHost = await this.connection.isPlayerHost(playerId, lobbyId);
+
+                if (isHost) {
+                    await this.connection.updateLobby(lobbyId, parameters);
+                    res.send('Lobby updated successfully');
+                } else {
+                    res.status(403).send('Only the host can update lobby parameters');
+                }
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');
             }
         });
 
-        this.app.get('/setPlayerState', async (req, res) => {
-            const playerId = req.query.playerId;
-            const ready = req.query.ready;
+        // Игрок выходит из лобби
+        this.app.post('/leaveLobby', async (req, res) => {
             try {
-
-                const response = await this.connection.updatePlayerState(playerId, ready);
-                const responseId = response.insertId;
-                res.json(responseId);
+                const { playerId } = req.body;
+                await this.connection.removePlayerFromLobby(playerId);
+                res.send('Player removed from lobby');
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');
             }
         });
 
-        this.app.get('/setRoomOwner', async (req, res) => {
-            const ownerId = req.query.ownerId;
-            const roomId = req.query.roomId;
+        // Owner удаляет игрока из комнаты
+        this.app.post('/removePlayer', async (req, res) => {
             try {
-                const response = await this.connection.setRoomOwner(roomId, ownerId);
-                const responseId = response.insertId;
-                res.json(responseId);
+                const { ownerId, playerNameToRemove } = req.body;
+                await this.connection.ownerRemovePlayerFromLobby(ownerId, playerNameToRemove);
+                res.send('Player removed from lobby by owner');
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
+
+        // Начало игры
+        this.app.post('/startGame', async (req, res) => {
+            try {
+                const { lobbyId } = req.body;
+                const players = await this.connection.getPlayersByLobbyId(lobbyId);
+                const allReady = players.every(player => player.ready === 'Y');
+
+                if (allReady) {
+                    await this.connection.updateLobby(lobbyId, { is_started: 1 });
+                    res.redirect(`/game?id=${lobbyId}`);
+                } else {
+                    res.status(400).send('Not all players are ready');
+                }
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');

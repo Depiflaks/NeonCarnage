@@ -1,5 +1,7 @@
 import mysql from 'mysql2';
 import { DATA_BASE } from '../CONST/SERVER/SERVER.js';
+import { GAME_MODE } from '../CONST/GAME/GAME.js'
+import { Player } from './Player/Player.js';
 
 class DatabaseController {
     constructor() {
@@ -9,90 +11,82 @@ class DatabaseController {
             if (err) return console.error("Ошибка: " + err.message);
             console.log("Подключение к серверу MySQL успешно установлено");
         });
+
+        this.player = new Player(this.connection);
+        this.lobby = new Lobby(this.connection);
     }
 
-    makeQuery(query, parameters=[]) {
-        return new Promise((resolve, reject) => {
-            this.connection.query(
-                query, 
-                parameters,
-                (err, data) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(data);
-                    }
-                }
-            );
-        });
+    // Добавление игрока c ready="N" и возвращение его id
+    async addPlayer(playerName) {
+        const result = await this.player.addPlayer(playerName, "N");
+        return result.insertId;
     }
 
-    getRoomId() {
-        return this.makeQuery(
-            "INSERT INTO lobby (owner_id, game_mode, time_creation) VALUES (0, '', '2023-10-28 19:30:35')"
-        );
+    // Создание lobby
+    async createLobby(ownerId) {
+        const gameMode = GAME_MODE.deathMatch;
+        const mapNumber = 1;
+        const address = "8000";
+        const timeCreation = new Date().toISOString().slice(0, 19).replace('T', ' '); // Текущее время
+
+        const result = await this.lobby.addLobby(ownerId, gameMode, mapNumber, address, timeCreation);
+        return result.insertId;
     }
 
-    getRoom(id) {
-        return this.makeQuery(
-            "SELECT * FROM lobby WHERE lobby_id=?", 
-            [id]
-        );
+    // Удаление игрока из лобби
+    async removePlayerFromLobby(playerId) {
+        const player = await this.player.getPlayerById(playerId);
+        if (!player) return;
+
+        const lobbyId = player.lobby_id;
+        await this.player.updatePlayerParameter(playerId, "lobby_id", null);
+
+        const playersInLobby = await this.player.getPlayersByRoomId(lobbyId);
+        if (playersInLobby.length === 0) {
+            await this.lobby.deleteLobby(lobbyId);
+        } else if (playerId === playersInLobby[0].player_id) {
+            const newOwnerId = playersInLobby[1]?.player_id || null;
+            await this.lobby.updateLobbyParameter(lobbyId, "owner_id", newOwnerId);
+        }
     }
 
-    setRoom(ownerId, gameMode, timeCreation) {
-        return this.makeQuery(
-            "INSERT INTO lobby (owner_id, game_mode, time_creation) VALUES (?, ?, ?)", 
-            [ownerId, gameMode, timeCreation]
-        )
+    // Удаление игрока из лобби по запросу владельца
+    async ownerRemovePlayerFromLobby(ownerId, playerNameToRemove) {
+        const owner = await this.player.getPlayerById(ownerId);
+        if (!owner) return;
+
+        const lobbyId = owner.lobby_id;
+        const lobby = await this.lobby.getLobbyById(lobbyId);
+        if (!lobby || lobby.owner_id !== ownerId) return;
+
+        const playersInLobby = await this.player.getPlayersByRoomId(lobbyId);
+        const playerToRemove = playersInLobby.find(player => player.player_name === playerNameToRemove);
+        if (playerToRemove) {
+            await this.player.updatePlayerParameter(playerToRemove.player_id, "lobby_id", null);
+        }
     }
 
-    setPlayer(roomId, nickname) {
-        return this.makeQuery(
-            "INSERT INTO player (lobby_id, player_name, ready) VALUES (?, ?, 'N')", 
-            [roomId, nickname]
-        )
+    // Обновление данных игрока
+    async updatePlayer(playerId, parameters) {
+        const keys = Object.keys(parameters);
+        for (const key of keys) {
+            await this.player.updatePlayerParameter(playerId, key, parameters[key]);
+        }
     }
 
-    setRoomOwner(roomId, ownerId) {
-        return this.makeQuery(
-            "UPDATE lobby SET owner_id=? WHERE lobby_id=?", 
-            [roomId, roomId]
-        )
-    }
-    
-    getAllFromLobby() {
-        return this.makeQuery(
-            "SELECT * FROM lobby", 
-        )
+    // Обновление данных лобби
+    async updateLobby(lobbyId, parameters) {
+        const keys = Object.keys(parameters);
+        for (const key of keys) {
+            await this.lobby.updateLobbyParameter(lobbyId, key, parameters[key]);
+        }
     }
 
-    getPlayers(lobbyId) {
-        return this.makeQuery(
-            "SELECT * FROM player WHERE lobby_id=?", 
-            [lobbyId]
-        )
-    }
+    async isPlayerHost(playerId, lobbyId) {
+        const lobby = await this.lobby.getLobbyById(lobbyId);
+        if (!lobby) throw new Error('Lobby not found');
 
-    getPlayer(playerId) {
-        return this.makeQuery(
-            "SELECT * FROM player WHERE player_id=?", 
-            [playerId]
-        )
-    } 
-
-    updatePlayerState(playerId, state) {
-        return this.makeQuery(
-            "UPDATE player SET ready=? WHERE player_id=?", 
-            [state, playerId]
-        )
-    }
-
-    closeConnection() {
-        this.connection.end(function(err) {
-            if (err) return console.log("Ошибка: " + err.message);
-            console.log("Подключение закрыто");
-        });
+        return lobby.owner_id === playerId;
     }
 }
 

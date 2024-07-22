@@ -34,6 +34,12 @@ const CAMERA = {
     period: 10,
 };
 
+export const GAME_MODE = {
+    deathMatch: "Death Match",
+    battleRoyale: "Battle Royale",
+
+}
+
 const KEYBOARD_E = 'KeyE';
 
 const KEYBOARD_F = 'KeyF'; 
