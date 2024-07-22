@@ -2,7 +2,7 @@ import { ENTITY, MELEE_STRIKE, RAD } from "../../../CONST.js";
 import { Drawable } from "../../Interface/Drawable.js";
 
 class MeleeStrike extends Drawable {
-    constructor(x, y, angle) {
+    constructor(x, y, angle, soundController) {
         super(x, y, MELEE_STRIKE.width, MELEE_STRIKE.height);
         this.deltaAngle = MELEE_STRIKE.deltaAngle;
         this.animationSpeed = MELEE_STRIKE.animationSpeed;
@@ -15,6 +15,8 @@ class MeleeStrike extends Drawable {
         this.weaponLeft.src = MELEE_STRIKE.knifeLeftImage;
         this.weaponRight = new Image();
         this.weaponRight.src = MELEE_STRIKE.knifeRightImage;
+        this.name = MELEE_STRIKE.name;
+        this.soundController = soundController;
 
     }
 
@@ -53,6 +55,7 @@ class MeleeStrike extends Drawable {
         if (this.direction === 1 && this.currentAngle > this.deltaAngle) {
             if (isStriking) {
                 this.toRight();
+                this.soundController.playTrack(this.name);
             } else {
                 this.isAnimating = false;
             }
@@ -60,6 +63,7 @@ class MeleeStrike extends Drawable {
         if (this.direction === -1 && this.currentAngle < -this.deltaAngle) {
             if (isStriking) {
                 this.toLeft();
+                this.soundController.playTrack(this.name);
             } else {
                 this.isAnimating = false;
             }

@@ -66,8 +66,8 @@ class EntityController {
         this.model.weaponId = id;
     }
 
-    createMeleeStrike() {
-        this.model.meleeStrike = new MeleeStrike(this.model.x, this.model.y, this.model.angle);
+    createMeleeStrike(soundController) {
+        this.model.meleeStrike = new MeleeStrike(this.model.x, this.model.y, this.model.angle, soundController);
     }
 
     removeMeleeStrike() {

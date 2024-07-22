@@ -11,6 +11,7 @@ const WEAPON_STATE = {
 };
 
 const MELEE_STRIKE = {
+    name: 'knife',
     handPoint: 40,
     width: 150,
     height: 10,

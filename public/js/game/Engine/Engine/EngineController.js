@@ -4,6 +4,7 @@ import { EngineView } from "./EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
 import { ConnectionController } from "../../Connection/ConnectionController.js";
 import { EntityController } from "../Entity/EntityController.js";
+import { SoundController } from "../SoundController/SoundController.js";
 
 class EngineController {
     /**
@@ -13,7 +14,15 @@ class EngineController {
      * @param {canvas} canvas 
      */
     constructor(objects, connection, canvas) {
-        this.model = new EngineModel(objects);
+        this.soundController = new SoundController();
+        this.soundController.addTrack('background', '../../../../public/sound/MOON - Paris.mp3');
+        this.soundController.addTrack('rifle', '../../../../public/sound/rifle.mp3');
+        this.soundController.addTrack('glock', '../../../../public/sound/laser.mp3');
+        this.soundController.addTrack('pistol', '../../../../public/sound/laser.mp3');
+        this.soundController.addTrack('machineGun', '../../../../public/sound/machineGun2.mp3');
+        this.soundController.addTrack('knife', '../../../../public/sound/knife.mp3');
+
+        this.model = new EngineModel(objects, this.soundController);
         this.view = new EngineView(canvas);
 
         this.enemies = this.model.getEnemies();
@@ -53,6 +62,11 @@ class EngineController {
     }
 
     update() {
+        for(let track in this.soundController.playing) {
+            if(this.soundController.playing[track].currentTime >= this.soundController.playing[track].duration) {
+                delete this.soundController.playing[track];
+            }
+        }
         this.field.update();
         this.tracing.updateViewRange();
         Object.values(this.enemies).forEach(enemy => {
@@ -189,6 +203,12 @@ class EngineController {
         addEventListener("keyup", event => this.keyUp(event));
         canvas.addEventListener('contextmenu', event => {
             event.preventDefault(); // Отключаем контекстное меню при правом клике
+        });
+        addEventListener('mousemove', () => {
+            if (!this.soundController.isPlaying) {
+                this.soundController.playTrack('background');
+                this.soundController.isPlaying = true;
+            }
         });
     }
 

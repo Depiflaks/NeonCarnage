@@ -4,10 +4,10 @@ import { PlayerModel } from "./PlayerModel.js";
 import { EntityController } from "../EntityController.js";
 
 class PlayerController extends EntityController {
-    constructor(position, skinId, name) {
+    constructor(position, skinId, name, soundController) {
         super();
         this.model = new PlayerModel(position, skinId, name);
-
+        this.soundController = soundController;
         this.cursorX = WINDOW.w / 2;
         this.cursorY = WINDOW.h / 2;
 
@@ -44,6 +44,10 @@ class PlayerController extends EntityController {
         }
     }
 
+    shotSound() {
+        this.soundController.playTrack(this.getWeapon().getName());
+    }
+
     pickupAidKit(id, aidKit) {
         const { x, y } = this.getPosition();
         const distance = Math.sqrt((aidKit.x - x) ** 2 + (aidKit.y - y) ** 2);
@@ -64,6 +68,7 @@ class PlayerController extends EntityController {
         if (this.getWeapon().getAmount() <= 0) return;
         this.getWeapon().decAmount();
         this.addAmount(-1);
+        this.shotSound();
         for (let i = 0; i < this.getWeapon().getGrouping(); i++) {
             
             const angle = this.getAngle();
@@ -99,10 +104,9 @@ class PlayerController extends EntityController {
 
     strike() {
         if (this.getIsStriking() || (!this.getIsStriking() && this.getMeleeStrike()) || this.getStacked() === true) return;
-
         this.setIsStriking(true);
-
-        this.createMeleeStrike();
+        this.shotSound();
+        this.createMeleeStrike(this.soundController);
         this.getMeleeStrike().toLeft();
     }
 
