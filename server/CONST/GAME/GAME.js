@@ -39,9 +39,9 @@ const KEYBOARD_E = 'KeyE';
 const KEYBOARD_F = 'KeyF'; 
 
 const GAME_MODE = {
-    BR: 0, //BattleRoyale
-    DM: 1, //DeathMatch
-    SR: 2 //SurvivalRun
+    BattleRoyale: 0,
+    DeathMatch: 1,
+    SurvivalRun: 2
 }
 
 export {RAD, FPS, RPS, FRAME_DURATION, REQUEST_DURATION, WINDOW, LEADER_BOARD, INTERFACE, SHAKE, CAMERA, KEYBOARD_E, KEYBOARD_F, GAME_MODE};
