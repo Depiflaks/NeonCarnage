@@ -12,7 +12,7 @@ class SessionController {
 
     startBotUpdates() {
         setInterval(() => {
-            this.model.updateBots();
+            //this.model.updateBots();
         }, 1000);
     }
 
@@ -140,6 +140,7 @@ class SessionController {
                 ammunitions: this.model.objects.ammunitions,
             },
             leaderBoard: this.model.leaderBoard,
+            bots: this.model.bots,
         };
         return response;
     }

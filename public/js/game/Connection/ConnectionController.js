@@ -5,7 +5,7 @@ import { Sender } from "./Sender/Sender.js";
 class ConnectionController {
     constructor() {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.sergey_home);
+        this.socket = new WebSocket(SERVER.denis_home);
         this.enemies = {};
         
         this.sender = new Sender(this.socket);
@@ -121,7 +121,6 @@ class ConnectionController {
                 })
             }));
         }
-
         
     }
 

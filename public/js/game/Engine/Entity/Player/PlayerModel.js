@@ -88,17 +88,7 @@ class PlayerModel extends EntityModel {
         this.bullets.forEach(bullet => bullet.move(dx, dy));
     }
 
-    addVisibleBot(botId) {
-        this.visibleBots.add(botId);
-    }
 
-    getVisibleBots() {
-        return Array.from(this.visibleBots);
-    }
-
-    clearVisibleBots() {
-        this.visibleBots.clear();
-    }
 
 }
 

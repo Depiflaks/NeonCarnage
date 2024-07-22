@@ -31,15 +31,17 @@ class SessionModel {
         this.bots = [
             {
                 current: {
-                    x: 0,
-                    y: 0
+                    x: 150,
+                    y: 150
                 },
                 purpose: {
-                    x: 1,
-                    y: 1
+                    x: 150,
+                    y: 150
                 },
                 skinId: 1,
-                state: STATES.wanders
+                state: STATES.wanders,
+                health: 5,
+                nickName: "bot1",
             },
             {
                 current: {
@@ -51,7 +53,9 @@ class SessionModel {
                     y: 1
                 },
                 skinId: 1,
-                state: STATES.wanders
+                state: STATES.wanders,
+                health: 5,
+                nickName: "bot2",
             }
         ];
         this.walls = this.convertWallList(field.map.walls);
