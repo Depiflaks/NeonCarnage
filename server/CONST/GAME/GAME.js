@@ -34,12 +34,12 @@ export const CAMERA = {
     period: 10,
 };
 
+export const KEYBOARD_E = 'KeyE';
+
 export const GAME_MODE = {
     deathMatch: "Death Match",
     battleRoyale: "Battle Royale",
-
+    operationOverrun: "Operation Overrun"
 }
 
-export const KEYBOARD_E = 'KeyE';
-
-export const KEYBOARD_F = 'KeyF'; 
+export const KEYBOARD_F = 'KeyF';

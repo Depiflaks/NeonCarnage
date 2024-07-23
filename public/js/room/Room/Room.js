@@ -60,7 +60,7 @@ export class Room {
         const lobby = (await lobbyResponse.json());
 
         if (lobby.is_started) {
-            window.location.href = `/game?id=${this.roomId}`;
+            //window.location.href = `/game?id=${this.roomId}`;
         }
 
         if (init) {
@@ -164,6 +164,7 @@ export class Room {
 
     async startGame() {
         console.log("lets start!");
+        await fetch(`/startGame?roomId=${this.roomId}`);
         await this.updateRoom(1);
     }
 

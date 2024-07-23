@@ -70,6 +70,10 @@ class WebSocketRoom {
     getUniqueID(ipAddress) {
         return crypto.createHash('sha256').update(ipAddress).digest('hex');
     }
+
+    kill() {
+        this.socket.close();
+    }
 }
 
 export {WebSocketRoom};

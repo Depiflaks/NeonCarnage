@@ -1,10 +1,11 @@
 import { ADDRESS } from "../../CONST/SERVER/SERVER.js";
 
 export class LobbyRequest {
-    constructor(app, database, child) {
+    constructor(app, database, child, creature) {
         this.database = database;
         this.app = app;
         this.child = child;
+        this.creature = creature;
         this.initGet();
         this.initPost();
     }
@@ -23,12 +24,13 @@ export class LobbyRequest {
 
         this.app.get('/startGame', async (req, res) => {
             try {
-                const { lobbyId } = req.query;
-                const players = await this.database.getPlayersByLobbyId(lobbyId);
+                const { roomId } = req.query;
+                const players = await this.database.getPlayersByLobbyId(roomId);
+                const lobby = await this.database.lobby.getLobbyById(roomId)
                 const allReady = players.every(player => player.ready);
 
                 if (allReady) {
-                    
+                    this.child.sendStart(roomId, this.creature.createMap(lobby.game_mode, lobby.map_number));
                 }
             } catch (error) {
                 console.error('Ошибка:', error);

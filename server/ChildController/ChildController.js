@@ -11,15 +11,34 @@ export class ChildController {
         return this.port;
     }
 
+    sendStart(id, data) {
+        this.childs[id].send({
+            type: "start",
+            body: data,
+        });
+    }
+
     create(id, port) {
         this.childs[id] = fork('./server/child.js', [id, port]);
         this.childs[id].port = port;
         this.childs[id].on('message', (message) => {
-          console.log(`Child ${id} is working`);
+            this.onMessage(message, id)
         });
     }
 
+    onMessage(message, id) {
+        switch (message.type) {
+            case "init":
+                console.log(`Child ${id} is working`);
+                break;
+            default:
+                break;
+        }
+        
+    }
+
     kill(id) {
-        this.childs[id].kill()
+        console.log("kill child: ", id);
+        if (this.childs[id]) this.childs[id].kill()
     }
 }

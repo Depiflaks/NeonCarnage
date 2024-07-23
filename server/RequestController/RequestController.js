@@ -16,8 +16,8 @@ class RequestController {
         this.app = app;
         this.creature = creature;
         this.child = child;
-        this.lobbyRequest = new LobbyRequest(this.app, this.database, this.child);
-        this.playerRequest = new PlayerRequest(this.app, this.database, this.child);
+        this.lobbyRequest = new LobbyRequest(this.app, this.database, this.child, this.creature);
+        this.playerRequest = new PlayerRequest(this.app, this.database, this.child, this.creature);
         this.app.use('/public', express.static(path.join(__dirname, '../../public')));
 
         this.app.get('/', (req, res) => {

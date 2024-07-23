@@ -1,8 +1,9 @@
 export class PlayerRequest {
-    constructor(app, database, child) {
+    constructor(app, database, child, creature) {
         this.database = database;
         this.app = app;
         this.child = child;
+        this.creature = creature;
         this.initGet();
         this.initPost();
     }
