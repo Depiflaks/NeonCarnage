@@ -138,21 +138,34 @@ class EngineController {
         })
     }
 
-    bulletsIntersectionEnemy() {
-        this.player.setBullets(this.player.getBullets().filter(
-            bullet => {
-                let hit = false;
-                Object.entries(this.enemies).forEach(([id, enemy]) => {
-                    if (enemy.isAlive() && bullet.isIntersectEnemy(enemy.model)) {
-                        hit = true;
-                        this.player.addDamage(id, 1)
-                    }
-                });
-                return !hit;
-            }
-        ));
+    filterBullets(bullets, enemies, addDamage) {
+        return bullets.filter(bullet => {
+            let hit = false;
+            Object.entries(enemies).forEach(([id, enemy]) => {
+                if (enemy.isAlive() && bullet.isIntersectEnemy(enemy.model)) {
+                    hit = true;
+                    addDamage(id, 1);
+                }
+            });
+            return !hit;
+        });
     }
 
+    bulletsIntersectionEnemy() {
+        this.player.setBullets(this.filterBullets(
+            this.player.getBullets(),
+            this.enemies,
+            (id, damage) => this.player.addDamage(id, damage)
+        ));
+
+        Object.values(this.bots).forEach(bot => {
+            bot.setBullets(this.filterBullets(
+                bot.getBullets(),
+                this.enemies,
+                (id, damage) => this.player.addDamage(id, damage)
+            ));
+        });
+    }
     /**
      *
      * @param {Array} drawableArray
