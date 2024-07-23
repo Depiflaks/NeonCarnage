@@ -40,6 +40,11 @@ class EngineController {
         Object.values(this.bots).forEach(bot => {
             bot.move(dx / period, dy / period);
         });
+        Object.values(this.bots).forEach(bot => {
+            Object.values(bot.getBullets()).forEach(bullet => {
+                bullet.move(dx / period, dy / period);
+            });
+        });
     }
 
     pickUpWeapon() {
@@ -73,6 +78,13 @@ class EngineController {
             } else {
                 this.player.removeVisibleBot(bot.model.id);
             }
+            if (bot.getShooting()) {
+                console.log(bot.getShooting())
+                bot.shot();
+            }
+            bot.getBullets().forEach(bullet => {
+                bullet.updatePosition();
+            });
             //console.log(this.player.getVisibleBots());
         });
         this.checkIntersections([...this.field.verticalWalls, ...this.field.horizontalWalls]);
@@ -119,6 +131,11 @@ class EngineController {
             bullet.updatePosition();
             return !barriers.some(barrier => bullet.isIntersectLines(barrier));
         }));
+        Object.values(this.bots).forEach(bot => {
+            bot.setBullets(bot.getBullets().filter(bullet => {
+                return !barriers.some(barrier => bullet.isIntersectLines(barrier));
+            }));
+        })
     }
 
     bulletsIntersectionEnemy() {

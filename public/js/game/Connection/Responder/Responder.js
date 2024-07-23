@@ -142,7 +142,7 @@ export class Responder {
         const {x, y} = {x: entity.current.x + this.field.x, y: entity.current.y + this.field.y}
         return new BotController({
             x: x, y: y, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth,
-            health: entity.health, id: entity.id,
+            health: entity.health, id: entity.id, shooting: entity.shooting,
         })
     }
 }

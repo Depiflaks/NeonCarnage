@@ -38,6 +38,7 @@ class SessionModel {
                 state: STATES.wanders,
                 health: 5,
                 id: 0,
+                shooting: false,
             },
             {
                 current: {
@@ -48,6 +49,7 @@ class SessionModel {
                 state: STATES.wanders,
                 health: 5,
                 id: 1,
+                shooting: false,
             }
         ];
         this.walls = this.convertWallList(field.map.walls);
@@ -62,12 +64,10 @@ class SessionModel {
 
 
     updateBots() {
-        //console.log(this.players)
         this.bots.forEach(bot => {
-            /*if (!bot.isActive()) {
-                bot.state = STATES.wanders;
-                return;
-            }*/
+
+            console.log(bot.shooting)
+
             let closestPlayer = null;
             let minDistance = Infinity;
 
@@ -78,7 +78,6 @@ class SessionModel {
 
                 for (const visibleBotId in player.visibleBots) {
                     const visibleBot = player.visibleBots[visibleBotId];
-                    //console.log(visibleBot.model.skinId)
                     if (visibleBot === bot.id) {
                         if (player.isAlive) {
                             const distance = this.getDistance(bot.current, {x: player.x, y: player.y});
@@ -95,10 +94,13 @@ class SessionModel {
                 bot.state = STATES.aimed;
                 bot.purpose = { x: closestPlayer.x, y: closestPlayer.y };
                 bot.angle = this.getAngle(bot.current, closestPlayer);
+                bot.shooting = true
             } else {
+                bot.shooting = false;
                 bot.state = STATES.wanders;
             }
         });
+
     }
 
     getDistance(p1, p2) {

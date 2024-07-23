@@ -41,6 +41,7 @@ class EngineView {
 
         Object.values(bots).map(bot => {
             this.entityView.draw(bot);
+            this.drawBullets(bot.getBullets(), field)
         })
         field.drawWalls(this.context);
         this.entityView.drawPlayerHealthBar(player);
