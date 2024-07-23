@@ -26,7 +26,7 @@ class Map {
 
     create() {
         return {
-            "map": this.getMap(GAME_MODE.SurvivalRun, 1),
+            "map": this.getMap(GAME_MODE.BattleRoyale, 1),
             "player": {
             },
             "const": {
