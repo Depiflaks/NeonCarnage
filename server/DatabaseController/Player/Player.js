@@ -38,11 +38,11 @@ export class Player {
         return this.makeQuery(query, [value, playerId]);
     }
 
-    getPlayerById(playerId) {
-        return this.makeQuery(
+    async getPlayerById(playerId) {
+        return (await this.makeQuery(
             "SELECT * FROM player WHERE player_id = ?",
             [playerId]
-        );
+        ))[0];
     }
 
     getPlayersByRoomId(lobbyId) {

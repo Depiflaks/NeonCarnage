@@ -24,6 +24,7 @@
                     <!-- Players will be dynamically loaded here -->
                 </tbody>
             </table>
+            <p id="admin-tip" style="display: none;">move the mouse over the player's status to kick him from lobby ;)</p>
         </div>
         <!-- Chat Section -->
         <div class="lobby-section chat-box">
@@ -34,38 +35,39 @@
         <!-- Player Settings Section -->
         <div class="lobby-section player-settings">
             <div class="section-header">Settings</div>
-            <div class="form-group">
-                <label for="player-skin">Select Skin</label>
-                <select id="player-skin">
-                    <option value="0" data-icon="/public/assets/Player/Skin1/head.png">Skin 1</option>
-                    <option value="1" data-icon="/public/assets/Player/Skin2/head.png">Skin 2</option>
-                    <option value="2" data-icon="/public/assets/Player/Skin3/head.png">Skin 3</option>
-                    <option value="3" data-icon="/public/assets/Player/Skin4/head.png">Skin 4</option>
-                    <option value="4" data-icon="/public/assets/Player/Skin5/head.png">Skin 5</option>
-                    <option value="5" data-icon="/public/assets/Player/Skin6/head.png">Skin 6</option>
-                </select>
-            </div>
-            <button id="exit-button">Exit</button>
-            <button id="ready-button">Ready</button>
+            <section class="settings-group">
+                <div class="form-group">
+                    <label for="player-skin">Select Skin</label>
+                    <select id="player-skin">
+                        <option value="0" data-icon="/public/assets/Player/Skin1/head.png">Skin 1</option>
+                        <option value="1" data-icon="/public/assets/Player/Skin2/head.png">Skin 2</option>
+                        <option value="2" data-icon="/public/assets/Player/Skin3/head.png">Skin 3</option>
+                        <option value="3" data-icon="/public/assets/Player/Skin4/head.png">Skin 4</option>
+                        <option value="4" data-icon="/public/assets/Player/Skin5/head.png">Skin 5</option>
+                        <option value="5" data-icon="/public/assets/Player/Skin6/head.png">Skin 6</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="game-mode">Game Mode</label>
+                    <select id="game-mode">
+                        <option value="Death Match">Death Match</option>
+                        <option value="Battle Royale">Battle Royale</option>
+                        <option value="Survival Run">Survival Run</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="map-number">Map</label>
+                    <select id="map-number">
+                        <option value="1">Open Space</option>
+                        <option value="2">Maze</option>
+                    </select>
+                </div>
+            </section>
+            <section class="settings-group">
+                <button id="exit-button">Exit</button>
+                <button id="ready-button">Ready</button>
+            </section>
         </div>
-        
-        <!-- Game Settings Section -->
-        <!-- <div class="lobby-section game-settings">
-            <div class="section-header">Game Settings</div>
-            <div class="form-group">
-                <label for="game-mode">Game Mode</label>
-                <select id="game-mode">
-                    <option value="easy">Easy</option>
-                    <option value="medium">Medium</option>
-                    <option value="hard">Hard</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="max-players">Max Players</label>
-                <input type="number" id="max-players" value="4">
-            </div>
-            <button>Start Game</button>
-        </div> -->
     </div>
     <script type="module" src="/public/js/room/main.js"></script>
 </body>

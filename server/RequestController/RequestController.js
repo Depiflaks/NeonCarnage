@@ -120,7 +120,7 @@ class RequestController {
             const playerId = req.query.playerId;
             try {
                 const player = await this.connection.player.getPlayerById(playerId);
-                res.json(player[0]);
+                res.json(player);
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');
@@ -130,8 +130,8 @@ class RequestController {
         // Получение параметров комнаты по id
         this.app.get('/getRoom', async (req, res) => {
             try {
-                const { id } = req.query;
-                const responseData = await this.connection.getById('lobby', id);
+                const { roomId } = req.query;
+                const responseData = await this.connection.lobby.getLobbyById(roomId);
                 res.json(responseData);
             } catch (error) {
                 console.error('Ошибка:', error);
@@ -144,7 +144,6 @@ class RequestController {
             try {
                 const { playerId, lobbyId, parameters } = req.body;
                 const isHost = await this.connection.isPlayerHost(playerId, lobbyId);
-
                 if (isHost) {
                     await this.connection.updateLobby(lobbyId, parameters);
                     res.send('Lobby updated successfully');
@@ -172,9 +171,8 @@ class RequestController {
         // Owner удаляет игрока из комнаты
         this.app.post('/removePlayer', async (req, res) => {
             try {
-                const { ownerId, playerNameToRemove } = req.body;
-                await this.connection.ownerRemovePlayerFromLobby(ownerId, playerNameToRemove);
-                res.send('Player removed from lobby by owner');
+                const { ownerId, playerIdToRemove } = req.body;
+                await this.connection.ownerRemovePlayerFromLobby(ownerId, playerIdToRemove);
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');

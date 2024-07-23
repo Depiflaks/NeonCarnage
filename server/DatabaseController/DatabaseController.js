@@ -33,6 +33,7 @@ class DatabaseController {
         const result = await this.lobby.addLobby(ownerId, gameMode, mapNumber, address, timeCreation);
         await this.player.updatePlayerParameter(ownerId, "lobby_id", result.insertId);
         await this.player.updatePlayerParameter(ownerId, "is_owner", 1);
+        await this.player.updatePlayerParameter(ownerId, "ready", 1);
         return result.insertId;
     }
 
@@ -40,9 +41,10 @@ class DatabaseController {
     async removePlayerFromLobby(playerId) {
         const player = await this.player.getPlayerById(playerId);
         if (!player) return;
-        const lobbyId = player[0].lobby_id;
+        const lobbyId = player.lobby_id;
         await this.player.updatePlayerParameter(playerId, "lobby_id", null);
         await this.player.updatePlayerParameter(playerId, "is_owner", 0);
+        await this.player.updatePlayerParameter(playerId, "ready", 0);
         const playersInLobby = await this.player.getPlayersByRoomId(lobbyId);
         if (playersInLobby.length === 0) {
             await this.lobby.deleteLobby(lobbyId);
@@ -50,20 +52,21 @@ class DatabaseController {
             const newOwnerId = playersInLobby[0].player_id || null;
             await this.lobby.updateLobbyParameter(lobbyId, "owner_id", newOwnerId);
             await this.player.updatePlayerParameter(newOwnerId, "is_owner", 1);
+            await this.player.updatePlayerParameter(newOwnerId, "ready", 1);
         }
     }
 
     // Удаление игрока из лобби по запросу владельца
-    async ownerRemovePlayerFromLobby(ownerId, playerNameToRemove) {
+    async ownerRemovePlayerFromLobby(ownerId, playerIdToRemove) {
         const owner = await this.player.getPlayerById(ownerId);
         if (!owner) return;
-
         const lobbyId = owner.lobby_id;
         const lobby = await this.lobby.getLobbyById(lobbyId);
+        console.log(owner, lobby);
         if (!lobby || lobby.owner_id !== ownerId) return;
-
-        const playersInLobby = await this.player.getPlayersByRoomId(lobbyId);
-        const playerToRemove = playersInLobby.find(player => player.player_name === playerNameToRemove);
+        //console.log(2);
+        const playerToRemove = await this.player.getPlayerById(playerIdToRemove);
+        //console.log(playerToRemove);
         if (playerToRemove) {
             await this.player.updatePlayerParameter(playerToRemove.player_id, "lobby_id", null);
         }
@@ -88,8 +91,7 @@ class DatabaseController {
     async isPlayerHost(playerId, lobbyId) {
         const lobby = await this.lobby.getLobbyById(lobbyId);
         if (!lobby) throw new Error('Lobby not found');
-
-        return lobby.owner_id === playerId;
+        return lobby.owner_id == playerId;
     }
 
     async getPlayersByLobbyId(lobbyId) {

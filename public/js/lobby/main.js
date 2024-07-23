@@ -27,6 +27,7 @@ async function updateRooms() {
         const roomRows = []
 
         for (const room of rooms) {
+            if (room.is_started) continue;
             // Получение списка игроков в комнате
             const playersResponse = await fetch(`/getPlayers?roomId=${room.lobby_id}`);
             const players = await playersResponse.json();
@@ -104,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateButton.addEventListener('click', async () => {
         await updateRooms();
     }); // Обновление списка комнат при нажатии на кнопку
-    // setInterval(async () => {
-    //     await updateRooms();
-    // }, 1000);
+    setInterval(async () => {
+        await updateRooms();
+    }, 1000);
 });

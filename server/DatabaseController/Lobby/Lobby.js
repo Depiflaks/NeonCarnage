@@ -26,11 +26,11 @@ export class Lobby {
         );
     }
 
-    getLobbyById(lobbyId) {
-        return this.makeQuery(
+    async getLobbyById(lobbyId) {
+        return (await this.makeQuery(
             "SELECT * FROM lobby WHERE lobby_id = ?",
             [lobbyId]
-        );
+        ))[0];
     }
 
     deleteLobby(lobbyId) {
