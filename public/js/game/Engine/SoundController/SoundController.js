@@ -1,7 +1,7 @@
 class SoundController {
     constructor() {
         this.tracks = {};
-        this.playing = [];
+        this.playing = {};
         this.volume = 1.0;
     }
 
@@ -12,39 +12,60 @@ class SoundController {
 
     // Воспроизвести трек
     playTrack(name) {
+        if (!this.tracks[name]) {
+            console.error(`Track ${name} not found.`);
+            return;
+        }
         const track = new Audio(this.tracks[name]);
         track.loop = false;
         track.volume = this.volume;
         track.play();
-        this.playing.push(track);
+        this.playing[name] = track;
     }
 
+    loopTrack(name) {
+        if (!this.tracks[name]) {
+            console.error(`Track ${name} not found.`);
+            return;
+        }
+        const track = new Audio(this.tracks[name]);
+        track.loop = true;
+        track.volume = this.volume;
+        track.play();
+        this.playing[name] = track;
+    }
+
+    // Обновить звуки
     updateSounds() {
-        for(let track in this.playing) {
-            if(this.playing[track].currentTime >= this.playing[track].duration) {
-                delete this.playing[track];
+        for (let name in this.playing) {
+            if (this.playing[name].ended) {
+                delete this.playing[name];
             }
         }
     }
 
-    // // Пауза трека
-    // pauseTrack(name) {
-    //     const track = this.playingTracks[name];
-    //     if (track) {
-    //         track.pause();
-    //         delete this.playingTracks[name];
-    //     }
-    // }
+    isPausedTrack(name) {
+        if(this.playing[name]) {
+            if (this.playing[name].paused) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-    // // Остановить трек
-    // stopTrack(name) {
-    //     const track = this.playingTracks[name];
-    //     if (track) {
-    //         track.pause();
-    //         track.audio.currentTime = 0;
-    //         delete this.playingTracks[name];
-    //     }
-    // }
+    pauseTrack(name) {
+        if (this.playing[name]) {
+            this.playing[name].pause();
+        }
+    }
+
+    // Установить громкость
+    setVolume(newVolume) {
+        this.volume = newVolume;
+        for (let name in this.playing) {
+            this.playing[name].volume = newVolume;
+        }
+    }
 }
 
-export {SoundController}
+export { SoundController }

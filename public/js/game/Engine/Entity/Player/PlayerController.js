@@ -48,6 +48,14 @@ class PlayerController extends EntityController {
         this.soundController.playTrack(this.getWeapon().getName());
     }
 
+    die() {
+        this.soundController.playTrack("death");
+        if(!this.getWeapon()) return;
+        clearInterval(this.getWeapon().getShootingInterval());
+        this.getWeapon().setShootingInterval(null);
+        this.removeMeleeStrike();
+    }
+
     pickupAidKit(id, aidKit) {
         const { x, y } = this.getPosition();
         const distance = Math.sqrt((aidKit.x - x) ** 2 + (aidKit.y - y) ** 2);
@@ -55,6 +63,7 @@ class PlayerController extends EntityController {
         const maxHealth = this.getMaxHealth();
         if (distance <= AIDKIT.minDistance && currentHealth < maxHealth) {
             this.addAidKit(id);
+            this.soundController.playTrack("aidKit");
         }
     }
 
@@ -65,7 +74,11 @@ class PlayerController extends EntityController {
     }
 
     shot() {
-        if (this.getWeapon().getAmount() <= 0) return;
+        if (this.getWeapon().getAmount() <= 0) {
+            this.soundController.playTrack("empty");
+            return;
+        } 
+
         this.getWeapon().decAmount();
         this.addAmount(-1);
         this.shotSound();
@@ -150,6 +163,19 @@ class PlayerController extends EntityController {
 
         this.model.setSpeed('x', speedX);
         this.model.setSpeed('y', speedY);
+
+        if((speedX == 0) && (speedY == 0)) {
+            this.soundController.pauseTrack('walk');
+        } else {
+            if (this.soundController.isPausedTrack('walk')) {
+                this.isWalking = false;
+            }
+        }
+
+        if (!this.isWalking) {
+            this.soundController.loopTrack('walk');
+            this.isWalking = true;
+        }
     }
 
     check(obj) {
@@ -174,6 +200,7 @@ class PlayerController extends EntityController {
         //console.log(x, y);
         this.model.x = x;
         this.model.y = y;
+        this.soundController.playTrack("reborn");
     }
 
     isReborning() {
@@ -260,6 +287,7 @@ class PlayerController extends EntityController {
     throwWeapon() {
         this.model.change.weapon.id = null;
         this.model.change.weapon.state = WEAPON_STATE.onTheGround;
+        this.soundController.playTrack("throwWeapon");
     }
 
     clearChangeWeapon() {
@@ -285,6 +313,7 @@ class PlayerController extends EntityController {
 
     addAmmunition(id) {
         this.model.change.ammunitions.push(id);
+        this.soundController.playTrack("ammunition");
     }
 
     clearAmmunition() {

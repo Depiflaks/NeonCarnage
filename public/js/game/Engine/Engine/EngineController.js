@@ -19,11 +19,20 @@ class EngineController {
         this.soundController.addTrack('rifle', '../../../../public/sound/rifle.mp3');
         this.soundController.addTrack('glock', '../../../../public/sound/laser.mp3');
         this.soundController.addTrack('pistol', '../../../../public/sound/laser.mp3');
-        this.soundController.addTrack('machineGun', '../../../../public/sound/machineGun2.mp3');
+        this.soundController.addTrack('machineGun', '../../../../public/sound/machineGun.mp3');
         this.soundController.addTrack('knife', '../../../../public/sound/knife.mp3');
+        this.soundController.addTrack('knifePickUp', '../../../../public/sound/knifePickUp.mp3');
         this.soundController.addTrack('riflePickUp', '../../../../public/sound/riflePickUp.mp3');
         this.soundController.addTrack('pistolPickUp', '../../../../public/sound/pistolPickUp.mp3');
         this.soundController.addTrack('glockPickUp', '../../../../public/sound/pistolPickUp.mp3');
+        this.soundController.addTrack('machineGunPickUp', '../../../../public/sound/machineGunPickUp.mp3');
+        this.soundController.addTrack('throwWeapon', '../../../../public/sound/throwWeapon.mp3');
+        this.soundController.addTrack('ammunition', '../../../../public/sound/ammunition.mp3');
+        this.soundController.addTrack('aidKit', '../../../../public/sound/aidKit.mp3');
+        this.soundController.addTrack('death', '../../../../public/sound/death.mp3');
+        this.soundController.addTrack('reborn', '../../../../public/sound/reborn.mp3');
+        this.soundController.addTrack('walk', '../../../../public/sound/walk.mp3');
+        this.soundController.addTrack('empty', '../../../../public/sound/empty.mp3');
 
         this.model = new EngineModel(objects, this.soundController);
         this.view = new EngineView(canvas);
@@ -99,8 +108,9 @@ class EngineController {
     takeAmmunition() {
         const weapon = this.player.getWeapon();
         for (const [index, ammunition] of this.field.ammunition.entries()) {
-            if (ammunition.active && weapon && weapon.isDistant()) 
+            if (ammunition.active && weapon && weapon.isDistant()) {
                 weapon.pickupAmmunition(index, ammunition, this.player);
+            }
         }
     }
 
@@ -228,6 +238,7 @@ class EngineController {
         }
         if (event.code === KEYBOARD_F) {
             this.model.leaderBoard = true;
+            this.soundController.setVolume(0.4);
         }
     }
 
@@ -238,6 +249,7 @@ class EngineController {
     keyUp(event) {
         if (event.code === KEYBOARD_F) {
             this.model.leaderBoard = false;
+            this.soundController.setVolume(1.0);
         }
     }
 

@@ -13,7 +13,7 @@ const INTERFACE = data.interface;
 const SHAKE = data.windowShake;
 const CAMERA = data.camera;
 const KEYBOARD_E = data.keyE;
-const KEYBOARD_F = data.KeyF; 
+const KEYBOARD_F = data.keyF; 
 
 const CELL = data.cellView;
 const WALL = data.wallView;
