@@ -254,6 +254,7 @@ class PlayerController extends EntityController {
         this.model.change.weapon.id = weapon.getId();
         //WEAPON_STATE.onTheGround : WEAPON_STATE.inTheHand
         this.model.change.weapon.state = WEAPON_STATE.inTheHand;
+        this.soundController.playTrack(weapon.getName() + "PickUp");
     }
 
     throwWeapon() {

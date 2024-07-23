@@ -21,6 +21,9 @@ class EngineController {
         this.soundController.addTrack('pistol', '../../../../public/sound/laser.mp3');
         this.soundController.addTrack('machineGun', '../../../../public/sound/machineGun2.mp3');
         this.soundController.addTrack('knife', '../../../../public/sound/knife.mp3');
+        this.soundController.addTrack('riflePickUp', '../../../../public/sound/riflePickUp.mp3');
+        this.soundController.addTrack('pistolPickUp', '../../../../public/sound/pistolPickUp.mp3');
+        this.soundController.addTrack('glockPickUp', '../../../../public/sound/pistolPickUp.mp3');
 
         this.model = new EngineModel(objects, this.soundController);
         this.view = new EngineView(canvas);
@@ -62,11 +65,7 @@ class EngineController {
     }
 
     update() {
-        for(let track in this.soundController.playing) {
-            if(this.soundController.playing[track].currentTime >= this.soundController.playing[track].duration) {
-                delete this.soundController.playing[track];
-            }
-        }
+        this.soundController.updateSounds();
         this.field.update();
         this.tracing.updateViewRange();
         Object.values(this.enemies).forEach(enemy => {

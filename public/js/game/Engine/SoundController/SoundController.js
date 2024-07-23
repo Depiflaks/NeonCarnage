@@ -19,6 +19,14 @@ class SoundController {
         this.playing.push(track);
     }
 
+    updateSounds() {
+        for(let track in this.playing) {
+            if(this.playing[track].currentTime >= this.playing[track].duration) {
+                delete this.playing[track];
+            }
+        }
+    }
+
     // // Пауза трека
     // pauseTrack(name) {
     //     const track = this.playingTracks[name];
