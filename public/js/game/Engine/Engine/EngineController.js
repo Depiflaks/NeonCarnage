@@ -69,9 +69,9 @@ class EngineController {
         Object.values(this.bots).forEach(bot => {
             bot.checkActive(this.field);
             if (bot.isActive()) {
-                this.player.addVisibleBot(bot);
+                this.player.addVisibleBot(bot.model.id);
             } else {
-                this.player.removeVisibleBot(bot);
+                this.player.removeVisibleBot(bot.model.id);
             }
             //console.log(this.player.getVisibleBots());
         });

@@ -31,13 +31,13 @@ class SessionModel {
         this.bots = [
             {
                 current: {
-                    x: 150,
-                    y: 150
+                    x: 170,
+                    y: 170
                 },
                 skinId: 1,
                 state: STATES.wanders,
                 health: 5,
-                nickname: "bot1",
+                id: 0,
             },
             {
                 current: {
@@ -47,7 +47,7 @@ class SessionModel {
                 skinId: 2,
                 state: STATES.wanders,
                 health: 5,
-                nickname: "bot2",
+                id: 1,
             }
         ];
         this.walls = this.convertWallList(field.map.walls);
@@ -74,12 +74,12 @@ class SessionModel {
             for (const playerId in this.players) {
                 const player = this.players[playerId];
 
-                //console.log(player.visibleBots)
+                console.log(player.visibleBots)
 
                 for (const visibleBotId in player.visibleBots) {
                     const visibleBot = player.visibleBots[visibleBotId];
-                    console.log(visibleBot.model.skinId)
-                    if (visibleBot.model.skinId === bot.skinId) {
+                    //console.log(visibleBot.model.skinId)
+                    if (visibleBot === bot.id) {
                         if (player.isAlive) {
                             const distance = this.getDistance(bot.current, {x: player.x, y: player.y});
                             if (distance < minDistance) {
