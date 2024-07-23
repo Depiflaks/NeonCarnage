@@ -18,8 +18,6 @@ export class Room {
         this.adminTip = document.getElementById('admin-tip')
 
         this.list = new PlayerList(this.playerId);
-
-        this.connection = new ConnectionController(this.chat);
         
         this.initEventListeners();
     }
@@ -67,6 +65,7 @@ export class Room {
 
         if (init) {
             this.readyButton.innerHTML = player.ready ? "Not ready": "Ready";
+            this.connection = new ConnectionController(this.chat, lobby.address);
         }
 
         this.nickName = player.player_name;

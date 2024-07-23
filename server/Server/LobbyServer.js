@@ -8,7 +8,7 @@ import { SessionController } from '../Session/SessionController.js';
 import express from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';
-import { Child } from '../Child/Child.js';
+import { ChildController } from '../ChildController/ChildController.js';
 
 
 
@@ -21,7 +21,7 @@ class LobbyServer {
         this.app.use(bodyParser.json());
 
         this.creature = new Map();
-        this.child = new Child(8080);
+        this.child = new ChildController(8080);
         this.request = new RequestController(this.app, this.creature, this.child);
 
         //this.sessions = [];
@@ -31,8 +31,6 @@ class LobbyServer {
         this.server.listen(this.port, () => {
             console.log('Listening on port ' + this.port);
         });
-
-        
     }
 }
 

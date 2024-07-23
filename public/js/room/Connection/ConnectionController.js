@@ -3,8 +3,8 @@ import { Responder } from "./Responder/Responder.js";
 import { Sender } from "./Sender/Sender.js";
 
 export class ConnectionController {
-    constructor(chat) {
-        this.socket = new WebSocket(SERVER.sergey);
+    constructor(chat, address) {
+        this.socket = new WebSocket(address);
         this.sender = new Sender(this.socket);
         this.responder = new Responder(this.socket, chat);
         this.initEventListeners();

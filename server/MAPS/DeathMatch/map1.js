@@ -189,4 +189,4 @@ const aidKitSet = [
 
 const groundList = convertFields(cellsList);
 
-export {wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints}
+export const map1 = {wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints}

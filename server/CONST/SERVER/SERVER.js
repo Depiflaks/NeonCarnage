@@ -9,6 +9,13 @@ export const SERVER = {
     denis_home: 'ws://192.168.124.252:8000/'
 };
 
+export const ADDRESS = {
+    sergey: {
+        start: 'ws://10.250.104.142:',
+        end: '/'
+    }
+}
+
 export const DATA_BASE = {
     sergey: {
         host: "localhost",

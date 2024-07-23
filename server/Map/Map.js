@@ -17,7 +17,7 @@ class Map {
 
     }
 
-    create() {
+    getMap(gameMode, mapNumber) {
         return {
             "map": {
                 cells: groundList,
@@ -61,12 +61,6 @@ class Map {
             }
         }
     }
-}
-
-const GAME_MODE = {
-    BR: 0,
-    DM: 1,
-    SR: 2
 }
 
 export {Map}

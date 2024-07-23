@@ -2,8 +2,8 @@ import WebSocket, { WebSocketServer } from 'ws';
 import crypto from 'crypto';
 
 class WebSocketGame {
-    constructor(server, session) {
-        this.socket = new WebSocketServer({ server });
+    constructor(port, session) {
+        this.socket = new WebSocketServer({ port: port });
         this.session = session;
         this.socket.on('connection', (connection, req) => {this.onConnection(connection, req)});
     }

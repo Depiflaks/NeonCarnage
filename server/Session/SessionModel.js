@@ -57,8 +57,6 @@ class SessionModel {
         this.walls = this.convertWallList(field.map.walls);
     }
 
-
-
     convertWallList(wallList) {
         return wallList.map(wall => ({
             start: { x: wall[0] * 15, y: wall[1] * 15 },
