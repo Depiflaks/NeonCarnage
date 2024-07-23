@@ -1,4 +1,4 @@
-import {CAMERA, KEYBOARD_E, KEYBOARD_F, MELEE_STRIKE, WEAPON, WEAPON_STATE} from "../../CONST.js";
+import {CAMERA, KEYBOARD_E, KEYBOARD_F, MELEE_STRIKE, SOUND, WEAPON, WEAPON_STATE} from "../../CONST.js";
 import { EngineModel } from "./EngineModel.js";
 import { EngineView } from "./EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
@@ -15,24 +15,7 @@ class EngineController {
      */
     constructor(objects, connection, canvas) {
         this.soundController = new SoundController();
-        this.soundController.addTrack('background', '../../../../public/sound/MOON - Paris.mp3');
-        this.soundController.addTrack('rifle', '../../../../public/sound/rifle.mp3');
-        this.soundController.addTrack('glock', '../../../../public/sound/laser.mp3');
-        this.soundController.addTrack('pistol', '../../../../public/sound/laser.mp3');
-        this.soundController.addTrack('machineGun', '../../../../public/sound/machineGun.mp3');
-        this.soundController.addTrack('knife', '../../../../public/sound/knife.mp3');
-        this.soundController.addTrack('knifePickUp', '../../../../public/sound/knifePickUp.mp3');
-        this.soundController.addTrack('riflePickUp', '../../../../public/sound/riflePickUp.mp3');
-        this.soundController.addTrack('pistolPickUp', '../../../../public/sound/pistolPickUp.mp3');
-        this.soundController.addTrack('glockPickUp', '../../../../public/sound/pistolPickUp.mp3');
-        this.soundController.addTrack('machineGunPickUp', '../../../../public/sound/machineGunPickUp.mp3');
-        this.soundController.addTrack('throwWeapon', '../../../../public/sound/throwWeapon.mp3');
-        this.soundController.addTrack('ammunition', '../../../../public/sound/ammunition.mp3');
-        this.soundController.addTrack('aidKit', '../../../../public/sound/aidKit.mp3');
-        this.soundController.addTrack('death', '../../../../public/sound/death.mp3');
-        this.soundController.addTrack('reborn', '../../../../public/sound/reborn.mp3');
-        this.soundController.addTrack('walk', '../../../../public/sound/walk.mp3');
-        this.soundController.addTrack('empty', '../../../../public/sound/empty.mp3');
+        this.soundController.init(SOUND);
 
         this.model = new EngineModel(objects, this.soundController);
         this.view = new EngineView(canvas);

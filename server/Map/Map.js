@@ -1,6 +1,6 @@
 // import { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints } from "../data.js";
 import { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints } from "../MAPS/DeathMatch/map1.js";
-import {RAD, FPS, RPS, FRAME_DURATION, REQUEST_DURATION, WINDOW, LEADER_BOARD, INTERFACE, SHAKE, CAMERA, KEYBOARD_E, KEYBOARD_F} from "../CONST/GAME/GAME.js";
+import {RAD, SOUND, FPS, RPS, FRAME_DURATION, REQUEST_DURATION, WINDOW, LEADER_BOARD, INTERFACE, SHAKE, CAMERA, KEYBOARD_E, KEYBOARD_F} from "../CONST/GAME/GAME.js";
 import { ENTITY, HEALTH_BAR, ENEMY } from "../CONST/GAME/ENTITY/ENTITY.js";
 import { SKINS } from "../CONST/GAME/ENTITY/SKINS.js";
 import { BOT_SKINS } from "../CONST/GAME/ENTITY/BOT.js";
@@ -58,6 +58,7 @@ class Map {
                 weaponProperties: WEAPON,
                 weaponStatus: WEAPON_STATE,
                 meleeStrike: MELEE_STRIKE,
+                sound: SOUND,
             }
         }
     }

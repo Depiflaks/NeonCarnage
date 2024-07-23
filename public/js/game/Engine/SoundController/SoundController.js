@@ -5,6 +5,12 @@ class SoundController {
         this.volume = 1.0;
     }
 
+    init(sounds) {
+        sounds.forEach(sound => {
+            this.addTrack(sound.name, sound.src);
+        });
+    }
+    
     // Добавить трек
     addTrack(name, src) {
         this.tracks[name] = src;
