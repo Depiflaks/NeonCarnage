@@ -1,11 +1,11 @@
 import { EnemyModel } from "../Enemy/EnemyModel.js";
 
 class BotModel extends EnemyModel {
-    constructor({ x, y, angle, skinId }) {
-        console.log(angle)
+    constructor({ x, y, angle, skinId, nickname}) {
         super({ x, y, skinId });
-        console.log(this)
         this.shooting = false;
+        this.nickname = nickname;
+        console.log(this)
     }
 }
 

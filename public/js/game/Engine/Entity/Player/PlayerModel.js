@@ -28,7 +28,7 @@ class PlayerModel extends EntityModel {
             aidKits: [],
         };
         this.isReborning = false;
-        this.visibleBots = new Set();
+        this.visibleBots = new Set(); // добавлять бота которого видит, и удалять если тот пропадает из видимости
 
     }
 
@@ -87,7 +87,6 @@ class PlayerModel extends EntityModel {
         super.move(dx, dy);
         this.bullets.forEach(bullet => bullet.move(dx, dy));
     }
-
 
 
 }

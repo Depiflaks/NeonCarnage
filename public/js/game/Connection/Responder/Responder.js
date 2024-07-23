@@ -77,6 +77,9 @@ export class Responder {
         this.player.setAlive(entity.isAlive);
         this.player.setHealth(entity.health);
         this.updateWeapon(this.player, entity);
+        console.log(entity);
+        //this.player.clearVisibleBots();
+        //this.player.model.visibleBots = entity.visibleBots;
     }
 
     updateEnemy(entity, id) {

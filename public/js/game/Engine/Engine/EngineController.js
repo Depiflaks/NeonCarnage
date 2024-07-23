@@ -67,9 +67,14 @@ class EngineController {
             enemy.update();
         })
         Object.values(this.bots).forEach(bot => {
-            console.log("checking")
-            bot.checkActive(this.field)
-        })
+            bot.checkActive(this.field);
+            if (bot.isActive()) {
+                this.player.addVisibleBot(bot);
+            } else {
+                this.player.removeVisibleBot(bot);
+            }
+            //console.log(this.player.getVisibleBots());
+        });
         this.checkIntersections([...this.field.verticalWalls, ...this.field.horizontalWalls]);
         this.takeAmmunition();
         this.takeAidKit();

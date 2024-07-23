@@ -44,7 +44,7 @@ class SessionModel {
                     x: 350,
                     y: 350
                 },
-                skinId: 1,
+                skinId: 2,
                 state: STATES.wanders,
                 health: 5,
                 nickname: "bot2",
@@ -62,17 +62,31 @@ class SessionModel {
 
 
     updateBots() {
+        //console.log(this.players)
         this.bots.forEach(bot => {
+            /*if (!bot.isActive()) {
+                bot.state = STATES.wanders;
+                return;
+            }*/
             let closestPlayer = null;
             let minDistance = Infinity;
 
             for (const playerId in this.players) {
                 const player = this.players[playerId];
-                if (player.isAlive && this.isVisible(bot, player)) {
-                    const distance = this.getDistance(bot.current, { x: player.x, y: player.y });
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        closestPlayer = player;
+
+                //console.log(player.visibleBots)
+
+                for (const visibleBotId in player.visibleBots) {
+                    const visibleBot = player.visibleBots[visibleBotId];
+                    console.log(visibleBot.model.skinId)
+                    if (visibleBot.model.skinId === bot.skinId) {
+                        if (player.isAlive) {
+                            const distance = this.getDistance(bot.current, {x: player.x, y: player.y});
+                            if (distance < minDistance) {
+                                minDistance = distance;
+                                closestPlayer = player;
+                            }
+                        }
                     }
                 }
             }
@@ -80,38 +94,20 @@ class SessionModel {
             if (closestPlayer) {
                 bot.state = STATES.aimed;
                 bot.purpose = { x: closestPlayer.x, y: closestPlayer.y };
+                bot.angle = this.getAngle(bot.current, closestPlayer);
             } else {
                 bot.state = STATES.wanders;
-                bot.purpose = this.getRandomCoordinates();
-                bot.current = { ...bot.purpose };
             }
         });
-    }
-
-    isVisible(bot, player) {
-        for (const wall of this.walls) {
-            if (this.linesIntersect(bot.current, { x: player.x, y: player.y }, wall.start, wall.end)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    linesIntersect(p1, p2, p3, p4) {
-        const det = (p2.x - p1.x) * (p4.y - p3.y) - (p2.y - p1.y) * (p4.x - p3.x);
-        if (det === 0) return false; // Линии параллельны
-
-        const lambda = ((p4.y - p3.y) * (p4.x - p1.x) + (p3.x - p4.x) * (p4.y - p1.y)) / det;
-        const gamma = ((p1.y - p2.y) * (p4.x - p1.x) + (p2.x - p1.x) * (p4.y - p1.y)) / det;
-
-        return (0 < lambda && lambda < 1) && (0 < gamma && gamma < 1);
     }
 
     getDistance(p1, p2) {
         return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
     }
 
-
+    getAngle(from, to) {
+        return Math.atan2(to.y - from.y, to.x - from.x);
+    }
 }
 
 export {SessionModel}

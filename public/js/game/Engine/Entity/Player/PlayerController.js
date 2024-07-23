@@ -344,17 +344,7 @@ class PlayerController extends EntityController {
         if (this.getMeleeStrike()) return this.getMeleeStrike().currentAngle;
     }
 
-    addVisibleBot(botId) {
-        this.model.visibleBots.add(botId);
-    }
 
-    getVisibleBots() {
-        return Array.from(this.model.visibleBots);
-    }
-
-    clearVisibleBots() {
-        this.model.visibleBots.clear();
-    }
 }
 
 export { PlayerController };
