@@ -14,7 +14,7 @@ class EngineView {
         this.gradientOffset = 0;
     }
 
-    draw(field, player, enemies, list, leaderBoard) {
+    draw(field, player, enemies, bots, list, leaderBoard) {
         field.drawGround(this.context);
         field.drawCorpse(this.context);
         this.drawBullets(player.getBullets(), field);
@@ -38,6 +38,10 @@ class EngineView {
             this.drawBullets(enemy.getBullets(), field);
             this.entityView.drawNickname(enemy);
         });
+
+        Object.values(bots).map(bot => {
+            this.entityView.draw(bot);
+        })
         field.drawWalls(this.context);
         this.entityView.drawPlayerHealthBar(player);
         this.drawBulletAmount(player);
@@ -100,14 +104,14 @@ class EngineView {
         })
     }
 
-    update(field, player, enemies, list, leaderBoard, isShaking) {
+    update(field, player, enemies, bots, list, leaderBoard, isShaking) {
         field.clearFrame(this.context);
         if (isShaking) {
             this.applyShake();
         } else {
             this.resetShake();
         }
-        this.draw(field, player, enemies, list, leaderBoard);
+        this.draw(field, player, enemies, bots, list, leaderBoard);
     }
 
     applyShake() {

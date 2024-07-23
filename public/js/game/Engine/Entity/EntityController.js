@@ -130,6 +130,7 @@ class EntityController {
     setMeleeStrikeAngle(value) {
         this.model.meleeStrike.angle = value;
     }
+
 }
 
 export {EntityController}

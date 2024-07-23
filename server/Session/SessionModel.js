@@ -34,34 +34,24 @@ class SessionModel {
                     x: 150,
                     y: 150
                 },
-                purpose: {
-                    x: 150,
-                    y: 150
-                },
                 skinId: 1,
                 state: STATES.wanders,
                 health: 5,
-                nickName: "bot1",
+                nickname: "bot1",
             },
             {
                 current: {
-                    x: 0,
-                    y: 0
-                },
-                purpose: {
-                    x: 1,
-                    y: 1
+                    x: 350,
+                    y: 350
                 },
                 skinId: 1,
                 state: STATES.wanders,
                 health: 5,
-                nickName: "bot2",
+                nickname: "bot2",
             }
         ];
         this.walls = this.convertWallList(field.map.walls);
     }
-
-
 
     convertWallList(wallList) {
         return wallList.map(wall => ({
@@ -69,6 +59,7 @@ class SessionModel {
             end: { x: wall[2] * 15, y: wall[3] * 15 }
         }));
     }
+
 
     updateBots() {
         this.bots.forEach(bot => {
@@ -120,12 +111,7 @@ class SessionModel {
         return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
     }
 
-    getRandomCoordinates() {
-        return {
-            x: Math.random() * this.field.width,
-            y: Math.random() * this.field.height
-        };
-    }
+
 }
 
 export {SessionModel}

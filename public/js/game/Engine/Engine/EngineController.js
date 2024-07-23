@@ -15,14 +15,13 @@ class EngineController {
     constructor(objects, connection, canvas) {
         this.model = new EngineModel(objects);
         this.view = new EngineView(canvas);
-
         this.enemies = this.model.getEnemies();
         this.field = this.model.getField();
         this.player = this.model.getPlayer();
+        this.bots = this.model.getBots();
         this.tracing = new Tracing(this.player, this.field);
 
         this.connection = connection;
-
         this.initEventListeners(canvas);
     }
 
@@ -37,6 +36,9 @@ class EngineController {
         this.player.move(dx / period, dy / period);
         Object.values(this.enemies).forEach(enemy => {
             enemy.move(dx / period, dy / period);
+        });
+        Object.values(this.bots).forEach(bot => {
+            bot.move(dx / period, dy / period);
         });
     }
 
@@ -53,6 +55,7 @@ class EngineController {
     }
 
     update() {
+        //console.log(this.model.bots)
         this.field.update();
         this.tracing.updateViewRange();
         Object.values(this.enemies).forEach(enemy => {
@@ -62,6 +65,10 @@ class EngineController {
             });
             this.updateEnemyMeleeStrike(enemy);
             enemy.update();
+        })
+        Object.values(this.bots).forEach(bot => {
+            console.log("checking")
+            bot.checkActive(this.field)
         })
         this.checkIntersections([...this.field.verticalWalls, ...this.field.horizontalWalls]);
         this.takeAmmunition();
@@ -224,7 +231,7 @@ class EngineController {
 
     nextFrame() {
         this.update();
-        this.view.update(this.field, this.player, this.enemies, this.player.leaderBoard, this.model.leaderBoard, this.model.isShaking());
+        this.view.update(this.field, this.player, this.enemies, this.bots, this.player.leaderBoard, this.model.leaderBoard, this.model.isShaking());
     }
 }
 

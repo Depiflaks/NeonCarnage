@@ -10,8 +10,8 @@ export class Responder {
         this.field = engine.field;
         this.enemies = engine.enemies;
         this.playerList = engine.model.playerList;
+        this.bots = engine.bots;
         this.socket = socket;
-        this.bots = {}
     }
 
     onInit(body) {
@@ -112,19 +112,19 @@ export class Responder {
     }
 
     updateBots(bots) {
-        bots.forEach(bot => {
-            const id = bot.id;
-            const {x, y} = {x: bot.current.x + this.field.x, y: bot.current.y + this.field.y};
+        bots.forEach((bot, index) => {
+            const id = `bot_${index}`;
             if (!this.bots[id]) {
                 this.bots[id] = this.newBot(bot);
             } else {
                 const botController = this.bots[id];
-                botController.setPosition({x, y});
-                botController.setAlive(bot.health > 0);
+                botController.setShooting(bot.shooting);
+                botController.setAlive(bot.isAlive);
                 botController.setHealth(bot.health);
                 botController.setAngle(bot.angle);
             }
         });
+        //console.log(this.bots)
     }
 
     newEnemy(entity) {
@@ -139,7 +139,7 @@ export class Responder {
         const {x, y} = {x: entity.current.x + this.field.x, y: entity.current.y + this.field.y}
         return new BotController({
             x: x, y: y, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth,
-            health: entity.health, nickName: entity.nickName,
+            health: entity.health, nickName: entity.nickname,
         })
     }
 }

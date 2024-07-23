@@ -7,6 +7,15 @@ class BotController extends EnemyController {
         this.model = new BotModel(player);
 
     }
+
+    setShooting(value) {
+        this.model.shooting = value;
+    }
+
+    getShooting() {
+        return this.model.shooting;
+    }
+
 }
 
 export {BotController}
