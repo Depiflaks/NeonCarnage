@@ -34,4 +34,4 @@ class LobbyServer {
     }
 }
 
-export { Server };
+export { LobbyServer };
