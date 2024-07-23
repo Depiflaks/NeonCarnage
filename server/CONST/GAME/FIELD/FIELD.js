@@ -1,4 +1,4 @@
-const CELL = {
+export const CELL = {
     w: 150,
     h: 150,
     activeAlpha: 0,
@@ -7,7 +7,7 @@ const CELL = {
     src: "public/assets/BattleGround/cell.png",
 };
 
-const WALL = {
+export const WALL = {
     h: 15,
     verticalStartImage: "public/assets/BattleGround/verticalWallStart.png",
     verticalEndImage: "public/assets/BattleGround/verticalWallEnd.png",
@@ -18,5 +18,3 @@ const WALL = {
     horizontalBetweenImage: "public/assets/BattleGround/horizontalWallBetween.png",
     horizontalImage: "public/assets/BattleGround/horizontalWall.png"
 }
-
-export {CELL, WALL};

@@ -1,4 +1,4 @@
-const BULLET = {
+export const BULLET = {
     w: 5,
     h: 70,
     radius: 70,
@@ -8,9 +8,7 @@ const BULLET = {
     image: "public/assets/Bonuses/cartridges.png",
 };
 
-const DRAW_BULLETS_AMOUNT = {
+export const DRAW_BULLETS_AMOUNT = {
     OffsetX: 10,
     OffsetY: 30,
 }
-
-export {BULLET, DRAW_BULLETS_AMOUNT};

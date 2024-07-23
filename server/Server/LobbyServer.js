@@ -8,7 +8,8 @@ import { SessionController } from '../Session/SessionController.js';
 import express from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';
-import { fork } from 'child_process';
+import { Child } from '../Child/Child.js';
+
 
 
 class LobbyServer {
@@ -20,7 +21,8 @@ class LobbyServer {
         this.app.use(bodyParser.json());
 
         this.creature = new Map();
-        this.request = new RequestController(this.app, this.creature);
+        this.child = new Child(8080);
+        this.request = new RequestController(this.app, this.creature, this.child);
 
         //this.sessions = [];
 
@@ -30,7 +32,7 @@ class LobbyServer {
             console.log('Listening on port ' + this.port);
         });
 
-        this.webSocket = new WebSocketRoom(this.server);
+        
     }
 }
 

@@ -24,13 +24,12 @@ class DatabaseController {
     }
 
     // Создание lobby
-    async createLobby(ownerId) {
+    async createLobby(ownerId, port) {
         const gameMode = GAME_MODE.deathMatch;
         const mapNumber = 1;
-        const address = "8000";
         const timeCreation = new Date().toISOString().slice(0, 19).replace('T', ' '); // Текущее время
         
-        const result = await this.lobby.addLobby(ownerId, gameMode, mapNumber, address, timeCreation);
+        const result = await this.lobby.addLobby(ownerId, gameMode, mapNumber, port, timeCreation);
         await this.player.updatePlayerParameter(ownerId, "lobby_id", result.insertId);
         await this.player.updatePlayerParameter(ownerId, "is_owner", 1);
         await this.player.updatePlayerParameter(ownerId, "ready", 1);
@@ -48,12 +47,15 @@ class DatabaseController {
         const playersInLobby = await this.player.getPlayersByRoomId(lobbyId);
         if (playersInLobby.length === 0) {
             await this.lobby.deleteLobby(lobbyId);
-        } else {
+            return lobbyId ? lobbyId : -1;
+        } else if (player.is_owner) {
             const newOwnerId = playersInLobby[0].player_id || null;
             await this.lobby.updateLobbyParameter(lobbyId, "owner_id", newOwnerId);
             await this.player.updatePlayerParameter(newOwnerId, "is_owner", 1);
             await this.player.updatePlayerParameter(newOwnerId, "ready", 1);
+            return -1;
         }
+        return -1;
     }
 
     // Удаление игрока из лобби по запросу владельца
