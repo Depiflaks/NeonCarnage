@@ -41,6 +41,7 @@ class WebSocketGame {
         if (!this.session.model.players[connection.id]) this.session.addPlayer(connection, {
             health: body.player.health,
             maxHealth: body.player.maxHealth,
+            nickname: body.player.nickname
         });
         this.session.updateParameters(body, connection.id);
         const data = this.session.getData();

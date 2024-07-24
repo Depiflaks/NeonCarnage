@@ -21,7 +21,11 @@ export const ADDRESS = {
     ignat: {
         start: 'ws://10.250.104.176:',
         end: '/'
-    }
+    },
+    liuba: {
+        start: 'ws://10.250.104.157:',
+        end: '/'
+    },
 }
 
 export const DATA_BASE = {
@@ -36,6 +40,12 @@ export const DATA_BASE = {
         user: "root",
         database: "NeonCarnage",
         password: "1111"
+    },
+    liuba: {
+        host: "localhost",
+        user: "root",
+        database: "NeonCarnage",
+        password: "1234"
     }
 }
 

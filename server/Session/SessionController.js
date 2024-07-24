@@ -46,12 +46,17 @@ class SessionController {
 
     }
 
-    addPlayer(connection, {health, maxHealth}) {
+    addPlayer(connection, {health, maxHealth, nickname}) {
         this.model.players[connection.id] = {
             health: health,
             maxHealth: maxHealth,
-            isAlive: true
+            isAlive: true,
+            nickname: nickname
         };
+        if (!this.model.leaderBoard[connection.id]) this.model.leaderBoard[connection.id] = {
+            name: nickname,
+            kills: 0
+        }
         this.model.playersCount += 1;
     }
 
@@ -152,10 +157,6 @@ class SessionController {
                 if (player.weaponId) {
                     this.model.objects.weapons[player.weaponId].state = WEAPON_STATE.onTheGround;
                     player.weaponId = null;
-                }
-                if (!this.model.leaderBoard[entityId]) this.model.leaderBoard[entityId] = {
-                    name: entity.nickname,
-                    kills: 0
                 }
                 this.model.leaderBoard[entityId].kills += 1;
             }
