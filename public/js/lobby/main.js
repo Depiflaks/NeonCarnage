@@ -84,6 +84,12 @@ async function joinLobby(roomId) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    const track = new Audio("../../../public/sound/Jasper Byrne - Voyager.mp3");
+    track.loop = false;
+    track.volume = 1.0;
+    track.play();
+    
     // Запрос на /createLobby
     createButton.addEventListener('click', async () => {
         try {

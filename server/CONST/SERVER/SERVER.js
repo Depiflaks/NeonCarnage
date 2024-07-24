@@ -26,6 +26,12 @@ export const DATA_BASE = {
         user: "smmm",
         database: "NeonCarnage",
         password: "3030"
+    },
+    ignat: {
+        host: "localhost",
+        user: "root",
+        database: "NeonCarnage",
+        password: "1111"
     }
 }
 
