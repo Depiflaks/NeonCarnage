@@ -70,6 +70,9 @@ export class Responder {
         if (this.player.isAlive() && !entity.isAlive) {
             this.player.die();
             this.field.addCorpse(this.id, this.player);
+            if (this.field.corpses[this.id].length === 10) {
+                this.field.corpses[this.id] = this.field.corpses[this.id].slice(5);
+            }
         }
         if (!this.player.isAlive() && entity.isAlive) {
             this.player.reborn(this.field.getSpawnPoint());
@@ -77,7 +80,6 @@ export class Responder {
         this.player.setAlive(entity.isAlive);
         this.player.setHealth(entity.health);
         this.updateWeapon(this.player, entity);
-        //console.log(entity);
         //this.player.clearVisibleBots();
         //this.player.model.visibleBots = entity.visibleBots;
     }

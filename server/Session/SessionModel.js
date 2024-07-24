@@ -1,11 +1,23 @@
 import {STATES} from "../CONST/GAME/ENTITY/BOT.js";
+import { GAME_MODE } from "../CONST/GAME/GAME.js";
 
 import { WEAPON_STATE } from "../CONST/GAME/WEAPON/WEAPON.js";
 import {ENTITY} from "../CONST/GAME/ENTITY/ENTITY.js";
 
 class SessionModel {
-    constructor(field) {
-        this.field = field;
+    constructor(data) {
+        this.field = data.map;
+        switch (data.mode) {
+            case GAME_MODE.deathMatch.name:
+                this.mode = GAME_MODE.deathMatch
+                break;
+            case GAME_MODE.battleRoyale.name:
+                this.mode = GAME_MODE.deathMatch
+                break;
+            case GAME_MODE.operationOverrun.name:
+                this.mode = GAME_MODE.operationOverrun
+                break;
+        }
         this.maxPlayers = 100;
         this.players = {};
         this.playersCount = 0;
@@ -24,7 +36,8 @@ class SessionModel {
                 state: WEAPON_STATE.onTheGround,
                 x: weapon.x * 150 + 75,
                 y: weapon.y * 150 + 75,
-                amount: weapon.type.amount
+                amount: weapon.type.amount,
+                maxAmount: weapon.type.amount,
             }
         });
         this.bots = [
@@ -55,7 +68,7 @@ class SessionModel {
                 isAlive: true,
             }
         ];
-        this.walls = this.convertWallList(field.map.walls);
+        //this.walls = this.convertWallList(field.map.walls);
     }
 
     convertWallList(wallList) {

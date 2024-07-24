@@ -9,8 +9,7 @@ import { Ammunition } from "./Collectable/Ammunition.js";
 import { Corpse } from "./Components/Corpse.js";
 
 class Field extends Drawable {
-    constructor(groundList, wallList, weaponSet, ammunitionSet, aidKitSet, spawnPoints) {
-        
+    constructor({groundList, wallList, weaponSet, ammunitionSet, aidKitSet, spawnPoints}) {
         let maxX = 0;
         let maxY = 0;
         groundList.map(
@@ -85,7 +84,6 @@ class Field extends Drawable {
         Object.values(this.weapons).forEach(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) /  CELL.w);
             indexY = Math.floor((weapon.model.y - this.y) / CELL.h);
-            //console.log(weapon.model.x, weapon.model.y);
             if (this.cells[indexX][indexY] && this.cells[indexX][indexY].active) weapon.view.draw(
                 weapon, 
                 entities, 
@@ -148,6 +146,10 @@ class Field extends Drawable {
         let {x, y} = player.getPosition();
         if (!this.corpses[id]) this.corpses[id] = [];
         this.corpses[id].push(new Corpse(x, y, skinId));
+    }
+
+    clearCorpses() {
+        
     }
 
     move(dx, dy) {

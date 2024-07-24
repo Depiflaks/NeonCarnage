@@ -7,6 +7,8 @@ class PlayerModel extends EntityModel {
         this.speedX = 0;
         this.speedY = 0;
         this.isStriking = false;
+        this.isShooting = false;
+        this.isRecharging = false;
         this.stacked = false;
         this.keyPressed = {
             w: 0,
@@ -32,7 +34,6 @@ class PlayerModel extends EntityModel {
         };
         this.isReborning = false;
         this.visibleBots = new Set(); // добавлять бота которого видит, и удалять если тот пропадает из видимости
-
     }
 
     updatePosition() {

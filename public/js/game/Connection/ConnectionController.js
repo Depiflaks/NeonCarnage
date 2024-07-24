@@ -3,9 +3,9 @@ import { Responder } from "./Responder/Responder.js";
 import { Sender } from "./Sender/Sender.js";
 
 class ConnectionController {
-    constructor() {
+    constructor(address) {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.denis);
+        this.socket = new WebSocket(address);
         this.enemies = {};
         
         this.sender = new Sender(this.socket);
@@ -47,81 +47,6 @@ class ConnectionController {
             default:
                 break;
         }
-    }
-
-    init(body) {
-        this.id = body.id;
-    }
-
-    onResponse(body) {
-        for (let id in body.objects.weapons) {
-            this.field.weapons[id].update(body.objects.weapons[id], {dx: this.field.x, dy: this.field.y})
-        }
-        for (const [id, aidKit] of body.objects.aidKits.entries()) {
-            this.field.aidKits[id].active = aidKit;
-        }
-        for (const [id, ammunition] of body.objects.ammunitions.entries()) {
-            this.field.ammunition[id].active = ammunition;
-        }
-        this.player.leaderBoard = body.leaderBoard;
-        for (let id in body.objects.corpses) {
-            if (id === this.id) continue;
-            this.field.corpses[id] = body.objects.corpses[id].map(corp => {return new Corpse(
-                corp.x + this.field.x,
-                corp.y + this.field.y,
-                corp.skinId
-            )})
-        }
-        for (const id in body.players) {
-            const entity = body.players[id];
-            if (id === this.id) {
-                this.player.setAlive(entity.isAlive);
-                this.player.setHealth(entity.health);
-                if (!entity.isAlive && !entity.isReborning && !this.player.isReborning()) {
-                    this.field.addCorpse(this.id, this.player);
-                    //console.log(this.field.getCorpses());
-                    this.player.die(this.field.getSpawnPoint());
-                }
-                this.player.setWeaponId(entity.weaponId);
-                this.player.setWeapon(this.field.weapons[entity.weaponId]);
-                continue;
-            };
-            const {x, y} = {x: entity.x + this.field.x, y: entity.y + this.field.y}
-            if (!this.enemies[id]) this.enemies[id] = new EnemyController({
-                x: x, y: y, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth,
-                health: entity.health
-            });
-            const enemy = this.enemies[id];
-            enemy.setPosition({x, y});
-            enemy.setAlive(entity.isAlive);
-            enemy.setAngle(entity.angle);
-            
-            enemy.setHealth(entity.health);
-            enemy.setNickname(entity.nickname);
-            if (entity.meleeStrike.isAnimating) {
-                if (!enemy.getMeleeStrike()) {
-                    enemy.createMeleeStrike();
-                } else {
-                    enemy.setMeleeStrike(entity.meleeStrike.angle, entity.meleeStrike.isAnimating, entity.meleeStrike.direction);
-                }
-            } else {
-                enemy.removeMeleeStrike();
-            }
-
-            if (!entity.isAlive) {
-                enemy.die();
-            }
-            enemy.setWeaponId(entity.weaponId);
-            enemy.setWeapon(this.field.weapons[entity.weaponId]);
-            enemy.setBullets(entity.bullets.map(bullet => {
-                return new Bullet({
-                    x: bullet.x + this.field.x,
-                    y: bullet.y + this.field.y,
-                    angle: bullet.angle
-                })
-            }));
-        }
-        
     }
 
     onClose(data) {

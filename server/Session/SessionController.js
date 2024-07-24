@@ -3,18 +3,11 @@ import { WEAPON_STATE } from "./../CONST/GAME/WEAPON/WEAPON.js"
 import { AIDKIT } from "../CONST/GAME/FIELD/AIDKIT.js";
 import { AMMUNITION } from "../CONST/GAME/FIELD/AMMUNITION.js";
 import { ENTITY } from "../CONST/GAME/ENTITY/ENTITY.js";
+import { GAME_MODE } from "../CONST/GAME/GAME.js";
 
 class SessionController {
-    constructor(field) {
-        this.model = new SessionModel(field);
-        //this.startBotUpdates();
-    }
-
-    startBotUpdates() {
-        setInterval(() => {
-            this.model.updateBots();
-
-        }, 1000);
+    constructor(data) {
+        this.model = new SessionModel(data);
     }
 
     addPlayer(connection, {health, maxHealth}) {
@@ -42,7 +35,6 @@ class SessionController {
         entity.meleeStrike = player.meleeStrike;
         entity.visibleBots = player.visibleBots;
 
-
         this.model.objects.corpses[id] = body.field.corpses;
         this.updateWeaponState(body, entity);
         this.updateWeapon(entity);
@@ -52,12 +44,13 @@ class SessionController {
         this.updateBullets(body, entity);
         
         this.updateAidKits(body, entity);
-        this.updateAmmunitions(body);
+        this.updateAmmunitions(body, entity);
         this.updateDamage(body, entity, id);
 
         this.updateBotDamage(body);
 
         this.model.updateBots();
+        this.checkEndCondition();
     }
 
     updateBullets(body, entity) {
@@ -67,6 +60,7 @@ class SessionController {
     updateWeaponState(body, entity) {
         const weapon = body.change.weapon;
         if (weapon.state === WEAPON_STATE.onTheGround) {
+            if (!entity.weaponId) return;
             this.model.objects.weapons[entity.weaponId].state = weapon.state;
             entity.weaponId = weapon.id;
         } else if (weapon.state === WEAPON_STATE.inTheHand) {
@@ -84,7 +78,7 @@ class SessionController {
     updateAmount(body, entity) {
         if (!entity.weaponId) return;
         const weapon = this.model.objects.weapons[entity.weaponId];
-        weapon.amount += body.change.amount;
+        weapon.amount = Math.min(weapon.maxAmount, Math.max(0, weapon.amount + body.change.amount));
     }
 
     updateAidKits(body, entity) {
@@ -100,7 +94,7 @@ class SessionController {
         if (entity.health > 0) entity.isAlive = true;
     }
 
-    updateAmmunitions(body) {
+    updateAmmunitions(body, entity) {
         const ammunitions = body.change.ammunitions;
         for (let id of new Set(ammunitions)) {
             this.model.objects.ammunitions[id] = false;
@@ -124,7 +118,7 @@ class SessionController {
             player.health = Math.max(0, player.health - damage[id])
             if (player.health === 0) {
                 player.isAlive = false;
-                setTimeout(() => {
+                if (this.model.mode.respawn.player) setTimeout(() => {
                     player.isAlive = true;
                     player.health = player.maxHealth;
                 }, ENTITY.rebornDelay);
@@ -159,6 +153,21 @@ class SessionController {
         }
     }
 
+    checkEndCondition() {
+        switch (this.model.gameMode) {
+            case GAME_MODE.deathMatch:
+
+                break;
+            case GAME_MODE.battleRoyale:
+
+                break;
+            case GAME_MODE.operationOverrun:
+                break;
+            default:
+                break;
+        }
+    }
+
     getData() {
         const response = {
             players: this.model.players,
@@ -170,6 +179,7 @@ class SessionController {
             },
             leaderBoard: this.model.leaderBoard,
             bots: this.model.bots,
+            mode: this.model.mode,
         };
         return response;
     }

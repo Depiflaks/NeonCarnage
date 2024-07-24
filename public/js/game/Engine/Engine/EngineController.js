@@ -1,9 +1,10 @@
-import {CAMERA, KEYBOARD_E, KEYBOARD_F, MELEE_STRIKE, WEAPON, WEAPON_STATE} from "../../CONST.js";
+import {CAMERA, KEYBOARD_E, KEYBOARD_F, MELEE_STRIKE, SOUND, WEAPON, WEAPON_STATE} from "../../CONST.js";
 import { EngineModel } from "./EngineModel.js";
 import { EngineView } from "./EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
 import { ConnectionController } from "../../Connection/ConnectionController.js";
 import { EntityController } from "../Entity/EntityController.js";
+import { SoundController } from "../SoundController/SoundController.js";
 
 class EngineController {
     /**
@@ -13,7 +14,10 @@ class EngineController {
      * @param {canvas} canvas 
      */
     constructor(objects, connection, canvas) {
-        this.model = new EngineModel(objects);
+        this.soundController = new SoundController();
+        this.soundController.init(SOUND);
+
+        this.model = new EngineModel(objects, this.soundController);
         this.view = new EngineView(canvas);
         this.enemies = this.model.getEnemies();
         this.field = this.model.getField();
@@ -53,14 +57,12 @@ class EngineController {
             const distance = Math.sqrt((weapon.model.x - x) ** 2 + (weapon.model.y - y) ** 2);
             if (weapon.getStatus() === WEAPON_STATE.onTheGround && distance <= WEAPON.minDistance && !this.player.getWeapon()) {
                 this.player.pickUpWeapon(weapon);
-                // weapon.setStatus(WEAPON_STATE.inTheHand);
-                // this.player.setWeapon(weapon);
             }
         });
     }
 
     update() {
-        //console.log(this.model.bots)
+        this.soundController.updateSounds();
         this.field.update();
         this.tracing.updateViewRange();
         Object.values(this.enemies).forEach(enemy => {
@@ -110,8 +112,9 @@ class EngineController {
     takeAmmunition() {
         const weapon = this.player.getWeapon();
         for (const [index, ammunition] of this.field.ammunition.entries()) {
-            if (ammunition.active && weapon && weapon.isDistant()) 
+            if (ammunition.active && weapon && weapon.isDistant()) {
                 weapon.pickupAmmunition(index, ammunition, this.player);
+            }
         }
     }
 
@@ -274,6 +277,12 @@ class EngineController {
         canvas.addEventListener('contextmenu', event => {
             event.preventDefault(); // Отключаем контекстное меню при правом клике
         });
+        addEventListener('mousemove', () => {
+            if (!this.soundController.isPlaying) {
+                this.soundController.playTrack('background');
+                this.soundController.isPlaying = true;
+            }
+        });
     }
 
     /**
@@ -293,6 +302,7 @@ class EngineController {
         }
         if (event.code === KEYBOARD_F) {
             this.model.leaderBoard = true;
+            this.soundController.setVolume(0.4);
         }
     }
 
@@ -303,6 +313,7 @@ class EngineController {
     keyUp(event) {
         if (event.code === KEYBOARD_F) {
             this.model.leaderBoard = false;
+            this.soundController.setVolume(1.0);
         }
     }
 

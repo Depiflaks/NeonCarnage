@@ -23,8 +23,7 @@ class EntityController {
 
     die() {
         if(!this.getWeapon()) return;
-        clearInterval(this.getWeapon().getShootingInterval());
-        this.getWeapon().setShootingInterval(null);
+        this.model.stacked = false;
         this.removeMeleeStrike();
     }
 
@@ -66,8 +65,8 @@ class EntityController {
         this.model.weaponId = id;
     }
 
-    createMeleeStrike() {
-        this.model.meleeStrike = new MeleeStrike(this.model.x, this.model.y, this.model.angle);
+    createMeleeStrike(soundController) {
+        this.model.meleeStrike = new MeleeStrike(this.model.x, this.model.y, this.model.angle, soundController);
     }
 
     removeMeleeStrike() {

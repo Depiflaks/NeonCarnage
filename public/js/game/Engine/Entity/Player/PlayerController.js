@@ -4,10 +4,10 @@ import { PlayerModel } from "./PlayerModel.js";
 import { EntityController } from "../EntityController.js";
 
 class PlayerController extends EntityController {
-    constructor(position, skinId, name) {
+    constructor(position, skinId, name, soundController) {
         super();
         this.model = new PlayerModel(position, skinId, name);
-
+        this.soundController = soundController;
         this.cursorX = WINDOW.w / 2;
         this.cursorY = WINDOW.h / 2;
 
@@ -36,12 +36,24 @@ class PlayerController extends EntityController {
     mouseDown(event) {
         if (!this.getWeapon()) return;
         if (this.getWeapon().getBattleType() === "distant" && !this.getWeapon().getShootingInterval()) {
-            this.shot();
-            this.getWeapon().setShootingInterval(setInterval(() => this.shot(), this.getWeapon().getRapidity()));
+            this.model.isShooting = true;
         }
         if (this.getWeapon().getBattleType() === "close") {
             this.strike();
         }
+    }
+
+    shotSound() {
+        this.soundController.playTrack(this.getWeapon().getName());
+    }
+
+    die() {
+        this.soundController.playTrack("death");
+        if(!this.getWeapon()) return;
+        this.model.stacked = false;
+        this.model.isShooting = false;
+        this.model.isRecharging = false;
+        this.removeMeleeStrike();
     }
 
     pickupAidKit(id, aidKit) {
@@ -51,6 +63,7 @@ class PlayerController extends EntityController {
         const maxHealth = this.getMaxHealth();
         if (distance <= AIDKIT.minDistance && currentHealth < maxHealth) {
             this.addAidKit(id);
+            this.soundController.playTrack("aidKit");
         }
     }
 
@@ -61,11 +74,15 @@ class PlayerController extends EntityController {
     }
 
     shot() {
-        if (this.getWeapon().getAmount() <= 0) return;
+        if (this.getWeapon().getAmount() <= 0) {
+            this.soundController.playTrack("empty");
+            return;
+        } 
+
         this.getWeapon().decAmount();
         this.addAmount(-1);
+        this.shotSound();
         for (let i = 0; i < this.getWeapon().getGrouping(); i++) {
-            
             const angle = this.getAngle();
             const x = this.getPosition().x + WEAPON.h/4.1 * Math.cos(angle);
             const y = this.getPosition().y + WEAPON.h/4.1 * Math.sin(angle);
@@ -85,8 +102,7 @@ class PlayerController extends EntityController {
     mouseUp(event) {
         if (!this.getWeapon()) return;
         if (this.getWeapon().getBattleType() === "distant") {
-            clearInterval(this.getWeapon().getShootingInterval());
-            this.getWeapon().setShootingInterval(null);
+            this.model.isShooting = false;
         }
         if (this.getWeapon().getBattleType() === "close") {
             if (this.getStacked()) {
@@ -99,10 +115,9 @@ class PlayerController extends EntityController {
 
     strike() {
         if (this.getIsStriking() || (!this.getIsStriking() && this.getMeleeStrike()) || this.getStacked() === true) return;
-
         this.setIsStriking(true);
-
-        this.createMeleeStrike();
+        this.shotSound();
+        this.createMeleeStrike(this.soundController);
         this.getMeleeStrike().toLeft();
     }
 
@@ -146,6 +161,19 @@ class PlayerController extends EntityController {
 
         this.model.setSpeed('x', speedX);
         this.model.setSpeed('y', speedY);
+
+        if((speedX == 0) && (speedY == 0)) {
+            this.soundController.pauseTrack('walk');
+        } else {
+            if (this.soundController.isPausedTrack('walk')) {
+                this.isWalking = false;
+            }
+        }
+
+        if (!this.isWalking) {
+            this.soundController.loopTrack('walk');
+            this.isWalking = true;
+        }
     }
 
     check(obj) {
@@ -155,6 +183,11 @@ class PlayerController extends EntityController {
 
     update() {
         if (!this.isAlive()) return;
+        if (this.getWeapon() && this.model.isShooting && !this.model.isRecharging) {
+            this.model.isRecharging = true;
+            setTimeout(() => {this.model.isRecharging = false}, this.getWeapon().getRapidity());
+            this.shot()
+        }
         if (this.getStacked()) return;
         this.model.updatePosition();
 
@@ -167,9 +200,9 @@ class PlayerController extends EntityController {
     }
 
     reborn({x, y}) {
-        //console.log(x, y);
         this.model.x = x;
         this.model.y = y;
+        this.soundController.playTrack("reborn");
     }
 
     isReborning() {
@@ -265,11 +298,13 @@ class PlayerController extends EntityController {
         this.model.change.weapon.id = weapon.getId();
         //WEAPON_STATE.onTheGround : WEAPON_STATE.inTheHand
         this.model.change.weapon.state = WEAPON_STATE.inTheHand;
+        this.soundController.playTrack(weapon.getName() + "PickUp");
     }
 
     throwWeapon() {
         this.model.change.weapon.id = null;
         this.model.change.weapon.state = WEAPON_STATE.onTheGround;
+        this.soundController.playTrack("throwWeapon");
     }
 
     clearChangeWeapon() {
@@ -295,6 +330,7 @@ class PlayerController extends EntityController {
 
     addAmmunition(id) {
         this.model.change.ammunitions.push(id);
+        this.soundController.playTrack("ammunition");
     }
 
     clearAmmunition() {
@@ -346,7 +382,6 @@ class PlayerController extends EntityController {
 
     getDirection() {
         if (this.getMeleeStrike()) {
-            //console.log(this.getMeleeStrike())
             return this.getMeleeStrike().direction;
         }
     }

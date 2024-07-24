@@ -7,18 +7,20 @@ class Game {
         this.document = document;
         this.canvas = this.document.getElementById("canvas");
         this.canvas.style.cursor = 'none';
-        this.connection = new ConnectionController();
+        this.connection = new ConnectionController(objects.address);
         this.engine = new EngineController(objects, this.connection, this.canvas);
         this.connection.initResponder(this.engine);
 
         this.lastFrame = 0;
         this.lastRequest = 0;
-
+        setTimeout(() => {window.location.href = `/lobby`;}, 180000);
         window.addEventListener('wheel', function(event) {
             if (event.ctrlKey) {
                 event.preventDefault();
             }
         }, { passive: false });
+
+        setTimeout(() => {window.location.href = `/leaderboard`;}, 180000);
     }
 
     loop(timestamp) {
