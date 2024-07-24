@@ -66,7 +66,7 @@ class SessionModel {
     updateBots() {
         this.bots.forEach(bot => {
 
-            console.log(bot.shooting)
+            //console.log(bot.shooting)
 
             let closestPlayer = null;
             let minDistance = Infinity;
@@ -74,7 +74,7 @@ class SessionModel {
             for (const playerId in this.players) {
                 const player = this.players[playerId];
 
-                console.log(player.visibleBots)
+                //console.log(player.visibleBots)
 
                 for (const visibleBotId in player.visibleBots) {
                     const visibleBot = player.visibleBots[visibleBotId];
