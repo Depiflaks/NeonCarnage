@@ -39,6 +39,7 @@ class SessionController {
         entity.isReborning = player.isReborning;
         entity.nickname = player.nickname;
         entity.meleeStrike = player.meleeStrike;
+        entity.visibleBots = player.visibleBots;
 
         //console.log(entity.meleeStrike);
         this.model.objects.corpses[id] = body.field.corpses;
@@ -139,6 +140,7 @@ class SessionController {
                 ammunitions: this.model.objects.ammunitions,
             },
             leaderBoard: this.model.leaderBoard,
+            bots: this.model.bots,
         };
         return response;
     }

@@ -22,3 +22,4 @@ export const STATES = {
     }
 }
 
+export const RATE_OF_FIRE= 90;

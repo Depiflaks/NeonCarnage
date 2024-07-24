@@ -6,7 +6,7 @@ export const SERVER = {
     liuba: 'ws://10.250.104.157:8000/',
     liuba_home: 'ws://192.168.103.146:8000',
     denis: 'ws://10.250.104.22:8000/',
-    denis_home: 'ws://192.168.124.252:8000/'
+    denis_home: 'ws://192.168.253.252:8000/'
 };
 
 export const PORT = 8000;

@@ -7,6 +7,7 @@ export class Sender {
 
     sendData(player, field) {
         const {x, y} = player.getPosition();
+        //console.log(player)
         const body = {
             player: {
                 x: x - field.x, 
@@ -21,7 +22,8 @@ export class Sender {
                     isAnimating: player.getIsAnimating(),
                     direction: player.getDirection(),
                     angle: player.getCurrentAngle(),
-                }
+                },
+                visibleBots: player.getVisibleBots(),
             },
             bullets: [],
             change: player.getChange(),

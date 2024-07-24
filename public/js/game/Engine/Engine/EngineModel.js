@@ -16,6 +16,7 @@ class EngineModel {
         this.enemies = [];
         this.playerList = {};
         this.leaderBoard = false;
+        this.bots = [];
     }
 
     getField() {
@@ -44,6 +45,10 @@ class EngineModel {
 
     isShaking() {
         return this.player.model.shaking;
+    }
+
+    getBots() {
+        return this.bots;
     }
 }
 

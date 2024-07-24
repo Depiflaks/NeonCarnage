@@ -342,6 +342,8 @@ class PlayerController extends EntityController {
     getCurrentAngle() {
         if (this.getMeleeStrike()) return this.getMeleeStrike().currentAngle;
     }
+
+
 }
 
 export { PlayerController };

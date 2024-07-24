@@ -86,7 +86,7 @@ class EntityController {
     }
 
     isActive() {
-        return this.model.active
+        return this.model.active;
     }
 
     getBullets() {
@@ -129,6 +129,25 @@ class EntityController {
 
     setMeleeStrikeAngle(value) {
         this.model.meleeStrike.angle = value;
+    }
+    addVisibleBot(botId) {
+        this.model.visibleBots.add(botId);
+    }
+
+    removeVisibleBot(botId) {
+        this.model.visibleBots.delete(botId);
+    }
+
+    getVisibleBots() {
+        return Array.from(this.model.visibleBots);
+    }
+
+    setVisibleBots(botIds) {
+        this.model.visibleBots = new Set(botIds);
+    }
+
+    clearVisibleBots() {
+        this.model.visibleBots.clear();
     }
 }
 
