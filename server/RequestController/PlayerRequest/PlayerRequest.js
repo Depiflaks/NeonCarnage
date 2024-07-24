@@ -73,11 +73,7 @@ export class PlayerRequest {
 
         this.app.post('/updatePlayer', async (req, res) => {
             try {
-                const { playerId, skinId, ready } = req.body;
-                const parameters = {
-                    skin_id: skinId, 
-                    ready: ready,
-                };
+                const { playerId, parameters } = req.body;
                 await this.database.updatePlayer(playerId, parameters);
                 res.send('Player updated successfully');
             } catch (error) {

@@ -3,8 +3,9 @@ import {STATES} from "../CONST/GAME/ENTITY/BOT.js";
 import { WEAPON_STATE } from "../CONST/GAME/WEAPON/WEAPON.js";
 
 class SessionModel {
-    constructor(field) {
-        this.field = field;
+    constructor(data) {
+        this.field = data.map;
+        this.gameMode = data.mode;
         this.maxPlayers = 100;
         this.players = {};
         this.playersCount = 0;
@@ -51,7 +52,7 @@ class SessionModel {
                 shooting: false,
             }
         ];
-        this.walls = this.convertWallList(field.map.walls);
+        this.walls = this.convertWallList(this.field.map.walls);
     }
 
     convertWallList(wallList) {

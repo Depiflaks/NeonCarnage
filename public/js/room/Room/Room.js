@@ -157,7 +157,7 @@ export class Room {
         await fetch('/updatePlayer', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ skinId: skin, playerId: this.playerId, ready: player.ready })
+            body: JSON.stringify({ playerId: this.playerId, parameters: {skin_id: skin, ready: player.ready} })
         });
         await this.updatePlayersList();
         if (this.ownerID == this.playerId) {

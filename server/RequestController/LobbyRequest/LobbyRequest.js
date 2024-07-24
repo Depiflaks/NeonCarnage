@@ -29,7 +29,10 @@ export class LobbyRequest {
                 const lobby = await this.database.lobby.getLobbyById(roomId)
                 const allReady = players.every(player => player.ready);
                 if (allReady) {
-                    this.child.sendStart(roomId, this.creature.createMap(lobby.game_mode, lobby.map_number));
+                    this.child.sendStart(roomId, {
+                        map: this.creature.createMap(lobby.game_mode, lobby.map_number),
+                        mode: lobby.game_mode,
+                    });
                 }
             } catch (error) {
                 console.error('Ошибка:', error);

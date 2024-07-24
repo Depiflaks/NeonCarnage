@@ -3,11 +3,11 @@ import { WEAPON_STATE } from "./../CONST/GAME/WEAPON/WEAPON.js"
 import { AIDKIT } from "../CONST/GAME/FIELD/AIDKIT.js";
 import { AMMUNITION } from "../CONST/GAME/FIELD/AMMUNITION.js";
 import { ENTITY } from "../CONST/GAME/ENTITY/ENTITY.js";
+import { GAME_MODE } from "../CONST/GAME/GAME.js";
 
 class SessionController {
-    constructor(field) {
-        this.model = new SessionModel(field);
-        //this.startBotUpdates();
+    constructor(data) {
+        this.model = new SessionModel(data);
     }
 
     startBotUpdates() {
@@ -55,6 +55,7 @@ class SessionController {
         this.updateAmmunitions(body, entity);
         this.updateDamage(body, entity, id);
         this.model.updateBots();
+        this.checkEndCondition();
     }
 
     updateBullets(body, entity) {
@@ -131,6 +132,22 @@ class SessionController {
                 }
                 this.model.leaderBoard[entityId].kills += 1;
             }
+        }
+    }
+
+    checkEndCondition() {
+        switch (this.model.gameMode) {
+            case GAME_MODE.deathMatch:
+                
+                break;
+            case GAME_MODE.battleRoyale:
+                
+                break;
+            case GAME_MODE.operationOverrun:
+                
+                break;  
+            default:
+                break;
         }
     }
 
