@@ -35,7 +35,6 @@ class BotController extends EnemyController {
     getBotSkin() {
         return this.model.skin;
     }
-
 }
 
 export {BotController}

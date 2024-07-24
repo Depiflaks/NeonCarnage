@@ -230,6 +230,14 @@ class EngineController {
                 }
             }
         });
+
+        Object.entries(this.bots).forEach(([id, bot]) => {
+            if ((bot.model.isAlive) && meleeStrike.isIntersectEnemy(bot.model) && !this.intersectMeleeStrike(drawableArray)) {
+                if (currentTime - bot.getLastHitTime() >= 1000) {
+                    this.player.botAddDamage(id, 2);
+                    bot.setLastHitTime(currentTime); // Обновляем время последнего удара
+                }            }
+        });
     }
 
     /**
