@@ -21,6 +21,7 @@ class SessionController {
         this.model.players[connection.id] = {
             health: health,
             maxHealth: maxHealth,
+
             isAlive: true
         };
         this.model.playersCount += 1;
@@ -64,8 +65,6 @@ class SessionController {
         const weapon = body.change.weapon;
         if (weapon.state === WEAPON_STATE.onTheGround) {
             if (!entity.weaponId) return;
-            //console.log(this.model.objects.weapons[entity.weaponId]);
-            //console.log(this.model.objects.weapons[entity.weaponId].state);
             this.model.objects.weapons[entity.weaponId].state = weapon.state;
             entity.weaponId = weapon.id;
         } else if (weapon.state === WEAPON_STATE.inTheHand) {
@@ -106,9 +105,6 @@ class SessionController {
             setTimeout(() => {
                 this.model.objects.ammunitions[id] = true;
             }, AMMUNITION.delay);
-            //if (!entity.weaponId) continue;
-            //const weapon = this.model.objects.weapons[entity.weaponId];
-            //weapon.amount = Math.min(weapon.maxAmount, Math.max(0, weapon.amount + body.change.amount));
         }
     }
 
@@ -122,6 +118,7 @@ class SessionController {
                 player.isAlive = false;
                 setTimeout(() => {
                     player.isAlive = true;
+
                     player.health = player.maxHealth;
                 }, ENTITY.rebornDelay);
                 if (player.weaponId) {

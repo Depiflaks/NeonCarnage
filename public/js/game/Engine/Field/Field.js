@@ -148,6 +148,10 @@ class Field extends Drawable {
         this.corpses[id].push(new Corpse(x, y, skinId));
     }
 
+    clearCorpses() {
+        
+    }
+
     move(dx, dy) {
         super.move(dx, dy);
         this.cells.forEach(row => row.forEach(cell => {if (cell) {cell.move(dx, dy)}}));

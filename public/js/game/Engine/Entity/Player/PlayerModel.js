@@ -31,7 +31,6 @@ class PlayerModel extends EntityModel {
         };
         this.isReborning = false;
         this.visibleBots = new Set(); // добавлять бота которого видит, и удалять если тот пропадает из видимости
-
     }
 
     updatePosition() {
