@@ -17,7 +17,10 @@ class PlayerModel extends EntityModel {
         };
         this.change = {
             damage: {
-                
+
+            },
+            botDamage: {
+
             },
             amount: 0,
             weapon: {

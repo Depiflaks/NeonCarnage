@@ -1,6 +1,7 @@
 import {STATES} from "../CONST/GAME/ENTITY/BOT.js";
 
 import { WEAPON_STATE } from "../CONST/GAME/WEAPON/WEAPON.js";
+import {ENTITY} from "../CONST/GAME/ENTITY/ENTITY.js";
 
 class SessionModel {
     constructor(field) {
@@ -9,14 +10,12 @@ class SessionModel {
         this.players = {};
         this.playersCount = 0;
         this.connections = {};
-        //console.log(field);
         this.objects = {
             corpses: {},
             weapons: {},
             aidKits: Array(this.field.map.aidKits.length).fill(true),
             ammunitions: Array(this.field.map.ammunitions.length).fill(true),
         };
-        //console.log(this.objects.aidKits);
         this.leaderBoard = {};
         this.objects.weapons = {};
         this.field.map.weapons.forEach(weapon => {
@@ -37,8 +36,10 @@ class SessionModel {
                 skinId: 1,
                 state: STATES.wanders,
                 health: 5,
-                id: 0,
+                maxHealth: ENTITY.maxHealth,
+                id: "bot_0",
                 shooting: false,
+                isAlive: true,
             },
             {
                 current: {
@@ -48,8 +49,10 @@ class SessionModel {
                 skinId: 2,
                 state: STATES.wanders,
                 health: 5,
-                id: 1,
+                maxHealth: ENTITY.maxHealth,
+                id: "bot_1",
                 shooting: false,
+                isAlive: true,
             }
         ];
         this.walls = this.convertWallList(field.map.walls);
@@ -66,15 +69,17 @@ class SessionModel {
     updateBots() {
         this.bots.forEach(bot => {
 
-            console.log(bot.shooting)
+
+            if (!bot.isAlive) {
+                bot.shooting = false;
+                return
+            }
 
             let closestPlayer = null;
             let minDistance = Infinity;
 
             for (const playerId in this.players) {
                 const player = this.players[playerId];
-
-                console.log(player.visibleBots)
 
                 for (const visibleBotId in player.visibleBots) {
                     const visibleBot = player.visibleBots[visibleBotId];

@@ -79,7 +79,7 @@ class EngineController {
                 this.player.removeVisibleBot(bot.model.id);
             }
             if (bot.getShooting()) {
-                console.log(bot.getShooting())
+                //console.log(bot.getShooting())
                 bot.shot();
             }
             bot.getBullets().forEach(bullet => {
@@ -138,15 +138,55 @@ class EngineController {
         })
     }
 
-    filterBullets(bullets, enemies, addDamage) {
+
+    bulletsIntersectionEnemy() {
+        this.player.setBullets(this.player.getBullets().filter(
+            bullet => {
+                let hit = false;
+                Object.entries(this.enemies).forEach(([id, enemy]) => {
+                    if (enemy.isAlive() && bullet.isIntersectEnemy(enemy.model)) {
+                        hit = true;
+                        this.player.addDamage(id, 1)
+                    }
+                });
+                return !hit;
+            }
+        ));
+
+        Object.values(this.bots).forEach(bot => {
+            bot.setBullets(bot.getBullets().filter(
+                bullet => {
+                    let hit = false;
+                        if (this.player.isAlive() && bullet.isIntersectEnemy(this.player.model)) {
+                            hit = true;
+                            this.player.addDamage('self', 1)
+                        }
+                    return !hit;
+                }
+            ));
+        });
+
+        this.player.setBullets(this.player.getBullets().filter(
+            bullet => {
+                let hit = false;
+                Object.entries(this.bots).forEach(([id, bot]) => {
+                    if ((bot.model.isAlive) && bullet.isIntersectEnemy(bot.model)) {
+                        hit = true;
+                        this.player.botAddDamage(id, 1)
+                    }
+                });
+                return !hit;
+            }
+        ));
+    }
+
+    /*filterBullets(bullets, enemies, addDamage) {
         return bullets.filter(bullet => {
             let hit = false;
-            Object.entries(enemies).forEach(([id, enemy]) => {
-                if (enemy.isAlive() && bullet.isIntersectEnemy(enemy.model)) {
-                    hit = true;
-                    addDamage(id, 1);
-                }
-            });
+            if (this.player.isAlive() && bullet.isIntersectEnemy(this.player.model)) {
+                hit = true;
+                addDamage(id, 1);
+            }
             return !hit;
         });
     }
@@ -161,11 +201,13 @@ class EngineController {
         Object.values(this.bots).forEach(bot => {
             bot.setBullets(this.filterBullets(
                 bot.getBullets(),
-                this.enemies,
+                this.player,
                 (id, damage) => this.player.addDamage(id, damage)
             ));
         });
-    }
+    }*/
+
+
     /**
      *
      * @param {Array} drawableArray

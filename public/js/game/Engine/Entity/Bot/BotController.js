@@ -14,7 +14,7 @@ class BotController extends EnemyController {
     shot() {
         if (this.model.isRecharging) return;
         this.model.isRecharging = true;
-        setTimeout(() => {this.model.isRecharging = false}, 150)
+        setTimeout(() => {this.model.isRecharging = false}, 700)
         const angle = this.getAngle();
         const x = this.getPosition().x + WEAPON.h/4.1 * Math.cos(angle);
         const y = this.getPosition().y + WEAPON.h/4.1 * Math.sin(angle);
