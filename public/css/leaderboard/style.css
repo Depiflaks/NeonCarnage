@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to top, #00ffcc, #2d2d2d);
+    color: #00ffcc;
+    font-family: 'Russo One';
+    overflow: hidden;
+}
+
+* {
+    user-select: none; /* Prevent text selection for all elements */
+}
+
+h1 {
+    font-family: 'Nosifer', sans-serif;
+    font-size: 3em;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 0 0 0 #00ffcc, 0 0 10px #00ffcc, 0 0 30px #00ffcc;
+    animation: glow 1.5s infinite alternate, neonFlow 3s infinite;
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
+    }
+    100% {
+        text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
+    }
+}
+
+@keyframes neonFlow {
+    0% {
+        color: #1a1a1a;
+    }
+    50% {
+        color: #00ffcc;
+    }
+    100% {
+        color: #1a1a1a;
+    }
+}
+
+.table-container {
+    width: 80%;
+    max-width: 600px;
+    overflow-y: auto;
+    max-height: 60vh; /* Adjust as needed */
+    margin-bottom: 20px;
+    border: 2px solid #00ffcc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00ffcc;
+    background-color: #2d2d2d;
+}
+
+.room-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.room-list th, .room-list td {
+    border: 2px solid #00ffcc;
+    padding: 10px;
+    text-align: center;
+}
+
+.room-list th {
+    background-color: #1a1a1a;
+}
+
+.room-list td {
+    background-color: #2d2d2d;
+}
+
+button {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-family: 'Russo One';
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    background-color: #00ffcc;
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+}
+
+button:hover {
+    background-color: #1a1a1a;
+    color: #00ffcc;
+}

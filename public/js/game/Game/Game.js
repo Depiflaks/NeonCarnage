@@ -19,6 +19,8 @@ class Game {
                 event.preventDefault();
             }
         }, { passive: false });
+
+        setTimeout(() => {window.location.href = `/leaderboard`;}, 180000);
     }
 
     loop(timestamp) {

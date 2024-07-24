@@ -35,6 +35,10 @@ class RequestController {
         this.app.get('/room', (req, res) => {
             res.sendFile(path.join(__dirname, '../../templates/room/main.html'));
         });
+
+        this.app.get('/leaderboard', (req, res) => {
+            res.sendFile(path.join(__dirname, '../../templates/leaderboard/main.html'));
+        });
     }
 }
 

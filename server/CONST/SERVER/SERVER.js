@@ -17,6 +17,10 @@ export const ADDRESS = {
     sergey_home: {
         start: 'ws://192.168.1.131:',
         end: '/'
+    },
+    ignat: {
+        start: 'ws://10.250.104.176:',
+        end: '/'
     }
 }
 
