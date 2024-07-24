@@ -14,7 +14,6 @@ class SessionController {
         this.model.players[connection.id] = {
             health: health,
             maxHealth: maxHealth,
-
             isAlive: true
         };
         this.model.playersCount += 1;
@@ -153,6 +152,7 @@ class SessionController {
             },
             leaderBoard: this.model.leaderBoard,
             bots: this.model.bots,
+            mode: this.model.mode,
         };
         return response;
     }

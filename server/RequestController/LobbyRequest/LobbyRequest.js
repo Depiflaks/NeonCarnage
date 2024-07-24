@@ -1,3 +1,4 @@
+import { GAME_MODE } from "../../CONST/GAME/GAME.js";
 import { ADDRESS } from "../../CONST/SERVER/SERVER.js";
 
 export class LobbyRequest {
@@ -50,6 +51,17 @@ export class LobbyRequest {
                 data.player.nickName = player.player_name;
                 data.player.skinId = player.skin_id;
                 data.address = lobby.address;
+                switch (lobby.game_mode) {
+                    case GAME_MODE.deathMatch.name:
+                        data.mode = GAME_MODE.deathMatch;
+                        break;
+                    case GAME_MODE.battleRoyale.name:
+                        data.mode = GAME_MODE.battleRoyale;
+                        break;
+                    case GAME_MODE.operationOverrun.name:
+                        data.mode = GAME_MODE.operationOverrun;
+                        break;
+                }
                 res.json(data);
             } catch (error) {
                 console.error('Ошибка:', error);
