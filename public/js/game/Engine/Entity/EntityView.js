@@ -35,6 +35,20 @@ class EntityView {
         this.context.restore();
     }
 
+    drawBot(bot) {
+        if (!bot.isActive()) return;
+        const gunSkin = bot.getBotSkin();
+
+        const { x, y } = bot.getPosition();
+        const angle = bot.getAngle();
+        this.context.save();
+        this.context.translate(x, y);
+        this.context.rotate(angle + 90 * RAD);
+        this.context.drawImage(gunSkin.alive, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+
+        this.context.restore();
+    }
+
     drawCursor(cursor) {
         this.context.drawImage(this.cursor, cursor.x - this.cursor.width / 2, cursor.y - this.cursor.height / 2);
     }

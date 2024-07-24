@@ -1,6 +1,6 @@
 import { ENTITY } from "../../CONST.js";
 import { Moveable } from "../Interface/Moveable.js";
-import { SkinModel } from "./Skin/SkinModel.js";
+import { Skin } from "./Skin/Skin.js";
 
 class EntityModel extends Moveable {
     constructor({ x, y, skinId, nickName}) {
@@ -13,7 +13,7 @@ class EntityModel extends Moveable {
         this.bullets = [];
         this.isAlive = true;
         this.skinId = skinId;
-        this.skin = new SkinModel({skinId});
+        this.skin = new Skin({skinId});
         
         this.nickname = nickName;
     }

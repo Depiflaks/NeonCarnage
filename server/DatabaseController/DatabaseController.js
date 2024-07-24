@@ -6,7 +6,7 @@ import { Lobby } from './Lobby/Lobby.js';
 
 class DatabaseController {
     constructor() {
-        this.connection = mysql.createConnection(DATA_BASE.ignat);
+        this.connection = mysql.createConnection(DATA_BASE.denis);
 
         this.connection.connect((err) => {
             if (err) return console.error("Ошибка: " + err.message);

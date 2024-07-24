@@ -40,7 +40,9 @@ class EngineView {
         });
 
         Object.values(bots).map(bot => {
+            //this.entityView.drawBot(bot);
             this.entityView.draw(bot);
+
             this.entityView.drawEnemyHealthBar(bot);
 
             this.drawBullets(bot.getBullets(), field)
