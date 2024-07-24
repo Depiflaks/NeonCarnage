@@ -9,8 +9,7 @@ import { Ammunition } from "./Collectable/Ammunition.js";
 import { Corpse } from "./Components/Corpse.js";
 
 class Field extends Drawable {
-    constructor(groundList, wallList, weaponSet, ammunitionSet, aidKitSet, spawnPoints) {
-        
+    constructor({groundList, wallList, weaponSet, ammunitionSet, aidKitSet, spawnPoints}) {
         let maxX = 0;
         let maxY = 0;
         groundList.map(

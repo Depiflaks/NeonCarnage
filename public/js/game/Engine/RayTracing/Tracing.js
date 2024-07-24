@@ -29,7 +29,6 @@ class Tracing {
     }
 
     setActive(x, y, vertical) {
-        //console.log(123);
         let indexX = Math.floor(x / CELL.w);
         let indexY = Math.floor(y / CELL.h);
         
@@ -96,7 +95,6 @@ class Tracing {
                     horizontalWall: horizontal.isWall && delta > 0, // если горизонтальный луч коснулся стены
                     verticalWall: vertical.isWall && delta < 0 // если вертикальный луч коснулся стены
                 }
-                //console.log(breakCondition);
                 if (Object.values(breakCondition).some(value => value)) break;
                 // пускаем лучи, которые находятся в области, дальше и обрабатываем точки
                 if (vertical.inRange && !vertical.isWall && delta < 0) {

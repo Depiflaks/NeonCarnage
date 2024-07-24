@@ -79,7 +79,6 @@ class ConnectionController {
                 this.player.setHealth(entity.health);
                 if (!entity.isAlive && !entity.isReborning && !this.player.isReborning()) {
                     this.field.addCorpse(this.id, this.player);
-                    //console.log(this.field.getCorpses());
                     this.player.die(this.field.getSpawnPoint());
                 }
                 this.player.setWeaponId(entity.weaponId);

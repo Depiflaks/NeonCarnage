@@ -331,7 +331,6 @@ class PlayerController extends EntityController {
 
     getDirection() {
         if (this.getMeleeStrike()) {
-            //console.log(this.getMeleeStrike())
             return this.getMeleeStrike().direction;
         }
     }

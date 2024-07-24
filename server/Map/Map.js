@@ -1,6 +1,13 @@
-// import { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints } from "../data.js";
-import { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints } from "../MAPS/DeathMatch/map1.js";
-import {RAD, FPS, RPS, FRAME_DURATION, REQUEST_DURATION, WINDOW, LEADER_BOARD, INTERFACE, SHAKE, CAMERA, KEYBOARD_E, KEYBOARD_F} from "../CONST/GAME/GAME.js";
+import { map1 } from "../MAPS/BattleRoyale/map1.js";
+import { map2 } from "../MAPS/BattleRoyale/map2.js";
+import { map3 } from "../MAPS/BattleRoyale/map3.js";
+import { map4 } from "../MAPS/DeathMatch/map4.js";
+import { map5 } from "../MAPS/DeathMatch/map5.js";
+import { map6 } from "../MAPS/DeathMatch/map6.js";
+import { map7 } from "../MAPS/SurvivalRun/map7.js";
+import { map8 } from "../MAPS/SurvivalRun/map8.js";
+import { map9 } from "../MAPS/SurvivalRun/map9.js";
+import {RAD, FPS, RPS, FRAME_DURATION, REQUEST_DURATION, WINDOW, LEADER_BOARD, INTERFACE, SHAKE, CAMERA, KEYBOARD_E, KEYBOARD_F, GAME_MODE} from "../CONST/GAME/GAME.js";
 import { ENTITY, HEALTH_BAR, ENEMY } from "../CONST/GAME/ENTITY/ENTITY.js";
 import { SKINS } from "../CONST/GAME/ENTITY/SKINS.js";
 import { BOT_SKINS } from "../CONST/GAME/ENTITY/BOT.js";
@@ -19,14 +26,7 @@ class Map {
 
     create() {
         return {
-            "map": {
-                cells: groundList,
-                walls: wallList,
-                weapons: weaponSet,
-                aidKits: aidKitSet,
-                ammunitions: ammunitionSet,
-                spawnPoints: spawnPoints,
-            },
+            "map": this.getMap(GAME_MODE.BattleRoyale, 1),
             "player": {
             },
             "const": {
@@ -58,15 +58,57 @@ class Map {
                 weaponProperties: WEAPON,
                 weaponStatus: WEAPON_STATE,
                 meleeStrike: MELEE_STRIKE,
+                gameMode: GAME_MODE,
             }
         }
     }
-}
 
-const GAME_MODE = {
-    BR: 0,
-    DM: 1,
-    SR: 2
+    getMap(gameMode, mapNumber) {
+        switch (gameMode) {
+            case GAME_MODE.BattleRoyale:
+                switch (mapNumber) {
+                    case 1:
+                        return this.getObjects(map1);
+                    case 2:
+                        return this.getObjects(map2);
+                    case 3:
+                        return this.getObjects(map3);
+                };
+                break;
+            case GAME_MODE.DeathMatch:
+                switch (mapNumber) {
+                    case 1:
+                        return this.getObjects(map4);
+                    case 2:
+                        return this.getObjects(map5);
+                    case 3:
+                        return this.getObjects(map6);
+                };
+                break;
+            case GAME_MODE.SurvivalRun:
+                switch (mapNumber) {
+                    case 1:
+                        return this.getObjects(map7);
+                    case 2:
+                        return this.getObjects(map8);
+                    case 3:
+                        return this.getObjects(map9);
+                };
+                break;
+        }
+    }
+
+    getObjects(map) {
+        return {                
+            cells: map.groundList, 
+            walls: map.wallList, 
+            weapons: map.weaponSet, 
+            aidKits: map.aidKitSet,
+            ammunitions: map.ammunitionSet,
+            spawnPoints: map.spawnPoints
+        }
+    }
+    
 }
 
 export {Map}

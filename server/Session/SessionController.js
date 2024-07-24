@@ -32,7 +32,6 @@ class SessionController {
     updateParameters(body, id) {
         const player = body.player;
         const entity = this.model.players[id];
-        //console.log(body);
         entity.x = player.x;
         entity.y = player.y;
         entity.angle = player.angle;
