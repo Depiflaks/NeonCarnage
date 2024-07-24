@@ -25,7 +25,11 @@ export const ADDRESS = {
     denis: {
         start: 'ws://10.250.104.22:',
         end: '/'
-    }
+    },
+    denis_home: {
+        start: 'ws://192.168.253.252:',
+        end: '/'
+    },
 }
 
 export const DATA_BASE = {

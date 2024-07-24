@@ -76,7 +76,7 @@ export class LobbyRequest {
                 const { ownerId } = req.body;
 
                 const port = this.child.getNewPort();
-                const address = ADDRESS.denis.start + port + ADDRESS.denis.end;
+                const address = ADDRESS.denis_home.start + port + ADDRESS.denis_home.end;
                 const lobbyId = await this.database.createLobby(ownerId, address);
                 this.child.create(lobbyId, port);
 

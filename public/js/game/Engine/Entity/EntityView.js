@@ -43,7 +43,7 @@ class EntityView {
         const angle = bot.getAngle();
         this.context.save();
         this.context.translate(x, y);
-        this.context.rotate(angle + 90 * RAD);
+        this.context.rotate(angle);
         this.context.drawImage(gunSkin.alive, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
 
         this.context.restore();

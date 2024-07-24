@@ -9,7 +9,7 @@ class BotModel extends EnemyModel {
         this.shooting = shooting;
         this.isRecharging = false;
         //this.skin = new BotSkin({skinId});
-        this.skin = new Skin({skinId});
+        this.skin = new BotSkin({skinId});
     }
 }
 

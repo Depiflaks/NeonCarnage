@@ -143,10 +143,10 @@ class SessionController {
                     bot.health = Math.max(0, bot.health - damage[id]);
                     if (bot.isAlive && bot.health === 0) {
                         bot.isAlive = false;
-                        setTimeout(() => {
+                        /*setTimeout(() => {
                             bot.isAlive = true;
                             bot.health = bot.maxHealth;
-                        }, ENTITY.rebornDelay);
+                        }, ENTITY.rebornDelay);*/
                     }
                 }
             });

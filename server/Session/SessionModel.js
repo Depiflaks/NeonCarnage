@@ -46,7 +46,7 @@ class SessionModel {
                     x: 170,
                     y: 170
                 },
-                skinId: 1,
+                skinId: 0,
                 state: STATES.wanders,
                 health: 5,
                 maxHealth: ENTITY.maxHealth,
@@ -59,7 +59,7 @@ class SessionModel {
                     x: 350,
                     y: 350
                 },
-                skinId: 2,
+                skinId: 1,
                 state: STATES.wanders,
                 health: 5,
                 maxHealth: ENTITY.maxHealth,
