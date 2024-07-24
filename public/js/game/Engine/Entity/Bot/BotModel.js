@@ -8,7 +8,7 @@ class BotModel extends EnemyModel {
         this.id = id;
         this.shooting = shooting;
         this.isRecharging = false;
-        console.log(this)
+        //console.log(this)
     }
 }
 

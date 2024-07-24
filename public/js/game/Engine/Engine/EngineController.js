@@ -57,8 +57,6 @@ class EngineController {
             const distance = Math.sqrt((weapon.model.x - x) ** 2 + (weapon.model.y - y) ** 2);
             if (weapon.getStatus() === WEAPON_STATE.onTheGround && distance <= WEAPON.minDistance && !this.player.getWeapon()) {
                 this.player.pickUpWeapon(weapon);
-                // weapon.setStatus(WEAPON_STATE.inTheHand);
-                // this.player.setWeapon(weapon);
             }
         });
     }
@@ -83,7 +81,7 @@ class EngineController {
                 this.player.removeVisibleBot(bot.model.id);
             }
             if (bot.getShooting()) {
-                console.log(bot.getShooting())
+                //console.log(bot.getShooting())
                 bot.shot();
             }
             bot.getBullets().forEach(bullet => {

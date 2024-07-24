@@ -7,6 +7,9 @@ addEventListener('DOMContentLoaded', async () => {
     fetch(`/getMap?roomId=${roomId}&playerId=${playerId}`)
     .then(response => response.json())
     .then(data => {
+        console.log(data);
+        localStorage.setItem("responseData", JSON.stringify(data));
+
         const game = new Game(
             data,
             document

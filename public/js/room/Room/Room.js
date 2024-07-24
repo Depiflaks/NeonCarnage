@@ -60,6 +60,19 @@ export class Room {
         const lobby = (await lobbyResponse.json());
 
         if (lobby.is_started) {
+            fetch(`/getMap?roomId=${roomId}&playerId=${playerId}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                localStorage.setItem("responseData", JSON.stringify(data));
+
+                const game = new Game(
+                    data,
+                    document
+                );
+        
+                game.loop();
+            })
             window.location.href = `/game?id=${this.roomId}`;
         }
 
