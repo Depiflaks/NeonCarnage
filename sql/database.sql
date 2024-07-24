@@ -16,13 +16,14 @@ CREATE TABLE lobby (
 );
 
 CREATE TABLE player (
-	player_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+  player_id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     lobby_id INT UNSIGNED,
     player_name VARCHAR(40) NOT NULL,
     socket_id VARCHAR(40),
     skin_id INT UNSIGNED,
     ready TINYINT default 0,
     is_owner TINYINT default 0,
+    score INT UNSIGNED default 0,
     FOREIGN KEY (lobby_id) REFERENCES lobby (lobby_id)
 );
 
