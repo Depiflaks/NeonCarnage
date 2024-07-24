@@ -37,8 +37,6 @@ class PlayerController extends EntityController {
         if (!this.getWeapon()) return;
         if (this.getWeapon().getBattleType() === "distant" && !this.getWeapon().getShootingInterval()) {
             this.model.isShooting = true;
-            //this.shot();
-            //this.getWeapon().setShootingInterval(setInterval(() => this.shot(), this.getWeapon().getRapidity()));
         }
         if (this.getWeapon().getBattleType() === "close") {
             this.strike();
@@ -52,8 +50,9 @@ class PlayerController extends EntityController {
     die() {
         this.soundController.playTrack("death");
         if(!this.getWeapon()) return;
-        clearInterval(this.getWeapon().getShootingInterval());
-        this.getWeapon().setShootingInterval(null);
+        this.model.stacked = false;
+        this.model.isShooting = false;
+        this.model.isRecharging = false;
         this.removeMeleeStrike();
     }
 

@@ -1,7 +1,5 @@
 const data = JSON.parse(localStorage.getItem("responseData")).const;
 
-console.log(data);
-
 export const RAD = data.rad;
 export const FPS = data.fps;
 export const RPS = data.rps;

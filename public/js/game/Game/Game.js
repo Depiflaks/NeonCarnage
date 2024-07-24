@@ -13,7 +13,7 @@ class Game {
 
         this.lastFrame = 0;
         this.lastRequest = 0;
-
+        setTimeout(() => {window.location.href = `/lobby`;}, 180000);
         window.addEventListener('wheel', function(event) {
             if (event.ctrlKey) {
                 event.preventDefault();

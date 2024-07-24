@@ -1,4 +1,3 @@
-import { SERVER } from "../../game/CONST.js";
 import { Responder } from "./Responder/Responder.js";
 import { Sender } from "./Sender/Sender.js";
 

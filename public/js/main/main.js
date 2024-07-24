@@ -2,7 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const startButton = document.getElementById('start');
     const nickNameInput = document.getElementById('nickName');
 
+    let flag = true;
+
     addEventListener('mousemove', () => {
+        if (!flag) return;
+        flag = false;
         const track = new Audio("../../../public/sound/M_O_O_N - Dust.mp3");
         track.loop = false;
         track.volume = 1.0;
@@ -13,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     startButton.addEventListener('click', async () => {
         const playerName = nickNameInput.value.trim();
         
+        
+
         if (!playerName) {
             return;
         }

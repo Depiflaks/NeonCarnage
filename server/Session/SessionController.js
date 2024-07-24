@@ -63,6 +63,9 @@ class SessionController {
     updateWeaponState(body, entity) {
         const weapon = body.change.weapon;
         if (weapon.state === WEAPON_STATE.onTheGround) {
+            if (!entity.weaponId) return;
+            //console.log(this.model.objects.weapons[entity.weaponId]);
+            //console.log(this.model.objects.weapons[entity.weaponId].state);
             this.model.objects.weapons[entity.weaponId].state = weapon.state;
             entity.weaponId = weapon.id;
         } else if (weapon.state === WEAPON_STATE.inTheHand) {

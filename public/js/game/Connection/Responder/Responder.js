@@ -26,7 +26,7 @@ export class Responder {
         this.updateCorpses(body);
         this.updatePlayers(body);
         //console.log(body.bots)
-        this.updateBots(body.bots);
+        //this.updateBots(body.bots);
     }
 
     updateWeapons(body) {

@@ -60,19 +60,9 @@ export class Room {
         const lobby = (await lobbyResponse.json());
 
         if (lobby.is_started) {
-            fetch(`/getMap?roomId=${roomId}&playerId=${playerId}`)
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                localStorage.setItem("responseData", JSON.stringify(data));
-
-                const game = new Game(
-                    data,
-                    document
-                );
-        
-                game.loop();
-            })
+            const dataResponse = await fetch(`/getMap?roomId=${this.roomId}&playerId=${this.playerId}`);
+            const data = await dataResponse.json();
+            localStorage.setItem("responseData", JSON.stringify(data));
             window.location.href = `/game?id=${this.roomId}`;
         }
 
@@ -99,7 +89,7 @@ export class Room {
             const players = await playersResponse.json();
             const count = players.length;
             const ready = players.filter(player => player.ready).length;
-            const max = 2
+            const max = 4
             if (count < max) {
                 this.readyButton.disabled = true;
                 this.readyButton.innerHTML = `${players.length} / 4`;
