@@ -3,7 +3,7 @@ import { PlayerController } from "../Entity/Player/PlayerController.js";
 
 
 class EngineModel {
-    constructor({map: {cells, walls, weapons, ammunitions, aidKits, spawnPoints}, player: player}, soundController) {
+    constructor({map: {cells, walls, weapons, ammunitions, aidKits, spawnPoints}, player: player, mode: mode}, soundController) {
         this.field = new Field({
             groundList: cells, 
             wallList: walls, 
@@ -13,9 +13,10 @@ class EngineModel {
             spawnPoints: spawnPoints
         });
         this.player = new PlayerController(this.field.getSpawnPoint(), player.skinId, player.nickName, soundController);
+        this.mode = mode;
         this.enemies = [];
         this.playerList = {};
-        this.leaderBoard = false;
+        this.leaderBoardView = false;
         this.bots = [];
     }
 

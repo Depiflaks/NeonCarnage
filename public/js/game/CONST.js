@@ -37,3 +37,5 @@ export const BULLET = data.bulletView;
 export const DRAW_BULLETS_AMOUNT = data.bulletAmount;
 
 export const MELEE_STRIKE = data.meleeStrike;
+
+export const GAME_MODE = data.gameMode;

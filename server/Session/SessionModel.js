@@ -11,7 +11,7 @@ class SessionModel {
                 this.mode = GAME_MODE.deathMatch
                 break;
             case GAME_MODE.battleRoyale.name:
-                this.mode = GAME_MODE.deathMatch
+                this.mode = GAME_MODE.battleRoyale
                 break;
             case GAME_MODE.operationOverrun.name:
                 this.mode = GAME_MODE.operationOverrun

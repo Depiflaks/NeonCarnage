@@ -107,7 +107,8 @@ class Map {
             weapons: map.weaponSet, 
             aidKits: map.aidKitSet,
             ammunitions: map.ammunitionSet,
-            spawnPoints: map.spawnPoints
+            spawnPoints: map.spawnPoints,
+            area: map.area,
         }
     }
     

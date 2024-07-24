@@ -259,7 +259,7 @@ class EngineController {
             }
         }
         if (event.code === KEYBOARD_F) {
-            this.model.leaderBoard = true;
+            this.model.leaderBoardView = true;
             this.soundController.setVolume(0.4);
         }
     }
@@ -270,14 +270,14 @@ class EngineController {
      */
     keyUp(event) {
         if (event.code === KEYBOARD_F) {
-            this.model.leaderBoard = false;
+            this.model.leaderBoardView = false;
             this.soundController.setVolume(1.0);
         }
     }
 
     nextFrame() {
         this.update();
-        this.view.update(this.field, this.player, this.enemies, this.bots, this.player.leaderBoard, this.model.leaderBoard, this.model.isShaking());
+        this.view.update(this.model);
     }
 }
 

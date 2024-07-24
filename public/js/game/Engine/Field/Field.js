@@ -79,6 +79,17 @@ class Field extends Drawable {
         this.verticalWalls.forEach(wall => wall.draw(context));
     }
 
+    drawTimer(context) {
+        //console.log(this.timer);
+        const red = this.timer < 16;
+        context.save();
+        context.font = red ? "40px Nosifer" : "35px Russo One";
+        context.fillStyle = red ? "red" : "white";
+        context.textAlign = "center";
+        context.fillText(this.timer, WINDOW.w / 2, 50);
+        context.restore();
+    }
+
     drawWeapons(entities, context) {
         let indexX, indexY;
         Object.values(this.weapons).forEach(weapon => {

@@ -14,7 +14,8 @@ class EngineView {
         this.gradientOffset = 0;
     }
 
-    draw(field, player, enemies, bots, list, leaderBoard) {
+    draw(model) {
+        const [field, player, enemies, bots] = [model.field, model.player, model.enemies, model.bots]
         field.drawGround(this.context);
         field.drawCorpse(this.context);
         this.drawBullets(player.getBullets(), field);
@@ -46,12 +47,12 @@ class EngineView {
         field.drawWalls(this.context);
         this.entityView.drawPlayerHealthBar(player);
         this.drawBulletAmount(player);
-        if (leaderBoard) {
-            this.drawLeaderBoard(list);
-        }
+        if (model.leaderBoardView) this.drawLeaderBoard(player.leaderBoard);
         this.entityView.drawCursor(player.getCursorPosition());
+        if (model.mode.timer) field.drawTimer(this.context);
         this.drawGradientOverlay();
         this.drawHealthOverlay(player.getHealth(), player.getMaxHealth());
+
     }
 
     drawBullets(bullets, field) {
@@ -105,14 +106,14 @@ class EngineView {
         })
     }
 
-    update(field, player, enemies, bots, list, leaderBoard, isShaking) {
-        field.clearFrame(this.context);
-        if (isShaking) {
+    update(model) {
+        model.field.clearFrame(this.context);
+        if (model.isShaking()) {
             this.applyShake();
         } else {
             this.resetShake();
         }
-        this.draw(field, player, enemies, bots, list, leaderBoard);
+        this.draw(model);
     }
 
     applyShake() {

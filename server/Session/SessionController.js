@@ -4,10 +4,46 @@ import { AIDKIT } from "../CONST/GAME/FIELD/AIDKIT.js";
 import { AMMUNITION } from "../CONST/GAME/FIELD/AMMUNITION.js";
 import { ENTITY } from "../CONST/GAME/ENTITY/ENTITY.js";
 import { GAME_MODE } from "../CONST/GAME/GAME.js";
+import { setInterval } from "timers";
 
 class SessionController {
     constructor(data) {
         this.model = new SessionModel(data);
+        this.initGameMode()
+    }
+
+    initGameMode() {
+        switch (this.model.mode.name) {
+            case GAME_MODE.deathMatch.name:
+                this.initDeathMatch()
+                break;
+            case GAME_MODE.battleRoyale.name:
+                this.initBattleRoyale()
+                break;
+            case GAME_MODE.operationOverrun.name:
+                this.initOperationOverrun()
+                break;  
+        }
+    }
+
+    initDeathMatch() {
+        this.timer = this.model.mode.seconds;
+        this.interval = setInterval(() => {this.decTimer()}, 1000);
+    }
+
+    decTimer() {
+        this.timer -= 1;
+        if (this.timer === 0) {
+            clearInterval(this.interval);
+        }
+    }
+
+    initBattleRoyale() {
+
+    }
+
+    initOperationOverrun() {
+
     }
 
     addPlayer(connection, {health, maxHealth}) {
@@ -47,7 +83,7 @@ class SessionController {
         this.updateAmmunitions(body, entity);
         this.updateDamage(body, entity, id);
         this.model.updateBots();
-        this.checkEndCondition();
+        //this.checkEndCondition();
     }
 
     updateBullets(body, entity) {
@@ -152,7 +188,7 @@ class SessionController {
             },
             leaderBoard: this.model.leaderBoard,
             bots: this.model.bots,
-            mode: this.model.mode,
+            timer: this.timer,
         };
         return response;
     }

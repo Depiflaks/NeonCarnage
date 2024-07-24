@@ -30,6 +30,7 @@ export class LobbyRequest {
                 const lobby = await this.database.lobby.getLobbyById(roomId)
                 const allReady = players.every(player => player.ready);
                 if (allReady) {
+                    //console.log(3, lobby.game_mode);
                     this.child.sendStart(roomId, {
                         map: this.creature.createMap(lobby.game_mode, lobby.map_number),
                         mode: lobby.game_mode,
@@ -51,6 +52,7 @@ export class LobbyRequest {
                 data.player.nickName = player.player_name;
                 data.player.skinId = player.skin_id;
                 data.address = lobby.address;
+                //console.log(1, lobby.game_mode);
                 switch (lobby.game_mode) {
                     case GAME_MODE.deathMatch.name:
                         data.mode = GAME_MODE.deathMatch;
@@ -62,6 +64,7 @@ export class LobbyRequest {
                         data.mode = GAME_MODE.operationOverrun;
                         break;
                 }
+                //console.log(1, data.mode);
                 res.json(data);
             } catch (error) {
                 console.error('Ошибка:', error);
@@ -76,7 +79,7 @@ export class LobbyRequest {
                 const { ownerId } = req.body;
 
                 const port = this.child.getNewPort();
-                const address = ADDRESS.ignat.start + port + ADDRESS.ignat.end;
+                const address = ADDRESS.sergey.start + port + ADDRESS.sergey.end;
                 const lobbyId = await this.database.createLobby(ownerId, address);
                 this.child.create(lobbyId, port);
 

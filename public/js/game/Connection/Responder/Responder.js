@@ -1,7 +1,7 @@
 import { Bullet } from "../../Engine/Weapon/Bullet/Bullet.js";
 import { Corpse } from "../../Engine/Field/Components/Corpse.js";
 import { EnemyController } from "../../Engine/Entity/Enemy/EnemyController.js";
-import { ENTITY } from "../../CONST.js";
+import { ENTITY, GAME_MODE } from "../../CONST.js";
 import {BotController} from "../../Engine/Entity/Bot/BotController.js";
 
 export class Responder {
@@ -12,11 +12,16 @@ export class Responder {
         this.playerList = engine.model.playerList;
         this.bots = engine.bots;
         this.socket = socket;
+        this.mode = engine.model.mode;
     }
 
     onInit(body) {
         this.id = body.id;
         this.socket.id = this.id
+    }
+
+    onEnd() {
+        window.location.href = `/lobby`
     }
 
     onResponse(body) {
@@ -27,6 +32,11 @@ export class Responder {
         this.updatePlayers(body);
         //console.log(body.bots)
         //this.updateBots(body.bots);
+        if (this.mode.timer) this.updateTimer(body);
+    }
+
+    updateTimer(body) {
+        this.field.timer = body.timer;
     }
 
     updateWeapons(body) {

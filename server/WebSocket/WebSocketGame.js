@@ -3,8 +3,10 @@ import crypto from 'crypto';
 
 class WebSocketGame {
     constructor(port, session) {
+        this.endGame = false;
         this.socket = new WebSocketServer({ port: port });
         this.session = session;
+        setTimeout(() => {this.sendEnd()}, this.session.model.mode.seconds * 1000);
         this.socket.on('connection', (connection, req) => {this.onConnection(connection, req)});
     }
 
@@ -59,6 +61,13 @@ class WebSocketGame {
 
     sendResponse(connection, data) {
         this.send(connection, "response", data)
+    }
+
+    sendEnd() {
+        for (let id in this.session.model.players) {
+            if (this.session.model.connections[id].readyState !== WebSocket.OPEN) continue;
+            this.send(this.session.model.connections[id], "end", [])
+        }
     }
 
     send(connection, type, data) {
