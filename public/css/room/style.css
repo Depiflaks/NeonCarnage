@@ -1,0 +1,262 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to top, #00ffcc, #2d2d2d);
+    color: #00ffcc;
+    font-family: 'Russo One';
+    overflow: hidden;
+}
+
+* {
+    user-select: none; /* Prevent text selection for all elements */
+}
+
+h1 {
+    font-family: 'Nosifer', sans-serif;
+    font-size: 3em;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 0 0 0 #00ffcc, 0 0 10px #00ffcc, 0 0 30px #00ffcc;
+    animation: glow 1.5s infinite alternate, neonFlow 3s infinite;
+}
+
+.menu {
+    text-align: center;
+}
+
+.menu h1 {
+    font-family: "Nosifer";
+    font-size: 3em;
+    color: #00ffcc;
+    text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
+    position: relative;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    margin: 40px 0;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #1a1a1a;
+    font-family: "Russo One";
+    font-size: 1.5em;
+    padding: 10px 20px;
+    background: #00ffcc;
+    border: 2px solid #00ffcc;
+    box-shadow: 3px 3px #1a1a1a, -3px -3px #00ffcc;
+    transition: background 0.3s;
+}
+
+.menu a:hover {
+    background: #2d2d2d;
+}
+
+
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+}
+
+select {
+    display: block;
+    width: 100%;
+    margin: 0 auto 20px;
+    padding: 10px;
+    font-family: 'Russo One';
+    font-size: 1.2em;
+    border: 2px solid #00ffcc;
+    border-radius: 5px;
+    background-color: #1a1a1a;
+    color: #00ffcc;
+    text-align: center;
+    outline: none;
+    box-shadow: 0 0 10px #00ffcc;
+    appearance: none;
+}
+
+select option {
+    background: #1a1a1a;
+    color: #00ffcc;
+}
+
+select::-webkit-inner-spin-button, 
+select::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+
+a {
+    color: inherit; /* Устанавливаем цвет текста как у родительского элемента */
+}
+
+button {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-family: 'Russo One';
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    background-color: #00ffcc;
+    color: #1a1a1a;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+}
+
+button:hover {
+    background-color: #1a1a1a;
+    color: #00ffcc;
+}
+
+button:disabled {
+    background-color: #4b4b4b;
+    color: #1a1a1a;
+    box-shadow: none;
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
+    }
+    100% {
+        text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
+    }
+}
+
+@keyframes neonFlow {
+    0% {
+        color: #1a1a1a;
+    }
+    50% {
+        color: #00ffcc;
+    }
+    100% {
+        color: #1a1a1a;
+    }
+}
+
+.lobby {
+    width: 80%;
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    text-align: center;
+}
+
+.lobby-section {
+    flex: 1 1 23%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    border: 2px solid #00ffcc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00ffcc;
+    background-color: #2d2d2d;
+    max-height: 70vh;
+    min-height: 70vh;
+    overflow-y: auto;
+}
+
+.section-header {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #00ffcc;
+}
+
+.players-list {
+    justify-content: flex-start;
+}
+
+.players-list, .chat-box, .game-settings, .player-settings {
+    flex: 1;
+}
+
+.players-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.players-list th, .players-list td {
+    border: 2px solid #00ffcc;
+    padding: 10px;
+    text-align: center;
+}
+
+.players-list th {
+    background-color: #1a1a1a;
+}
+
+.players-list td {
+    background-color: #2d2d2d;
+}
+
+.chat-box {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chat-box textarea, .chat-box .message-area {
+    width: 90%;
+    padding: 10px;
+    border: 2px solid #00ffcc;
+    border-radius: 5px;
+    background-color: #1a1a1a;
+    color: #00ffcc;
+    resize: none;
+    outline: none;
+    box-shadow: 0 0 10px #00ffcc;
+}
+
+.message-area div {
+    text-align: left;
+    font-size: 0.9em;
+}
+
+.chat-box span {
+    color: greenyellow;
+}
+
+.chat-box .message-area {
+    flex: 1;
+}
+
+.chat-box .text-input {
+    margin: 10px 0 0;
+}
+
+.game-settings, .player-settings {
+    display: flex;
+    flex-direction: column;
+}
+
+.game-settings .form-group, .player-settings .form-group {
+    margin-bottom: 20px;
+}
+
+.form-group select {
+    background-repeat: no-repeat;
+}
+
+label {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+    color: #00ffcc;
+}

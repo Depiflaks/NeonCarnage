@@ -48,7 +48,6 @@ export class Sender {
                 angle: bullet.getAngle()
             };
         })
-        //console.log(body.change.weapon);
         this.send("update", body);
     }
 

@@ -202,7 +202,7 @@ const weaponSet = [
     },
     {
         id: 2,
-        type: WEAPON_MODELS.pistol,
+        type: WEAPON_MODELS.uzi,
         x: 10,
         y: 3,
     },
@@ -214,7 +214,7 @@ const weaponSet = [
     },
     {
         id: 4,
-        type: WEAPON_MODELS.pistol,
+        type: WEAPON_MODELS.uzi,
         x: 18,
         y: 8,
     },
@@ -226,7 +226,7 @@ const weaponSet = [
     },
     {
         id: 6,
-        type: WEAPON_MODELS.machineGun, 
+        type: WEAPON_MODELS.shotGun, 
         x: 11, 
         y: 7, 
     },

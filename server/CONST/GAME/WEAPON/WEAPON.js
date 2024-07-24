@@ -1,16 +1,16 @@
-const WEAPON = {
+export const WEAPON = {
     w: 80,
     h: 120,
     minDistance: 80
 
 };
 
-const WEAPON_STATE = {
+export const WEAPON_STATE = {
     onTheGround: 0,
     inTheHand: 1,
 };
 
-const MELEE_STRIKE = {
+export const MELEE_STRIKE = {
     name: 'knife',
     handPoint: 40,
     width: 150,
@@ -23,5 +23,3 @@ const MELEE_STRIKE = {
     knifeRightBloodyImage: "public/assets/Weapon/rightBloody.png",
 
 };
-
-export {WEAPON, WEAPON_STATE, MELEE_STRIKE};

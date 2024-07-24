@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Lobby</title>
+    <link href="../../public/css/lobby/style.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <div class="lobby">
+        <h1>Game Lobby</h1>
+        <div>
+            <button id="createButton">Create Room</button>
+            <button id="updateButton">Update</button>
+        </div>
+        <div class="table-container">
+            <table class="room-list">
+                <thead>
+                    <tr>
+                        <th>Creator</th>
+                        <th>Players</th>
+                        <th>Game Mode</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="roomsContainer">
+                    <!-- Dynamic room entries will be added here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script type="module" src="/public/js/lobby/main.js"></script>
+</body>
+</html>

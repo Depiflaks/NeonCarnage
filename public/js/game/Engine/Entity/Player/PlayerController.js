@@ -36,8 +36,9 @@ class PlayerController extends EntityController {
     mouseDown(event) {
         if (!this.getWeapon()) return;
         if (this.getWeapon().getBattleType() === "distant" && !this.getWeapon().getShootingInterval()) {
-            this.shot();
-            this.getWeapon().setShootingInterval(setInterval(() => this.shot(), this.getWeapon().getRapidity()));
+            this.model.isShooting = true;
+            //this.shot();
+            //this.getWeapon().setShootingInterval(setInterval(() => this.shot(), this.getWeapon().getRapidity()));
         }
         if (this.getWeapon().getBattleType() === "close") {
             this.strike();
@@ -83,7 +84,6 @@ class PlayerController extends EntityController {
         this.addAmount(-1);
         this.shotSound();
         for (let i = 0; i < this.getWeapon().getGrouping(); i++) {
-            
             const angle = this.getAngle();
             const x = this.getPosition().x + WEAPON.h/4.1 * Math.cos(angle);
             const y = this.getPosition().y + WEAPON.h/4.1 * Math.sin(angle);
@@ -103,8 +103,7 @@ class PlayerController extends EntityController {
     mouseUp(event) {
         if (!this.getWeapon()) return;
         if (this.getWeapon().getBattleType() === "distant") {
-            clearInterval(this.getWeapon().getShootingInterval());
-            this.getWeapon().setShootingInterval(null);
+            this.model.isShooting = false;
         }
         if (this.getWeapon().getBattleType() === "close") {
             if (this.getStacked()) {
@@ -185,6 +184,11 @@ class PlayerController extends EntityController {
 
     update() {
         if (!this.isAlive()) return;
+        if (this.getWeapon() && this.model.isShooting && !this.model.isRecharging) {
+            this.model.isRecharging = true;
+            setTimeout(() => {this.model.isRecharging = false}, this.getWeapon().getRapidity());
+            this.shot()
+        }
         if (this.getStacked()) return;
         this.model.updatePosition();
 
@@ -197,7 +201,6 @@ class PlayerController extends EntityController {
     }
 
     reborn({x, y}) {
-        //console.log(x, y);
         this.model.x = x;
         this.model.y = y;
         this.soundController.playTrack("reborn");

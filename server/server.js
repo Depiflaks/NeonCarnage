@@ -1,3 +1,3 @@
-import { ServerController } from "./ServerController/ServerController.js";
+import { LobbyServer } from "./Server/LobbyServer.js";
 
-const server = new ServerController();
+new LobbyServer();

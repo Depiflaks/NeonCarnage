@@ -1,6 +1,6 @@
 import { RAD } from "../GAME.js";
 
-const HEALTH_BAR = {
+export const HEALTH_BAR = {
     squareSize: 15,
     squaresPerRow: 5,
     offsetX: 10,
@@ -8,7 +8,7 @@ const HEALTH_BAR = {
     gap: 0, // Gap between squares
 }
 
-const ENTITY = {
+export const ENTITY = {
     radius: 30,
     w: 100,
     h: 40,
@@ -25,8 +25,6 @@ const ENTITY = {
     rebornDelay: 3000,
 };
 
-const ENEMY = {
+export const ENEMY = {
     period: 5,
 }
-
-export {ENTITY, HEALTH_BAR, ENEMY};

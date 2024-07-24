@@ -41,7 +41,6 @@ class SessionController {
         entity.meleeStrike = player.meleeStrike;
         entity.visibleBots = player.visibleBots;
 
-        //console.log(entity.meleeStrike);
         this.model.objects.corpses[id] = body.field.corpses;
         this.updateWeaponState(body, entity);
         this.updateWeapon(entity);
@@ -51,7 +50,7 @@ class SessionController {
         this.updateBullets(body, entity);
         
         this.updateAidKits(body, entity);
-        this.updateAmmunitions(body);
+        this.updateAmmunitions(body, entity);
         this.updateDamage(body, entity, id);
     }
 
@@ -79,7 +78,7 @@ class SessionController {
     updateAmount(body, entity) {
         if (!entity.weaponId) return;
         const weapon = this.model.objects.weapons[entity.weaponId];
-        weapon.amount += body.change.amount;
+        weapon.amount = Math.min(weapon.maxAmount, Math.max(0, weapon.amount + body.change.amount));
     }
 
     updateAidKits(body, entity) {
@@ -95,13 +94,16 @@ class SessionController {
         if (entity.health > 0) entity.isAlive = true;
     }
 
-    updateAmmunitions(body) {
+    updateAmmunitions(body, entity) {
         const ammunitions = body.change.ammunitions;
         for (let id of new Set(ammunitions)) {
             this.model.objects.ammunitions[id] = false;
             setTimeout(() => {
                 this.model.objects.ammunitions[id] = true;
             }, AMMUNITION.delay);
+            //if (!entity.weaponId) continue;
+            //const weapon = this.model.objects.weapons[entity.weaponId];
+            //weapon.amount = Math.min(weapon.maxAmount, Math.max(0, weapon.amount + body.change.amount));
         }
     }
 

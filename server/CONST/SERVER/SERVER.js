@@ -9,4 +9,24 @@ export const SERVER = {
     denis_home: 'ws://192.168.253.252:8000/'
 };
 
+export const ADDRESS = {
+    sergey: {
+        start: 'ws://10.250.104.142:',
+        end: '/'
+    },
+    sergey_home: {
+        start: 'ws://192.168.1.131:',
+        end: '/'
+    }
+}
+
+export const DATA_BASE = {
+    sergey: {
+        host: "localhost",
+        user: "smmm",
+        database: "NeonCarnage",
+        password: "3030"
+    }
+}
+
 export const PORT = 8000;

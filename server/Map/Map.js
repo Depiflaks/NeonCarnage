@@ -24,9 +24,9 @@ class Map {
 
     }
 
-    create() {
+    createMap(gameMode, mapNumber) {
         return {
-            "map": this.getMap(GAME_MODE.BattleRoyale, 1),
+            "map": this.getMap(gameMode, mapNumber),
             "player": {
             },
             "const": {
@@ -66,7 +66,7 @@ class Map {
 
     getMap(gameMode, mapNumber) {
         switch (gameMode) {
-            case GAME_MODE.BattleRoyale:
+            case GAME_MODE.battleRoyale:
                 switch (mapNumber) {
                     case 1:
                         return this.getObjects(map1);
@@ -76,7 +76,7 @@ class Map {
                         return this.getObjects(map3);
                 };
                 break;
-            case GAME_MODE.DeathMatch:
+            case GAME_MODE.deathMatch:
                 switch (mapNumber) {
                     case 1:
                         return this.getObjects(map4);
@@ -86,7 +86,7 @@ class Map {
                         return this.getObjects(map6);
                 };
                 break;
-            case GAME_MODE.SurvivalRun:
+            case GAME_MODE.survivalRun:
                 switch (mapNumber) {
                     case 1:
                         return this.getObjects(map7);
