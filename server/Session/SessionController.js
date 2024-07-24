@@ -10,13 +10,6 @@ class SessionController {
         this.model = new SessionModel(data);
     }
 
-    startBotUpdates() {
-        setInterval(() => {
-            this.model.updateBots();
-
-        }, 1000);
-    }
-
     addPlayer(connection, {health, maxHealth}) {
         this.model.players[connection.id] = {
             health: health,
@@ -117,9 +110,8 @@ class SessionController {
             player.health = Math.max(0, player.health - damage[id])
             if (player.health === 0) {
                 player.isAlive = false;
-                setTimeout(() => {
+                if (this.model.mode.respawn.player) setTimeout(() => {
                     player.isAlive = true;
-
                     player.health = player.maxHealth;
                 }, ENTITY.rebornDelay);
                 if (player.weaponId) {
@@ -144,7 +136,6 @@ class SessionController {
                 
                 break;
             case GAME_MODE.operationOverrun:
-                
                 break;  
             default:
                 break;

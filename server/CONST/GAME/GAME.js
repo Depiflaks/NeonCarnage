@@ -1,3 +1,4 @@
+
 export const RAD = Math.PI / 180;
 export const FPS = 90;
 export const RPS = 40;
@@ -37,9 +38,42 @@ export const CAMERA = {
 export const KEYBOARD_E = 'KeyE';
 
 export const GAME_MODE = {
-    deathMatch: "Death Match",
-    battleRoyale: "Battle Royale",
-    operationOverrun: "Operation Overrun"
+    deathMatch: {
+        name: "Death Match",
+        respawn: {
+            aidKid: true,
+            ammunition: true,
+            player: true,
+        },
+        timer: true,
+        area: false,
+        bots: false,
+        endPoint: false,
+    },
+    battleRoyale: {
+        name: "Battle Royale",
+        respawn: {
+            aidKid: false,
+            ammunition: false,
+            player: false
+        },
+        timer: false,
+        area: true,
+        bots: true,
+        endPoint: false,
+    },
+    operationOverrun: {
+        name: "Operation Overrun",
+        respawn: {
+            aidKid: false,
+            ammunition: false,
+            player: false
+        },
+        timer: false,
+        area: false,
+        bots: true,
+        endPoint: true,
+    }
 }
 
 export const KEYBOARD_F = 'KeyF';

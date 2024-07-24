@@ -1,11 +1,22 @@
 import {STATES} from "../CONST/GAME/ENTITY/BOT.js";
+import { GAME_MODE } from "../CONST/GAME/GAME.js";
 
 import { WEAPON_STATE } from "../CONST/GAME/WEAPON/WEAPON.js";
 
 class SessionModel {
     constructor(data) {
         this.field = data.map;
-        this.gameMode = data.mode;
+        switch (data.mode) {
+            case GAME_MODE.deathMatch.name:
+                this.mode = GAME_MODE.deathMatch
+                break;
+            case GAME_MODE.battleRoyale.name:
+                this.mode = GAME_MODE.deathMatch
+                break;
+            case GAME_MODE.operationOverrun.name:
+                this.mode = GAME_MODE.operationOverrun
+                break;
+        }
         this.maxPlayers = 100;
         this.players = {};
         this.playersCount = 0;

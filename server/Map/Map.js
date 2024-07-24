@@ -67,7 +67,7 @@ class Map {
 
     getMap(gameMode, mapNumber) {
         switch (gameMode) {
-            case GAME_MODE.battleRoyale:
+            case GAME_MODE.battleRoyale.name:
                 switch (mapNumber) {
                     case 1:
                         return this.getObjects(map1);
@@ -77,7 +77,7 @@ class Map {
                         return this.getObjects(map3);
                 };
                 break;
-            case GAME_MODE.deathMatch:
+            case GAME_MODE.deathMatch.name:
                 switch (mapNumber) {
                     case 1:
                         return this.getObjects(map4);
@@ -87,7 +87,7 @@ class Map {
                         return this.getObjects(map6);
                 };
                 break;
-            case GAME_MODE.survivalRun:
+            case GAME_MODE.survivalRun.name:
                 switch (mapNumber) {
                     case 1:
                         return this.getObjects(map7);

@@ -25,7 +25,7 @@ class DatabaseController {
 
     // Создание lobby
     async createLobby(ownerId, port) {
-        const gameMode = GAME_MODE.deathMatch;
+        const gameMode = GAME_MODE.deathMatch.name;
         const mapNumber = 1;
         const timeCreation = new Date().toISOString().slice(0, 19).replace('T', ' '); // Текущее время
         
