@@ -65,11 +65,6 @@ class Field extends Drawable {
         this.hideCells();
     }
 
-    getSpawnPoint() {
-        const {x, y} = this.spawnPoints[Math.floor(Math.random() * this.spawnPoints.length)];
-        return {x: x + this.x, y: y + this.y};
-    }
-
     drawGround(context) {
         this.cells.forEach(row => row.forEach(cell => { if(cell) {cell.draw(context)}}));
     }

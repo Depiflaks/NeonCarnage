@@ -12,7 +12,7 @@ class EngineModel {
             aidKitSet: aidKits, 
             spawnPoints: spawnPoints
         });
-        this.player = new PlayerController(this.field.getSpawnPoint(), player.skinId, player.nickName, soundController);
+        this.player = new PlayerController({x: 600, y: 500}, player.skinId, player.nickName, soundController);
         this.enemies = [];
         this.playerList = {};
         this.leaderBoard = false;

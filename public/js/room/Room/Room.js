@@ -89,7 +89,7 @@ export class Room {
             const players = await playersResponse.json();
             const count = players.length;
             const ready = players.filter(player => player.ready).length;
-            const max = 1
+            const max = 2
             if (count < max) {
                 this.readyButton.disabled = true;
                 this.readyButton.innerHTML = `${players.length} / 4`;

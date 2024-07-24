@@ -109,6 +109,15 @@ class SessionModel {
     getAngle(from, to) {
         return Math.atan2(to.y - from.y, to.x - from.x);
     }
+
+    getSpawnPoint(id){
+        return this.field.map.spawnPoints[id];
+    }
+
+    getRandomSpawn() {
+        const {x, y} = this.field.map.spawnPoints[Math.floor(Math.random() * this.field.map.spawnPoints.length)];
+        return {x, y};
+    }
 }
 
 export {SessionModel}

@@ -7,6 +7,8 @@ import { ENTITY } from "../CONST/GAME/ENTITY/ENTITY.js";
 class SessionController {
     constructor(field) {
         this.model = new SessionModel(field);
+        let i = 0;
+        this.spawn = i;
         //this.startBotUpdates();
     }
 
@@ -24,6 +26,19 @@ class SessionController {
             isAlive: true
         };
         this.model.playersCount += 1;
+    }
+
+    nextSpawnPoint() {
+        const spawnPoint = this.model.getSpawnPoint(this.spawn);
+        this.spawn += 1;
+        if (this.spawn === 4) {
+            this.spawn = 0;
+        }
+        return spawnPoint;
+    }
+
+    randomSpawnPoint() {
+        return this.model.getRandomSpawn();
     }
 
     updateConnection(connection) {
@@ -121,6 +136,7 @@ class SessionController {
             if (player.health === 0) {
                 player.isAlive = false;
                 setTimeout(() => {
+                    player.spawnPoint = this.randomSpawnPoint();
                     player.isAlive = true;
                     player.health = player.maxHealth;
                 }, ENTITY.rebornDelay);
