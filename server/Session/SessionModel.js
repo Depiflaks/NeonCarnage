@@ -6,6 +6,8 @@ import { WEAPON_STATE } from "../CONST/GAME/WEAPON/WEAPON.js";
 class SessionModel {
     constructor(data) {
         this.field = data.map;
+        this.area = data.map.map.area;
+        this.area.damage = true;
         switch (data.mode) {
             case GAME_MODE.deathMatch.name:
                 this.mode = GAME_MODE.deathMatch

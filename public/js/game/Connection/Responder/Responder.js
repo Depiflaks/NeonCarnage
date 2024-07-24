@@ -12,6 +12,8 @@ export class Responder {
         this.playerList = engine.model.playerList;
         this.bots = engine.bots;
         this.socket = socket;
+        this.mode = engine.model.mode;
+        this.area = engine.model.area;
     }
 
     onInit(body) {
@@ -25,6 +27,7 @@ export class Responder {
         this.player.leaderBoard = body.leaderBoard;
         this.updateCorpses(body);
         this.updatePlayers(body);
+        this.updateArea(body);
         //console.log(body.bots)
         //this.updateBots(body.bots);
     }
@@ -32,6 +35,12 @@ export class Responder {
     updateWeapons(body) {
         for (let id in body.objects.weapons) {
             this.field.weapons[id].update(body.objects.weapons[id], {dx: this.field.x, dy: this.field.y})
+        }
+    }
+
+    updateArea(body) {
+        if(this.area) {
+            this.area.radius = body.area.radius;
         }
     }
 

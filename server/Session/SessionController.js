@@ -8,6 +8,25 @@ import { GAME_MODE } from "../CONST/GAME/GAME.js";
 class SessionController {
     constructor(data) {
         this.model = new SessionModel(data);
+        this.initGameMode();
+    }
+    
+    initGameMode() {
+        switch (this.model.mode.name) {
+            case GAME_MODE.deathMatch.name:
+                this.initDeathMatch()
+                break;
+            case GAME_MODE.battleRoyale.name:
+                this.initBattleRoyale()
+                break;
+            case GAME_MODE.operationOverrun.name:
+                this.initOperationOverrun()
+                break;  
+        }
+    }
+
+    initDeathMatch() {
+
     }
 
     addPlayer(connection, {health, maxHealth}) {
@@ -48,6 +67,37 @@ class SessionController {
         this.updateDamage(body, entity, id);
         this.model.updateBots();
         this.checkEndCondition();
+
+        if(this.model.mode.name == GAME_MODE.deathMatch.name) {
+            this.updateArea();
+        }
+    }
+
+    updateArea() {
+        this.model.area.radius -= 1;
+        for(const player in this.model.players) {
+            if(!this.isInArea(this.model.players[player].x, this.model.players[player].y)) {
+                if(this.model.area.damage) {
+                    this.model.area.damage = false;
+                    this.model.players[player].health = Math.max(0, this.model.players[player].health -= 1)
+                    if (this.model.players[player].health === 0) {
+                        this.model.players[player].isAlive = false;
+                        if (player.weaponId) {
+                            this.model.objects.weapons[player.weaponId].state = WEAPON_STATE.onTheGround;
+                            player.weaponId = null;
+                        }
+                    }
+
+                    setInterval(() => {this.model.area.damage = true;}, 1000);   
+                }                 
+            }
+        }
+    }
+
+    isInArea(x, y) {
+        const distance = Math.sqrt((x - this.model.area.x) ** 2 + (y - this.model.area.y) ** 2);
+
+        return distance <= this.model.area.radius - 500;
     }
 
     updateBullets(body, entity) {
@@ -153,6 +203,7 @@ class SessionController {
             leaderBoard: this.model.leaderBoard,
             bots: this.model.bots,
             mode: this.model.mode,
+            area: this.model.area,
         };
         return response;
     }
