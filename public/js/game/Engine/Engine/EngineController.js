@@ -89,6 +89,7 @@ class EngineController {
             });
             //console.log(this.player.getVisibleBots());
         });
+        this.player.updateSpeed()
         this.checkIntersections([...this.field.verticalWalls, ...this.field.horizontalWalls]);
         this.takeAmmunition();
         this.takeAidKit();
@@ -200,6 +201,7 @@ class EngineController {
         this.bulletsIntersectionEnemy(moveableArray);
         this.meleeStrikeIntersectionEnemy(drawableArray)
         this.intersectMeleeStrike(drawableArray);
+        
         drawableArray.forEach(obj => {
             this.player.check(obj);
         });

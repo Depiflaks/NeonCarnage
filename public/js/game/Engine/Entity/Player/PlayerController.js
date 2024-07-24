@@ -197,6 +197,7 @@ class PlayerController extends EntityController {
         } else {
             this.removeMeleeStrike();
         }
+        
     }
 
     reborn({x, y}) {
