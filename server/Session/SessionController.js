@@ -7,12 +7,13 @@ import { ENTITY } from "../CONST/GAME/ENTITY/ENTITY.js";
 class SessionController {
     constructor(field) {
         this.model = new SessionModel(field);
-        this.startBotUpdates();
+        //this.startBotUpdates();
     }
 
     startBotUpdates() {
         setInterval(() => {
             this.model.updateBots();
+
         }, 1000);
     }
 
@@ -53,6 +54,7 @@ class SessionController {
         this.updateAidKits(body, entity);
         this.updateAmmunitions(body);
         this.updateDamage(body, entity, id);
+        this.model.updateBots();
     }
 
     updateBullets(body, entity) {
