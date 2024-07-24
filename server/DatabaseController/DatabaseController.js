@@ -64,11 +64,8 @@ class DatabaseController {
         if (!owner) return;
         const lobbyId = owner.lobby_id;
         const lobby = await this.lobby.getLobbyById(lobbyId);
-        console.log(owner, lobby);
         if (!lobby || lobby.owner_id !== ownerId) return;
-        //console.log(2);
         const playerToRemove = await this.player.getPlayerById(playerIdToRemove);
-        //console.log(playerToRemove);
         if (playerToRemove) {
             await this.player.updatePlayerParameter(playerToRemove.player_id, "lobby_id", null);
         }

@@ -84,7 +84,6 @@ class Field extends Drawable {
         Object.values(this.weapons).forEach(weapon => {
             indexX = Math.floor((weapon.model.x - this.x) /  CELL.w);
             indexY = Math.floor((weapon.model.y - this.y) / CELL.h);
-            //console.log(weapon.model.x, weapon.model.y);
             if (this.cells[indexX][indexY] && this.cells[indexX][indexY].active) weapon.view.draw(
                 weapon, 
                 entities, 

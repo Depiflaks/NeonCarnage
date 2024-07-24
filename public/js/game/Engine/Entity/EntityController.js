@@ -23,8 +23,7 @@ class EntityController {
 
     die() {
         if(!this.getWeapon()) return;
-        clearInterval(this.getWeapon().getShootingInterval());
-        this.getWeapon().setShootingInterval(null);
+        this.model.stacked = false;
         this.removeMeleeStrike();
     }
 

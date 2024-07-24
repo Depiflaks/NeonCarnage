@@ -12,9 +12,7 @@ class EnemyController extends EntityController{
         const {x, y} = this.getPosition();
         const indexX = Math.floor((x - field.x) / CELL.w);
         const indexY = Math.floor((y - field.y) / CELL.h);
-        //console.log(indexX, indexY);
         if (field.cells[indexX][indexY]) this.model.active = field.cells[indexX][indexY].active;
-        //console.log(this.model.active);
     }
 
     setPosition({x, y}) {
@@ -25,7 +23,6 @@ class EnemyController extends EntityController{
     update() {
         const dx = this.model.factX - this.model.x;
         const dy = this.model.factY - this.model.y;
-        //console.log(dx / ENEMY.period, dy / ENEMY.period);
         this.model.move(dx / ENEMY.period, dy / ENEMY.period);
     }
 

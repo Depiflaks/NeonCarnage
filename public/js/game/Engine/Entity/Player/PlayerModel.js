@@ -7,6 +7,8 @@ class PlayerModel extends EntityModel {
         this.speedX = 0;
         this.speedY = 0;
         this.isStriking = false;
+        this.isShooting = false;
+        this.isRecharging = false;
         this.stacked = false;
         this.keyPressed = {
             w: 0,

@@ -24,7 +24,7 @@ class WebSocketGame {
             id: connection.id,
         }
         this.sendInit(connection, body);
-        console.log(`Connected ${ip}`);
+        //console.log(`Connected ${ip}`);
     }
 
     onMessage(message, connection) {
@@ -49,7 +49,7 @@ class WebSocketGame {
 
     onClose(req) {
         const ip = req.socket.remoteAddress;
-        console.log(`Disconnected ${ip}`);
+        //console.log(`Disconnected ${ip}`);
     }
 
     sendInit(connection, data) {

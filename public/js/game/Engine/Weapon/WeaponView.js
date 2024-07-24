@@ -41,9 +41,9 @@ class WeaponView {
             case "knife":
                 return {weaponX: ENTITY.h, weaponY: -weapon.getInHand().height / 2}
             case "glock":
-            case "pistol":
+            case "uzi":
                 return {weaponX: -ENTITY.h / 5, weaponY: -weapon.getInHand().height};
-            case "machineGun":
+            case "shotGun":
             case "rifle":
                 return {weaponX: -ENTITY.h / 2, weaponY: -weapon.getInHand().height}
         }

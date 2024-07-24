@@ -13,6 +13,10 @@ export const ADDRESS = {
     sergey: {
         start: 'ws://10.250.104.142:',
         end: '/'
+    },
+    sergey_home: {
+        start: 'ws://192.168.1.131:',
+        end: '/'
     }
 }
 

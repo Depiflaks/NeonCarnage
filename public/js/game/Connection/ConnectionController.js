@@ -3,9 +3,9 @@ import { Responder } from "./Responder/Responder.js";
 import { Sender } from "./Sender/Sender.js";
 
 class ConnectionController {
-    constructor() {
+    constructor(address) {
         // вебсокет у каждого свой... типа
-        this.socket = new WebSocket(SERVER.liuba);
+        this.socket = new WebSocket(address);
         this.enemies = {};
         
         this.sender = new Sender(this.socket);

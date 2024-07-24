@@ -35,14 +35,6 @@ class RequestController {
         this.app.get('/room', (req, res) => {
             res.sendFile(path.join(__dirname, '../../templates/room/main.html'));
         });
-
-        this.app.post('/create', (req, res) => {
-            console.log('Create new Session');
-
-            const responseData = this.creature.create();
-            
-            res.json(responseData);
-        });
     }
 }
 

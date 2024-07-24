@@ -13,7 +13,7 @@ export const INTERFACE = data.interface;
 export const SHAKE = data.windowShake;
 export const CAMERA = data.camera;
 export const KEYBOARD_E = data.keyE;
-export const KEYBOARD_F = data.KeyF; 
+export const KEYBOARD_F = data.keyF; 
 
 export const CELL = data.cellView;
 export const WALL = data.wallView;

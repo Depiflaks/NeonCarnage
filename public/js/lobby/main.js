@@ -2,7 +2,7 @@ const updateButton = document.getElementById('updateButton');
 const createButton = document.getElementById('createButton');
 const roomsContainer = document.getElementById('roomsContainer');
 const id = localStorage.getItem("playerId")
-console.log(id);
+
 
 // Запрос на /leaveLobby при загрузке страницы
 async function leaveLobby() {
@@ -69,7 +69,6 @@ async function updateRooms() {
 // Запрос на /joinLobby
 async function joinLobby(roomId) {
     try {
-        //console.log(roomId, id);
         await fetch('/joinLobby', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -101,11 +100,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Инициализация
-    leaveLobby(); // Выполнить запрос при загрузке страницы
+    leaveLobby();
+    updateRooms();
+     // Выполнить запрос при загрузке страницы
     updateButton.addEventListener('click', async () => {
+        await leaveLobby();
         await updateRooms();
     }); // Обновление списка комнат при нажатии на кнопку
     setInterval(async () => {
+        await leaveLobby();
         await updateRooms();
     }, 1000);
 });

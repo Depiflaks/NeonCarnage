@@ -60,7 +60,7 @@ export class Room {
         const lobby = (await lobbyResponse.json());
 
         if (lobby.is_started) {
-            //window.location.href = `/game?id=${this.roomId}`;
+            window.location.href = `/game?id=${this.roomId}`;
         }
 
         if (init) {
@@ -86,16 +86,16 @@ export class Room {
             const players = await playersResponse.json();
             const count = players.length;
             const ready = players.filter(player => player.ready).length;
-            //console.log(ready);
-            if (count < 2) {
+            const max = 2
+            if (count < max) {
                 this.readyButton.disabled = true;
                 this.readyButton.innerHTML = `${players.length} / 4`;
             }
-            if (count === 2 && ready === 2) {
+            if (count === max && ready === max) {
                 this.readyButton.disabled = false;
                 this.readyButton.innerHTML = `Start`;
             }
-            if (count === 2 && ready < 2) {
+            if (count === max && ready < max) {
                 this.readyButton.disabled = true;
                 this.readyButton.innerHTML = `waiting...`;
             }
@@ -144,15 +144,12 @@ export class Room {
     }
 
     async onReadyButtonClick() {
-        if (this.ownerID == this.playerId) {
-            await this.startGame();
-            return;
-        }
+        
         const skin = document.getElementById('player-skin').value;
         
         const response = await fetch(`/getPlayer?playerId=${this.playerId}`);
         const player = await response.json();
-        player.ready ^= 1;
+        if (this.ownerID != this.playerId) player.ready ^= 1;
         this.readyButton.innerHTML = player.ready ? "Not ready" : "Ready";
         await fetch('/updatePlayer', {
             method: 'POST',
@@ -160,12 +157,16 @@ export class Room {
             body: JSON.stringify({ skinId: skin, playerId: this.playerId, ready: player.ready })
         });
         await this.updatePlayersList();
+        if (this.ownerID == this.playerId) {
+            await this.startGame();
+        }
     }
 
     async startGame() {
         console.log("lets start!");
-        await fetch(`/startGame?roomId=${this.roomId}`);
         await this.updateRoom(1);
+        await fetch(`/startGame?roomId=${this.roomId}`);
+        
     }
 
     updateLocalStorage() {

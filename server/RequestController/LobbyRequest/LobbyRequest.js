@@ -28,10 +28,26 @@ export class LobbyRequest {
                 const players = await this.database.getPlayersByLobbyId(roomId);
                 const lobby = await this.database.lobby.getLobbyById(roomId)
                 const allReady = players.every(player => player.ready);
-
                 if (allReady) {
                     this.child.sendStart(roomId, this.creature.createMap(lobby.game_mode, lobby.map_number));
                 }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
+
+        this.app.get('/getMap', async (req, res) => {
+            try {
+                const { roomId, playerId } = req.query;
+                const lobby = await this.database.lobby.getLobbyById(roomId);
+                const player = await this.database.player.getPlayerById(playerId);
+                const data = this.creature.createMap(lobby.game_mode, lobby.map_number);
+
+                data.player.nickName = player.player_name;
+                data.player.skinId = player.skin_id;
+                data.address = lobby.address;
+                res.json(data);
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');
@@ -46,7 +62,6 @@ export class LobbyRequest {
 
                 const port = this.child.getNewPort();
                 const address = ADDRESS.sergey.start + port + ADDRESS.sergey.end;
-                console.log(address);
                 const lobbyId = await this.database.createLobby(ownerId, address);
                 this.child.create(lobbyId, port);
 

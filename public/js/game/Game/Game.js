@@ -7,7 +7,7 @@ class Game {
         this.document = document;
         this.canvas = this.document.getElementById("canvas");
         this.canvas.style.cursor = 'none';
-        this.connection = new ConnectionController();
+        this.connection = new ConnectionController(objects.address);
         this.engine = new EngineController(objects, this.connection, this.canvas);
         this.connection.initResponder(this.engine);
 
