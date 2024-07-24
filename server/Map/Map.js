@@ -7,7 +7,7 @@ import { map6 } from "../MAPS/DeathMatch/map6.js";
 import { map7 } from "../MAPS/SurvivalRun/map7.js";
 import { map8 } from "../MAPS/SurvivalRun/map8.js";
 import { map9 } from "../MAPS/SurvivalRun/map9.js";
-import {RAD, FPS, RPS, FRAME_DURATION, REQUEST_DURATION, WINDOW, LEADER_BOARD, INTERFACE, SHAKE, CAMERA, KEYBOARD_E, KEYBOARD_F, GAME_MODE} from "../CONST/GAME/GAME.js";
+import {RAD, SOUND, FPS, RPS, FRAME_DURATION, REQUEST_DURATION, WINDOW, LEADER_BOARD, INTERFACE, SHAKE, CAMERA, KEYBOARD_E, KEYBOARD_F, GAME_MODE} from "../CONST/GAME/GAME.js";
 import { ENTITY, HEALTH_BAR, ENEMY } from "../CONST/GAME/ENTITY/ENTITY.js";
 import { SKINS } from "../CONST/GAME/ENTITY/SKINS.js";
 import { BOT_SKINS } from "../CONST/GAME/ENTITY/BOT.js";
@@ -58,6 +58,7 @@ class Map {
                 weaponProperties: WEAPON,
                 weaponStatus: WEAPON_STATE,
                 meleeStrike: MELEE_STRIKE,
+                sound: SOUND,
                 gameMode: GAME_MODE,
             }
         }
