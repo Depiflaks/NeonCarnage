@@ -81,7 +81,7 @@ class Field extends Drawable {
         context.font = red ? "40px Nosifer" : "35px Russo One";
         context.fillStyle = red ? "red" : "white";
         context.textAlign = "center";
-        context.fillText(this.timer, WINDOW.w / 2, 50);
+        context.fillText(this.timer, window.innerWidth / 2, 50);
         context.restore();
     }
 
@@ -131,7 +131,7 @@ class Field extends Drawable {
 
     clearFrame(context) {
         context.fillStyle = "black";
-        context.fillRect(0, 0, WINDOW.w, WINDOW.h);
+        context.fillRect(0, 0, window.innerWidth, window.innerHeight);
     }
 
     hideCells() {
