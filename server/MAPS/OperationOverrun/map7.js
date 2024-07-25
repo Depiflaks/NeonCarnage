@@ -358,7 +358,7 @@ const bots = [
         shooting: false,
         isAlive: true,
         deviation: 0.15,
-        rapidity: 700,
+        rapidity: 500,
     },
     {
         current: {
@@ -373,7 +373,7 @@ const bots = [
         shooting: false,
         isAlive: true,
         deviation: 0.13,
-        rapidity: 500,
+        rapidity: 350,
     },
     {
         current: {
@@ -388,7 +388,7 @@ const bots = [
         shooting: false,
         isAlive: true,
         deviation: 0.12,
-        rapidity: 400,
+        rapidity: 300,
     },
     {
         current: {
@@ -403,7 +403,7 @@ const bots = [
         shooting: false,
         isAlive: true,
         deviation: 0.11,
-        rapidity: 350,
+        rapidity: 250,
     },
     {
         current: {
@@ -418,7 +418,7 @@ const bots = [
         shooting: false,
         isAlive: true,
         deviation: 0.1,
-        rapidity: 300,
+        rapidity: 200,
     },
     {
         current: {
@@ -433,12 +433,12 @@ const bots = [
         shooting: false,
         isAlive: true,
         deviation: 0.09,
-        rapidity: 200,
+        rapidity: 150,
     },
     {
         current: {
             x: 1840,
-            y: 1327
+            y: 1227
         },
         skinId: 1,
         state: STATES.wanders,
@@ -448,7 +448,7 @@ const bots = [
         shooting: false,
         isAlive: true,
         deviation: 0.08,
-        rapidity: 200,
+        rapidity: 110,
     },
     {
         current: {
@@ -457,13 +457,13 @@ const bots = [
         },
         skinId: 1,
         state: STATES.wanders,
-        health: 8,
+        health: 10,
         maxHealth: ENTITY.maxHealth,
         id: "bot_7",
         shooting: false,
         isAlive: true,
         deviation: 0.08,
-        rapidity: 150,
+        rapidity: 80,
     },
     {
         current: {
@@ -472,13 +472,13 @@ const bots = [
         },
         skinId: 1,
         state: STATES.wanders,
-        health: 20,
+        health: 10,
         maxHealth: ENTITY.maxHealth,
         id: "bot_8",
         shooting: false,
         isAlive: true,
         deviation: 0.2,
-        rapidity: 200,
+        rapidity: 50,
     },
 ];
 
