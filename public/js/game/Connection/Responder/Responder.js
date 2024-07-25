@@ -170,6 +170,7 @@ export class Responder {
         return new BotController({
             x: x, y: y, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth,
             health: entity.health, id: entity.id, shooting: entity.shooting, isAlive: entity.isAlive,
+            deviation: entity.deviation, rapidity: entity.rapidity,
         })
     }
 }

@@ -1,4 +1,6 @@
 import { WEAPON_MODELS } from "../../CONST/GAME/WEAPON/WEAPON_MODELS.js";
+import {STATES} from "../../CONST/GAME/ENTITY/BOT.js";
+import {ENTITY} from "../../CONST/GAME/ENTITY/ENTITY.js";
 function convertFields(cellsList) {
     const result = [];
     for (let i = 0; i < cellsList.length; i++) {
@@ -401,7 +403,70 @@ const aidKitSet = [
     }
 ];
 
+const bots = [
+    {
+        current: {
+            x: 960,
+            y: 540
+        },
+        skinId: 0,
+        state: STATES.wanders,
+        health: 5,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_0",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.1,
+        rapidity: 500,
+    },
+    {
+        current: {
+            x: 350,
+            y: 350
+        },
+        skinId: 1,
+        state: STATES.wanders,
+        health: 5,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_1",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.2,
+        rapidity: 900,
+    },
+    {
+        current: {
+            x: 1652,
+            y: 1488
+        },
+        skinId: 0,
+        state: STATES.wanders,
+        health: 5,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_2",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.08,
+        rapidity: 450,
+    },
+    {
+        current: {
+            x: 1653,
+            y: 2070
+        },
+        skinId: 1,
+        state: STATES.wanders,
+        health: 5,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_3",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.08,
+        rapidity: 450,
+    },
+];
+
 const groundList = convertFields(cellsList);
-const map1 = { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints, area };
+const map1 = { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints, area, bots };
 
 export {map1}
