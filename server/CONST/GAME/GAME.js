@@ -46,10 +46,11 @@ export const GAME_MODE = {
             ammunition: true,
             player: true,
         },
+        leaderBoard: true,
         timer: true,
         seconds: 60,
         area: false,
-        bots: false,
+        bots: true,
         endPoint: false,
     },
     battleRoyale: {
@@ -59,6 +60,7 @@ export const GAME_MODE = {
             ammunition: false,
             player: false
         },
+        leaderBoard: false,
         timer: false,
         area: true,
         areaSpeed: 40,
@@ -72,6 +74,7 @@ export const GAME_MODE = {
             ammunition: false,
             player: false
         },
+        leaderBoard: false,
         timer: false,
         area: false,
         bots: true,

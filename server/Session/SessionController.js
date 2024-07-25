@@ -51,6 +51,7 @@ class SessionController {
             isAlive: true,
             nickname: nickname,
             visible: true,
+            selfDamage: 0,
         };
         if (!this.model.leaderBoard[connection.id]) this.model.leaderBoard[connection.id] = {
             name: nickname,
@@ -102,7 +103,7 @@ class SessionController {
 
         this.updateBotDamage(body);
 
-        this.model.updateBots();
+        if (this.model.mode.bots) this.model.updateBots();
 
         this.checkEndCondition();
     }
@@ -112,13 +113,7 @@ class SessionController {
         for (const id in this.model.players) {
             const player = this.model.players[id]
             if (this.isInArea(player)) continue;
-            player.health = Math.max(0, player.health -= 1)
-            if (player.health !== 0) continue;
-            player.isAlive = false;
-            if (player.weaponId) {
-                this.model.objects.weapons[player.weaponId].state = WEAPON_STATE.onTheGround;
-                player.weaponId = null;
-            }
+            player.selfDamage += 1;
         }
     }
 
@@ -181,15 +176,14 @@ class SessionController {
 
     updateDamage(body, entity, entityId) {
         const damage = body.change.damage;
-
-
+        for (const id in this.model.players) {
+            const player = this.model.players[id]
+            if (!damage[id]) damage[id] = 0;
+            damage[id] += player.selfDamage;
+            player.selfDamage = 0;
+        }
         for (let id in damage) {
-            let player;
-            if (id === 'self') {
-                player = this.model.players[entityId];
-            } else {
-                player = this.model.players[id];
-            }
+            const player = this.model.players[id];
             player.health = Math.max(0, player.health - damage[id])
             if (player.health === 0) {
                 player.isAlive = false;
@@ -204,7 +198,7 @@ class SessionController {
                     this.model.objects.weapons[player.weaponId].state = WEAPON_STATE.onTheGround;
                     player.weaponId = null;
                 }
-                if (id !== 'self') this.model.leaderBoard[entityId].kills += 1;
+                if (this.model.mode.leaderBoard) this.model.leaderBoard[entityId].kills += 1;
             }
         }
     }
@@ -217,10 +211,6 @@ class SessionController {
                     bot.health = Math.max(0, bot.health - damage[id]);
                     if (bot.isAlive && bot.health === 0) {
                         bot.isAlive = false;
-                        /*setTimeout(() => {
-                            bot.isAlive = true;
-                            bot.health = bot.maxHealth;
-                        }, ENTITY.rebornDelay);*/
                     }
                 }
             });
@@ -235,10 +225,6 @@ class SessionController {
                     bot.health = Math.max(0, bot.health - damage[id]);
                     if (bot.isAlive && bot.health === 0) {
                         bot.isAlive = false;
-                        /*setTimeout(() => {
-                            bot.isAlive = true;
-                            bot.health = bot.maxHealth;
-                        }, ENTITY.rebornDelay);*/
                     }
                 }
             });

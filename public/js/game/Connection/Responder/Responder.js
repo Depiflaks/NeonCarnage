@@ -18,6 +18,7 @@ export class Responder {
 
     onInit(body) {
         this.id = body.id;
+        this.player.id = body.id;
         this.spawnPoint = body.spawnPoint;
         let x = this.spawnPoint.x + this.field.x;
         let y = this.spawnPoint.y + this.field.y;
@@ -37,7 +38,7 @@ export class Responder {
         this.updatePlayers(body);
         if (this.mode.area) this.updateArea(body);
         //console.log(body.bots)
-        this.updateBots(body.bots);
+        if (this.mode.bots) this.updateBots(body.bots);
         if (this.mode.timer) this.updateTimer(body);
     }
 

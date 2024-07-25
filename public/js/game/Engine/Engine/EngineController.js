@@ -161,10 +161,10 @@ class EngineController {
             bot.setBullets(bot.getBullets().filter(
                 bullet => {
                     let hit = false;
-                        if (this.player.isAlive() && bullet.isIntersectEnemy(this.player.model)) {
-                            hit = true;
-                            this.player.addDamage('self', 1)
-                        }
+                    if (this.player.isAlive() && bullet.isIntersectEnemy(this.player.model)) {
+                        hit = true;
+                        this.player.addDamage(this.player.id, 1)
+                    }
                     return !hit;
                 }
             ));
