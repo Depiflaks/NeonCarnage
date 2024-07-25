@@ -185,7 +185,7 @@ class SessionController {
         for (let id in damage) {
             const player = this.model.players[id];
             player.health = Math.max(0, player.health - damage[id])
-            if (player.health === 0) {
+            if (player.health === 0 && player.isAlive) {
                 player.isAlive = false;
                 if (this.model.mode.respawn.player) setTimeout(() => {
                     player.spawnPoint = this.nextSpawnPoint();
@@ -237,7 +237,7 @@ class SessionController {
             case GAME_MODE.deathMatch.name:
                 if (this.timer === 0) {
                     clearInterval(this.interval)
-                    this.end();
+                    this.end(this.calculateScores(this.model.leaderBoard));
                 }
                 break;
             case GAME_MODE.battleRoyale.name:
@@ -266,11 +266,27 @@ class SessionController {
                 }
                 break;
             case GAME_MODE.operationOverrun.name:
+                
                 break;
             default:
                 break;
         }
     }
+
+    calculateScores(players) {
+        const playersArray = Object.entries(players);
+
+        playersArray.sort(([, a], [, b]) => a.kills - b.kills);
+        const result = {}
+        playersArray.forEach(([playerId, player], index) => {
+          result[playerId] = {
+            name: player.name,
+            score: (index + 1) * 25
+          };
+        });
+      
+        return result;
+      }
 
     getData() {
         const response = {

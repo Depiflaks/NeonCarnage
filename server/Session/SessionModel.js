@@ -25,6 +25,7 @@ class SessionModel {
         this.playersCount = 0;
         this.connections = {};
         this.objects = {
+            
             corpses: {},
             weapons: {},
             aidKits: Array(this.field.map.aidKits.length).fill(true),

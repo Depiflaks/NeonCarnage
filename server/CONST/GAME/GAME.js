@@ -48,9 +48,9 @@ export const GAME_MODE = {
         },
         leaderBoard: true,
         timer: true,
-        seconds: 60,
+        seconds: 30,
         area: false,
-        bots: true,
+        bots: false,
         endPoint: false,
     },
     battleRoyale: {
