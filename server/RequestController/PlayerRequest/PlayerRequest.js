@@ -30,6 +30,16 @@ export class PlayerRequest {
                 res.status(500).send('Ошибка сервера');
             }
         });
+
+        this.app.get('/getAllPlayers', async (req, res) => {
+            try {
+                const players = await this.database.getAllPlayers();
+                res.json(players);
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
     }
 
     initPost() {
@@ -76,16 +86,6 @@ export class PlayerRequest {
                 const { playerId, parameters } = req.body;
                 await this.database.updatePlayer(playerId, parameters);
                 res.send('Player updated successfully');
-            } catch (error) {
-                console.error('Ошибка:', error);
-                res.status(500).send('Ошибка сервера');
-            }
-        });
-
-        this.app.post('/getAllPlayers', async (req, res) => {
-            try {
-                const players = await this.database.getAllPlayers();
-                res.json(players);
             } catch (error) {
                 console.error('Ошибка:', error);
                 res.status(500).send('Ошибка сервера');

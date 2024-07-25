@@ -3,8 +3,8 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
-    flex-direction: column;
     align-items: center;
+    flex-direction: row;
     background: linear-gradient(to top, #00ffcc, #2d2d2d);
     color: #00ffcc;
     font-family: 'Russo One';
@@ -22,43 +22,6 @@ h1 {
     margin-bottom: 20px;
     text-shadow: 0 0 0 #00ffcc, 0 0 10px #00ffcc, 0 0 30px #00ffcc;
     animation: glow 1.5s infinite alternate, neonFlow 3s infinite;
-}
-
-.menu {
-    text-align: center;
-}
-
-.menu h1 {
-    font-family: "Nosifer";
-    font-size: 3em;
-    color: #00ffcc;
-    text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
-    position: relative;
-}
-
-.menu ul {
-    list-style: none;
-    padding: 0;
-}
-
-.menu li {
-    margin: 40px 0;
-}
-
-.menu a {
-    text-decoration: none;
-    color: #1a1a1a;
-    font-family: "Russo One";
-    font-size: 1.5em;
-    padding: 10px 20px;
-    background: #00ffcc;
-    border: 2px solid #00ffcc;
-    box-shadow: 3px 3px #1a1a1a, -3px -3px #00ffcc;
-    transition: background 0.3s;
-}
-
-.menu a:hover {
-    background: #2d2d2d;
 }
 
 input {
@@ -132,6 +95,12 @@ button:hover {
     color: #00ffcc;
 }
 
+button:disabled {
+    background-color: #4b4b4b;
+    color: #1a1a1a;
+    box-shadow: none;
+}
+
 @keyframes glow {
     0% {
         text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
@@ -155,17 +124,8 @@ button:hover {
 
 .lobby {
     width: 80%;
-    max-width: 600px;
+    max-width: 1000px;
     text-align: center;
-}
-
-.lobby-form {
-    margin-bottom: 40px;
-    padding: 20px;
-    border: 2px solid #00ffcc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #00ffcc;
-    background-color: #2d2d2d;
 }
 
 .form-group {
@@ -180,32 +140,37 @@ label {
 }
 
 .table-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 20px;
     margin-top: 20px;
     width: 100%;
     overflow-y: auto;
     max-height: 60vh; /* Adjust as needed */
     margin-bottom: 20px;
-    border: 2px solid #00ffcc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #00ffcc;
-    background-color: #2d2d2d;
 }
 
-.room-list {
+.list {
     width: 100%;
     border-collapse: collapse;
 }
 
-.room-list th, .room-list td {
+.player {
+    width: 60%;
+}
+
+.list th, .list td {
     border: 2px solid #00ffcc;
     padding: 10px;
     text-align: center;
 }
 
-.room-list th {
+.list th {
     background-color: #1a1a1a;
 }
 
-.room-list td {
+.list td {
     background-color: #2d2d2d;
 }

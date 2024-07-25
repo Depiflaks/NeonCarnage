@@ -26,6 +26,11 @@ class EnemyController extends EntityController{
         this.model.move(dx / ENEMY.period, dy / ENEMY.period);
     }
 
+    reborn({x, y}) {
+        this.model.x = x;
+        this.model.y = y;
+    }
+
     move(dx, dy) {
         this.model.move(dx, dy); 
         this.model.factX += dx;

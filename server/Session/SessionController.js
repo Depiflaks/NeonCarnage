@@ -101,7 +101,7 @@ class SessionController {
             if (!entity.weaponId) return;
             this.model.objects.weapons[entity.weaponId].state = weapon.state;
             entity.weaponId = weapon.id;
-        } else if (weapon.state === WEAPON_STATE.inTheHand) {
+        } else if (weapon.state === WEAPON_STATE.inTheHand && this.model.objects.weapons[weapon.id].state === WEAPON_STATE.onTheGround) {
             this.model.objects.weapons[weapon.id].state = weapon.state;
             entity.weaponId = weapon.id;
         }

@@ -1,6 +1,7 @@
 const updateButton = document.getElementById('updateButton');
 const createButton = document.getElementById('createButton');
 const roomsContainer = document.getElementById('roomsContainer');
+const playersContainer = document.getElementById('playersContainer');
 const id = localStorage.getItem("playerId")
 
 
@@ -57,6 +58,7 @@ async function updateRooms() {
         // Добавление обработчиков событий для кнопок Join Room
         document.querySelectorAll('.joinButton').forEach(button => {
             button.addEventListener('click', async () => {
+                button.disabled = true;
                 const roomId = button.getAttribute('data-room-id');
                 await joinLobby(roomId);
             });
@@ -66,21 +68,31 @@ async function updateRooms() {
     }
 }
 
+async function updatePlayers() {
+    const playersResponse = await fetch('/getAllPlayers');
+    const players = await playersResponse.json();
+    playersContainer.innerHTML = "";
+    for (let player of players) {
+        const playerRow = document.createElement('tr');
+        playerRow.innerHTML = `
+            <td>${player.player_name}</td>
+            <td>${player.score}</td>
+        `;
+        playersContainer.appendChild(playerRow);;
+    }
+}
+
 // Запрос на /joinLobby
 async function joinLobby(roomId) {
-    try {
-        await fetch('/joinLobby', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                playerId: id,
-                lobbyId: roomId
-            })
-        });
-        window.location.href = `/room?id=${roomId}`;
-    } catch (error) {
-        console.error('Ошибка при входе в лобби:', error);
-    }
+    await fetch('/joinLobby', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            playerId: id,
+            lobbyId: roomId
+        })
+    });
+    window.location.href = `/room?id=${roomId}`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -90,31 +102,30 @@ document.addEventListener('DOMContentLoaded', () => {
     track.volume = 1.0;
     track.play();
     
-    // Запрос на /createLobby
     createButton.addEventListener('click', async () => {
-        try {
-            const response = await fetch('/createLobby', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ownerId: id })
-            });
-            const { lobbyId } = await response.json();
-            window.location.href = `/room?id=${lobbyId}`;
-        } catch (error) {
-            console.error('Ошибка при создании лобби:', error);
-        }
+        createButton.disabled = true;
+        const response = await fetch('/createLobby', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ownerId: id })
+        });
+        const { lobbyId } = await response.json();
+        window.location.href = `/room?id=${lobbyId}`;
     });
 
     // Инициализация
+    updatePlayers();
     leaveLobby();
     updateRooms();
      // Выполнить запрос при загрузке страницы
     updateButton.addEventListener('click', async () => {
-        await leaveLobby();
+        //await leaveLobby();
+        await updatePlayers()
         await updateRooms();
     }); // Обновление списка комнат при нажатии на кнопку
     setInterval(async () => {
-        await leaveLobby();
+        //await leaveLobby();
+        await updatePlayers();
         await updateRooms();
     }, 1000);
 });

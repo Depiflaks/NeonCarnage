@@ -36,6 +36,7 @@ export class Room {
             await this.onExitButtonClick()
         })
         this.gameMode.addEventListener("change", async () => {
+            await this.changeMaps();
             await this.updateRoom();
         });
         this.mapNumber.addEventListener("change", async () => {
@@ -44,7 +45,7 @@ export class Room {
         setInterval(async () => {
             await this.updatePlayersList();
             await this.updateState();
-        }, 1000);
+        }, 500);
     }
 
     async onPageLoad() {
@@ -89,22 +90,41 @@ export class Room {
             const players = await playersResponse.json();
             const count = players.length;
             const ready = players.filter(player => player.ready).length;
-            const max = 1;
-            if (count < max) {
+            if (count === 1 || ready < count) {
                 this.readyButton.disabled = true;
-                this.readyButton.innerHTML = `${players.length} / 4`;
+                this.readyButton.innerHTML = `Waiting...`;
             }
-            if (count === max && ready === max) {
+            if (count !== 1 && ready === count) {
                 this.readyButton.disabled = false;
                 this.readyButton.innerHTML = `Start`;
-            }
-            if (count === max && ready < max) {
-                this.readyButton.disabled = true;
-                this.readyButton.innerHTML = `waiting...`;
             }
         }
 
         if (!player.lobby_id) await this.onExitButtonClick()
+    }
+
+    async changeMaps() {
+        switch (this.gameMode.value) {
+            case "Death Match":
+                this.mapNumber.innerHTML = `
+                <option value="1">Bloodshed Maze</option>
+                <option value="2">Carnage Central</option>
+                <option value="3">Annihilation Alley</option>
+                `;
+                break;
+            case "Battle Royale":
+                this.mapNumber.innerHTML = `
+                <option value="1">Doomsday Junction</option>
+                `;
+                break;
+            case "Survival Run":
+                this.mapNumber.innerHTML = `
+                <option value="1">Ghostly Gallows</option>
+                `;
+                break;
+            default:
+                break;
+        }
     }
 
     async updatePlayersList() {
@@ -132,12 +152,13 @@ export class Room {
     onKeyDown(event) {
         if (event.key === "Enter") {
             event.preventDefault();
-            this.connection.send(this.nickName, this.chat.getInput());
+            if (this.chat.getInput() != "") this.connection.send(this.nickName, this.chat.getInput());
             this.chat.clearInput();
         }
     }
 
     async onExitButtonClick() {
+        this.exitButton.disabled = true;
         await fetch('/leaveLobby', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -147,13 +168,16 @@ export class Room {
     }
 
     async onReadyButtonClick() {
-        
         const skin = document.getElementById('player-skin').value;
         
         const response = await fetch(`/getPlayer?playerId=${this.playerId}`);
         const player = await response.json();
-        if (this.ownerID != this.playerId) player.ready ^= 1;
-        this.readyButton.innerHTML = player.ready ? "Not ready" : "Ready";
+        if (this.ownerID != this.playerId) {
+            player.ready ^= 1;
+            this.readyButton.innerHTML = player.ready ? "Not ready" : "Ready";
+        } else {
+            this.readyButton.disabled = true;
+        }
         await fetch('/updatePlayer', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

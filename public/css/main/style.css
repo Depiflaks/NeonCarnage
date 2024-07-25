@@ -26,44 +26,6 @@ h1 {
     animation: glow 1.5s infinite alternate, neonFlow 3s infinite;
 }
 
-/* Стили для меню */
-.menu {
-    text-align: center;
-}
-
-.menu h1 {
-    font-family: "Nosifer";
-    font-size: 3em;
-    color: #00ffcc;
-    text-shadow: 2px 2px #1a1a1a, -2px -2px #00ffcc;
-    position: relative;
-}
-
-.menu ul {
-    list-style: none;
-    padding: 0;
-}
-
-.menu li {
-    margin: 40px 0;
-}
-
-.menu a {
-    text-decoration: none;
-    color: #1a1a1a;
-    font-family: "Russo One";
-    font-size: 1.5em;
-    padding: 10px 20px;
-    background: #00ffcc;
-    border: 2px solid #00ffcc;
-    box-shadow: 3px 3px #1a1a1a, -3px -3px #00ffcc;
-    transition: background 0.3s;
-}
-
-.menu a:hover {
-    background: #2d2d2d;
-}
-
 /* Стили для поля ввода */
 input {
     display: block;
