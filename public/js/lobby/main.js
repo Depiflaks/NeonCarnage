@@ -69,16 +69,24 @@ async function updateRooms() {
 }
 
 async function updatePlayers() {
-    const playersResponse = await fetch('/getAllPlayers');
-    const players = await playersResponse.json();
-    playersContainer.innerHTML = "";
-    for (let player of players) {
-        const playerRow = document.createElement('tr');
-        playerRow.innerHTML = `
-            <td>${player.player_name}</td>
-            <td>${player.score}</td>
-        `;
-        playersContainer.appendChild(playerRow);;
+    try {
+        const playersResponse = await fetch('/getAllPlayers');
+        const players = await playersResponse.json();
+
+        // Сортировка игроков по score по убыванию
+        players.sort((a, b) => b.score - a.score);
+        playersContainer.innerHTML = "";
+
+        for (let player of players) {
+            const playerRow = document.createElement('tr');
+            playerRow.innerHTML = `
+                <td>${player.player_name}</td>
+                <td>${player.score}</td>
+            `;
+            playersContainer.appendChild(playerRow);
+        }
+    } catch (error) {
+        console.error('Ошибка при обновлении списка игроков:', error);
     }
 }
 
