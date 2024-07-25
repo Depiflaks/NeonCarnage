@@ -19,6 +19,7 @@ export const LEADER_BOARD = {
 
 export const INTERFACE = {
     cursor: "public/assets/Interface/cursor.png",
+    pointer: "public/assets/Interface/pointer.png",
 }
 
 export const SHAKE = {
