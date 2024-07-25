@@ -199,6 +199,7 @@ class SessionController {
                     player.weaponId = null;
                 }
                 if (this.model.mode.leaderBoard) this.model.leaderBoard[entityId].kills += 1;
+                if (this.model.mode.endPoint || this.model.mode.area) this.model.deadList.push(id)
             }
         }
     }
@@ -240,9 +241,28 @@ class SessionController {
                 }
                 break;
             case GAME_MODE.battleRoyale.name:
+                if (this.model.playersCount < 2) return;
+                let alive = [];
+                for (let id in this.model.players) {
+                    if (this.model.players[id].isAlive) alive.push(id);
+                }
+                if (alive.length === 1) {
+                    this.model.deadList.push(alive[0]);
+                }
                 if (this.model.area.radius < 100) {
+                    this.model.mode.areaSpeed = 0;
+                }
+                if (alive.length <= 1) {
                     clearInterval(this.interval)
-                    this.end();
+                    const res = {}
+                    for (let i = 0; i < this.model.deadList.length; i++) {
+                        let score = (i + 1) * 25;
+                        res[this.model.deadList[i]] = {
+                            score: score,
+                            name: this.model.players[this.model.deadList[i]].nickname,
+                        };
+                    }
+                    this.end(res);
                 }
                 break;
             case GAME_MODE.operationOverrun.name:

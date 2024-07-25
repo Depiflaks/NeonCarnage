@@ -92,6 +92,19 @@ export class PlayerRequest {
             }
         });
 
+        this.app.post('/updatePlayerScore', async (req, res) => {
+            try {
+                const { playerId, score } = req.body;
+                const player = await this.database.player.getPlayerById(playerId);
+                const newScore = score + player.score;
+                await this.database.updatePlayer(playerId, {score: newScore});
+                res.send('Player updated successfully');
+            } catch (error) {
+                console.error('Ошибка:', error);
+                res.status(500).send('Ошибка сервера');
+            }
+        });
+
         this.app.post('/joinLobby', async (req, res) => {
             try {
                 const { playerId, lobbyId } = req.body;

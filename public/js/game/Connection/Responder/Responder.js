@@ -26,7 +26,13 @@ export class Responder {
         this.socket.id = this.id
     }
 
-    onEnd() {
+    onEnd(body) {
+        localStorage.setItem('leaders', body)
+        fetch('/updatePlayerScore', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ playerId: localStorage.getItem('playerId'), score: body[this.id].score })
+        })
         window.location.href = `/lobby`
     }
 

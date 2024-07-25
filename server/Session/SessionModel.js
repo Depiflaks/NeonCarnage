@@ -19,6 +19,7 @@ class SessionModel {
                 this.mode = GAME_MODE.operationOverrun
                 break;
         }
+        if (this.mode.endPoint || this.mode.area) this.deadList = []
         this.maxPlayers = 4;
         this.players = {};
         this.playersCount = 0;

@@ -6,7 +6,7 @@ class WebSocketGame {
         this.endGame = false;
         this.socket = new WebSocketServer({ port: port });
         this.session = session;
-        this.session.end = () => {this.sendEnd()};
+        this.session.end = (leaders) => {this.sendEnd(leaders)};
         this.socket.on('connection', (connection, req) => {this.onConnection(connection, req)});
     }
 
@@ -55,7 +55,6 @@ class WebSocketGame {
 
     onClose(req) {
         const ip = req.socket.remoteAddress;
-        //console.log(`Disconnected ${ip}`);
     }
 
     sendInit(connection, data) {
@@ -66,10 +65,13 @@ class WebSocketGame {
         this.send(connection, "response", data)
     }
 
-    sendEnd() {
-        for (let id in this.session.model.players) {
+    sendEnd(leaders) {
+        for (let id in leaders) {
             if (this.session.model.connections[id].readyState !== WebSocket.OPEN) continue;
-            this.send(this.session.model.connections[id], "end", [])
+            this.send(this.session.model.connections[id], "end", leaders)
+        }
+        for (let id in this.session.model.connections) {
+            this.session.model.connections[id].close();
         }
     }
 

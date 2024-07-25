@@ -45,7 +45,7 @@ class ConnectionController {
                 this.responder.onResponse(body);
                 break;
             case "end":
-                this.responder.onEnd();
+                this.responder.onEnd(body);
             default:
                 break;
         }
