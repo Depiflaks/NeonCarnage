@@ -7,7 +7,7 @@ import {ENTITY} from "../CONST/GAME/ENTITY/ENTITY.js";
 class SessionModel {
     constructor(data) {
         this.field = data.map;
-        this.area = data.map.map.area;
+        console.log(123, data)
         switch (data.mode) {
             case GAME_MODE.deathMatch.name:
                 this.mode = GAME_MODE.deathMatch
@@ -19,6 +19,7 @@ class SessionModel {
                 this.mode = GAME_MODE.operationOverrun
                 break;
         }
+        if (this.mode.area) this.area = data.map.map.area;
         this.maxPlayers = 4;
         this.players = {};
         this.playersCount = 0;

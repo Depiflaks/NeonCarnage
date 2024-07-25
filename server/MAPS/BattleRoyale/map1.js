@@ -464,6 +464,21 @@ const bots = [
         deviation: 0.08,
         rapidity: 450,
     },
+    {
+        current: {
+            x: 2835,
+            y: 1500
+        },
+        skinId: 2,
+        state: STATES.wanders,
+        health: 5,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_4",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.1,
+        rapidity: 550,
+    },
 ];
 
 const groundList = convertFields(cellsList);
