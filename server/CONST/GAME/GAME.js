@@ -50,7 +50,7 @@ export const GAME_MODE = {
         },
         leaderBoard: true,
         timer: true,
-        seconds: 30,
+        seconds: 180,
         area: false,
         bots: false,
         endPoint: false,

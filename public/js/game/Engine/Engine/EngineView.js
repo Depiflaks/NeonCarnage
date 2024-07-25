@@ -120,6 +120,15 @@ class EngineView {
         this.draw(model);
     }
 
+    drawPointer(player, pointer){
+        this.context.save();
+        this.context.translate(player.model.x, player.model.y);
+        const angle = Math.atan2(pointer.y - player.model.y, pointer.x - player.model.x);
+        this.context.rotate(angle);
+        this.context.drawImage(this.pointer, INTERFACE.w, -INTERFACE.h / 4, INTERFACE.w, INTERFACE.h)
+        this.context.restore();
+    }
+
     applyShake() {
         this.shakeOffsetX = Math.random() * SHAKE.scale - SHAKE.relocateRange;
         this.shakeOffsetY = Math.random() * SHAKE.scale - SHAKE.relocateRange;
