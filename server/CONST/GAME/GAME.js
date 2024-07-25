@@ -51,7 +51,7 @@ export const GAME_MODE = {
         friendlyfire: true,
         leaderBoard: true,
         timer: true,
-        seconds: 180,
+        seconds: 150,
         area: false,
         bots: false,
         endPoint: false,

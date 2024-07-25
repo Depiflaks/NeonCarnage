@@ -98,7 +98,7 @@ export class Responder {
         if (this.player.isAlive() && !entity.isAlive) {
             this.player.die();
             this.field.addCorpse(this.id, this.player);
-            if (this.field.corpses[this.id].length === 10) {
+            if (this.field.corpses[this.id].length >= 4) {
                 this.field.corpses[this.id] = this.field.corpses[this.id].slice(5);
             }
         }
