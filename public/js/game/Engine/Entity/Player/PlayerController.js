@@ -222,6 +222,10 @@ class PlayerController extends EntityController {
         return this.model.damage;
     }
 
+    getBotDamage() {
+        return this.model.change.botDamage;
+    }
+
     getHealth() {
         return this.model.health;
     }
@@ -245,6 +249,7 @@ class PlayerController extends EntityController {
     getChange() {
         return {
             damage: this.getDamage(),
+            botDamage: this.getBotDamage(),
             amount: this.getAmount(),
             weapon: {
                 id: this.getChangeWeapon().id,
@@ -257,6 +262,7 @@ class PlayerController extends EntityController {
 
     clearChange() {
         this.clearDamage();
+        this.clearBotDamage();
         this.clearAmount();
         this.clearChangeWeapon();
         this.clearAmmunition();
@@ -272,8 +278,17 @@ class PlayerController extends EntityController {
         this.model.change.damage[id] += value;
     }
 
+    botAddDamage(id, value) {
+        if (!this.model.change.botDamage[id]) this.model.change.botDamage[id] = 0;
+        this.model.change.botDamage[id] += value;
+    }
+
     clearDamage() {
         this.model.change.damage = {};
+    }
+
+    clearBotDamage() {
+        this.model.change.botDamage = {};
     }
 // Weapon
     getChangeWeapon() {

@@ -1,8 +1,8 @@
 import { SKINS } from "../../../CONST.js";
 
-class SkinModel {
+class Skin {
     constructor({ skinId }) {
-        this.head = new Image(),
+        this.head = new Image();
         this.body = {
             none: new Image(),
             one: new Image(),
@@ -15,4 +15,4 @@ class SkinModel {
     }
 }
 
-export {SkinModel}
+export {Skin}

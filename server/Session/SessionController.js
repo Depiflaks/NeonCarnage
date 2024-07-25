@@ -99,6 +99,9 @@ class SessionController {
         this.updateAidKits(body, entity);
         this.updateAmmunitions(body, entity);
         this.updateDamage(body, entity, id);
+
+        this.updateBotDamage(body);
+
         this.model.updateBots();
 
         this.checkEndCondition();
@@ -179,8 +182,14 @@ class SessionController {
     updateDamage(body, entity, entityId) {
         const damage = body.change.damage;
 
+
         for (let id in damage) {
-            const player = this.model.players[id];
+            let player;
+            if (id === 'self') {
+                player = this.model.players[entityId];
+            } else {
+                player = this.model.players[id];
+            }
             player.health = Math.max(0, player.health - damage[id])
             if (player.health === 0) {
                 player.isAlive = false;
@@ -195,8 +204,44 @@ class SessionController {
                     this.model.objects.weapons[player.weaponId].state = WEAPON_STATE.onTheGround;
                     player.weaponId = null;
                 }
-                this.model.leaderBoard[entityId].kills += 1;
+                if (id !== 'self') this.model.leaderBoard[entityId].kills += 1;
             }
+        }
+    }
+
+    updateBotDamage(body) {
+        const damage = body.change.botDamage;
+        for (let id in damage) {
+            this.model.bots.forEach(bot => {
+                if (id === bot.id) {
+                    bot.health = Math.max(0, bot.health - damage[id]);
+                    if (bot.isAlive && bot.health === 0) {
+                        bot.isAlive = false;
+                        /*setTimeout(() => {
+                            bot.isAlive = true;
+                            bot.health = bot.maxHealth;
+                        }, ENTITY.rebornDelay);*/
+                    }
+                }
+            });
+        }
+    }
+
+    updateBotDamage(body) {
+        const damage = body.change.botDamage;
+        for (let id in damage) {
+            this.model.bots.forEach(bot => {
+                if (id === bot.id) {
+                    bot.health = Math.max(0, bot.health - damage[id]);
+                    if (bot.isAlive && bot.health === 0) {
+                        bot.isAlive = false;
+                        /*setTimeout(() => {
+                            bot.isAlive = true;
+                            bot.health = bot.maxHealth;
+                        }, ENTITY.rebornDelay);*/
+                    }
+                }
+            });
         }
     }
 
@@ -215,7 +260,7 @@ class SessionController {
                 }
                 break;
             case GAME_MODE.operationOverrun:
-                break;  
+                break;
             default:
                 break;
         }

@@ -2,6 +2,7 @@ import {STATES} from "../CONST/GAME/ENTITY/BOT.js";
 import { GAME_MODE } from "../CONST/GAME/GAME.js";
 
 import { WEAPON_STATE } from "../CONST/GAME/WEAPON/WEAPON.js";
+import {ENTITY} from "../CONST/GAME/ENTITY/ENTITY.js";
 
 class SessionModel {
     constructor(data) {
@@ -46,25 +47,29 @@ class SessionModel {
                     x: 170,
                     y: 170
                 },
-                skinId: 1,
+                skinId: 0,
                 state: STATES.wanders,
                 health: 5,
-                id: 0,
+                maxHealth: ENTITY.maxHealth,
+                id: "bot_0",
                 shooting: false,
+                isAlive: true,
             },
             {
                 current: {
                     x: 350,
                     y: 350
                 },
-                skinId: 2,
+                skinId: 1,
                 state: STATES.wanders,
                 health: 5,
-                id: 1,
+                maxHealth: ENTITY.maxHealth,
+                id: "bot_1",
                 shooting: false,
+                isAlive: true,
             }
         ];
-        this.walls = this.convertWallList(this.field.map.walls);
+        //this.walls = this.convertWallList(field.map.walls);
     }
 
     convertWallList(wallList) {
@@ -78,15 +83,17 @@ class SessionModel {
     updateBots() {
         this.bots.forEach(bot => {
 
-            //console.log(bot.shooting)
+
+            if (!bot.isAlive) {
+                bot.shooting = false;
+                return
+            }
 
             let closestPlayer = null;
             let minDistance = Infinity;
 
             for (const playerId in this.players) {
                 const player = this.players[playerId];
-
-                //console.log(player.visibleBots)
 
                 for (const visibleBotId in player.visibleBots) {
                     const visibleBot = player.visibleBots[visibleBotId];

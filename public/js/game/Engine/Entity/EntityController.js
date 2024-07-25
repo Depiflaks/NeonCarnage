@@ -1,6 +1,7 @@
 import { WEAPON_STATE } from "../../CONST.js";
 import { MeleeStrike } from "../Weapon/MeleeStrike/MeleeStrike.js";
-import { SkinModel } from "./Skin/SkinModel.js";
+import { Skin } from "./Skin/Skin.js";
+import {BotModel} from "./Bot/BotModel.js";
 
 class EntityController {
     constructor() {}
@@ -110,7 +111,7 @@ class EntityController {
 
     setSkin(skinId) {
         this.model.skinId = skinId;
-        this.model.skin = new SkinModel(skinId);
+        this.model.skin = new Skin(skinId);
     }
 
     getNickname() {

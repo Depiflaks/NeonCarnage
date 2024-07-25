@@ -11,6 +11,7 @@ class Moveable extends Drawable {
     }
 
     isIntersectEnemy(obj) {
+        //console.log(obj);
         const deltaX = obj.x - this.x - this.h * Math.cos(this.angle);
         const deltaY = obj.y - this.y - this.h * Math.sin(this.angle);
         //context.lineTo(this.x + this.h * Math.cos(this.angle), this.y + this.h * Math.sin(this.angle));

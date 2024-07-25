@@ -37,7 +37,7 @@ export class Responder {
         this.updatePlayers(body);
         if (this.mode.area) this.updateArea(body);
         //console.log(body.bots)
-        //this.updateBots(body.bots);
+        this.updateBots(body.bots);
         if (this.mode.timer) this.updateTimer(body);
     }
 
@@ -141,7 +141,8 @@ export class Responder {
 
     updateBots(bots) {
         bots.forEach((bot, index) => {
-            const id = `bot_${index}`;
+            const id = bot.id;
+
             if (!this.bots[id]) {
                 this.bots[id] = this.newBot(bot);
             } else {
@@ -167,7 +168,7 @@ export class Responder {
         const {x, y} = {x: entity.current.x + this.field.x, y: entity.current.y + this.field.y}
         return new BotController({
             x: x, y: y, angle: 0, weaponId: null, skinId: entity.skinId, maxHealth: ENTITY.maxHealth,
-            health: entity.health, id: entity.id, shooting: entity.shooting,
+            health: entity.health, id: entity.id, shooting: entity.shooting, isAlive: entity.isAlive,
         })
     }
 }

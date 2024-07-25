@@ -35,6 +35,31 @@ class EntityView {
         this.context.restore();
     }
 
+    drawBot(bot) {
+        if (!bot.isActive()) return;
+        const gunSkin = bot.getBotSkin();
+        const angle = bot.getAngle();
+
+        const { x, y } = bot.getPosition();
+        this.context.save();
+        this.context.translate(x, y);
+        this.context.drawImage(gunSkin.legs, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+        this.context.restore();
+
+        this.context.save();
+        this.context.translate(x, y);
+        if (bot.model.isAlive)
+        this.context.rotate(angle);
+        if (bot.model.isAlive) {
+            this.context.drawImage(gunSkin.alive, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+        } else {
+            this.context.rotate(angle);
+            this.context.drawImage(gunSkin.died, -ENTITY.radius, -ENTITY.radius, ENTITY.radius * 2, ENTITY.radius * 2);
+
+        }
+        this.context.restore();
+    }
+
     drawCursor(cursor) {
         this.context.drawImage(this.cursor, cursor.x - this.cursor.width / 2, cursor.y - this.cursor.height / 2);
     }

@@ -40,5 +40,6 @@ export const SKINS = [
         bodyWithWeapon: "public/assets/Player/Skin6/bodyWithWeapon.png",
         bodyWithPistols: "public/assets/Player/Skin6/bodyWithPistols.png",
         corpse: "public/assets/Player/Skin6/died.png"
-    }
+    },
+
 ]
