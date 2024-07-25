@@ -5,8 +5,8 @@ import {WINDOW, LEADER_BOARD, INTERFACE, CELL, SHAKE, DRAW_BULLETS_AMOUNT, RAD} 
 class EngineView {
     constructor(canvas) {
         this.canvas = canvas
-        canvas.width = WINDOW.w;
-        canvas.height = WINDOW.h;
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
         this.context = canvas.getContext("2d");
         this.entityView = new EntityView(this.context);
         this.shakeOffsetX = 0;
@@ -106,7 +106,8 @@ class EngineView {
 
     drawLeaderBoard(list) {
         this.context.fillStyle = "rgba(0,0,0,0.5)";
-        this.context.fillRect(0, 0, WINDOW.w, WINDOW.h);
+        const { width, height } = this.canvas;
+        this.context.fillRect(0, 0, width, height);
         this.context.font = '64px Nosifer';
         this.context.fillStyle = 'white';
         this.context.fillText('Leader Board', LEADER_BOARD.w, LEADER_BOARD.h);
