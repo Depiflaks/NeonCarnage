@@ -7,8 +7,6 @@ export class Sender {
 
     sendData(player, field) {
         const {x, y} = player.getPosition();
-        //console.log(player)
-        //console.log(player.getChange())
         const body = {
             player: {
                 x: x - field.x, 

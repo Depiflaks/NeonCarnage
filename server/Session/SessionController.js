@@ -3,6 +3,7 @@ import { WEAPON_STATE } from "./../CONST/GAME/WEAPON/WEAPON.js"
 import { AIDKIT } from "../CONST/GAME/FIELD/AIDKIT.js";
 import { AMMUNITION } from "../CONST/GAME/FIELD/AMMUNITION.js";
 import { ENTITY } from "../CONST/GAME/ENTITY/ENTITY.js";
+import { RAD } from "../CONST/GAME/GAME.js";
 import { GAME_MODE } from "../CONST/GAME/GAME.js";
 import { setInterval } from "timers";
 
@@ -52,6 +53,10 @@ class SessionController {
             nickname: nickname,
             visible: true,
             selfDamage: 0,
+            pointer: {
+                x: 0,
+                y: 0,
+            }
         };
         if (!this.model.leaderBoard[connection.id]) this.model.leaderBoard[connection.id] = {
             name: nickname,
@@ -100,7 +105,7 @@ class SessionController {
         this.updateAidKits(body, entity);
         this.updateAmmunitions(body, entity);
         this.updateDamage(body, entity, id);
-
+        this.pointerUpdate(player);
         this.updateBotDamage(body);
 
         if (this.model.mode.bots) this.model.updateBots();
@@ -287,6 +292,26 @@ class SessionController {
       
         return result;
       }
+
+    updatePointersDM() {
+        for (const playerId in this.model.players) {
+            const player = this.model.players[playerId];
+            let minDistance = Infinity;
+            for (const enemyId in this.model.players) {
+                const enemy = this.model.players[enemyId]
+                if (playerId === enemyId || !enemy.isAlive) continue;
+                const distance = this.model.getDistance(player, enemy);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    player.pointer = {x: enemy.x, y: enemy.y}
+                }
+            }
+        }
+    }
+
+    pointerUpdate(player) {
+        this.updatePointersDM(player);
+    }
 
     getData() {
         const response = {

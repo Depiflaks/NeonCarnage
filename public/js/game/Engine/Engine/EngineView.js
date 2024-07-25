@@ -1,5 +1,5 @@
 import { EntityView } from "../Entity/EntityView.js";
-import {WINDOW, LEADER_BOARD, RAD, ENTITY, CELL, SHAKE, DRAW_BULLETS_AMOUNT} from "../../CONST.js";
+import {WINDOW, LEADER_BOARD, INTERFACE, CELL, SHAKE, DRAW_BULLETS_AMOUNT, RAD} from "../../CONST.js";
 
 
 class EngineView {
@@ -12,6 +12,8 @@ class EngineView {
         this.shakeOffsetX = 0;
         this.shakeOffsetY = 0;
         this.gradientOffset = 0;
+        this.pointer = new Image();
+        this.pointer.src = INTERFACE.pointer;
     }
 
     draw(model) {
@@ -47,6 +49,7 @@ class EngineView {
         if (model.mode.timer) field.drawTimer(this.context);
 
         if (model.mode.area) this.drawArea(model.area);
+        this.drawPointer(player, model.pointer)
         this.drawGradientOverlay();
         this.drawHealthOverlay(player.getHealth(), player.getMaxHealth());
     }

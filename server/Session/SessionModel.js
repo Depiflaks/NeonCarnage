@@ -1,4 +1,5 @@
 import {STATES} from "../CONST/GAME/ENTITY/BOT.js";
+import { RAD } from "../CONST/GAME/GAME.js";
 import { GAME_MODE } from "../CONST/GAME/GAME.js";
 
 import { WEAPON_STATE } from "../CONST/GAME/WEAPON/WEAPON.js";
@@ -30,6 +31,10 @@ class SessionModel {
             weapons: {},
             aidKits: Array(this.field.map.aidKits.length).fill(true),
             ammunitions: Array(this.field.map.ammunitions.length).fill(true),
+            pointer: {
+                x: 500,
+                y: 500,
+            }
         };
         this.leaderBoard = {};
         this.objects.weapons = {};
@@ -124,8 +129,8 @@ class SessionModel {
 
     }
 
-    getDistance(p1, p2) {
-        return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);
+    getDistance({x: x1, y: y1}, {x: x2, y: y2}) {
+        return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
     }
 
     getAngle(from, to) {

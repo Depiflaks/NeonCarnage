@@ -1,5 +1,6 @@
 import { Field } from "../Field/Field.js";
 import { PlayerController } from "../Entity/Player/PlayerController.js";
+import { RAD } from "../../CONST.js";
 import { Drawable } from "../Interface/Drawable.js";
 
 
@@ -25,6 +26,7 @@ class EngineModel {
             this.area.radiusFact = area.radius;
         }
         
+        this.pointer = {x: 0, y: 0};
     }
 
     getField() {
