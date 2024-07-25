@@ -26,7 +26,6 @@ class WebSocketRoom {
             id: connection.id,
         }
         this.sendInit(connection, body);
-        //console.log(`Connected ${ip}`);
     }
 
     onMessage(message, connection) {
@@ -48,7 +47,6 @@ class WebSocketRoom {
 
     onClose(req) {
         const ip = req.socket.remoteAddress;
-        //console.log(`Disconnected ${ip}`);
     }
 
     sendInit(connection, data) {

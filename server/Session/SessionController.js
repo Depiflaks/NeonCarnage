@@ -3,6 +3,7 @@ import { WEAPON_STATE } from "./../CONST/GAME/WEAPON/WEAPON.js"
 import { AIDKIT } from "../CONST/GAME/FIELD/AIDKIT.js";
 import { AMMUNITION } from "../CONST/GAME/FIELD/AMMUNITION.js";
 import { ENTITY } from "../CONST/GAME/ENTITY/ENTITY.js";
+import { RAD } from "../CONST/GAME/GAME.js";
 
 class SessionController {
     constructor(field) {
@@ -68,6 +69,7 @@ class SessionController {
         this.updateAidKits(body, entity);
         this.updateAmmunitions(body, entity);
         this.updateDamage(body, entity, id);
+        this.pointerUpdate(player);
         this.model.updateBots();
     }
 
@@ -79,8 +81,6 @@ class SessionController {
         const weapon = body.change.weapon;
         if (weapon.state === WEAPON_STATE.onTheGround) {
             if (!entity.weaponId) return;
-            //console.log(this.model.objects.weapons[entity.weaponId]);
-            //console.log(this.model.objects.weapons[entity.weaponId].state);
             this.model.objects.weapons[entity.weaponId].state = weapon.state;
             entity.weaponId = weapon.id;
         } else if (weapon.state === WEAPON_STATE.inTheHand) {
@@ -153,6 +153,31 @@ class SessionController {
         }
     }
 
+    updatePointerDM(entity) {
+        let closestPlayer = null;
+        let minDistance = Infinity;
+        for (const playerId in this.model.players) {
+            const player = this.model.players[playerId];
+            if ((player.isAlive) && (entity.nickname !== player.nickname)) {
+                const distance = this.model.getDistance(this.model.objects.pointer, {x: player.x, y: player.y});
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestPlayer = player;
+                }
+            }
+        }
+        if (closestPlayer) {
+            this.model.objects.pointer = { x: closestPlayer.x, y: closestPlayer.y};
+        } else {
+            this.model.objects.pointer = { x: 0, y: 0};
+        }
+    }
+
+
+    pointerUpdate(player) {
+        this.updatePointerDM(player);
+    }
+
     getData() {
         const response = {
             players: this.model.players,
@@ -161,6 +186,7 @@ class SessionController {
                 weapons: this.model.objects.weapons,
                 aidKits: this.model.objects.aidKits,
                 ammunitions: this.model.objects.ammunitions,
+                pointer: this.model.objects.pointer
             },
             leaderBoard: this.model.leaderBoard,
             bots: this.model.bots,

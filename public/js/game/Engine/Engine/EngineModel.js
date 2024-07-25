@@ -1,5 +1,6 @@
 import { Field } from "../Field/Field.js";
 import { PlayerController } from "../Entity/Player/PlayerController.js";
+import { RAD } from "../../CONST.js";
 
 
 class EngineModel {
@@ -12,11 +13,12 @@ class EngineModel {
             aidKitSet: aidKits, 
             spawnPoints: spawnPoints
         });
-        this.player = new PlayerController({x: 600, y: 500}, player.skinId, player.nickName, soundController);
+        this.player = new PlayerController({x: 800, y: 500}, player.skinId, player.nickName, soundController);
         this.enemies = [];
         this.playerList = {};
         this.leaderBoard = false;
         this.bots = [];
+        this.pointer = {x: 0, y: 0};
     }
 
     getField() {

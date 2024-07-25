@@ -1,4 +1,5 @@
 import {STATES} from "../CONST/GAME/ENTITY/BOT.js";
+import { RAD } from "../CONST/GAME/GAME.js";
 
 import { WEAPON_STATE } from "../CONST/GAME/WEAPON/WEAPON.js";
 
@@ -14,6 +15,10 @@ class SessionModel {
             weapons: {},
             aidKits: Array(this.field.map.aidKits.length).fill(true),
             ammunitions: Array(this.field.map.ammunitions.length).fill(true),
+            pointer: {
+                x: 500,
+                y: 500,
+            }
         };
         this.leaderBoard = {};
         this.objects.weapons = {};
@@ -64,17 +69,11 @@ class SessionModel {
 
     updateBots() {
         this.bots.forEach(bot => {
-
-            //console.log(bot.shooting)
-
             let closestPlayer = null;
             let minDistance = Infinity;
 
             for (const playerId in this.players) {
                 const player = this.players[playerId];
-
-                //console.log(player.visibleBots)
-
                 for (const visibleBotId in player.visibleBots) {
                     const visibleBot = player.visibleBots[visibleBotId];
                     if (visibleBot === bot.id) {

@@ -22,6 +22,10 @@ export const ADDRESS = {
         start: 'ws://10.250.104.157:',
         end: '/'
     },
+    liuba_home: {
+        start: 'ws://192.168.103.146:',
+        end: '/'
+    },
 }
 
 export const DATA_BASE = {

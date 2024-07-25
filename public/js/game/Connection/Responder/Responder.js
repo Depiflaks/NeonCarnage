@@ -11,6 +11,7 @@ export class Responder {
         this.enemies = engine.enemies;
         this.playerList = engine.model.playerList;
         this.bots = engine.bots;
+        this.pointer = engine.model.pointer;
         this.socket = socket;
     }
 
@@ -65,6 +66,7 @@ export class Responder {
             } else {
                 this.updateEnemy(entity, id);
             }
+            this.updatePointer(body.objects.pointer);
         }
     }
 
@@ -81,7 +83,6 @@ export class Responder {
         this.player.setAlive(entity.isAlive);
         this.player.setHealth(entity.health);
         this.updateWeapon(this.player, entity);
-        //console.log(entity);
         //this.player.clearVisibleBots();
         //this.player.model.visibleBots = entity.visibleBots;
     }
@@ -113,6 +114,11 @@ export class Responder {
         }));
     }
 
+    updatePointer(pointer) {
+        this.pointer.x = pointer.x + this.field.x;
+        this.pointer.y = pointer.y + this.field.y;
+    }
+
     updateWeapon(player, entity) {
         player.setWeaponId(entity.weaponId);
         player.setWeapon(this.field.weapons[entity.weaponId]);
@@ -131,7 +137,6 @@ export class Responder {
                 botController.setAngle(bot.angle);
             }
         });
-        //console.log(this.bots)
     }
 
     newEnemy(entity) {
