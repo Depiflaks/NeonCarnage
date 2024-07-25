@@ -259,8 +259,8 @@ const wallList = [
 ];
 
 const area = {
-    x: 1500,
-    y: 1500,
+    x: 2000,
+    y: 2000,
     radius: 3500
 }
 
