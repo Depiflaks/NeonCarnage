@@ -311,7 +311,7 @@ class SessionController {
                     }
                 }
                 for (let id of this.model.deadList) {
-                    console.log(id);
+                    //console.log(id);
                     res[id].score = 25;
                 }
                 this.end(res);
