@@ -246,20 +246,20 @@ class SessionController {
     }
 
     checkEndCondition() {
-        switch (this.model.gameMode) {
-            case GAME_MODE.deathMatch:
+        switch (this.model.mode.name) {
+            case GAME_MODE.deathMatch.name:
                 if (this.timer === 0) {
                     clearInterval(this.interval)
                     this.end();
                 }
                 break;
-            case GAME_MODE.battleRoyale:
+            case GAME_MODE.battleRoyale.name:
                 if (this.model.area.radius < 100) {
                     clearInterval(this.interval)
                     this.end();
                 }
                 break;
-            case GAME_MODE.operationOverrun:
+            case GAME_MODE.operationOverrun.name:
                 break;
             default:
                 break;

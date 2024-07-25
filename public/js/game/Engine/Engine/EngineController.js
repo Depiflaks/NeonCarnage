@@ -94,7 +94,7 @@ class EngineController {
         this.takeAmmunition();
         this.takeAidKit();
         this.player.update();
-        this.model.area.radius -= (this.model.area.radius - this.model.area.radiusFact) / 20;
+        if (this.model.mode.area) this.model.area.radius -= (this.model.area.radius - this.model.area.radiusFact) / 20;
         this.move();
         this.model.updateShake();
     }
