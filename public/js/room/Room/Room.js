@@ -98,6 +98,7 @@ export class Room {
                 this.readyButton.disabled = false;
                 this.readyButton.innerHTML = `Start`;
             }
+            this.readyButton.disabled = false;
         }
 
         if (!player.lobby_id) await this.onExitButtonClick()
@@ -117,7 +118,7 @@ export class Room {
                 <option value="1">Doomsday Junction</option>
                 `;
                 break;
-            case "Survival Run":
+            case "Operation Overrun":
                 this.mapNumber.innerHTML = `
                 <option value="1">Ghostly Gallows</option>
                 `;

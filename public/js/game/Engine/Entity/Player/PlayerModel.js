@@ -17,6 +17,7 @@ class PlayerModel extends EntityModel {
             d: 0,
             e: 0,
         };
+        this.ghost = false;
         this.change = {
             damage: {
 

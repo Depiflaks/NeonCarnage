@@ -19,9 +19,9 @@ export const LEADER_BOARD = {
 
 export const INTERFACE = {
     cursor: "public/assets/Interface/cursor.png",
-    pointer: "public/assets/Interface/newPointer.png",
-    w: 100,
-    h: 80
+    pointer: "public/assets/Interface/pointer.png",
+    w: 50,
+    h: 40
 }
 
 export const SHAKE = {
@@ -48,6 +48,7 @@ export const GAME_MODE = {
             ammunition: true,
             player: true,
         },
+        friendlyfire: true,
         leaderBoard: true,
         timer: true,
         seconds: 180,
@@ -62,6 +63,7 @@ export const GAME_MODE = {
             ammunition: false,
             player: false
         },
+        friendlyfire: true,
         leaderBoard: false,
         timer: false,
         area: true,
@@ -76,10 +78,11 @@ export const GAME_MODE = {
             ammunition: false,
             player: false
         },
+        friendlyfire: false,
         leaderBoard: false,
         timer: false,
         area: false,
-        bots: true,
+        bots: false,
         endPoint: true,
     }
 }

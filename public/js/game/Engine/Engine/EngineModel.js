@@ -20,7 +20,7 @@ class EngineModel {
         this.playerList = {};
         this.leaderBoardView = false;
         this.bots = [];
-        if (this.mode.area) {
+        if (this.mode.area || this.mode.endPoint) {
             this.area = new Drawable(area.x, area.y, 0, 0);
             this.area.radius = area.radius;
             this.area.radiusFact = area.radius;

@@ -4,9 +4,9 @@ import { map3 } from "../MAPS/BattleRoyale/map3.js";
 import { map4 } from "../MAPS/DeathMatch/map4.js";
 import { map5 } from "../MAPS/DeathMatch/map5.js";
 import { map6 } from "../MAPS/DeathMatch/map6.js";
-import { map7 } from "../MAPS/SurvivalRun/map7.js";
-import { map8 } from "../MAPS/SurvivalRun/map8.js";
-import { map9 } from "../MAPS/SurvivalRun/map9.js";
+import { map7 } from "../MAPS/OperationOverrun/map7.js";
+import { map8 } from "../MAPS/OperationOverrun/map8.js";
+import { map9 } from "../MAPS/OperationOverrun/map9.js";
 import {RAD, FPS, RPS, FRAME_DURATION, REQUEST_DURATION, WINDOW, LEADER_BOARD, INTERFACE, SHAKE, CAMERA, KEYBOARD_E, KEYBOARD_F, GAME_MODE} from "../CONST/GAME/GAME.js";
 import { ENTITY, HEALTH_BAR, ENEMY } from "../CONST/GAME/ENTITY/ENTITY.js";
 import { SOUND } from "../CONST/GAME/SOUND.js";
@@ -87,7 +87,7 @@ class Map {
                         return this.getObjects(map6);
                 };
                 break;
-            case GAME_MODE.survivalRun.name:
+            case GAME_MODE.operationOverrun.name:
                 switch (mapNumber) {
                     case 1:
                         return this.getObjects(map7);
