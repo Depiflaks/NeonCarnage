@@ -293,6 +293,13 @@ class SessionController {
         return result;
       }
 
+    updatePointers() {
+        for (const playerId in this.model.players) {
+            const player = this.model.players[playerId];
+            player.pointer = { x: this.model.area.x, y: this.model.area.y}; 
+        }
+    }
+
     updatePointersDM() {
         for (const playerId in this.model.players) {
             const player = this.model.players[playerId];
@@ -303,14 +310,25 @@ class SessionController {
                 const distance = this.model.getDistance(player, enemy);
                 if (distance < minDistance) {
                     minDistance = distance;
-                    player.pointer = {x: enemy.x, y: enemy.y}
+                    player.pointer = {x: enemy.x, y: enemy.y};
                 }
             }
         }
     }
 
     pointerUpdate(player) {
-        this.updatePointersDM(player);
+        switch (this.model.mode.name) {
+            case GAME_MODE.deathMatch.name:
+                this.updatePointersDM(player);
+                break;
+            case GAME_MODE.battleRoyale.name:
+                this.updatePointers()
+                break;
+            case GAME_MODE.operationOverrun.name:
+                this.updatePointers()
+                break;  
+        }
+        
     }
 
     getData() {
