@@ -31,8 +31,8 @@ class EngineController {
     move() {
         const { x, y } = this.player.getPosition();
         const [dx, dy] = [
-            Math.round(CAMERA.center.x - x),
-            Math.round(CAMERA.center.y - y)
+            Math.round(window.innerWidth / 2 - x),
+            Math.round(window.innerHeight / 2 - y)
         ];
         const period = CAMERA.period;
         this.field.move(dx / period, dy / period);

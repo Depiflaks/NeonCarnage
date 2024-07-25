@@ -8,8 +8,8 @@ class PlayerController extends EntityController {
         super();
         this.model = new PlayerModel(position, skinId, name);
         this.soundController = soundController;
-        this.cursorX = WINDOW.w / 2;
-        this.cursorY = WINDOW.h / 2;
+        this.cursorX = window.innerWidth / 2;
+        this.cursorY = window.innerHeight / 2;
 
         addEventListener("mousemove", (event) => this.mouseMove(event));
         addEventListener("mousedown", (event) => this.mouseDown(event));
