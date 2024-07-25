@@ -3,6 +3,7 @@ import { WEAPON_STATE } from "./../CONST/GAME/WEAPON/WEAPON.js"
 import { AIDKIT } from "../CONST/GAME/FIELD/AIDKIT.js";
 import { AMMUNITION } from "../CONST/GAME/FIELD/AMMUNITION.js";
 import { ENTITY } from "../CONST/GAME/ENTITY/ENTITY.js";
+import { RAD } from "../CONST/GAME/GAME.js";
 import { GAME_MODE } from "../CONST/GAME/GAME.js";
 import { setInterval } from "timers";
 
@@ -105,7 +106,7 @@ class SessionController {
         this.updateAidKits(body, entity);
         this.updateAmmunitions(body, entity);
         this.updateDamage(body, entity, id);
-
+        this.pointerUpdate(player);
         this.updateBotDamage(body);
 
         if (this.model.mode.bots) this.model.updateBots();
@@ -198,7 +199,7 @@ class SessionController {
         for (let id in damage) {
             const player = this.model.players[id];
             player.health = Math.max(0, player.health - damage[id])
-            if (player.health === 0) {
+            if (player.health === 0 && player.isAlive) {
                 player.isAlive = false;
                 if (this.model.mode.respawn.player) {
                     setTimeout(() => {
@@ -257,7 +258,7 @@ class SessionController {
             case GAME_MODE.deathMatch.name:
                 if (this.timer === 0) {
                     clearInterval(this.interval)
-                    this.end();
+                    this.end(this.calculateScores(this.model.leaderBoard));
                 }
                 break;
             case GAME_MODE.battleRoyale.name:
@@ -312,6 +313,59 @@ class SessionController {
             default:
                 break;
         }
+    }
+
+    calculateScores(players) {
+        const playersArray = Object.entries(players);
+
+        playersArray.sort(([, a], [, b]) => a.kills - b.kills);
+        const result = {}
+        playersArray.forEach(([playerId, player], index) => {
+          result[playerId] = {
+            name: player.name,
+            score: (index + 1) * 25
+          };
+        });
+      
+        return result;
+      }
+
+    updatePointers() {
+        for (const playerId in this.model.players) {
+            const player = this.model.players[playerId];
+            player.pointer = { x: this.model.area.x, y: this.model.area.y}; 
+        }
+    }
+
+    updatePointersDM() {
+        for (const playerId in this.model.players) {
+            const player = this.model.players[playerId];
+            let minDistance = Infinity;
+            for (const enemyId in this.model.players) {
+                const enemy = this.model.players[enemyId]
+                if (playerId === enemyId || !enemy.isAlive) continue;
+                const distance = this.model.getDistance(player, enemy);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    player.pointer = {x: enemy.x, y: enemy.y};
+                }
+            }
+        }
+    }
+
+    pointerUpdate(player) {
+        switch (this.model.mode.name) {
+            case GAME_MODE.deathMatch.name:
+                this.updatePointersDM(player);
+                break;
+            case GAME_MODE.battleRoyale.name:
+                this.updatePointers()
+                break;
+            case GAME_MODE.operationOverrun.name:
+                this.updatePointers()
+                break;  
+        }
+        
     }
 
     getData() {

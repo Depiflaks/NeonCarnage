@@ -1,5 +1,5 @@
 export const SERVER = {
-    sergey: 'ws://10.10.29.44:8000/',
+    sergey: 'ws://10.250.104.142:8000/',
     sergey_home: 'ws://192.168.1.131:8000/',
     ignat: 'ws://192.168.214.172:8000/',
     ignat_home: 'ws://10.250.104.176:8000/',
@@ -11,7 +11,7 @@ export const SERVER = {
 
 export const ADDRESS = {
     sergey: {
-        start: 'ws://10.10.29.44:',
+        start: 'ws://10.250.104.142:',
         end: '/'
     },
     sergey_home: {
@@ -24,6 +24,10 @@ export const ADDRESS = {
     },
     liuba: {
         start: 'ws://10.250.104.157:',
+        end: '/'
+    },
+    liuba_home: {
+        start: 'ws://192.168.103.146:',
         end: '/'
     },
     denis: {

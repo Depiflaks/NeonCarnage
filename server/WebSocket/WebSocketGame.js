@@ -29,7 +29,6 @@ class WebSocketGame {
             spawnPoint: this.session.nextSpawnPoint(),
         }
         this.sendInit(connection, body);
-        //console.log(`Connected ${ip}`);
     }
 
     onMessage(message, connection) {

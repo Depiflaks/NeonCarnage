@@ -11,6 +11,7 @@ export class Responder {
         this.enemies = engine.enemies;
         this.playerList = engine.model.playerList;
         this.bots = engine.bots;
+        this.pointer = engine.model.pointer;
         this.socket = socket;
         this.mode = engine.model.mode;
         if (this.mode.area) this.area = engine.model.area;
@@ -43,7 +44,6 @@ export class Responder {
         this.updateCorpses(body);
         this.updatePlayers(body);
         if (this.mode.area) this.updateArea(body);
-        //console.log(body.bots)
         if (this.mode.bots) this.updateBots(body.bots);
         if (this.mode.timer) this.updateTimer(body);
     }
@@ -90,6 +90,7 @@ export class Responder {
             } else {
                 this.updateEnemy(entity, id);
             }
+            this.updatePointer(body.players[this.id].pointer);
         }
     }
 
@@ -141,6 +142,11 @@ export class Responder {
         }));
     }
 
+    updatePointer(pointer) {
+        this.pointer.x = pointer.x + this.field.x;
+        this.pointer.y = pointer.y + this.field.y;
+    }
+
     updateWeapon(player, entity) {
         player.setWeaponId(entity.weaponId);
         player.setWeapon(this.field.weapons[entity.weaponId]);
@@ -160,7 +166,6 @@ export class Responder {
                 botController.setAngle(bot.angle);
             }
         });
-        //console.log(this.bots)
     }
 
     newEnemy(entity) {

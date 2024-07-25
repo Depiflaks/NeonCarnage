@@ -20,6 +20,8 @@ export const LEADER_BOARD = {
 export const INTERFACE = {
     cursor: "public/assets/Interface/cursor.png",
     pointer: "public/assets/Interface/pointer.png",
+    w: 50,
+    h: 40
 }
 
 export const SHAKE = {
@@ -49,9 +51,9 @@ export const GAME_MODE = {
         friendlyfire: true,
         leaderBoard: true,
         timer: true,
-        seconds: 60,
+        seconds: 180,
         area: false,
-        bots: true,
+        bots: false,
         endPoint: false,
     },
     battleRoyale: {

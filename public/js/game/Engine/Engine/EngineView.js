@@ -1,5 +1,5 @@
 import { EntityView } from "../Entity/EntityView.js";
-import {WINDOW, LEADER_BOARD, RAD, ENTITY, CELL, SHAKE, DRAW_BULLETS_AMOUNT} from "../../CONST.js";
+import {WINDOW, LEADER_BOARD, INTERFACE, CELL, SHAKE, DRAW_BULLETS_AMOUNT, RAD} from "../../CONST.js";
 
 
 class EngineView {
@@ -12,6 +12,8 @@ class EngineView {
         this.shakeOffsetX = 0;
         this.shakeOffsetY = 0;
         this.gradientOffset = 0;
+        this.pointer = new Image();
+        this.pointer.src = INTERFACE.pointer;
     }
 
     draw(model) {
@@ -128,6 +130,15 @@ class EngineView {
             this.resetShake();
         }
         this.draw(model);
+    }
+
+    drawPointer(player, pointer){
+        this.context.save();
+        this.context.translate(player.model.x, player.model.y);
+        const angle = Math.atan2(pointer.y - player.model.y, pointer.x - player.model.x);
+        this.context.rotate(angle);
+        this.context.drawImage(this.pointer, INTERFACE.w * 2, -INTERFACE.h, INTERFACE.w, INTERFACE.h)
+        this.context.restore();
     }
 
     applyShake() {

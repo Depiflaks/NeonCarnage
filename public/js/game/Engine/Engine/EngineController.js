@@ -82,13 +82,11 @@ class EngineController {
                 this.player.removeVisibleBot(bot.model.id);
             }
             if (bot.getShooting()) {
-                //console.log(bot.getShooting())
                 bot.shot();
             }
             bot.getBullets().forEach(bullet => {
                 bullet.updatePosition();
             });
-            //console.log(this.player.getVisibleBots());
         });
         this.player.updateSpeed()
         this.checkIntersections([...this.field.verticalWalls, ...this.field.horizontalWalls]);
