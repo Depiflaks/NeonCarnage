@@ -289,6 +289,7 @@ class SessionController {
             case GAME_MODE.operationOverrun.name:
                 const res = {}
                 if (this.model.deadList.length === this.model.playersCount) {
+                    console.log(123);
                     for (let id in this.model.players) {
                         res[id] = {
                             name: this.model.players[id].nickname,

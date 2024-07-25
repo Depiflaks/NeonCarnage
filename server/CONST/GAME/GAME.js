@@ -82,7 +82,7 @@ export const GAME_MODE = {
         leaderBoard: false,
         timer: false,
         area: false,
-        bots: true,
+        bots: false,
         endPoint: true,
     }
 }
