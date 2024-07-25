@@ -13,13 +13,6 @@ class SessionController {
         //this.startBotUpdates();
     }
 
-    startBotUpdates() {
-        setInterval(() => {
-            this.model.updateBots();
-
-        }, 1000);
-    }
-
     addPlayer(connection, {health, maxHealth, nickname}) {
         this.model.players[connection.id] = {
             health: health,
@@ -137,11 +130,13 @@ class SessionController {
             player.health = Math.max(0, player.health - damage[id])
             if (player.health === 0) {
                 player.isAlive = false;
-                if (this.model.mode.respawn.player) setTimeout(() => {
-                    player.spawnPoint = this.randomSpawnPoint();
-                    player.isAlive = true;
-                    player.health = player.maxHealth;
-                }, ENTITY.rebornDelay);
+                if (this.model.mode.respawn.player) {
+                    setTimeout(() => {
+                        player.spawnPoint = this.nextSpawnPoint();
+                        player.isAlive = true;
+                        player.health = player.maxHealth;
+                    }, ENTITY.rebornDelay);
+                }
                 if (player.weaponId) {
                     this.model.objects.weapons[player.weaponId].state = WEAPON_STATE.onTheGround;
                     player.weaponId = null;

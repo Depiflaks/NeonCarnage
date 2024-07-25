@@ -104,12 +104,7 @@ export class Responder {
         const {x, y} = {x: entity.x + this.field.x, y: entity.y + this.field.y}
         if (!this.enemies[id]) this.enemies[id] = this.newEnemy(entity)
         const enemy = this.enemies[id];
-        if (!enemy.isAlive() && entity.isAlive) {
-            console.log("reborn", x, y);
-            enemy.reborn({x, y})
-        } else {
-            enemy.setPosition({x, y});
-        }
+        enemy.setPosition({x, y});
         
         enemy.setAlive(entity.isAlive);
         enemy.setAngle(entity.angle);
