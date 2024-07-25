@@ -358,7 +358,7 @@ const bots = [
         shooting: false,
         isAlive: true,
         deviation: 0.15,
-        rapidity: 900,
+        rapidity: 700,
     },
     {
         current: {
@@ -367,13 +367,13 @@ const bots = [
         },
         skinId: 1,
         state: STATES.wanders,
-        health: 5,
+        health: 7,
         maxHealth: ENTITY.maxHealth,
         id: "bot_1",
         shooting: false,
         isAlive: true,
         deviation: 0.13,
-        rapidity: 800,
+        rapidity: 500,
     },
     {
         current: {
@@ -382,13 +382,13 @@ const bots = [
         },
         skinId: 0,
         state: STATES.wanders,
-        health: 5,
+        health: 9,
         maxHealth: ENTITY.maxHealth,
         id: "bot_2",
         shooting: false,
         isAlive: true,
         deviation: 0.12,
-        rapidity: 700,
+        rapidity: 400,
     },
     {
         current: {
@@ -397,13 +397,13 @@ const bots = [
         },
         skinId: 1,
         state: STATES.wanders,
-        health: 5,
+        health: 10,
         maxHealth: ENTITY.maxHealth,
         id: "bot_3",
         shooting: false,
         isAlive: true,
         deviation: 0.11,
-        rapidity: 600,
+        rapidity: 350,
     },
     {
         current: {
@@ -412,13 +412,13 @@ const bots = [
         },
         skinId: 1,
         state: STATES.wanders,
-        health: 5,
+        health: 10,
         maxHealth: ENTITY.maxHealth,
         id: "bot_4",
         shooting: false,
         isAlive: true,
         deviation: 0.1,
-        rapidity: 500,
+        rapidity: 300,
     },
     {
         current: {
@@ -427,13 +427,13 @@ const bots = [
         },
         skinId: 1,
         state: STATES.wanders,
-        health: 5,
+        health: 7,
         maxHealth: ENTITY.maxHealth,
         id: "bot_5",
         shooting: false,
         isAlive: true,
         deviation: 0.09,
-        rapidity: 450,
+        rapidity: 200,
     },
     {
         current: {
@@ -442,13 +442,13 @@ const bots = [
         },
         skinId: 1,
         state: STATES.wanders,
-        health: 5,
+        health: 10,
         maxHealth: ENTITY.maxHealth,
         id: "bot_6",
         shooting: false,
         isAlive: true,
         deviation: 0.08,
-        rapidity: 400,
+        rapidity: 200,
     },
     {
         current: {
@@ -457,13 +457,13 @@ const bots = [
         },
         skinId: 1,
         state: STATES.wanders,
-        health: 5,
+        health: 8,
         maxHealth: ENTITY.maxHealth,
         id: "bot_7",
         shooting: false,
         isAlive: true,
         deviation: 0.08,
-        rapidity: 300,
+        rapidity: 150,
     },
     {
         current: {
@@ -472,13 +472,13 @@ const bots = [
         },
         skinId: 1,
         state: STATES.wanders,
-        health: 10,
+        health: 20,
         maxHealth: ENTITY.maxHealth,
         id: "bot_8",
         shooting: false,
         isAlive: true,
         deviation: 0.2,
-        rapidity: 300,
+        rapidity: 200,
     },
 ];
 
