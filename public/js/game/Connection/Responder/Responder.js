@@ -88,7 +88,6 @@ export class Responder {
     }
 
     updatePlayer(entity) {
-        console.log(entity.x, entity.y)
         if (this.player.isAlive() && !entity.isAlive) {
             this.player.die();
             this.field.addCorpse(this.id, this.player);
