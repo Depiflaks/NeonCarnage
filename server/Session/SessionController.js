@@ -7,10 +7,45 @@ import { GAME_MODE } from "../CONST/GAME/GAME.js";
 import { setInterval } from "timers";
 
 class SessionController {
-    constructor(field) {
-        this.model = new SessionModel(field);
+    constructor(data) {
+        this.model = new SessionModel(data);
         this.spawn = 0;
-        //this.startBotUpdates();
+        this.initGameMode()
+    }
+
+    initGameMode() {
+        switch (this.model.mode.name) {
+            case GAME_MODE.deathMatch.name:
+                this.initDeathMatch()
+                break;
+            case GAME_MODE.battleRoyale.name:
+                this.initBattleRoyale()
+                break;
+            case GAME_MODE.operationOverrun.name:
+                this.initOperationOverrun()
+                break;  
+        }
+    }
+
+    initDeathMatch() {
+        this.timer = this.model.mode.seconds;
+        this.interval = setInterval(() => {this.decTimer()}, 1000);
+    }
+
+    decTimer() {
+        this.timer -= 1;
+        if (this.timer === 0) {
+            this.end();
+            clearInterval(this.interval);
+        }
+    }
+
+    initBattleRoyale() {
+
+    }
+
+    initOperationOverrun() {
+
     }
 
     addPlayer(connection, {health, maxHealth, nickname}) {
@@ -18,7 +53,8 @@ class SessionController {
             health: health,
             maxHealth: maxHealth,
             isAlive: true,
-            nickname: nickname
+            nickname: nickname,
+            visible: true,
         };
         if (!this.model.leaderBoard[connection.id]) this.model.leaderBoard[connection.id] = {
             name: nickname,
@@ -105,7 +141,7 @@ class SessionController {
             if (!entity.isReborning) entity.health = Math.min(entity.maxHealth, entity.health + AIDKIT.amount);
             
             this.model.objects.aidKits[id] = false;
-            setTimeout(() => {
+            if (this.model.mode.respawn.aidKid) setTimeout(() => {
                 this.model.objects.aidKits[id] = true;
             }, AIDKIT.delay);
         }
@@ -116,7 +152,7 @@ class SessionController {
         const ammunitions = body.change.ammunitions;
         for (let id of new Set(ammunitions)) {
             this.model.objects.ammunitions[id] = false;
-            setTimeout(() => {
+            if (this.model.mode.respawn.ammunition) setTimeout(() => {
                 this.model.objects.ammunitions[id] = true;
             }, AMMUNITION.delay);
         }
@@ -130,13 +166,13 @@ class SessionController {
             player.health = Math.max(0, player.health - damage[id])
             if (player.health === 0) {
                 player.isAlive = false;
-                if (this.model.mode.respawn.player) {
-                    setTimeout(() => {
-                        player.spawnPoint = this.nextSpawnPoint();
-                        player.isAlive = true;
-                        player.health = player.maxHealth;
-                    }, ENTITY.rebornDelay);
-                }
+                if (this.model.mode.respawn.player) setTimeout(() => {
+                    player.spawnPoint = this.nextSpawnPoint();
+                    player.isAlive = true;
+                    player.visible = false;
+                    setTimeout(() => {player.visible = true}, 2000);
+                    player.health = player.maxHealth;
+                }, ENTITY.rebornDelay);
                 if (player.weaponId) {
                     this.model.objects.weapons[player.weaponId].state = WEAPON_STATE.onTheGround;
                     player.weaponId = null;

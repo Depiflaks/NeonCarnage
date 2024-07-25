@@ -105,7 +105,7 @@ export class Responder {
         if (!this.enemies[id]) this.enemies[id] = this.newEnemy(entity)
         const enemy = this.enemies[id];
         enemy.setPosition({x, y});
-        
+        enemy.setVisible(entity.visible)
         enemy.setAlive(entity.isAlive);
         enemy.setAngle(entity.angle);
         

@@ -13,6 +13,7 @@ class EntityModel extends Moveable {
         this.bullets = [];
         this.isAlive = true;
         this.skinId = skinId;
+        this.visible = true;
         this.skin = new SkinModel({skinId});
         
         this.nickname = nickName;

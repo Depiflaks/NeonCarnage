@@ -42,6 +42,14 @@ class EntityController {
     getAngle() {
         return this.model.angle;
     }
+    
+    getVisible() {
+        return this.model.visible;
+    }
+
+    setVisible(value) {
+        this.model.visible = value;
+    }
 
     getSkinId() {
         return this.model.skinId;

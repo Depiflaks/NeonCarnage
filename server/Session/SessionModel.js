@@ -17,7 +17,7 @@ class SessionModel {
                 this.mode = GAME_MODE.operationOverrun
                 break;
         }
-        this.maxPlayers = 100;
+        this.maxPlayers = 4;
         this.players = {};
         this.playersCount = 0;
         this.connections = {};

@@ -1,4 +1,4 @@
-import {ENTITY, RAD, INTERFACE, HEALTH_BAR} from "../../CONST.js";
+import {ENTITY, RAD, INTERFACE, HEALTH_BAR, DRAW_BULLETS_AMOUNT} from "../../CONST.js";
 
 class EntityView {
     constructor(context) {
@@ -78,6 +78,22 @@ class EntityView {
         this.drawHealthBar(player, ENTITY.radius * 2);
     }
 
+    drawBulletAmount(player) {
+        const weapon = player.getWeapon();
+        if (weapon && weapon.getBattleType() === "distant") {
+            const cursorPos = player.getCursorPosition();
+            this.context.save();
+            this.context.font = "22px Russo One";
+            this.context.fillStyle = 'white';
+
+            const text = weapon.getAmount();
+            const x = cursorPos.x + DRAW_BULLETS_AMOUNT.OffsetX;
+            const y = cursorPos.y + DRAW_BULLETS_AMOUNT.OffsetY;
+
+            this.context.fillText(text, x, y);
+            this.context.restore();
+        }
+    }
 
     drawNickname(entity) {
         const { x, y } = entity.getPosition();

@@ -6,9 +6,11 @@ class WebSocketGame {
         this.endGame = false;
         this.socket = new WebSocketServer({ port: port });
         this.session = session;
-        setTimeout(() => {this.sendEnd()}, this.session.model.mode.seconds * 1000);
+        this.session.end = () => {this.sendEnd()};
         this.socket.on('connection', (connection, req) => {this.onConnection(connection, req)});
     }
+
+
 
     onConnection(connection, req) {
         this.init(connection, req);

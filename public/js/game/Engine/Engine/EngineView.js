@@ -27,32 +27,37 @@ class EngineView {
 
         this.entityView.drawNickname(player);
 
-        Object.values(enemies).map(enemy => {
-            if (enemy.isAlive()) {
-                if (enemy.getMeleeStrike() && enemy.model.active === true) {
-                    enemy.getMeleeStrike().draw(this.context);
-                }
-                this.entityView.draw(enemy);
-
-                this.entityView.drawEnemyHealthBar(enemy);
-            }
-            this.drawBullets(enemy.getBullets(), field);
-            this.entityView.drawNickname(enemy);
+        Object.values(enemies).forEach(enemy => {
+            this.drawEnemy(enemy, field);
         });
 
-        Object.values(bots).map(bot => {
+        Object.values(bots).forEach(bot => {
             this.entityView.draw(bot);
             this.drawBullets(bot.getBullets(), field)
         })
+
         field.drawWalls(this.context);
         this.entityView.drawPlayerHealthBar(player);
-        this.drawBulletAmount(player);
+        this.entityView.drawBulletAmount(player);
         if (model.leaderBoardView) this.drawLeaderBoard(player.leaderBoard);
         this.entityView.drawCursor(player.getCursorPosition());
         if (model.mode.timer) field.drawTimer(this.context);
         this.drawGradientOverlay();
         this.drawHealthOverlay(player.getHealth(), player.getMaxHealth());
+    }
 
+    drawEnemy(enemy, field) {
+        if (!enemy.model.visible) return;
+        if (enemy.isAlive()) {
+            if (enemy.getMeleeStrike() && enemy.model.active === true) {
+                enemy.getMeleeStrike().draw(this.context);
+            }
+            this.entityView.draw(enemy);
+
+            this.entityView.drawEnemyHealthBar(enemy);
+        }
+        this.drawBullets(enemy.getBullets(), field);
+        this.entityView.drawNickname(enemy);
     }
 
     drawBullets(bullets, field) {
@@ -69,23 +74,6 @@ class EngineView {
                 field.cells[indexX][indexY].active
             ) bullet.draw(this.context);
         });
-    }
-
-    drawBulletAmount(player) {
-        const weapon = player.getWeapon();
-        if (weapon != null && weapon.getBattleType() === "distant") {
-            const cursorPos = player.getCursorPosition();
-            this.context.save();
-            this.context.font = "22px Russo One";
-            this.context.fillStyle = 'white';
-
-            const text = weapon.getAmount();
-            const x = cursorPos.x + DRAW_BULLETS_AMOUNT.OffsetX;
-            const y = cursorPos.y + DRAW_BULLETS_AMOUNT.OffsetY;
-
-            this.context.fillText(text, x, y);
-            this.context.restore();
-        }
     }
 
     drawLeaderBoard(list) {

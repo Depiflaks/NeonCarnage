@@ -47,7 +47,7 @@ export const GAME_MODE = {
             player: true,
         },
         timer: true,
-        seconds: 180,
+        seconds: 60,
         area: false,
         bots: false,
         endPoint: false,
