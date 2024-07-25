@@ -30,25 +30,26 @@ class EngineController {
 
     move() {
         const { x, y } = this.player.getPosition();
-        const [dx, dy] = [
-            Math.round(CAMERA.center.x - x),
-            Math.round(CAMERA.center.y - y)
-        ];
         const period = CAMERA.period;
-        this.field.move(dx / period, dy / period);
-        this.player.move(dx / period, dy / period);
+        const [dx, dy] = [
+            Math.round(CAMERA.center.x - x) / period,
+            Math.round(CAMERA.center.y - y) / period
+        ];
+        
+        this.field.move(dx, dy);
+        this.player.move(dx, dy);
         Object.values(this.enemies).forEach(enemy => {
-            enemy.move(dx / period, dy / period);
+            enemy.move(dx, dy);
         });
         Object.values(this.bots).forEach(bot => {
-            bot.move(dx / period, dy / period);
+            bot.move(dx, dy);
         });
         Object.values(this.bots).forEach(bot => {
             Object.values(bot.getBullets()).forEach(bullet => {
-                bullet.move(dx / period, dy / period);
+                bullet.move(dx, dy);
             });
         });
-        if (this.model.mode.area) this.model.area.move(dx / period, dy / period);
+        if (this.model.mode.area || this.model.mode.endPoint) this.model.area.move(dx, dy);
     }
 
     pickUpWeapon() {
@@ -143,8 +144,8 @@ class EngineController {
     }
 
 
-    bulletsIntersectionEnemy() {
-        this.player.setBullets(this.player.getBullets().filter(
+    bulletsIntersection() {
+        if (this.model.mode.friendlyfire) this.player.setBullets(this.player.getBullets().filter(
             bullet => {
                 let hit = false;
                 Object.entries(this.enemies).forEach(([id, enemy]) => {
@@ -184,33 +185,6 @@ class EngineController {
         ));
     }
 
-    /*filterBullets(bullets, enemies, addDamage) {
-        return bullets.filter(bullet => {
-            let hit = false;
-            if (this.player.isAlive() && bullet.isIntersectEnemy(this.player.model)) {
-                hit = true;
-                addDamage(id, 1);
-            }
-            return !hit;
-        });
-    }
-
-    bulletsIntersectionEnemy() {
-        this.player.setBullets(this.filterBullets(
-            this.player.getBullets(),
-            this.enemies,
-            (id, damage) => this.player.addDamage(id, damage)
-        ));
-
-        Object.values(this.bots).forEach(bot => {
-            bot.setBullets(this.filterBullets(
-                bot.getBullets(),
-                this.player,
-                (id, damage) => this.player.addDamage(id, damage)
-            ));
-        });
-    }*/
-
 
     /**
      *
@@ -248,7 +222,7 @@ class EngineController {
      */
     checkIntersections(drawableArray, moveableArray) {
         this.bulletsIntersectionWall(drawableArray);
-        this.bulletsIntersectionEnemy(moveableArray);
+        this.bulletsIntersection(moveableArray);
         this.meleeStrikeIntersectionEnemy(drawableArray)
         this.intersectMeleeStrike(drawableArray);
         

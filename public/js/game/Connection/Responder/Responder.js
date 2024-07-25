@@ -106,11 +106,11 @@ export class Responder {
             let y = entity.spawnPoint.y + this.field.y;
             this.player.reborn({x, y});
         }
+        this.player.model.ghost = entity.ghost;
         this.player.setAlive(entity.isAlive);
         this.player.setHealth(entity.health);
         this.updateWeapon(this.player, entity);
-        //this.player.clearVisibleBots();
-        //this.player.model.visibleBots = entity.visibleBots;
+
     }
 
     updateEnemy(entity, id) {

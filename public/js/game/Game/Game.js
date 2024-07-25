@@ -28,7 +28,7 @@ class Game {
             this.lastFrame = timestamp;
         }
 
-        if (timestamp - this.lastRequest >= REQUEST_DURATION) {
+        if (!this.engine.player.model.ghost && timestamp - this.lastRequest >= REQUEST_DURATION) {
             this.connection.send(this.engine.player, this.engine.field); 
             this.lastRequest = timestamp;
         }

@@ -40,18 +40,31 @@ class EngineView {
         })
 
         field.drawWalls(this.context);
+        
         this.entityView.drawPlayerHealthBar(player);
         this.entityView.drawBulletAmount(player);
         if (model.leaderBoardView) this.drawLeaderBoard(player.leaderBoard);
         this.entityView.drawCursor(player.getCursorPosition());
         if (model.mode.timer) field.drawTimer(this.context);
 
-        if (model.mode.area) this.drawArea(model.area);
+        if (model.mode.area) this.drawDeathArea(model.area);
+
+        if (model.mode.endPoint) this.drawEndArea(model.area);
+
+        this.drawPointer(player, model.pointer)
         this.drawGradientOverlay();
         this.drawHealthOverlay(player.getHealth(), player.getMaxHealth());
     }
 
-    drawArea(area) {
+    drawEndArea(area) {
+        this.context.fillStyle = 'rgba(0, 150, 0, 0.3)';
+        this.context.lineWidth = 1;
+        this.context.beginPath();
+        this.context.arc(area.x, area.y, area.radius, 0, Math.PI * 2);
+        this.context.fill();
+    }
+
+    drawDeathArea(area) {
         this.context.strokeStyle = 'rgba(255, 0, 0, 0.3)';
         this.context.lineWidth = 1000;
         this.context.beginPath();

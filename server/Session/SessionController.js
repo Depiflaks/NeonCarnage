@@ -37,7 +37,7 @@ class SessionController {
     }
 
     initBattleRoyale() {
-        this.interval = setInterval(() => {this.updateArea()}, 1000);
+        this.interval = setInterval(() => {this.updateDeathArea()}, 1000);
     }
 
     initOperationOverrun() {
@@ -52,6 +52,11 @@ class SessionController {
             nickname: nickname,
             visible: true,
             selfDamage: 0,
+            pointer: {
+                x: 0,
+                y: 0,
+            },
+            ghost: false,
         };
         if (!this.model.leaderBoard[connection.id]) this.model.leaderBoard[connection.id] = {
             name: nickname,
@@ -108,13 +113,21 @@ class SessionController {
         this.checkEndCondition();
     }
 
-    updateArea() {
+    updateDeathArea() {
         this.model.area.radius -= this.model.mode.areaSpeed;
         for (const id in this.model.players) {
             const player = this.model.players[id]
             if (this.isInArea(player)) continue;
             player.selfDamage += 1;
         }
+    }
+
+    updateFinishArea() {
+        for (const id in this.model.players) {
+            const player = this.model.players[id]
+            if (!player.isAlive || !this.isInArea(player)) return false;
+        }
+        return true;
     }
 
     isInArea({x, y}) {
@@ -187,13 +200,20 @@ class SessionController {
             player.health = Math.max(0, player.health - damage[id])
             if (player.health === 0) {
                 player.isAlive = false;
-                if (this.model.mode.respawn.player) setTimeout(() => {
-                    player.spawnPoint = this.nextSpawnPoint();
-                    player.isAlive = true;
-                    player.visible = false;
-                    setTimeout(() => {player.visible = true}, 2000);
-                    player.health = player.maxHealth;
-                }, ENTITY.rebornDelay);
+                if (this.model.mode.respawn.player) {
+                    setTimeout(() => {
+                        player.spawnPoint = this.nextSpawnPoint();
+                        player.isAlive = true;
+                        player.visible = false;
+                        setTimeout(() => {player.visible = true}, 2000);
+                        player.health = player.maxHealth;
+                    }, ENTITY.rebornDelay);
+                } 
+                // else {
+                //     player.ghost = true;
+                //     player.isAlive = true;
+                //     player.visible = false;
+                // }
                 if (player.weaponId) {
                     this.model.objects.weapons[player.weaponId].state = WEAPON_STATE.onTheGround;
                     player.weaponId = null;
@@ -266,6 +286,28 @@ class SessionController {
                 }
                 break;
             case GAME_MODE.operationOverrun.name:
+                const res = {}
+                if (this.model.deadList.length === this.model.playersCount) {
+                    for (let id in this.model.players) {
+                        res[id] = {
+                            name: this.model.players[id].nickname,
+                            score: 0,
+                        }
+                    }
+                    this.end(res);
+                    return;
+                }
+                if (!this.updateFinishArea()) return;
+                for (let id in this.model.players) {
+                    res[id] = {
+                        name: this.model.players[id].nickname,
+                        score: 75,
+                    }
+                }
+                for (let id in this.model.deadList) {
+                    res[id].score = 25;
+                }
+                this.end(res);
                 break;
             default:
                 break;

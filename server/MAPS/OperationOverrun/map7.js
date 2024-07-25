@@ -11,6 +11,12 @@ function convertFields(cellsList) {
     return result;
 }
 
+const area = {
+    x: 430,
+    y: 1950,
+    radius: 300
+}
+
 const spawnPoints = [
     {
         x: 75,
@@ -331,6 +337,6 @@ const aidKitSet = [
 ];
 
 const groundList = convertFields(cellsList);
-const map7 = { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints};
+const map7 = { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints, area };
 
 export {map7}

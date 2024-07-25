@@ -46,6 +46,7 @@ export const GAME_MODE = {
             ammunition: true,
             player: true,
         },
+        friendlyfire: true,
         leaderBoard: true,
         timer: true,
         seconds: 60,
@@ -60,6 +61,7 @@ export const GAME_MODE = {
             ammunition: false,
             player: false
         },
+        friendlyfire: true,
         leaderBoard: false,
         timer: false,
         area: true,
@@ -74,6 +76,7 @@ export const GAME_MODE = {
             ammunition: false,
             player: false
         },
+        friendlyfire: false,
         leaderBoard: false,
         timer: false,
         area: false,
