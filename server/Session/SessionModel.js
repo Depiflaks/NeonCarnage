@@ -49,42 +49,7 @@ class SessionModel {
                 maxAmount: weapon.type.amount,
             }
         });
-        this.bots = [
-            {
-                current: {
-                    x: 170,
-                    y: 170
-                },
-                skinId: 0,
-                state: STATES.wanders,
-                health: 5,
-                maxHealth: ENTITY.maxHealth,
-                id: "bot_0",
-                shooting: false,
-                isAlive: true,
-            },
-            {
-                current: {
-                    x: 350,
-                    y: 350
-                },
-                skinId: 1,
-                state: STATES.wanders,
-                health: 5,
-                maxHealth: ENTITY.maxHealth,
-                id: "bot_1",
-                shooting: false,
-                isAlive: true,
-            }
-        ];
-        //this.walls = this.convertWallList(field.map.walls);
-    }
-
-    convertWallList(wallList) {
-        return wallList.map(wall => ({
-            start: { x: wall[0] * 15, y: wall[1] * 15 },
-            end: { x: wall[2] * 15, y: wall[3] * 15 }
-        }));
+        this.bots = this.field.map.bots;
     }
 
 

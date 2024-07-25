@@ -14,11 +14,11 @@ class BotController extends EnemyController {
     shot() {
         if (this.model.isRecharging) return;
         this.model.isRecharging = true;
-        setTimeout(() => {this.model.isRecharging = false}, 700)
+        setTimeout(() => {this.model.isRecharging = false}, this.model.rapidity);
         const angle = this.getAngle();
         const x = this.getPosition().x + WEAPON.h/4.1 * Math.cos(angle);
         const y = this.getPosition().y + WEAPON.h/4.1 * Math.sin(angle);
-        const deviation = 0.1;
+        const deviation = this.model.deviation;
         const angleDeviation = (Math.random() * 2 - 1) * deviation;
         const adjustedAngle = angle + angleDeviation;
         this.model.bullets.push(new Bullet({ x, y, angle: adjustedAngle }));

@@ -1,4 +1,6 @@
 import { WEAPON_MODELS } from "../../CONST/GAME/WEAPON/WEAPON_MODELS.js";
+import {STATES} from "../../CONST/GAME/ENTITY/BOT.js";
+import {ENTITY} from "../../CONST/GAME/ENTITY/ENTITY.js";
 function convertFields(cellsList) {
     const result = [];
     for (let i = 0; i < cellsList.length; i++) {
@@ -336,7 +338,151 @@ const aidKitSet = [
     }
 ];
 
+// 1373.2935059634483 104.6360389693271, 1983.2194795587563 501.5405845398269,
+// 2790.053570062023 681.0883117545835, 2996.6012972767794 1207.0035713374841,
+// 2420.6788950189375 2232.6610383316183, 1792.8626612030102 2232.848375853163,
+// 1840.6860376938732 1327.731493398836, 739.6753236814657 1215.8162338159377,
+// 303.4951288348593 1609.1025971044564
+
+const bots = [
+    {
+        current: {
+            x: 1373,
+            y: 104
+        },
+        skinId: 0,
+        state: STATES.wanders,
+        health: 5,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_0",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.15,
+        rapidity: 900,
+    },
+    {
+        current: {
+            x: 1983,
+            y: 501
+        },
+        skinId: 1,
+        state: STATES.wanders,
+        health: 5,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_1",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.13,
+        rapidity: 800,
+    },
+    {
+        current: {
+            x: 2790,
+            y: 681
+        },
+        skinId: 0,
+        state: STATES.wanders,
+        health: 5,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_2",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.12,
+        rapidity: 700,
+    },
+    {
+        current: {
+            x: 2996,
+            y: 1207
+        },
+        skinId: 1,
+        state: STATES.wanders,
+        health: 5,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_3",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.11,
+        rapidity: 600,
+    },
+    {
+        current: {
+            x: 2420,
+            y: 2232
+        },
+        skinId: 1,
+        state: STATES.wanders,
+        health: 5,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_4",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.1,
+        rapidity: 500,
+    },
+    {
+        current: {
+            x: 1792,
+            y: 2232
+        },
+        skinId: 1,
+        state: STATES.wanders,
+        health: 5,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_5",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.09,
+        rapidity: 450,
+    },
+    {
+        current: {
+            x: 1840,
+            y: 1327
+        },
+        skinId: 1,
+        state: STATES.wanders,
+        health: 5,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_6",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.08,
+        rapidity: 400,
+    },
+    {
+        current: {
+            x: 739,
+            y: 1215
+        },
+        skinId: 1,
+        state: STATES.wanders,
+        health: 5,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_7",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.08,
+        rapidity: 300,
+    },
+    {
+        current: {
+            x: 303,
+            y: 1609
+        },
+        skinId: 1,
+        state: STATES.wanders,
+        health: 10,
+        maxHealth: ENTITY.maxHealth,
+        id: "bot_8",
+        shooting: false,
+        isAlive: true,
+        deviation: 0.2,
+        rapidity: 300,
+    },
+];
+
 const groundList = convertFields(cellsList);
-const map7 = { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints, area };
+const map7 = { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints, area, bots};
 
 export {map7}

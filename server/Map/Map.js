@@ -101,7 +101,7 @@ class Map {
     }
 
     getObjects(map) {
-        return {                
+        return {
             cells: map.groundList, 
             walls: map.wallList, 
             weapons: map.weaponSet, 
@@ -109,6 +109,7 @@ class Map {
             ammunitions: map.ammunitionSet,
             spawnPoints: map.spawnPoints,
             area: map.area,
+            bots: map.bots,
         }
     }
     
