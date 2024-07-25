@@ -24,7 +24,7 @@ class WebSocketGame {
         this.session.updateConnection(connection);
         const body = {
             id: connection.id,
-            
+            spawnPoint: this.session.nextSpawnPoint(),
         }
         this.sendInit(connection, body);
         //console.log(`Connected ${ip}`);

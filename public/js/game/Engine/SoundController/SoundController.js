@@ -6,7 +6,6 @@ class SoundController {
     }
 
     init(sounds) {
-        console.log(sounds);
         sounds.forEach(sound => {
             this.addTrack(sound.name, sound.src);
         });

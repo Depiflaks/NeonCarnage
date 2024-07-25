@@ -17,6 +17,10 @@ export class Responder {
 
     onInit(body) {
         this.id = body.id;
+        this.spawnPoint = body.spawnPoint;
+        let x = this.spawnPoint.x + this.field.x;
+        let y = this.spawnPoint.y + this.field.y;
+        this.player.reborn({x, y});
         this.socket.id = this.id
     }
 
@@ -85,7 +89,9 @@ export class Responder {
             }
         }
         if (!this.player.isAlive() && entity.isAlive) {
-            this.player.reborn(this.field.getSpawnPoint());
+            let x = entity.spawnPoint.x + this.field.x;
+            let y = entity.spawnPoint.y + this.field.y;
+            this.player.reborn({x, y});
         }
         this.player.setAlive(entity.isAlive);
         this.player.setHealth(entity.health);

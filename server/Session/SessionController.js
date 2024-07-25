@@ -7,43 +7,17 @@ import { GAME_MODE } from "../CONST/GAME/GAME.js";
 import { setInterval } from "timers";
 
 class SessionController {
-    constructor(data) {
-        this.model = new SessionModel(data);
-        this.initGameMode()
+    constructor(field) {
+        this.model = new SessionModel(field);
+        this.spawn = 0;
+        //this.startBotUpdates();
     }
 
-    initGameMode() {
-        switch (this.model.mode.name) {
-            case GAME_MODE.deathMatch.name:
-                this.initDeathMatch()
-                break;
-            case GAME_MODE.battleRoyale.name:
-                this.initBattleRoyale()
-                break;
-            case GAME_MODE.operationOverrun.name:
-                this.initOperationOverrun()
-                break;  
-        }
-    }
+    startBotUpdates() {
+        setInterval(() => {
+            this.model.updateBots();
 
-    initDeathMatch() {
-        this.timer = this.model.mode.seconds;
-        this.interval = setInterval(() => {this.decTimer()}, 1000);
-    }
-
-    decTimer() {
-        this.timer -= 1;
-        if (this.timer === 0) {
-            clearInterval(this.interval);
-        }
-    }
-
-    initBattleRoyale() {
-
-    }
-
-    initOperationOverrun() {
-
+        }, 1000);
     }
 
     addPlayer(connection, {health, maxHealth, nickname}) {
@@ -58,6 +32,19 @@ class SessionController {
             kills: 0
         }
         this.model.playersCount += 1;
+    }
+
+    nextSpawnPoint() {
+        const spawnPoint = this.model.getSpawnPoint(this.spawn);
+        this.spawn += 1;
+        if (this.spawn === 4) {
+            this.spawn = 0;
+        }
+        return spawnPoint;
+    }
+
+    randomSpawnPoint() {
+        return this.model.getRandomSpawn();
     }
 
     updateConnection(connection) {
@@ -151,6 +138,7 @@ class SessionController {
             if (player.health === 0) {
                 player.isAlive = false;
                 if (this.model.mode.respawn.player) setTimeout(() => {
+                    player.spawnPoint = this.randomSpawnPoint();
                     player.isAlive = true;
                     player.health = player.maxHealth;
                 }, ENTITY.rebornDelay);
