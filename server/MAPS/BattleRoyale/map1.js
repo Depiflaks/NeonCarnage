@@ -258,6 +258,12 @@ const wallList = [
     [26, 18, 26, 24],
 ];
 
+const area = {
+    x: 1500,
+    y: 1500,
+    radius: 3500
+}
+
 const weaponSet = [
     {
         id: 1,
@@ -395,13 +401,7 @@ const aidKitSet = [
     }
 ];
 
-const area = {
-    x: 1,
-    y: 1,
-    rad: 1,
-}
-
 const groundList = convertFields(cellsList);
-const map1 = { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints, area};
+const map1 = { wallList, weaponSet, groundList, aidKitSet, ammunitionSet, spawnPoints, area };
 
 export {map1}

@@ -48,7 +48,6 @@ export class LobbyRequest {
                 const lobby = await this.database.lobby.getLobbyById(roomId);
                 const player = await this.database.player.getPlayerById(playerId);
                 const data = this.creature.createMap(lobby.game_mode, lobby.map_number);
-
                 data.player.nickName = player.player_name;
                 data.player.skinId = player.skin_id;
                 data.address = lobby.address;

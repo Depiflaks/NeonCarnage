@@ -16,7 +16,6 @@ class EngineController {
     constructor(objects, connection, canvas) {
         this.soundController = new SoundController();
         this.soundController.init(SOUND);
-
         this.model = new EngineModel(objects, this.soundController);
         this.view = new EngineView(canvas);
         this.enemies = this.model.getEnemies();
@@ -49,6 +48,7 @@ class EngineController {
                 bullet.move(dx / period, dy / period);
             });
         });
+        this.model.area.move(dx / period, dy / period);
     }
 
     pickUpWeapon() {

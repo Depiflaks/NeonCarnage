@@ -42,8 +42,17 @@ class EngineView {
         if (model.leaderBoardView) this.drawLeaderBoard(player.leaderBoard);
         this.entityView.drawCursor(player.getCursorPosition());
         if (model.mode.timer) field.drawTimer(this.context);
+        if (model.mode.area) this.drawArea(area);
         this.drawGradientOverlay();
         this.drawHealthOverlay(player.getHealth(), player.getMaxHealth());
+    }
+
+    drawArea(area) {
+        this.context.strokeStyle = 'rgba(255, 0, 0, 0.3)';
+        this.context.lineWidth = 1000;
+        this.context.beginPath();
+        this.context.arc(area.x, area.y, area.radius, 0, Math.PI * 2);
+        this.context.stroke();
     }
 
     drawEnemy(enemy, field) {
@@ -59,6 +68,8 @@ class EngineView {
         this.drawBullets(enemy.getBullets(), field);
         this.entityView.drawNickname(enemy);
     }
+
+    
 
     drawBullets(bullets, field) {
         let indexX, indexY;

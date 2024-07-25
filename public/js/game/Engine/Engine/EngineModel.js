@@ -1,5 +1,6 @@
 import { Field } from "../Field/Field.js";
 import { PlayerController } from "../Entity/Player/PlayerController.js";
+import { Drawable } from "../Interface/Drawable.js";
 
 
 class EngineModel {
@@ -18,6 +19,8 @@ class EngineModel {
         this.playerList = {};
         this.leaderBoardView = false;
         this.bots = [];
+        this.area = new Drawable(area.x, area.y, 0, 0);
+        this.area.radius = area.radius;
     }
 
     getField() {
