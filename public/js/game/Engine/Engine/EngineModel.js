@@ -4,7 +4,7 @@ import { Drawable } from "../Interface/Drawable.js";
 
 
 class EngineModel {
-    constructor({map: {cells, walls, weapons, ammunitions, aidKits, spawnPoints}, player: player, mode: mode}, soundController) {
+    constructor({map: {cells, walls, weapons, ammunitions, aidKits, spawnPoints, area}, player: player, mode: mode}, soundController) {
         this.field = new Field({
             groundList: cells, 
             wallList: walls, 
@@ -19,8 +19,12 @@ class EngineModel {
         this.playerList = {};
         this.leaderBoardView = false;
         this.bots = [];
-        this.area = new Drawable(area.x, area.y, 0, 0);
-        this.area.radius = area.radius;
+        if (this.mode.area) {
+            this.area = new Drawable(area.x, area.y, 0, 0);
+            this.area.radius = area.radius;
+            this.area.radiusFact = area.radius;
+        }
+        
     }
 
     getField() {

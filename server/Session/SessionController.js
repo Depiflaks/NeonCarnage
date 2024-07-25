@@ -34,14 +34,10 @@ class SessionController {
 
     decTimer() {
         this.timer -= 1;
-        if (this.timer === 0) {
-            this.end();
-            clearInterval(this.interval);
-        }
     }
 
     initBattleRoyale() {
-
+        this.interval = setInterval(() => {this.updateArea()}, 1000);
     }
 
     initOperationOverrun() {
@@ -104,35 +100,26 @@ class SessionController {
         this.updateAmmunitions(body, entity);
         this.updateDamage(body, entity, id);
         this.model.updateBots();
-        this.checkEndCondition();
 
-        if(this.model.mode.name == GAME_MODE.deathMatch.name) {
-            this.updateArea();
-        }
+        this.checkEndCondition();
     }
 
     updateArea() {
-        this.model.area.radius -= 1;
-        for(const player in this.model.players) {
-            if(!this.isInArea(this.model.players[player].x, this.model.players[player].y)) {
-                if(this.model.area.damage) {
-                    this.model.area.damage = false;
-                    this.model.players[player].health = Math.max(0, this.model.players[player].health -= 1)
-                    if (this.model.players[player].health === 0) {
-                        this.model.players[player].isAlive = false;
-                        if (player.weaponId) {
-                            this.model.objects.weapons[player.weaponId].state = WEAPON_STATE.onTheGround;
-                            player.weaponId = null;
-                        }
-                    }
-
-                    setInterval(() => {this.model.area.damage = true;}, 1000);   
-                }                 
+        this.model.area.radius -= this.model.mode.areaSpeed;
+        for (const id in this.model.players) {
+            const player = this.model.players[id]
+            if (this.isInArea(player)) continue;
+            player.health = Math.max(0, player.health -= 1)
+            if (player.health !== 0) continue;
+            player.isAlive = false;
+            if (player.weaponId) {
+                this.model.objects.weapons[player.weaponId].state = WEAPON_STATE.onTheGround;
+                player.weaponId = null;
             }
         }
     }
 
-    isInArea(x, y) {
+    isInArea({x, y}) {
         const distance = Math.sqrt((x - this.model.area.x) ** 2 + (y - this.model.area.y) ** 2);
 
         return distance <= this.model.area.radius - 500;
@@ -216,10 +203,16 @@ class SessionController {
     checkEndCondition() {
         switch (this.model.gameMode) {
             case GAME_MODE.deathMatch:
-                
+                if (this.timer === 0) {
+                    clearInterval(this.interval)
+                    this.end();
+                }
                 break;
             case GAME_MODE.battleRoyale:
-                
+                if (this.model.area.radius < 100) {
+                    clearInterval(this.interval)
+                    this.end();
+                }
                 break;
             case GAME_MODE.operationOverrun:
                 break;  

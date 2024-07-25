@@ -42,7 +42,8 @@ class EngineView {
         if (model.leaderBoardView) this.drawLeaderBoard(player.leaderBoard);
         this.entityView.drawCursor(player.getCursorPosition());
         if (model.mode.timer) field.drawTimer(this.context);
-        if (model.mode.area) this.drawArea(area);
+
+        if (model.mode.area) this.drawArea(model.area);
         this.drawGradientOverlay();
         this.drawHealthOverlay(player.getHealth(), player.getMaxHealth());
     }
@@ -68,8 +69,6 @@ class EngineView {
         this.drawBullets(enemy.getBullets(), field);
         this.entityView.drawNickname(enemy);
     }
-
-    
 
     drawBullets(bullets, field) {
         let indexX, indexY;

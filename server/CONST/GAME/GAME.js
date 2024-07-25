@@ -61,6 +61,7 @@ export const GAME_MODE = {
         },
         timer: false,
         area: true,
+        areaSpeed: 40,
         bots: true,
         endPoint: false,
     },

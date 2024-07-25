@@ -1,4 +1,4 @@
-import {CAMERA, KEYBOARD_E, KEYBOARD_F, MELEE_STRIKE, SOUND, WEAPON, WEAPON_STATE} from "../../CONST.js";
+import {CAMERA, FPS, KEYBOARD_E, KEYBOARD_F, MELEE_STRIKE, RPS, SOUND, WEAPON, WEAPON_STATE} from "../../CONST.js";
 import { EngineModel } from "./EngineModel.js";
 import { EngineView } from "./EngineView.js";
 import { Tracing } from "../RayTracing/Tracing.js";
@@ -48,7 +48,7 @@ class EngineController {
                 bullet.move(dx / period, dy / period);
             });
         });
-        this.model.area.move(dx / period, dy / period);
+        if (this.model.mode.area) this.model.area.move(dx / period, dy / period);
     }
 
     pickUpWeapon() {
@@ -94,7 +94,7 @@ class EngineController {
         this.takeAmmunition();
         this.takeAidKit();
         this.player.update();
-
+        this.model.area.radius -= (this.model.area.radius - this.model.area.radiusFact) / 20;
         this.move();
         this.model.updateShake();
     }
