@@ -125,16 +125,17 @@ class SessionController {
 
     updateFinishArea() {
         for (const id in this.model.players) {
-            const player = this.model.players[id]
-            if (!player.isAlive || !this.isInArea(player)) return false;
+            const player = this.model.players[id];
+            if (!player.isAlive) continue;
+            if (!this.isInArea(player)) return false;
         }
         return true;
     }
 
     isInArea({x, y}) {
         const distance = Math.sqrt((x - this.model.area.x) ** 2 + (y - this.model.area.y) ** 2);
-
-        return distance <= this.model.area.radius - 500;
+        const diff = this.model.mode.area ? 500 : 0
+        return distance <= this.model.area.radius - diff;
     }
 
     updateBullets(body, entity) {
@@ -289,7 +290,6 @@ class SessionController {
             case GAME_MODE.operationOverrun.name:
                 const res = {}
                 if (this.model.deadList.length === this.model.playersCount) {
-                    console.log(123);
                     for (let id in this.model.players) {
                         res[id] = {
                             name: this.model.players[id].nickname,
@@ -299,7 +299,9 @@ class SessionController {
                     this.end(res);
                     return;
                 }
-                if (!this.updateFinishArea()) return;
+                if (!this.updateFinishArea()) {
+                    return;
+                }
                 for (let id in this.model.players) {
                     res[id] = {
                         name: this.model.players[id].nickname,
@@ -366,7 +368,6 @@ class SessionController {
                 this.updatePointers()
                 break;  
         }
-        
     }
 
     getData() {

@@ -13,7 +13,7 @@ function convertFields(cellsList) {
 
 const area = {
     x: 430,
-    y: 1950,
+    y: 400,
     radius: 300
 }
 
