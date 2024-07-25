@@ -310,8 +310,9 @@ class SessionController {
                         score: 75,
                     }
                 }
-                for (let id in this.model.deadList) {
-                    res[id].score = 25;
+                for (let id of this.model.deadList) {
+                    console.log(id);
+                    res[this.model.deadList[id]].score = 25;
                 }
                 this.end(res);
                 break;

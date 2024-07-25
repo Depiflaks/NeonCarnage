@@ -68,7 +68,7 @@ export const GAME_MODE = {
         timer: false,
         area: true,
         areaSpeed: 70,
-        bots: false,
+        bots: true,
         endPoint: false,
     },
     operationOverrun: {
@@ -82,7 +82,7 @@ export const GAME_MODE = {
         leaderBoard: false,
         timer: false,
         area: false,
-        bots: false,
+        bots: true,
         endPoint: true,
     }
 }
