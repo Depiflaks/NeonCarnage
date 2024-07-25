@@ -1,5 +1,5 @@
 import { EntityView } from "../Entity/EntityView.js";
-import {WINDOW, LEADER_BOARD, INTERFACE, CELL, SHAKE, DRAW_BULLETS_AMOUNT, RAD} from "../../CONST.js";
+import {LEADER_BOARD, INTERFACE, CELL, SHAKE} from "../../CONST.js";
 
 
 class EngineView {

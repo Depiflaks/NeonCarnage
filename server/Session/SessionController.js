@@ -212,9 +212,11 @@ class SessionController {
                     }, ENTITY.rebornDelay);
                 } 
                 // else {
-                //     player.ghost = true;
-                //     player.isAlive = true;
-                //     player.visible = false;
+                //     setTimeout(() => {
+                //         //player.isAlive = true;
+                //         player.visible = false;
+                //         player.ghost = true;
+                //     }, ENTITY.rebornDelay);
                 // }
                 if (player.weaponId) {
                     this.model.objects.weapons[player.weaponId].state = WEAPON_STATE.onTheGround;
@@ -263,6 +265,9 @@ class SessionController {
                 }
                 break;
             case GAME_MODE.battleRoyale.name:
+                if (this.model.area.radius < 1000) {
+                    this.model.mode.areaSpeed = 0;
+                }
                 if (this.model.playersCount < 2) return;
                 let alive = [];
                 for (let id in this.model.players) {
@@ -270,9 +275,6 @@ class SessionController {
                 }
                 if (alive.length === 1) {
                     this.model.deadList.push(alive[0]);
-                }
-                if (this.model.area.radius < 100) {
-                    this.model.mode.areaSpeed = 0;
                 }
                 if (alive.length <= 1) {
                     clearInterval(this.interval)
