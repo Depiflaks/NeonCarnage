@@ -34,8 +34,12 @@ export const ADDRESS = {
         start: 'ws://10.250.105.6:',
         end: '/'
     },
-    denis_home: {
+    denis_mobile: {
         start: 'ws://192.168.253.252:',
+        end: '/'
+    },
+    denis_home: {
+        start: 'ws://192.168.1.38:',
         end: '/'
     },
 }

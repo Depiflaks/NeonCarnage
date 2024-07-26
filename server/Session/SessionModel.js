@@ -83,10 +83,12 @@ class SessionModel {
             }
 
             if (closestPlayer) {
-                bot.state = STATES.aimed;
-                bot.purpose = { x: closestPlayer.x, y: closestPlayer.y };
-                bot.angle = this.getAngle(bot.current, closestPlayer);
-                bot.shooting = true
+                setTimeout(() => {
+                    bot.state = STATES.aimed;
+                    bot.purpose = { x: closestPlayer.x, y: closestPlayer.y };
+                    bot.angle = this.getAngle(bot.current, closestPlayer);
+                    bot.shooting = true
+                }, 1000);
             } else {
                 bot.shooting = false;
                 bot.state = STATES.wanders;
